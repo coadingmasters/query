@@ -3,7 +3,155 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* ==========================================================================
+   Design tokens
+   --------------------------------------------------------------------------
+   Every colour below meets WCAG AA (>= 4.5:1) against the surface it is
+   designed to sit on, so Lighthouse's accessibility audit stays clean.
+   The brighter brand values are kept as `-vivid` variants for large text,
+   icons and decorative fills, where the 3:1 threshold applies instead.
+   ========================================================================== */
+@theme static {
+    /* ── Brand ───────────────────────────────────────────────────────────── */
+    --color-primary:         #534AB7;  /* 6.93:1 on white */
+    --color-primary-hover:   #4740A3;  /* 8.30:1 */
+    --color-primary-dark:    #3C3489;  /* 10.27:1 */
+    --color-primary-light:   #EEEDFE;  /* tinted surface */
+
+    /* ── Accent ──────────────────────────────────────────────────────────── */
+    --color-accent:          #198563;  /* 4.59:1 — safe for text and buttons */
+    --color-accent-vivid:    #1D9E75;  /* 3.39:1 — large text / icons only */
+    --color-accent-dark:     #0F6E56;  /* 6.20:1 */
+    --color-accent-light:    #E1F5EE;  /* tinted surface */
+
+    /* ── Surfaces ────────────────────────────────────────────────────────── */
+    --color-surface:         #FFFFFF;
+    --color-surface-soft:    #F8F7FF;
+    --color-surface-section: #F4F3FE;
+
+    /* ── Text ────────────────────────────────────────────────────────────── */
+    --color-ink:             #1A1A2E;  /* 17.06:1 — body copy */
+    --color-ink-soft:        #636B77;  /* 4.90:1 on the darkest surface */
+    --color-ink-muted:       #6D7687;  /* 4.57:1 — still AA, unlike a grey tint */
+    --color-ink-inverse:     #FFFFFF;
+
+    /* ── Lines ───────────────────────────────────────────────────────────── */
+    --color-line:            #E5E3F8;
+    --color-line-strong:     #C4C0F0;
+
+    /* ── Status ──────────────────────────────────────────────────────────── */
+    --color-success:         #198563;  /* 4.59:1 */
+    --color-warning:         #A6680C;  /* 4.56:1 */
+    --color-danger:          #DE3231;  /* 4.56:1 */
+    --color-info:            #2377CC;  /* 4.58:1 */
+
+    --color-success-vivid:   #1D9E75;  /* decorative fills / icons */
+    --color-warning-vivid:   #EF9F27;
+    --color-danger-vivid:    #E24B4A;
+    --color-info-vivid:      #378ADD;
+
+    /* ── Typography ──────────────────────────────────────────────────────── */
+    --font-sans:    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-heading: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* ── Radii ───────────────────────────────────────────────────────────── */
+    --radius-sm:   6px;
+    --radius-md:  10px;
+    --radius-lg:  16px;
+    --radius-xl:  24px;
+
+    /* ── Shadows ─────────────────────────────────────────────────────────── */
+    --shadow-sm: 0 1px  3px rgb(83 74 183 / 0.08);
+    --shadow-md: 0 4px 16px rgb(83 74 183 / 0.12);
+    --shadow-lg: 0 8px 32px rgb(83 74 183 / 0.16);
+}
+
+/* Aliases for the original token names, so hand-written CSS and any design
+   snippets using `var(--color-text-main)` keep working unchanged. */
+:root {
+    --color-bg-main:        var(--color-surface);
+    --color-bg-card:        var(--color-surface);
+    --color-bg-soft:        var(--color-surface-soft);
+    --color-bg-section:     var(--color-surface-section);
+    --color-text-main:      var(--color-ink);
+    --color-text-secondary: var(--color-ink-soft);
+    --color-text-muted:     var(--color-ink-muted);
+    --color-text-white:     var(--color-ink-inverse);
+    --color-border:         var(--color-line);
+    --color-border-strong:  var(--color-line-strong);
+    --font-primary:         var(--font-sans);
+    --radius-full:          9999px;
+}
+
+/* ==========================================================================
+   Base layer
+   ========================================================================== */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        /* Stops horizontal jitter between short and tall pages, which would
+           otherwise register as layout shift. */
+        scrollbar-gutter: stable;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        background-color: var(--color-surface);
+        color: var(--color-ink);
+        font-family: var(--font-sans);
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-heading);
+        color: var(--color-ink);
+        text-wrap: balance;
+    }
+
+    p {
+        text-wrap: pretty;
+    }
+
+    /* A visible keyboard focus ring on every interactive element. Removing
+       this is one of the most common accessibility audit failures. */
+    :focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+
+    /* Reserve intrinsic space for media so images never shift the layout
+       while loading. Pair with width/height attributes on every <img>. */
+    img, video, iframe, svg {
+        max-width: 100%;
+        height: auto;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+        }
+    }
+}
+
+/* ==========================================================================
+   Reusable component classes
+   ========================================================================== */
+@layer components {
+    /* Skip link for keyboard and screen-reader users; visible only on focus. */
+    .skip-link {
+        @apply sr-only focus:not-sr-only focus:absolute focus:start-4 focus:top-4 focus:z-50
+               focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-ink-inverse;
+    }
+
+    /* Ad slots must reserve their height before the ad loads, otherwise the
+       insertion shifts the page and damages CLS. */
+    .ad-slot {
+        @apply mx-auto flex w-full items-center justify-center overflow-hidden;
+        contain: layout size;
+    }
 }

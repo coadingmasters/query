@@ -172,6 +172,56 @@ Clear the cached config: `php artisan config:clear`.
 
 ---
 
+## Deploying to production
+
+`.env.example` holds **local development** defaults. On a production server the
+following values must be changed, and several of them directly affect SEO:
+
+```dotenv
+APP_ENV=production
+APP_DEBUG=false                      # never true in production: leaks stack traces
+APP_URL=https://yourdomain.com       # exact canonical origin, https, no trailing slash
+SESSION_SECURE_COOKIE=true           # cookies over HTTPS only
+LOG_STACK=daily
+LOG_LEVEL=warning
+MAIL_MAILER=smtp                     # plus real MAIL_HOST / MAIL_USERNAME / MAIL_PASSWORD
+DB_USERNAME=                         # a dedicated user, not root
+DB_PASSWORD=                         # a strong password
+```
+
+`APP_URL` is the single most important of these. Canonical tags, sitemap
+entries and feed links are all generated from it, so it must be the exact
+origin you want indexed — matching your choice of `www` vs non-`www`, over
+`https`, with no trailing slash. A mismatch makes search engines treat the
+same page as several different URLs and splits its ranking signals.
+
+Then cache the configuration for speed and run the migrations:
+
+```bash
+composer install --no-dev --optimize-autoloader
+php artisan migrate --force
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+npm ci && npm run build
+```
+
+Re-run the `*:cache` commands after any config change — cached config ignores
+edits to `.env`.
+
+### Behaviour that changes automatically in production
+
+Setting `APP_ENV=production` switches on three safeguards, defined in
+`app/Providers/AppServiceProvider.php`:
+
+| Safeguard | Effect |
+|---|---|
+| Forced HTTPS URLs | All generated URLs use `https://`, so canonicals and sitemaps never emit `http://` duplicates |
+| Destructive commands blocked | `migrate:fresh`, `db:wipe` and similar refuse to run against live content |
+| Relaxed Eloquent strictness | Strict mode stays on outside production, catching N+1 queries during development |
+
+---
+
 ## Project structure
 
 ```

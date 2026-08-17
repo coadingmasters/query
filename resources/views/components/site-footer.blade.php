@@ -20,11 +20,11 @@
             'heading' => 'Site',
             'span' => 'lg:col-span-2',
             'items' => [
-                ['About us', route('about')],
+                ['About Us', route('about')],
                 ['How it works', '/#how-it-works'],
                 ['Blog', '/#blog'],
                 ['All food guides', '/#food-guides'],
-                ['Contact', 'mailto:'.config('brand.email')],
+                ['Contact Us', route('contact')],
             ],
         ],
     ];

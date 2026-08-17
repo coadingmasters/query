@@ -6,7 +6,8 @@
         ['/#food-guides', 'Food Guides'],
         ['/#blog', 'Blog'],
         ['/#how-it-works', 'How It Works'],
-        [route('about'), 'About'],
+        [route('about'), 'About Us'],
+        [route('contact'), 'Contact Us'],
     ];
 @endphp
 

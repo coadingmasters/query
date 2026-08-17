@@ -8,18 +8,15 @@
 @endphp
 
 <header class="sticky top-0 z-50 border-b border-line/70 bg-surface/85 backdrop-blur-md">
-    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
 
-        {{-- The wordmark stays as live text beside the badge. The badge has
-             "PurrQuery" set around its rim, but at this size that ring is
-             unreadable, and text in an image is not selectable or indexable.
-             alt is empty because the name is already in the link. --}}
-        <a href="/" class="flex shrink-0 items-center gap-2.5">
-            <span class="block size-10 shrink-0">
-                <x-img name="purrquerylogo" alt="" sizes="40px" fit="contain"/>
-            </span>
-            <span class="font-heading text-xl font-extrabold tracking-tight text-ink">
-                {{ config('app.name') }}
+        {{-- The badge alone, with no wordmark beside it. It carries the name
+             around its rim, so it is sized to let that read — and the alt text
+             has to spell the name out, because it is now the only thing naming
+             this link to a screen reader or to Google. --}}
+        <a href="/" class="flex shrink-0 items-center">
+            <span class="block size-14 shrink-0 sm:size-16">
+                <x-img name="purrquerylogo" alt="{{ config('app.name') }}" sizes="64px" fit="contain"/>
             </span>
         </a>
 

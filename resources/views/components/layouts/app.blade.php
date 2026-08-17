@@ -28,7 +28,12 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image:alt" content="{{ config('app.name') }} — {{ config('brand.tagline') }}">
 
-    <link rel="icon" href="/favicon.ico" sizes="any">
+    {{-- Small sizes carry the cat on its disc rather than the whole badge:
+         the rim lettering is unreadable below about 48px. --}}
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+    <link rel="icon" href="/favicon-96.png" type="image/png" sizes="96x96">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
 
     @fonts
     @vite(['resources/css/app.css'])

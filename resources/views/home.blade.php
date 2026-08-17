@@ -143,7 +143,7 @@
 </section>
 
 {{-- ══ 3. Tools ══════════════════════════════════════════════════════════ --}}
-<section id="tools" class="section scroll-mt-16 bg-surface">
+<section id="tools" class="section scroll-mt-20 bg-surface">
     <div class="container-page">
         <div class="text-center">
             <p class="eyebrow">Free tools</p>
@@ -177,7 +177,7 @@
 </section>
 
 {{-- ══ 4. How it works ═══════════════════════════════════════════════════ --}}
-<section id="how-it-works" class="section scroll-mt-16 bg-primary-dark">
+<section id="how-it-works" class="section scroll-mt-20 bg-primary-dark">
     <div class="container-page">
         <div class="text-center">
             <p class="inline-flex items-center rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-white uppercase">
@@ -209,7 +209,7 @@
 </section>
 
 {{-- ══ 5. Food categories ════════════════════════════════════════════════ --}}
-<section id="food-guides" class="section scroll-mt-16 bg-surface-soft">
+<section id="food-guides" class="section scroll-mt-20 bg-surface-soft">
     <div class="container-page">
         <div class="text-center">
             <p class="eyebrow">Food guides</p>
@@ -315,7 +315,7 @@
     $featured = $posts[0];
     $rest = array_slice($posts, 1);
 @endphp
-<section id="blog" class="section scroll-mt-16 bg-surface-soft">
+<section id="blog" class="section scroll-mt-20 bg-surface-soft">
     <div class="container-page">
         <div class="text-center">
             <p class="eyebrow">From the blog</p>

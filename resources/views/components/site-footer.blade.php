@@ -18,16 +18,11 @@
         <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
 
             <div class="lg:pr-8">
-                {{-- Larger here, where there is room for the seal to read
-                     as one and the rim text is actually legible. --}}
-                <div class="flex items-center gap-3">
-                    <span class="block size-16 shrink-0">
-                        <x-img name="purrquerylogo" alt="" sizes="64px" fit="contain"/>
-                    </span>
-                    <span class="font-heading text-xl font-extrabold tracking-tight text-ink">
-                        {{ config('app.name') }}
-                    </span>
-                </div>
+                {{-- Room here for the seal at full size, where the rim
+                     actually reads. --}}
+                <span class="block size-24 shrink-0">
+                    <x-img name="purrquerylogo" alt="{{ config('app.name') }}" sizes="96px" fit="contain"/>
+                </span>
                 <p class="mt-4 text-sm leading-relaxed text-ink-muted">
                     {{ config('brand.tagline') }}. Free to use, no account required.
                 </p>

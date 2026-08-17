@@ -109,6 +109,14 @@ foreach ($config['images'] as $name => $preset) {
             $th = (int) round($tw / $ratio);
 
             $out = imagecreatetruecolor($tw, $th);
+
+            // A new truecolor canvas is opaque black. The logo has a
+            // transparent surround, so without this it would gain black
+            // corners the moment it was resized.
+            imagealphablending($out, false);
+            imagesavealpha($out, true);
+            imagefill($out, 0, 0, imagecolorallocatealpha($out, 0, 0, 0, 127));
+
             imagecopyresampled($out, $cropped, 0, 0, 0, 0, $tw, $th, imagesx($cropped), imagesy($cropped));
             imagewebp($out, $path, $quality);
 

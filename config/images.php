@@ -24,6 +24,7 @@ return [
         'tool' => [400, 250],
         'food' => [300, 200],
         'blog' => [600, 400],
+        'logo' => [96, 96],
     ],
 
     /*
@@ -36,6 +37,9 @@ return [
         'tool' => 78,
         'food' => 78,
         'blog' => 80,
+
+        // The mark carries fine linework and sits on every page.
+        'logo' => 90,
     ],
 
     /*
@@ -43,6 +47,8 @@ return [
      | the build script is all that is needed to use it in a page.
      */
     'images' => [
+        'purrquerylogo' => 'logo',
+
         'purrquery-hero-cat-owner-smiling' => 'hero',
 
         'cat-age-calculator-senior-tabby-cat' => 'tool',

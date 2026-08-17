@@ -10,8 +10,14 @@
 <header class="sticky top-0 z-50 border-b border-line/70 bg-surface/85 backdrop-blur-md">
     <div class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
 
-        <a href="/" class="flex shrink-0 items-center gap-2.5" aria-label="{{ config('app.name') }} home">
-            <x-brand-mark class="size-8"/>
+        {{-- The wordmark stays as live text beside the badge. The badge has
+             "PurrQuery" set around its rim, but at this size that ring is
+             unreadable, and text in an image is not selectable or indexable.
+             alt is empty because the name is already in the link. --}}
+        <a href="/" class="flex shrink-0 items-center gap-2.5">
+            <span class="block size-10 shrink-0">
+                <x-img name="purrquerylogo" alt="" sizes="40px" fit="contain"/>
+            </span>
             <span class="font-heading text-xl font-extrabold tracking-tight text-ink">
                 {{ config('app.name') }}
             </span>

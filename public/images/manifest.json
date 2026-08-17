@@ -419,6 +419,26 @@
             }
         ]
     },
+    "purrquerylogo": {
+        "width": 96,
+        "height": 96,
+        "preset": "logo",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 96,
+                "src": "/images/purrquerylogo-96.8be580ff.webp"
+            },
+            {
+                "w": 144,
+                "src": "/images/purrquerylogo-144.8be580ff.webp"
+            },
+            {
+                "w": 192,
+                "src": "/images/purrquerylogo-192.8be580ff.webp"
+            }
+        ]
+    },
     "signs-cat-is-sick-vet-examination": {
         "width": 600,
         "height": 400,

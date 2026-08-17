@@ -293,24 +293,16 @@
             <a href="#tools" class="btn-primary mt-8">Start with a tool</a>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 sm:gap-5">
+        <div class="grid grid-cols-2 gap-5">
             @foreach ([
-                ['6', 'Free tools', 'primary'],
-                ['10', 'Food guides', 'accent'],
-                ['0', 'Sign-ups needed', 'accent'],
-                ['100%', 'Free to use', 'primary'],
-            ] as [$figure, $label, $tone])
-                <div @class([
-                    'rounded-xl border border-line p-6 text-center shadow-sm',
-                    'bg-primary-light' => $tone === 'primary',
-                    'bg-accent-light' => $tone === 'accent',
-                ])>
-                    <p @class([
-                        'font-heading text-4xl font-extrabold tracking-tight',
-                        'text-primary-dark' => $tone === 'primary',
-                        'text-accent-dark' => $tone === 'accent',
-                    ])>{{ $figure }}</p>
-                    <p class="mt-1 text-sm font-medium text-ink-muted">{{ $label }}</p>
+                ['6', 'Free tools'],
+                ['10', 'Food guides'],
+                ['0', 'Sign-ups needed'],
+                ['100%', 'Free to use'],
+            ] as [$figure, $label])
+                <div class="rounded-2xl border border-line bg-surface p-8 text-center shadow-md transition duration-200 hover:-translate-y-1 hover:shadow-lg">
+                    <p class="font-heading text-5xl font-extrabold tracking-tight text-primary">{{ $figure }}</p>
+                    <p class="mt-2 text-sm font-medium text-ink-muted">{{ $label }}</p>
                 </div>
             @endforeach
         </div>
@@ -337,9 +329,16 @@
             <article class="card" data-filter data-terms="{{ Str::lower($featured['title'].' '.$featured['excerpt']) }}">
                 <div class="card-media lg:min-h-0 lg:flex-1">
                     <x-img :name="$featured['image']" :alt="$featured['alt']"
-                           sizes="(max-width: 1023px) 92vw, 46vw"/>
+                           sizes="(max-width: 1023px) 92vw, 46vw"
+                           class="lg:absolute lg:inset-0"/>
                 </div>
-                <div class="card-body">
+
+                {{-- card-body carries flex-1 by default. On the featured card
+                     that made the body and the image split the spare height
+                     between them, which is where the gap under the text came
+                     from. The body sizes to its content; the image takes the
+                     rest. --}}
+                <div class="card-body lg:flex-none">
                     <div class="flex items-center gap-3 text-xs font-semibold">
                         <span class="rounded-full bg-primary-light px-2.5 py-1 text-primary-dark">{{ $featured['category'] }}</span>
                         <span class="text-ink-muted">{{ $featured['minutes'] }} min read</span>

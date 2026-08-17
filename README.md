@@ -209,6 +209,36 @@ npm ci && npm run build
 Re-run the `*:cache` commands after any config change — cached config ignores
 edits to `.env`.
 
+### Deploying purrquery.com
+
+The live site runs on Hostinger shared hosting. Deploy with one command:
+
+```bash
+ssh -p 65002 u783099422@145.79.4.158 'bash ~/deploy-purrquery.sh'
+```
+
+That pulls `main`, then hands over to `scripts/publish.sh`, which rsyncs the
+tree into the document root, installs Composer dependencies and rebuilds the
+caches. Pushing to `main` runs the same thing through
+`.github/workflows/deploy.yml`.
+
+Three details of this host are worth knowing before changing anything:
+
+- **The app lives inside `public_html`.** The document root cannot be moved to
+  `public/`, so the root `.htaccess` is what rewrites requests into `public/`
+  and blocks `.env`, `artisan` and the Composer files. Deleting it exposes the
+  application internals.
+- **Assets are committed to git.** Vite 8 bundles with Rolldown, and
+  CloudLinux's process limits stop it from starting a thread pool, so
+  `npm run build` cannot run on the server. Build locally (or let CI do it)
+  and commit `public/build`. `scripts/publish.sh` refuses to deploy without a
+  manifest rather than publishing an unstyled site.
+- **The launch page needs no database.** Cache, session and queue all run on
+  the filesystem, so migrations are skipped unless you pass `--migrate`.
+
+Deploys authenticate with a dedicated SSH key rather than the account
+password, so rotating the password does not break them.
+
 ### Behaviour that changes automatically in production
 
 Setting `APP_ENV=production` switches on three safeguards, defined in

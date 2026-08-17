@@ -7,17 +7,29 @@
     <link rel="preload" as="image" fetchpriority="high"
           href="{{ \App\Support\Images::get('purrquery-hero-cat-owner-smiling')['src'] }}"
           imagesrcset="{{ \App\Support\Images::get('purrquery-hero-cat-owner-smiling')['srcset'] }}"
-          imagesizes="(max-width: 1023px) 92vw, 600px">
+          imagesizes="(max-width: 1023px) 92vw, 700px">
 @endpush
 
 {{-- ══ 1. Hero ═══════════════════════════════════════════════════════════ --}}
 <section class="relative overflow-hidden bg-surface-soft">
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary opacity-10 blur-3xl"></div>
         <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-10 blur-3xl"></div>
+
+        @foreach ([
+            ['left-[4%]  top-[16%]', 'size-10', 0,    22, 'text-primary'],
+            ['left-[13%] top-[68%]', 'size-7',  -6,   26, 'text-accent-vivid'],
+            ['left-[30%] top-[8%]',  'size-6',  -11,  19, 'text-primary'],
+            ['right-[6%] top-[12%]', 'size-9',  -3,   24, 'text-accent-vivid'],
+            ['right-[2%] bottom-[8%]','size-11',-15,  28, 'text-primary'],
+            ['left-[46%] bottom-[4%]','size-6', -8,   21, 'text-accent-vivid'],
+        ] as [$position, $size, $delay, $duration, $tone])
+            <x-paw-print class="paw absolute {{ $position }} {{ $size }} {{ $tone }}"
+                         style="animation-delay: {{ $delay }}s; animation-duration: {{ $duration }}s"/>
+        @endforeach
     </div>
 
-    <div class="container-page relative grid items-center gap-12 py-14 lg:grid-cols-2 lg:gap-16 lg:py-20">
+    <div class="container-page relative grid items-center gap-12 py-14 lg:grid-cols-[1fr_1.15fr] lg:gap-14 lg:py-20">
         <div>
             <p class="eyebrow">
                 <span class="size-1.5 rounded-full bg-accent-vivid"></span>
@@ -77,23 +89,8 @@
             <div class="overflow-hidden rounded-2xl border border-line bg-surface shadow-lg">
                 <x-img name="purrquery-hero-cat-owner-smiling"
                        alt="Happy cat owner sitting with her fluffy cat on a couch — PurrQuery cat care guides"
-                       sizes="(max-width: 1023px) 92vw, 600px"
+                       sizes="(max-width: 1023px) 92vw, 700px"
                        :priority="true"/>
-            </div>
-
-            {{-- Sized in ch/rem rather than left to the text, so it cannot
-                 reflow the hero as the font loads. --}}
-            <div class="absolute -bottom-5 -left-4 hidden items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3 shadow-md sm:flex">
-                <span class="flex size-9 items-center justify-center rounded-lg bg-accent-light">
-                    <svg class="size-5 text-accent-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                         stroke-width="2" stroke-linecap="round" aria-hidden="true">
-                        <path d="M20 6 9 17l-5-5"/>
-                    </svg>
-                </span>
-                <span class="text-sm leading-tight">
-                    <span class="block font-bold text-ink">6 free tools</span>
-                    <span class="block text-ink-muted">No sign-up needed</span>
-                </span>
             </div>
         </div>
     </div>
@@ -101,35 +98,45 @@
 
 {{-- ══ 2. Trust badges ═══════════════════════════════════════════════════ --}}
 @php
+    // Properly drawn multi-path icons rather than one improvised outline each:
+    // a phone, a shield with a tick, a bolt and an open book read as what they
+    // are at 24px, which single-stroke approximations do not.
     $trust = [
-        ['Easy to use', 'Answers in a few taps, on any device.', 'primary',
-         'M13 2 3 14h7l-1 8 10-12h-7l1-8Z'],
-        ['Accurate data', 'Built on published veterinary guidance.', 'accent',
-         'M9 12l2 2 4-4M12 3l7 4v5c0 4.4-3 8.3-7 9-4-0.7-7-4.6-7-9V7l7-4Z'],
-        ['Fast results', 'Everything runs instantly in your browser.', 'primary',
-         'M12 6v6l4 2M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z'],
-        ['Care guides', 'Plain-English answers, not a wall of jargon.', 'accent',
-         'M4 5a2 2 0 0 1 2-2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5ZM8 12h8M8 16h5'],
+        ['Easy to use', 'Answers in a few taps, on any device.', 'primary', [
+            'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z',
+            'M11 18.5h2',
+        ]],
+        ['Accurate data', 'Built on published veterinary guidance.', 'accent', [
+            'M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z',
+            'm9.4 12.2 1.9 1.9 3.6-3.7',
+        ]],
+        ['Fast results', 'Everything runs instantly in your browser.', 'primary', [
+            'M13.2 2.4 4.5 12.9a.7.7 0 0 0 .5 1.1h5l-1.2 7.6a.35.35 0 0 0 .62.28l8.7-10.5a.7.7 0 0 0-.54-1.15h-5l1.2-7.6a.35.35 0 0 0-.62-.28Z',
+        ]],
+        ['Care guides', 'Plain-English answers, not a wall of jargon.', 'accent', [
+            'M12 7.5v13',
+            'M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z',
+        ]],
     ];
 @endphp
-<section class="border-b border-line bg-surface py-12">
+<section class="border-b border-line bg-surface py-14">
     <div class="container-page grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        @foreach ($trust as [$title, $text, $tone, $path])
-            <div class="flex items-start gap-4 rounded-xl border border-line bg-surface p-5 shadow-sm">
+        @foreach ($trust as [$title, $text, $tone, $paths])
+            <div class="group rounded-xl border border-line bg-surface p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-line-strong hover:shadow-md">
                 <span @class([
-                    'flex size-11 shrink-0 items-center justify-center rounded-lg',
-                    'bg-primary-light text-primary' => $tone === 'primary',
-                    'bg-accent-light text-accent-dark' => $tone === 'accent',
+                    'flex size-12 items-center justify-center rounded-xl transition-colors duration-200',
+                    'bg-primary-light text-primary group-hover:bg-primary group-hover:text-ink-inverse' => $tone === 'primary',
+                    'bg-accent-light text-accent-dark group-hover:bg-accent group-hover:text-ink-inverse' => $tone === 'accent',
                 ])>
-                    <svg class="size-5.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="{{ $path }}"/>
+                        @foreach ($paths as $d)
+                            <path d="{{ $d }}"/>
+                        @endforeach
                     </svg>
                 </span>
-                <span>
-                    <span class="block font-heading font-bold text-ink">{{ $title }}</span>
-                    <span class="mt-1 block text-sm leading-relaxed text-ink-muted">{{ $text }}</span>
-                </span>
+                <h2 class="mt-5 font-heading text-lg font-bold text-ink">{{ $title }}</h2>
+                <p class="mt-1.5 text-sm leading-relaxed text-ink-muted">{{ $text }}</p>
             </div>
         @endforeach
     </div>
@@ -213,21 +220,40 @@
             </p>
         </div>
 
-        <div class="mt-12 grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-5">
+        <div class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+            @php
+                $verdictLabel = ['safe' => 'Safe', 'caution' => 'In moderation', 'unsafe' => 'Never'];
+            @endphp
             @foreach (config('catalog.foods') as $food)
-                <article class="card" data-filter data-terms="{{ Str::lower($food['title'].' '.$food['note']) }}">
+                <article class="card" data-filter
+                         data-terms="{{ Str::lower($food['question'].' '.$food['answer'].' '.$food['title']) }}">
                     <div class="card-media">
                         <x-img :name="$food['image']" :alt="$food['alt']"
-                               sizes="(max-width: 767px) 46vw, (max-width: 1023px) 30vw, 19vw"/>
+                               sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, (max-width: 1279px) 30vw, 23vw"/>
+
+                        {{-- The verdict rides on the image so it is the first
+                             thing read. Solid rather than tinted, because it
+                             sits over a photograph: white on each of these
+                             three clears 5.5:1. --}}
+                        <span @class([
+                            'absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-bold text-ink-inverse shadow-md',
+                            'bg-accent' => $food['verdict'] === 'safe',
+                            'bg-warning' => $food['verdict'] === 'caution',
+                            'bg-danger' => $food['verdict'] === 'unsafe',
+                        ])>{{ $verdictLabel[$food['verdict']] }}</span>
                     </div>
-                    <div class="p-4">
-                        <h3 class="font-heading text-base font-bold text-ink">{{ $food['title'] }}</h3>
-                        <p @class([
-                            'mt-2',
-                            'pill-safe' => $food['verdict'] === 'safe',
-                            'pill-caution' => $food['verdict'] === 'caution',
-                            'pill-unsafe' => $food['verdict'] === 'unsafe',
-                        ])>{{ $food['note'] }}</p>
+
+                    <div class="flex flex-1 flex-col p-5">
+                        <p class="text-xs font-bold tracking-wide text-primary uppercase">{{ $food['title'] }}</p>
+
+                        {{-- The heading is the question people type into
+                             Google, and the answer sits under it. That is also
+                             what makes the FAQ structured data legitimate: it
+                             describes content on the page. --}}
+                        <h3 class="mt-1.5 font-heading text-lg leading-snug font-bold text-ink">
+                            {{ $food['question'] }}
+                        </h3>
+                        <p class="mt-2 text-sm leading-relaxed text-ink-muted">{{ $food['answer'] }}</p>
                     </div>
                 </article>
             @endforeach

@@ -14,8 +14,17 @@ class SitemapController extends Controller
      */
     public function __invoke(): Response
     {
+        // lastmod tells a crawler whether a re-fetch is worth it. It is taken
+        // from the deployed view file rather than "now", because claiming a
+        // page changed today when it did not trains crawlers to ignore it.
+        $home = resource_path('views/home.blade.php');
+
         $urls = [
-            ['loc' => rtrim(config('app.url'), '/').'/', 'priority' => '1.0'],
+            [
+                'loc' => rtrim(config('app.url'), '/').'/',
+                'lastmod' => date('Y-m-d', is_file($home) ? filemtime($home) : time()),
+                'priority' => '1.0',
+            ],
         ];
 
         return response()

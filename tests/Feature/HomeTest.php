@@ -23,7 +23,7 @@ class HomeTest extends TestCase
         }
 
         foreach (config('catalog.foods') as $food) {
-            $response->assertSee($food['title']);
+            $response->assertSee($food['question']);
         }
 
         foreach (config('catalog.posts') as $post) {

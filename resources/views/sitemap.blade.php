@@ -3,6 +3,7 @@
 @foreach ($urls as $url)
     <url>
         <loc>{{ $url['loc'] }}</loc>
+        <lastmod>{{ $url['lastmod'] }}</lastmod>
         <priority>{{ $url['priority'] }}</priority>
     </url>
 @endforeach

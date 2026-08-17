@@ -13,7 +13,7 @@ class HomeController extends Controller
         $description = config('brand.description');
 
         return view('home', [
-            'title' => $name.' — '.config('brand.tagline'),
+            'title' => config('brand.home_title').' | '.$name,
             'description' => $description,
             'canonical' => $url.'/',
             'schema' => [
@@ -37,15 +37,24 @@ class HomeController extends Controller
                         'inLanguage' => str_replace('_', '-', app()->getLocale()),
                         'publisher' => ['@id' => $url.'/#organization'],
                     ],
-                    // Marks the food guides as a Q&A set, which is what makes
-                    // "can cats eat X" eligible for a rich result.
+                    /*
+                     | The food guides as a Q&A set. Google requires FAQ
+                     | markup to mirror content the visitor can actually see,
+                     | so this pulls the same question and answer strings the
+                     | cards render — not a paraphrase of them.
+                     |
+                     | Worth being clear-eyed: since 2023 Google shows FAQ rich
+                     | results only for authoritative health and government
+                     | sites, so this is unlikely to produce stars in the SERP.
+                     | It still helps Google understand what the page answers.
+                     */
                     [
                         '@type' => 'FAQPage',
                         '@id' => $url.'/#faq',
                         'mainEntity' => collect(config('catalog.foods'))->map(fn (array $food) => [
                             '@type' => 'Question',
-                            'name' => 'Can cats eat '.mb_strtolower($food['title']).'?',
-                            'acceptedAnswer' => ['@type' => 'Answer', 'text' => $food['note']],
+                            'name' => $food['question'],
+                            'acceptedAnswer' => ['@type' => 'Answer', 'text' => $food['answer']],
                         ])->all(),
                     ],
                 ],

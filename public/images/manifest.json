@@ -400,22 +400,22 @@
         ]
     },
     "purrquery-hero-cat-owner-smiling": {
-        "width": 600,
-        "height": 500,
+        "width": 700,
+        "height": 560,
         "preset": "hero",
         "placeholder": false,
         "variants": [
             {
-                "w": 600,
-                "src": "/images/purrquery-hero-cat-owner-smiling-600.55ebf98b.webp"
+                "w": 700,
+                "src": "/images/purrquery-hero-cat-owner-smiling-700.29a3ca00.webp"
             },
             {
-                "w": 900,
-                "src": "/images/purrquery-hero-cat-owner-smiling-900.55ebf98b.webp"
+                "w": 1050,
+                "src": "/images/purrquery-hero-cat-owner-smiling-1050.29a3ca00.webp"
             },
             {
-                "w": 1200,
-                "src": "/images/purrquery-hero-cat-owner-smiling-1200.55ebf98b.webp"
+                "w": 1400,
+                "src": "/images/purrquery-hero-cat-owner-smiling-1400.29a3ca00.webp"
             }
         ]
     },

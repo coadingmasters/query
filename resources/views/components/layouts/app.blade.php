@@ -9,6 +9,11 @@
     <meta name="description" content="{{ $description }}">
     <link rel="canonical" href="{{ $canonical }}">
 
+    {{-- max-image-preview:large is the one that earns its place on a site
+         built around photographs: without it Google is limited to a thumbnail
+         in results. The snippet and video values lift the default caps too. --}}
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ config('app.name') }}">
     <meta property="og:title" content="{{ $title }}">
@@ -17,7 +22,11 @@
     <meta property="og:image" content="{{ rtrim(config('app.url'), '/') }}/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="{{ config('app.name') }} — {{ config('brand.tagline') }}">
+    <meta property="og:locale" content="{{ config('brand.og_locale') }}">
+
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image:alt" content="{{ config('app.name') }} — {{ config('brand.tagline') }}">
 
     <link rel="icon" href="/favicon.ico" sizes="any">
 

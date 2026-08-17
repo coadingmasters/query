@@ -22,6 +22,19 @@ return [
 
     'email' => env('BRAND_EMAIL', 'hello@purrquery.com'),
 
+    /*
+     | Open Graph wants a language_TERRITORY pair, which app()->getLocale()
+     | ("en") does not carry. Stated once here rather than assembled inline.
+     */
+    'og_locale' => env('BRAND_OG_LOCALE', 'en_GB'),
+
+    /*
+     | The page title leads with what people search for and closes with the
+     | brand. A new site has no brand recognition to trade on, so the keywords
+     | earn the click; the name still appears, just last.
+     */
+    'home_title' => env('BRAND_HOME_TITLE', 'Free Cat Care Tools & Food Safety Guides'),
+
     // Shown under the hero as short proof points.
     'promises' => ['100% free', 'PDF reports', 'No sign-up', 'Research-backed'],
 ];

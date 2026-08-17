@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\Schema;
 use Illuminate\Contracts\View\View;
 
 class TermsController extends Controller
@@ -21,31 +22,21 @@ class TermsController extends Controller
             'canonical' => $url.'/terms',
             'sections' => config('legal.terms'),
             'effective' => config('legal.terms_effective'),
-            'schema' => [
-                '@context' => 'https://schema.org',
-                '@graph' => [
-                    [
-                        // WebPage rather than anything more specific: there is no
-                        // schema type for terms of use, and inventing a fit would
-                        // describe the page as something it is not.
-                        '@type' => 'WebPage',
-                        '@id' => $url.'/terms#page',
-                        'url' => $url.'/terms',
-                        'name' => 'Terms & Conditions',
-                        'description' => $description,
-                        'isPartOf' => ['@id' => $url.'/#website'],
-                        'dateModified' => config('legal.terms_effective'),
-                    ],
-                    [
-                        '@type' => 'BreadcrumbList',
-                        '@id' => $url.'/terms#breadcrumb',
-                        'itemListElement' => [
-                            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => $url.'/'],
-                            ['@type' => 'ListItem', 'position' => 2, 'name' => 'Terms & Conditions'],
-                        ],
-                    ],
+            'schema' => Schema::graph([
+                [
+                    // WebPage rather than anything more specific: there is no
+                    // schema type for terms of use, and inventing a fit would
+                    // describe the page as something it is not.
+                    '@type' => 'WebPage',
+                    '@id' => $url.'/terms#page',
+                    'url' => $url.'/terms',
+                    'name' => 'Terms & Conditions',
+                    'description' => $description,
+                    'isPartOf' => ['@id' => $url.'/#website'],
+                    'dateModified' => config('legal.terms_effective'),
                 ],
-            ],
+                Schema::breadcrumbs('/terms', ['Home' => '/', 'Terms & Conditions' => null]),
+            ]),
         ]);
     }
 }

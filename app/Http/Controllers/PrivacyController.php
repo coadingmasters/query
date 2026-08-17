@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\Schema;
 use Illuminate\Contracts\View\View;
 
 class PrivacyController extends Controller
@@ -22,28 +23,18 @@ class PrivacyController extends Controller
             'sections' => config('legal.privacy'),
             'summary' => config('legal.privacy_summary'),
             'effective' => config('legal.privacy_effective'),
-            'schema' => [
-                '@context' => 'https://schema.org',
-                '@graph' => [
-                    [
-                        '@type' => 'WebPage',
-                        '@id' => $url.'/privacy#page',
-                        'url' => $url.'/privacy',
-                        'name' => 'Privacy Policy',
-                        'description' => $description,
-                        'isPartOf' => ['@id' => $url.'/#website'],
-                        'dateModified' => config('legal.privacy_effective'),
-                    ],
-                    [
-                        '@type' => 'BreadcrumbList',
-                        '@id' => $url.'/privacy#breadcrumb',
-                        'itemListElement' => [
-                            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => $url.'/'],
-                            ['@type' => 'ListItem', 'position' => 2, 'name' => 'Privacy Policy'],
-                        ],
-                    ],
+            'schema' => Schema::graph([
+                [
+                    '@type' => 'WebPage',
+                    '@id' => $url.'/privacy#page',
+                    'url' => $url.'/privacy',
+                    'name' => 'Privacy Policy',
+                    'description' => $description,
+                    'isPartOf' => ['@id' => $url.'/#website'],
+                    'dateModified' => config('legal.privacy_effective'),
                 ],
-            ],
+                Schema::breadcrumbs('/privacy', ['Home' => '/', 'Privacy Policy' => null]),
+            ]),
         ]);
     }
 }

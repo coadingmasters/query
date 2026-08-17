@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\Schema;
 use Illuminate\Contracts\View\View;
 
 class FaqController extends Controller
@@ -24,41 +25,27 @@ class FaqController extends Controller
             'canonical' => $url.'/faq',
             'groups' => $groups,
             'count' => $count,
-            'schema' => [
-                '@context' => 'https://schema.org',
-                '@graph' => [
-                    /*
-                     | Every question and answer below is rendered on the page
-                     | inside details/summary, which keeps it in the DOM whether
-                     | open or shut. That is what makes this markup honest —
-                     | Google requires FAQ structured data to describe content
-                     | the visitor can actually reach.
-                     */
-                    [
-                        '@type' => 'FAQPage',
-                        '@id' => $url.'/faq#faq',
-                        'url' => $url.'/faq',
-                        'name' => 'Cat Care FAQ',
-                        'description' => $description,
-                        'isPartOf' => ['@id' => $url.'/#website'],
-                        'mainEntity' => collect($groups)
-                            ->flatMap(fn (array $group): array => $group['items'])
-                            ->map(fn (array $item): array => [
-                                '@type' => 'Question',
-                                'name' => $item['q'],
-                                'acceptedAnswer' => ['@type' => 'Answer', 'text' => $item['a']],
-                            ])->all(),
-                    ],
-                    [
-                        '@type' => 'BreadcrumbList',
-                        '@id' => $url.'/faq#breadcrumb',
-                        'itemListElement' => [
-                            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => $url.'/'],
-                            ['@type' => 'ListItem', 'position' => 2, 'name' => 'FAQ'],
-                        ],
-                    ],
+            'schema' => Schema::graph([
+                [
+                    '@type' => 'WebPage',
+                    '@id' => $url.'/faq#page',
+                    'url' => $url.'/faq',
+                    'name' => 'Cat Care FAQ',
+                    'description' => $description,
+                    'isPartOf' => ['@id' => $url.'/#website'],
                 ],
-            ],
+                /*
+                 | Every question and answer is rendered inside details/summary,
+                 | which keeps it in the DOM whether open or shut — that is what
+                 | makes this markup honest, since Google requires FAQ data to
+                 | describe content the visitor can reach.
+                 */
+                Schema::faq('/faq#faq', collect($groups)
+                    ->flatMap(fn (array $group): array => $group['items'])
+                    ->map(fn (array $item): array => ['q' => $item['q'], 'a' => $item['a']])
+                    ->all()),
+                Schema::breadcrumbs('/faq', ['Home' => '/', 'FAQ' => null]),
+            ]),
         ]);
     }
 }

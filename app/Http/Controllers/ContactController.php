@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContactMessage;
+use App\Support\Schema;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -33,35 +34,27 @@ class ContactController extends Controller
             'description' => $description,
             'canonical' => $url.'/contact',
             'subjects' => self::SUBJECTS,
-            'schema' => [
-                '@context' => 'https://schema.org',
-                '@graph' => [
-                    [
-                        '@type' => 'ContactPage',
-                        '@id' => $url.'/contact#page',
-                        'url' => $url.'/contact',
-                        'name' => 'Contact '.$name,
-                        'description' => $description,
-                        'isPartOf' => ['@id' => $url.'/#website'],
-                    ],
-                    [
-                        '@type' => 'Organization',
-                        '@id' => $url.'/#organization',
-                        'name' => $name,
-                        'url' => $url,
-                        'email' => config('brand.email'),
-                        // No telephone or postal address: the site has neither,
-                        // and inventing contact details is worse than omitting
-                        // them — someone will eventually try to use them.
-                        'contactPoint' => [
-                            '@type' => 'ContactPoint',
-                            'contactType' => 'customer support',
-                            'email' => config('brand.email'),
-                            'availableLanguage' => 'English',
-                        ],
-                    ],
+            'schema' => Schema::graph([
+                [
+                    '@type' => 'ContactPage',
+                    '@id' => $url.'/contact#page',
+                    'url' => $url.'/contact',
+                    'name' => 'Contact '.$name,
+                    'description' => $description,
+                    'isPartOf' => ['@id' => $url.'/#website'],
                 ],
-            ],
+                [
+                    // No telephone or postal address: the site has neither, and
+                    // inventing contact details is worse than omitting them —
+                    // someone eventually tries to use them.
+                    '@type' => 'ContactPoint',
+                    '@id' => $url.'/contact#point',
+                    'contactType' => 'customer support',
+                    'email' => config('brand.email'),
+                    'availableLanguage' => 'English',
+                ],
+                Schema::breadcrumbs('/contact', ['Home' => '/', 'Contact' => null]),
+            ]),
         ]);
     }
 

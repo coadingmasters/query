@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\Schema;
 use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
@@ -11,54 +12,46 @@ class HomeController extends Controller
         $name = config('app.name');
         $url = rtrim(config('app.url'), '/');
         $description = config('brand.description');
+        $title = config('brand.home_title').' | '.$name;
 
         return view('home', [
-            'title' => config('brand.home_title').' | '.$name,
+            'title' => $title,
             'description' => $description,
             'canonical' => $url.'/',
-            'schema' => [
-                '@context' => 'https://schema.org',
-                '@graph' => [
-                    [
-                        '@type' => 'Organization',
-                        '@id' => $url.'/#organization',
-                        'name' => $name,
-                        'url' => $url,
-                        'email' => config('brand.email'),
-                        'description' => $description,
-                        'logo' => $url.'/og-image.png',
-                    ],
-                    [
-                        '@type' => 'WebSite',
-                        '@id' => $url.'/#website',
-                        'name' => $name,
-                        'url' => $url,
-                        'description' => $description,
-                        'inLanguage' => str_replace('_', '-', app()->getLocale()),
-                        'publisher' => ['@id' => $url.'/#organization'],
-                    ],
-                    /*
-                     | The food guides as a Q&A set. Google requires FAQ
-                     | markup to mirror content the visitor can actually see,
-                     | so this pulls the same question and answer strings the
-                     | cards render — not a paraphrase of them.
-                     |
-                     | Worth being clear-eyed: since 2023 Google shows FAQ rich
-                     | results only for authoritative health and government
-                     | sites, so this is unlikely to produce stars in the SERP.
-                     | It still helps Google understand what the page answers.
-                     */
-                    [
-                        '@type' => 'FAQPage',
-                        '@id' => $url.'/#faq',
-                        'mainEntity' => collect(config('catalog.foods'))->map(fn (array $food) => [
-                            '@type' => 'Question',
-                            'name' => $food['question'],
-                            'acceptedAnswer' => ['@type' => 'Answer', 'text' => $food['answer']],
-                        ])->all(),
-                    ],
+            'schema' => Schema::graph([
+                [
+                    '@type' => 'WebPage',
+                    '@id' => $url.'/#webpage',
+                    'url' => $url.'/',
+                    'name' => $title,
+                    'description' => $description,
+                    'isPartOf' => ['@id' => $url.'/#website'],
+                    'about' => ['@id' => $url.'/#organization'],
                 ],
-            ],
+                // Names the tools and the guides as two collections rather
+                // than leaving Google to infer it from a wall of cards.
+                Schema::itemList('/#tools', 'Free cat care tools',
+                    collect(config('catalog.tools'))->map(fn (array $t): array => [
+                        'name' => $t['title'], 'description' => $t['blurb'],
+                    ])->all()),
+                Schema::itemList('/#food-guides', 'Cat food safety guides',
+                    collect(config('catalog.foods'))->map(fn (array $f): array => [
+                        'name' => $f['question'], 'description' => $f['answer'],
+                    ])->all()),
+                /*
+                 | The food guides as a Q&A set. Every question and answer here
+                 | is rendered on the cards, which is what Google requires of
+                 | FAQ markup — it must describe content the visitor can read.
+                 |
+                 | Worth being clear-eyed: since 2023 Google has shown FAQ rich
+                 | results only for authoritative health and government sites,
+                 | so this is unlikely to produce an expandable result. It still
+                 | tells Google what the page answers.
+                 */
+                Schema::faq('/#faq', collect(config('catalog.foods'))->map(fn (array $f): array => [
+                    'q' => $f['question'], 'a' => $f['answer'],
+                ])->all()),
+            ]),
         ]);
     }
 }

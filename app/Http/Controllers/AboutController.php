@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\Schema;
 use Illuminate\Contracts\View\View;
 
 class AboutController extends Controller
@@ -32,40 +33,18 @@ class AboutController extends Controller
                 [$foods + $posts, 'Guides and articles'],
                 ['$0', 'Cost to use, always'],
             ],
-            'schema' => [
-                '@context' => 'https://schema.org',
-                '@graph' => [
-                    [
-                        '@type' => 'AboutPage',
-                        '@id' => $url.'/about#page',
-                        'url' => $url.'/about',
-                        'name' => $title,
-                        'description' => $description,
-                        'isPartOf' => ['@id' => $url.'/#website'],
-                        'about' => ['@id' => $url.'/#organization'],
-                    ],
-                    [
-                        '@type' => 'Organization',
-                        '@id' => $url.'/#organization',
-                        'name' => $name,
-                        'url' => $url,
-                        'email' => config('brand.email'),
-                        'description' => $description,
-                        'logo' => $url.'/og-image.png',
-                    ],
-                    // Breadcrumbs feed the path Google shows under the result instead
-                    // of a bare URL. Unlike FAQ markup this does not need a visible
-                    // trail on the page, so it stays now the hero has none.
-                    [
-                        '@type' => 'BreadcrumbList',
-                        '@id' => $url.'/about#breadcrumb',
-                        'itemListElement' => [
-                            ['@type' => 'ListItem', 'position' => 1, 'name' => 'Home', 'item' => $url.'/'],
-                            ['@type' => 'ListItem', 'position' => 2, 'name' => 'About'],
-                        ],
-                    ],
+            'schema' => Schema::graph([
+                [
+                    '@type' => 'AboutPage',
+                    '@id' => $url.'/about#page',
+                    'url' => $url.'/about',
+                    'name' => $title,
+                    'description' => $description,
+                    'isPartOf' => ['@id' => $url.'/#website'],
+                    'about' => ['@id' => $url.'/#organization'],
                 ],
-            ],
+                Schema::breadcrumbs('/about', ['Home' => '/', 'About' => null]),
+            ]),
         ]);
     }
 }

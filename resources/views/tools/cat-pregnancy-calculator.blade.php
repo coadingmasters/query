@@ -205,37 +205,126 @@
 </section>
 
 {{-- ══ 4. TIMELINE ═══════════════════════════════════════════════════════
-     Week 1 to Week 9, static placeholders. No week is marked as current yet —
-     that arrives with the calculation.
+     The nine weeks, rendered from config/pregnancy-weeks.php.
+
+     All of it is in the markup, open or shut, rather than injected from a
+     script — it is the substantial writing on this page, and content that
+     only exists inside JavaScript is content a crawler may never read. The
+     script's only job here is deciding which card is marked current, which
+     are behind, and which are still ahead.
+
+     Each card is a details/summary, so it expands with a keyboard and works
+     with JavaScript switched off.
      ═══════════════════════════════════════════════════════════════════════ --}}
-<section class="section-tight bg-surface-soft">
-    <div class="container-page">
+<section id="timeline" class="section-tight scroll-mt-24 bg-surface-soft">
+    <div class="container-page max-w-3xl">
         <div class="text-center">
             <p class="eyebrow">Week by week</p>
             <h2 class="section-title">What happens, and when</h2>
             <p class="section-intro">
-                A cat pregnancy runs about nine weeks. Here is the shape of it.
+                A cat pregnancy runs about nine weeks. Run the calculator above
+                and the week she is in now is marked here.
             </p>
         </div>
 
-        <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            @for ($week = 1; $week <= 9; $week++)
-                <article class="reveal rounded-2xl border border-line bg-surface p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md"
-                         data-week="{{ $week }}">
-                    <div class="flex items-center gap-3">
-                        <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-light font-heading text-lg font-extrabold text-primary-dark">
-                            {{ $week }}
-                        </span>
-                        <h3 class="font-heading text-lg font-bold text-ink">Week {{ $week }}</h3>
-                    </div>
+        {{-- The rail runs behind the cards; the dots sit on it. --}}
+        <ol class="relative mt-10 space-y-4 sm:pl-8">
+            <span aria-hidden="true"
+                  class="absolute top-4 bottom-4 left-[15px] hidden w-px bg-line-strong sm:block"></span>
 
-                    <p class="mt-4 text-sm leading-relaxed text-ink-muted">
-                        Placeholder text for week {{ $week }}. What to expect, what to
-                        watch for, and what your cat needs at this stage.
-                    </p>
-                </article>
-            @endfor
-        </div>
+            @foreach (config('pregnancy-weeks') as $entry)
+                <li data-week-card="{{ $entry['week'] }}" class="reveal relative">
+                    {{-- Dot on the rail --}}
+                    <span aria-hidden="true" data-week-dot
+                          class="absolute top-6 -left-8 hidden size-[9px] rounded-full bg-line-strong ring-4 ring-surface-soft transition-colors sm:block"></span>
+
+                    <details data-week-details
+                             class="group rounded-2xl border border-line bg-surface shadow-sm transition duration-200 hover:border-line-strong open:shadow-md">
+                        <summary class="flex cursor-pointer list-none items-center gap-4 p-5 marker:content-['']">
+                            <span data-week-number
+                                  class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-light font-heading text-lg font-extrabold text-primary-dark transition-colors">
+                                {{ $entry['week'] }}
+                            </span>
+
+                            <span class="min-w-0 flex-1">
+                                <span class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                                    <span class="font-heading text-lg font-bold text-ink">
+                                        Week {{ $entry['week'] }} — {{ $entry['title'] }}
+                                    </span>
+
+                                    {{-- Filled in by the script once a week is known. --}}
+                                    <span data-week-badge hidden
+                                          class="rounded-full px-2.5 py-0.5 text-xs font-bold"></span>
+                                </span>
+                                <span class="mt-1 block text-sm text-ink-muted">
+                                    {{ $entry['visible_signs'] }}
+                                </span>
+                            </span>
+
+                            <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary transition-transform duration-200 group-open:rotate-45">
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                    <path d="M12 5v14M5 12h14"/>
+                                </svg>
+                            </span>
+                        </summary>
+
+                        <div class="space-y-5 border-t border-line px-5 py-5">
+                            <div>
+                                <h3 class="font-heading text-sm font-bold tracking-wide text-ink uppercase">
+                                    What happens
+                                </h3>
+                                <p class="mt-2 text-sm leading-relaxed text-ink-muted">
+                                    {{ $entry['what_happens'] }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 class="font-heading text-sm font-bold tracking-wide text-ink uppercase">
+                                    What you might see
+                                </h3>
+                                <p class="mt-2 text-sm leading-relaxed text-ink-muted">
+                                    {{ $entry['visible_signs'] }}
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 class="font-heading text-sm font-bold tracking-wide text-ink uppercase">
+                                    Care this week
+                                </h3>
+                                <ul class="mt-2 space-y-2">
+                                    @foreach ($entry['care_tips'] as $tip)
+                                        <li class="flex items-start gap-2.5 text-sm leading-relaxed text-ink-muted">
+                                            <svg class="mt-1 size-3.5 shrink-0 text-accent" viewBox="0 0 24 24"
+                                                 fill="none" stroke="currentColor" stroke-width="3"
+                                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                <path d="M20 6 9 17l-5-5"/>
+                                            </svg>
+                                            {{ $tip }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+
+                            @if ($entry['vet_action'])
+                                <div class="flex items-start gap-3 rounded-xl border border-info-light bg-info-light p-4">
+                                    <svg class="mt-0.5 size-4 shrink-0 text-info" viewBox="0 0 24 24" fill="none"
+                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                         stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z"/>
+                                        <path d="m9.4 12.2 1.9 1.9 3.6-3.7"/>
+                                    </svg>
+                                    <span class="text-sm leading-relaxed">
+                                        <span class="font-bold text-ink">Vet:</span>
+                                        <span class="text-ink-muted">{{ $entry['vet_action'] }}</span>
+                                    </span>
+                                </div>
+                            @endif
+                        </div>
+                    </details>
+                </li>
+            @endforeach
+        </ol>
     </div>
 </section>
 
@@ -305,6 +394,8 @@
             const breedInput  = document.getElementById('cat-breed');
             const nameInput   = document.getElementById('cat-name');
             const signsInput  = document.getElementById('signs-noticed');
+
+            const weekCards = document.querySelectorAll('[data-week-card]');
 
             const out = {
                 dueDate:   document.querySelector('[data-result-due-date]'),
@@ -415,11 +506,76 @@
                 errorBox.textContent = message;
                 errorBox.hidden = false;
                 results.hidden = true;
+
+                // Back to neutral: leaving last run's highlight up beside an
+                // error would be pointing at a week we no longer stand behind.
+                paintTimeline(null);
             };
 
             const clearError = () => {
                 errorBox.hidden = true;
                 errorBox.textContent = '';
+            };
+
+            // ══ TIMELINE ═══════════════════════════════════════════════════
+
+            /**
+             * Marks each week card as behind, current or ahead.
+             *
+             * The cards and their text are already in the page; this only
+             * changes how they are presented. Called with null to put them
+             * back to neutral, which is the state before anything is
+             * calculated.
+             */
+            const paintTimeline = (currentWeek) => {
+                weekCards.forEach((card) => {
+                    const week = Number(card.dataset.weekCard);
+                    const dot = card.querySelector('[data-week-dot]');
+                    const number = card.querySelector('[data-week-number]');
+                    const badge = card.querySelector('[data-week-badge]');
+                    const details = card.querySelector('[data-week-details]');
+
+                    // Reset everything this function is allowed to touch, so
+                    // recalculating never leaves marks from the last run.
+                    card.classList.remove('opacity-60');
+                    dot.className = dot.className.replace(/bg-\S+/, 'bg-line-strong');
+                    number.className = number.className
+                        .replace(/bg-\S+/, 'bg-primary-light')
+                        .replace(/text-primary\b|text-primary-dark|text-ink-inverse/, 'text-primary-dark');
+                    details.classList.remove('border-primary', 'ring-2', 'ring-primary/20');
+                    badge.hidden = true;
+                    badge.textContent = '';
+                    badge.className = 'rounded-full px-2.5 py-0.5 text-xs font-bold';
+
+                    if (currentWeek === null) return;
+
+                    if (week < currentWeek) {
+                        // Behind: faded, and closed if the script opened it.
+                        card.classList.add('opacity-60');
+                        badge.hidden = false;
+                        badge.textContent = 'Done';
+                        badge.className += ' bg-surface-soft text-ink-muted';
+                        details.open = false;
+                    } else if (week === currentWeek) {
+                        dot.className = dot.className.replace(/bg-\S+/, 'bg-primary');
+                        number.className = number.className
+                            .replace(/bg-\S+/, 'bg-primary')
+                            .replace(/text-primary-dark/, 'text-ink-inverse');
+                        details.classList.add('border-primary', 'ring-2', 'ring-primary/20');
+                        badge.hidden = false;
+                        badge.textContent = 'You are here';
+                        badge.className += ' bg-primary text-ink-inverse';
+
+                        // Open the week she is actually in — it is the one
+                        // thing the visitor came for.
+                        details.open = true;
+                    } else {
+                        badge.hidden = false;
+                        badge.textContent = 'Ahead';
+                        badge.className += ' bg-primary-light text-primary-dark';
+                        details.open = false;
+                    }
+                });
             };
 
             // ══ RENDER ═════════════════════════════════════════════════════
@@ -481,6 +637,8 @@
                 } else {
                     warningBox.hidden = true;
                 }
+
+                paintTimeline(week);
 
                 results.hidden = false;
                 results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });

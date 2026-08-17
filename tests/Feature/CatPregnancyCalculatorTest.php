@@ -99,8 +99,56 @@ class CatPregnancyCalculatorTest extends TestCase
         $response = $this->get(self::PATH);
 
         for ($week = 1; $week <= 9; $week++) {
-            $response->assertSee('data-week="'.$week.'"', false);
+            $response->assertSee('data-week-card="'.$week.'"', false);
         }
+    }
+
+    /**
+     * The week writing is the substantial content on this page and the reason
+     * it can rank for "cat pregnancy week by week". Held in a JavaScript
+     * object it would be content a crawler may never read, so it has to be in
+     * the markup — served, not injected.
+     */
+    public function test_every_week_renders_its_content_into_the_html(): void
+    {
+        $response = $this->get(self::PATH);
+
+        foreach (config('pregnancy-weeks') as $entry) {
+            $response->assertSee('Week '.$entry['week'].' — '.$entry['title'], false);
+            $response->assertSee($entry['what_happens'], false);
+            $response->assertSee($entry['visible_signs'], false);
+
+            foreach ($entry['care_tips'] as $tip) {
+                $response->assertSee($tip, false);
+            }
+
+            if ($entry['vet_action']) {
+                $response->assertSee($entry['vet_action'], false);
+            }
+        }
+    }
+
+    public function test_each_week_has_every_field_the_brief_asked_for(): void
+    {
+        $weeks = config('pregnancy-weeks');
+
+        $this->assertCount(9, $weeks);
+
+        foreach ($weeks as $entry) {
+            $this->assertArrayHasKey('title', $entry);
+            $this->assertArrayHasKey('what_happens', $entry);
+            $this->assertArrayHasKey('visible_signs', $entry);
+            $this->assertArrayHasKey('vet_action', $entry);
+            $this->assertCount(2, $entry['care_tips'], 'week '.$entry['week'].' should have two care tips');
+        }
+    }
+
+    /** The cards expand without JavaScript, so the content is never trapped. */
+    public function test_the_weeks_expand_without_javascript(): void
+    {
+        $html = $this->get(self::PATH)->getContent();
+
+        $this->assertSame(9, substr_count($html, '<details data-week-details'));
     }
 
     public function test_it_carries_the_veterinary_note(): void

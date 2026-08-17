@@ -151,6 +151,60 @@ class CatPregnancyCalculatorTest extends TestCase
         $this->assertSame(9, substr_count($html, '<details data-week-details'));
     }
 
+    /**
+     * The symptom mode is the part of this tool that does not exist
+     * elsewhere, so the questions and their day thresholds are pinned.
+     */
+    public function test_every_symptom_renders_with_its_day_threshold(): void
+    {
+        $html = $this->get(self::PATH)->getContent();
+
+        foreach (config('pregnancy-symptoms') as $symptom) {
+            $this->assertStringContainsString($symptom['question'], $html);
+            $this->assertStringContainsString('data-min-day="'.$symptom['min_day'].'"', $html);
+            $this->assertStringContainsString('id="symptom-'.$symptom['id'].'"', $html);
+        }
+    }
+
+    public function test_the_symptom_thresholds_match_the_brief(): void
+    {
+        $days = collect(config('pregnancy-symptoms'))->pluck('min_day', 'id')->all();
+
+        $this->assertSame([
+            'pinking' => 15,
+            'appetite' => 25,
+            'belly' => 30,
+            'movement' => 45,
+            'nesting' => 55,
+            'milk' => 56,
+            'restless' => 60,
+        ], $days);
+    }
+
+    /**
+     * Real checkboxes behind the card styling. A div dressed as a button
+     * would look identical and be unusable with a keyboard or a screen
+     * reader — the failure nobody sees in a screenshot.
+     */
+    public function test_the_symptom_cards_are_real_checkboxes(): void
+    {
+        $html = $this->get(self::PATH)->getContent();
+
+        // Seven symptom inputs, and each one an actual checkbox.
+        preg_match_all('/<input[^>]*data-symptom[^>]*>/', $html, $inputs);
+
+        $this->assertCount(7, $inputs[0]);
+
+        foreach ($inputs[0] as $input) {
+            $this->assertStringContainsString('type="checkbox"', $input);
+        }
+
+        foreach (config('pregnancy-symptoms') as $symptom) {
+            $this->assertStringContainsString('for="symptom-'.$symptom['id'].'"', $html,
+                'the card has no label bound to its checkbox');
+        }
+    }
+
     public function test_it_carries_the_veterinary_note(): void
     {
         $this->get(self::PATH)

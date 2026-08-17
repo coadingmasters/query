@@ -94,8 +94,9 @@
                 </div>
             </div>
 
-            {{-- Mating date --}}
-            <div class="mt-5">
+            {{-- Mating date. Hidden when the symptom mode is on, since the two
+                 are alternatives rather than both being filled in. --}}
+            <div class="mt-5" data-date-field>
                 <label for="mating-date" class="block text-sm font-semibold text-ink">Mating date</label>
                 <input id="mating-date" name="mating-date" type="date"
                        class="mt-2 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-sm transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
@@ -114,20 +115,64 @@
                     </span>
                 </label>
 
-                {{-- Secondary input, hidden until the toggle is checked --}}
+                {{-- ══ SYMPTOM MODE ═════════════════════════════════════════
+                     Shown when the mating date is unknown. Each card is a real
+                     checkbox with its label styled as a toggle — it keeps the
+                     keyboard behaviour and the screen-reader semantics that a
+                     div dressed up as a button would throw away.
+
+                     min_day rides on the markup as data-min-day, so the script
+                     and the page can never disagree about a symptom's timing.
+                     ═══════════════════════════════════════════════════════ --}}
                 <div id="unknown-date-panel" hidden class="mt-4 border-t border-line pt-4">
-                    <label for="signs-noticed" class="block text-sm font-semibold text-ink">
-                        When did you first notice signs?
-                    </label>
-                    <select id="signs-noticed" name="signs-noticed"
-                            class="mt-2 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-sm transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                        <option value="">Select a rough time</option>
-                        <option value="1">Within the last week</option>
-                        <option value="2">One to two weeks ago</option>
-                        <option value="3">Two to four weeks ago</option>
-                        <option value="4">Four to six weeks ago</option>
-                        <option value="5">More than six weeks ago</option>
-                    </select>
+                    <fieldset>
+                        <legend class="text-sm font-semibold text-ink">
+                            Tick everything you have noticed
+                        </legend>
+                        <p class="mt-1 text-sm text-ink-muted">
+                            The latest sign she is showing tells us roughly how far
+                            along she is. More ticks means a more confident estimate.
+                        </p>
+
+                        <div class="mt-4 grid gap-3">
+                            @foreach (config('pregnancy-symptoms') as $symptom)
+                                <label for="symptom-{{ $symptom['id'] }}"
+                                       class="group flex cursor-pointer items-start gap-3 rounded-xl border border-line bg-surface p-4 shadow-sm transition duration-150 hover:border-line-strong has-checked:border-primary has-checked:bg-primary-light has-checked:shadow-md">
+                                    <input id="symptom-{{ $symptom['id'] }}" type="checkbox"
+                                           data-symptom data-min-day="{{ $symptom['min_day'] }}"
+                                           value="{{ $symptom['id'] }}" class="peer sr-only">
+
+                                    {{-- Stands in for the hidden checkbox. The
+                                         real one still owns focus and state. --}}
+                                    <span aria-hidden="true"
+                                          class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md border-2 border-line-strong bg-surface transition peer-checked:border-primary peer-checked:bg-primary peer-focus-visible:ring-2 peer-focus-visible:ring-primary/30 peer-focus-visible:ring-offset-2">
+                                        <svg class="size-3 text-ink-inverse opacity-0 transition-opacity group-has-checked:opacity-100"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"
+                                             stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M20 6 9 17l-5-5"/>
+                                        </svg>
+                                    </span>
+
+                                    <span class="min-w-0">
+                                        <span class="block text-sm font-semibold text-ink">{{ $symptom['question'] }}</span>
+                                        <span class="mt-0.5 block text-sm text-ink-muted">{{ $symptom['detail'] }}</span>
+                                    </span>
+                                </label>
+                            @endforeach
+                        </div>
+
+                        {{-- Confidence, filled in by the script as boxes are ticked --}}
+                        <div data-confidence hidden class="mt-4 rounded-xl border border-line bg-surface p-4">
+                            <div class="flex items-center justify-between gap-4">
+                                <span class="text-sm font-semibold text-ink">Confidence</span>
+                                <span data-confidence-label class="text-sm font-bold"></span>
+                            </div>
+                            <div class="mt-2 h-2 overflow-hidden rounded-full bg-line">
+                                <div data-confidence-bar class="h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                            </div>
+                            <p data-confidence-note class="mt-2 text-xs text-ink-muted"></p>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
 
@@ -166,7 +211,7 @@
                 {{-- An overdue or past-term pregnancy says so here, above the
                      figures, because it is the only thing that matters then. --}}
                 <p data-result-warning hidden role="alert"
-                   class="mx-6 mt-6 flex items-start gap-3 rounded-xl border border-danger/30 bg-danger-light px-4 py-3 text-sm font-medium text-danger sm:mx-8"></p>
+                   class="mx-6 mt-6 flex items-start gap-3 rounded-xl border px-4 py-3 text-sm font-medium sm:mx-8"></p>
 
                 {{-- Week, days remaining, trimester, pinking up --}}
                 <div class="grid gap-5 p-6 sm:grid-cols-2 sm:p-8">
@@ -375,10 +420,18 @@
             const TOTAL_WEEKS      = 9;
             const OVERDUE_DAY      = 72;    // past this, it is a vet call
 
-            // Roughly how long ago mating was, if the owner only knows when
-            // signs appeared. Signs show around the pinking-up mark, so the
-            // midpoint of each range is pushed back by that much.
-            const DAYS_SINCE_SIGNS = { '1': 3, '2': 10, '3': 21, '4': 35, '5': 49 };
+            // How far the symptom estimate can be out, either way. Stated on
+            // screen rather than buried, because an estimate presented as a
+            // date is an estimate someone will plan around.
+            const ESTIMATE_ACCURACY_DAYS = 5;
+
+            // More corroborating signs means more confidence in the floor the
+            // estimate rests on — never certainty.
+            const CONFIDENCE_LEVELS = [
+                { min: 4, label: 'Good',     width: 100, tone: 'accent',  note: 'Several signs agree, so the estimate rests on more than one observation.' },
+                { min: 2, label: 'Moderate', width: 66,  tone: 'warning', note: 'A couple of signs to go on. Ticking more will sharpen the estimate.' },
+                { min: 1, label: 'Low',      width: 33,  tone: 'danger',  note: 'One sign only. This is a rough floor, not a due date to plan around.' },
+            ];
 
             const MS_PER_DAY = 86400000;
 
@@ -393,7 +446,15 @@
             const matingInput = document.getElementById('mating-date');
             const breedInput  = document.getElementById('cat-breed');
             const nameInput   = document.getElementById('cat-name');
-            const signsInput  = document.getElementById('signs-noticed');
+            const symptomInputs = document.querySelectorAll('[data-symptom]');
+            const dateField     = document.querySelector('[data-date-field]');
+            const confidence    = {
+                box:   document.querySelector('[data-confidence]'),
+                label: document.querySelector('[data-confidence-label]'),
+                bar:   document.querySelector('[data-confidence-bar]'),
+                note:  document.querySelector('[data-confidence-note]'),
+            };
+            const dueBanner = document.querySelector('[data-result-due-date]').closest('div');
 
             const weekCards = document.querySelectorAll('[data-week-card]');
 
@@ -461,28 +522,42 @@
                 return 'Third';
             };
 
+            /** Every ticked symptom, as its earliest possible day. */
+            const tickedDays = () =>
+                [...symptomInputs].filter((box) => box.checked)
+                                  .map((box) => Number(box.dataset.minDay));
+
             /**
              * Work out the mating date from the form.
              *
-             * The unknown-date path was not specified, so it is treated as an
-             * estimate rather than dropped: the ranges ask when signs were
-             * first noticed, and signs appear around the pinking-up mark, so
-             * mating is estimated as that many days ago plus 21.
+             * Two modes. With a mating date it is arithmetic. Without one, the
+             * latest sign she is showing sets a floor for how far along she is
+             * — a cat with a day-55 sign is at least day 55 — and mating is
+             * placed that many days back from today.
              *
-             * @returns {{date: Date, approximate: boolean}|{error: string}}
+             * The floor is the honest reading: she may be further along than
+             * the signs prove, never less far.
+             *
+             * @returns an object with either date and approximate, or error
              */
             const resolveMatingDate = () => {
                 const today = startOfToday();
 
                 if (toggle && toggle.checked) {
-                    const choice = signsInput ? signsInput.value : '';
+                    const days = tickedDays();
 
-                    if (!choice) {
-                        return { error: 'Choose roughly when you first noticed signs, or untick the box and give the mating date.' };
+                    if (days.length === 0) {
+                        return { error: 'Tick at least one sign you have noticed, or untick the box and give the mating date.' };
                     }
 
-                    const daysAgo = DAYS_SINCE_SIGNS[choice] + PINKING_UP_DAY;
-                    return { date: addDays(today, -daysAgo), approximate: true };
+                    const estimatedDay = Math.max(...days);
+
+                    return {
+                        date: addDays(today, -estimatedDay),
+                        approximate: true,
+                        estimatedDay,
+                        signCount: days.length,
+                    };
                 }
 
                 if (!matingInput.value) {
@@ -500,6 +575,33 @@
                 }
 
                 return { date: mating, approximate: false };
+            };
+
+            // ══ CONFIDENCE ═════════════════════════════════════════════════
+            const TONE_CLASSES = {
+                accent:  { text: 'text-accent',  bar: 'bg-accent' },
+                warning: { text: 'text-warning', bar: 'bg-warning' },
+                danger:  { text: 'text-danger',  bar: 'bg-danger' },
+            };
+
+            /** Redraws the confidence meter from however many boxes are ticked. */
+            const paintConfidence = () => {
+                const count = tickedDays().length;
+
+                if (count === 0) {
+                    confidence.box.hidden = true;
+                    return;
+                }
+
+                const level = CONFIDENCE_LEVELS.find((l) => count >= l.min);
+                const tone = TONE_CLASSES[level.tone];
+
+                confidence.box.hidden = false;
+                confidence.label.textContent = `${level.label} — ${count} ${count === 1 ? 'sign' : 'signs'}`;
+                confidence.label.className = `text-sm font-bold ${tone.text}`;
+                confidence.bar.className = `h-full rounded-full transition-all duration-300 ${tone.bar}`;
+                confidence.bar.style.width = `${level.width}%`;
+                confidence.note.textContent = level.note;
             };
 
             const showError = (message) => {
@@ -603,9 +705,14 @@
                 const week          = weekFor(daysElapsed);
 
                 // --- due date and window ---
+                // Amber rather than the usual purple when the date came from
+                // symptoms, so an estimate never looks like a measurement.
+                dueBanner.classList.toggle('bg-primary', !resolved.approximate);
+                dueBanner.classList.toggle('bg-warning', resolved.approximate);
+
                 out.dueDate.textContent = formatDate(dueDate);
                 out.window.textContent  = resolved.approximate
-                    ? `Roughly ${formatShort(windowStart)} – ${formatDate(windowEnd)}`
+                    ? `Estimated window: ${formatShort(windowStart)} – ${formatDate(windowEnd)}`
                     : `Likely birth window: ${formatShort(windowStart)} – ${formatDate(windowEnd)}`;
 
                 // --- stage ---
@@ -628,11 +735,18 @@
                 // --- warnings ---
                 // Past day 72 a cat is beyond any normal gestation, and that
                 // is a call to the vet rather than a number on a screen.
+                // Red is kept for the one case that needs acting on. An
+                // estimate is a caveat, not a problem, and colouring it like an
+                // error teaches people to ignore the colour that matters.
+                const WARNING_BASE = 'mx-6 mt-6 flex items-start gap-3 rounded-xl border px-4 py-3 text-sm font-medium sm:mx-8';
+
                 if (daysElapsed > OVERDUE_DAY) {
+                    warningBox.className = `${WARNING_BASE} border-danger/30 bg-danger-light text-danger`;
                     warningBox.textContent = `It has been ${daysElapsed} days since mating, which is past the normal range for a cat. Please contact your vet.`;
                     warningBox.hidden = false;
                 } else if (resolved.approximate) {
-                    warningBox.textContent = 'This is estimated from when you noticed signs, so treat the dates as approximate.';
+                    warningBox.className = `${WARNING_BASE} border-warning/30 bg-warning-light text-warning`;
+                    warningBox.textContent = `This is a symptom-based estimate, from ${resolved.signCount} ${resolved.signCount === 1 ? 'sign' : 'signs'} putting her at around day ${resolved.estimatedDay}. Accuracy ±${ESTIMATE_ACCURACY_DAYS} days. Consult your vet for confirmation.`;
                     warningBox.hidden = false;
                 } else {
                     warningBox.hidden = true;
@@ -648,9 +762,18 @@
             if (toggle && panel) {
                 toggle.addEventListener('change', () => {
                     panel.hidden = !toggle.checked;
+                    // The two inputs are alternatives, so only one is offered
+                    // at a time rather than leaving a dead field on screen.
+                    dateField.hidden = toggle.checked;
                     clearError();
+                    paintConfidence();
                 });
             }
+
+            symptomInputs.forEach((box) => box.addEventListener('change', () => {
+                clearError();
+                paintConfidence();
+            }));
 
             form.addEventListener('submit', calculate);
         })();

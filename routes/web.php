@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManifestController;
@@ -20,6 +21,7 @@ Route::post('/contact', [ContactController::class, 'store'])
     ->name('contact.store');
 
 Route::get('/terms', TermsController::class)->name('terms');
+Route::get('/privacy', PrivacyController::class)->name('privacy');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/site.webmanifest', ManifestController::class)->name('manifest');

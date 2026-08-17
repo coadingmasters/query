@@ -24,6 +24,7 @@ class SitemapController extends Controller
             ['/about', 'views/about.blade.php', '0.7'],
             ['/contact', 'views/contact.blade.php', '0.5'],
             ['/terms', 'views/terms.blade.php', '0.3'],
+            ['/privacy', 'views/privacy.blade.php', '0.3'],
         ];
 
         $urls = collect($pages)->map(function (array $page) use ($base): array {

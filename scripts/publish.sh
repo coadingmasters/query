@@ -61,6 +61,14 @@ say "runtime directories"
 mkdir -p storage/framework/{cache/data,sessions,views} storage/logs storage/app/public
 chmod -R 775 storage bootstrap/cache
 
+# Uploaded images are served through this symlink. rsync excludes it (so a
+# deploy never deletes uploads), which also means it is never created by a
+# deploy — without this, every uploaded image 404s.
+if [ ! -L public/storage ]; then
+    say "linking public/storage"
+    $PHP artisan storage:link
+fi
+
 if [ "$MIGRATE" = "1" ]; then
     say "migrations"
     $PHP artisan migrate --force

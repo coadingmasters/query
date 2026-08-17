@@ -378,11 +378,6 @@
 </section>
 
 {{-- ══ 7. Blog ═══════════════════════════════════════════════════════════ --}}
-@php
-    $posts = config('catalog.posts');
-    $featured = $posts[0];
-    $rest = array_slice($posts, 1);
-@endphp
 <section id="blog" class="section scroll-mt-20 bg-surface-soft">
     <div class="container-page">
         <div class="text-center">
@@ -393,51 +388,37 @@
             </p>
         </div>
 
-        <div class="mt-12 grid gap-6 lg:grid-cols-2">
-            <article class="card" data-filter data-terms="{{ Str::lower($featured['title'].' '.$featured['excerpt']) }}">
-                <div class="card-media lg:min-h-0 lg:flex-1">
-                    <x-img :name="$featured['image']" :alt="$featured['alt']"
-                           sizes="(max-width: 1023px) 92vw, 46vw"
-                           class="lg:absolute lg:inset-0"/>
-                </div>
-
-                {{-- card-body carries flex-1 by default. On the featured card
-                     that made the body and the image split the spare height
-                     between them, which is where the gap under the text came
-                     from. The body sizes to its content; the image takes the
-                     rest. --}}
-                <div class="card-body lg:flex-none">
-                    <div class="flex items-center gap-3 text-xs font-semibold">
-                        <span class="rounded-full bg-primary-light px-2.5 py-1 text-primary-dark">{{ $featured['category'] }}</span>
-                        <span class="text-ink-muted">{{ $featured['minutes'] }} min read</span>
+        {{-- Six equal cards, two rows of three. The tall featured card this
+             replaces had to stretch one photo down a whole column, which
+             cropped most of it away and left the two columns wildly different
+             heights. Here every image sits at its own 3:2 ratio, at the same
+             size, and the rows line up. --}}
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            @foreach (config('catalog.posts') as $post)
+                <article class="card" data-filter
+                         data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}">
+                    <div class="card-media">
+                        <x-img :name="$post['image']" :alt="$post['alt']"
+                               sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 30vw"/>
                     </div>
-                    <h3 class="mt-3 font-heading text-2xl font-bold text-ink">{{ $featured['title'] }}</h3>
-                    <p class="card-text">{{ $featured['excerpt'] }}</p>
-                    <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                        Read the guide
-                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                             stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-                    </span>
-                </div>
-            </article>
 
-            <div class="grid gap-4 sm:grid-cols-2 lg:content-start">
-                @foreach ($rest as $post)
-                    <article class="card" data-filter data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}">
-                        <div class="card-media">
-                            <x-img :name="$post['image']" :alt="$post['alt']"
-                                   sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 23vw"/>
+                    <div class="card-body">
+                        <div class="flex items-center gap-3 text-xs font-semibold">
+                            <span class="rounded-full bg-primary-light px-2.5 py-1 text-primary-dark">{{ $post['category'] }}</span>
+                            <span class="text-ink-muted">{{ $post['minutes'] }} min read</span>
                         </div>
-                        <div class="p-4">
-                            <div class="flex items-center gap-2 text-xs font-semibold">
-                                <span class="rounded-full bg-primary-light px-2 py-0.5 text-primary-dark">{{ $post['category'] }}</span>
-                                <span class="text-ink-muted">{{ $post['minutes'] }} min</span>
-                            </div>
-                            <h3 class="mt-2 font-heading text-base leading-snug font-bold text-ink">{{ $post['title'] }}</h3>
-                        </div>
-                    </article>
-                @endforeach
-            </div>
+
+                        <h3 class="mt-3 font-heading text-lg leading-snug font-bold text-ink">{{ $post['title'] }}</h3>
+                        <p class="card-text flex-1">{{ $post['excerpt'] }}</p>
+
+                        <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                            Read the guide
+                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                 stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </span>
+                    </div>
+                </article>
+            @endforeach
         </div>
     </div>
 </section>

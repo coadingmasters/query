@@ -155,3 +155,71 @@
         contain: layout size;
     }
 }
+
+/* ==========================================================================
+   Launch screen
+   --------------------------------------------------------------------------
+   Everything below is scoped to the pre-launch holding page. The entrance
+   animations all finish on `forwards`, so the reduced-motion override in the
+   base layer leaves the page fully readable rather than stuck at opacity 0.
+   ========================================================================== */
+@keyframes drift {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    33%      { transform: translate3d(6%, -8%, 0) scale(1.12); }
+    66%      { transform: translate3d(-5%, 6%, 0) scale(0.94); }
+}
+
+@keyframes rise {
+    from { opacity: 0; transform: translate3d(0, 14px, 0); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes beacon {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%      { opacity: 0.45; transform: scale(0.82); }
+}
+
+@keyframes sweep {
+    from { transform: translateX(-100%); }
+    to   { transform: translateX(100%); }
+}
+
+@layer components {
+    /* Blurred colour fields that give the page depth without an image
+       request. `will-change` keeps the drift on the compositor. */
+    .aurora {
+        position: absolute;
+        border-radius: var(--radius-full);
+        filter: blur(80px);
+        opacity: 0.5;
+        will-change: transform;
+        animation: drift 22s ease-in-out infinite;
+    }
+
+    /* Staggered entrance. The delay is set per element with --rise-delay. */
+    .rise {
+        opacity: 0;
+        animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        animation-delay: var(--rise-delay, 0ms);
+    }
+
+    .beacon {
+        animation: beacon 2s ease-in-out infinite;
+    }
+
+    /* Indeterminate progress bar — it signals "work in progress" without
+       claiming a percentage we cannot honour. */
+    .sweep::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--color-primary) 35%,
+            var(--color-accent-vivid) 65%,
+            transparent
+        );
+        animation: sweep 2.4s ease-in-out infinite;
+    }
+}

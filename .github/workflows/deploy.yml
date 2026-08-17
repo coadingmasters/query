@@ -1,0 +1,61 @@
+name: Deploy
+
+# Every push to main ships. The build happens here rather than on the server:
+# the host's process limits stop Vite's bundler from starting, so the compiled
+# assets are produced in CI and committed back before the server pulls.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build assets
+        run: npm run build
+
+      # The server cannot build, so it needs the compiled output in git. If
+      # the build produced something different from what was committed, push
+      # the difference back before deploying.
+      - name: Commit refreshed build output
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- public/build; then
+            git add public/build
+            git commit -m "Rebuild assets [skip ci]"
+            git push
+          else
+            echo "build output already up to date"
+          fi
+
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: bash ~/deploy-purrquery.sh
+
+      - name: Verify the site is up
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' --retry 5 --retry-delay 5 https://purrquery.com/)
+          echo "https://purrquery.com/ -> $code"
+          [ "$code" = "200" ]

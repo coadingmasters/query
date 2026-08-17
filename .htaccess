@@ -1,0 +1,46 @@
+# This file sits at the account's document root, and the whole Laravel app
+# lives inside it. That means this .htaccess is what keeps the site working
+# AND what keeps the app internals unreachable. Do not delete it.
+
+# Hostinger's account default is PHP 8.3. Laravel 13 runs on 8.3, but the
+# handler is pinned so a change to the account default cannot move it to an
+# older PHP without warning.
+AddHandler application/x-httpd-alt-php84 .php
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # --- Canonical origin -------------------------------------------------
+    # One origin only (https://purrquery.com) so search engines never see the
+    # same page on four different URLs. The X-Forwarded-Proto check matters:
+    # requests arrive through Hostinger's CDN, which terminates TLS, so
+    # testing %{HTTPS} alone would loop forever on those requests.
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    RewriteRule ^ https://purrquery.com%{REQUEST_URI} [R=301,L]
+
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://purrquery.com%{REQUEST_URI} [R=301,L]
+
+    # --- Guard rails ------------------------------------------------------
+    # Loose files that sit next to the app root and must never be served.
+    RewriteRule ^(\.env|\.env\..*|artisan|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|vite\.config\.js|deploy\.sh|README\.md)$ - [F,L]
+
+    # Everything else is handled by Laravel's front controller in public/.
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Belt-and-braces: never serve a dotfile, whatever the rewrite does.
+<FilesMatch "^\.">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
+</FilesMatch>

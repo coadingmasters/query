@@ -7,11 +7,11 @@
     <link rel="preload" as="image" fetchpriority="high"
           href="{{ \App\Support\Images::get('purrquery-hero-cat-owner-smiling')['src'] }}"
           imagesrcset="{{ \App\Support\Images::get('purrquery-hero-cat-owner-smiling')['srcset'] }}"
-          imagesizes="(max-width: 1023px) 92vw, 700px">
+          imagesizes="(max-width: 1023px) 92vw, 780px">
 @endpush
 
 {{-- ══ 1. Hero ═══════════════════════════════════════════════════════════ --}}
-<section class="relative overflow-hidden bg-surface-soft pb-24 lg:pb-32">
+<section class="relative overflow-hidden bg-surface-soft pb-16 lg:pb-20">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary opacity-10 blur-3xl"></div>
         <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-10 blur-3xl"></div>
@@ -28,25 +28,25 @@
         @endforeach
     </div>
 
-    <div class="container-page relative grid items-center gap-12 py-14 lg:grid-cols-[1.08fr_1fr] lg:gap-12 lg:py-20">
+    <div class="container-page relative grid items-center gap-10 py-10 lg:grid-cols-2 lg:gap-10 xl:grid-cols-[1fr_1.14fr] lg:py-14">
         <div>
             <p class="eyebrow">
                 <span class="size-1.5 rounded-full bg-accent-vivid"></span>
                 22 free tools and guides
             </p>
 
-            <h1 class="mt-5 font-heading text-4xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-5xl lg:text-6xl">
+            <h1 class="mt-5 font-heading text-4xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-5xl">
                 Everything You Need for a
                 <span class="text-primary">Healthy,</span>
                 <span class="text-accent">Happy</span> Cat
             </h1>
 
-            <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
+            <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
                 Free smart tools and clear, sourced answers — all in one place,
                 with no account and nothing to install.
             </p>
 
-            <form class="mt-7 max-w-lg" role="search" onsubmit="return false">
+            <form class="mt-6 max-w-lg" role="search" onsubmit="return false">
                 <label for="site-search" class="sr-only">Search cat care tools and guides</label>
                 <div class="relative">
                     <svg class="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-ink-muted"
@@ -67,7 +67,7 @@
                 <p data-search-status class="sr-only" role="status" aria-live="polite"></p>
             </form>
 
-            <div class="mt-6 flex flex-wrap gap-3">
+            <div class="mt-5 flex flex-wrap gap-3">
                 <a href="#tools" class="btn-primary rounded-full px-7">
                     Explore Free Tools
                     <svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -86,7 +86,7 @@
 
             {{-- Each of these is true of the site as it stands. Counts and
                  endorsements that cannot be backed are deliberately absent. --}}
-            <ul class="mt-9 grid max-w-lg grid-cols-2 gap-x-6 gap-y-5">
+            <ul class="mt-7 grid grid-cols-2 gap-x-4 gap-y-4 xl:grid-cols-4 xl:gap-x-2">
                 @foreach ([
                     ['100% Free', 'Always will be', [
                         'M12.6 2.9 20.8 11a1.5 1.5 0 0 1 0 2.1l-7.7 7.7a1.5 1.5 0 0 1-2.1 0L2.9 12.6a1.5 1.5 0 0 1-.4-1.1V4.3a1.7 1.7 0 0 1 1.7-1.7h7.2c.4 0 .8.1 1.1.3Z',
@@ -106,18 +106,18 @@
                         'M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z',
                     ]],
                 ] as [$title, $sub, $paths])
-                    <li class="flex items-start gap-3">
-                        <span class="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary-light text-primary">
-                            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    <li class="flex items-start gap-2">
+                        <span class="mt-px flex size-6 shrink-0 items-center justify-center rounded-md bg-primary-light text-primary">
+                            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 @foreach ($paths as $d)
                                     <path d="{{ $d }}"/>
                                 @endforeach
                             </svg>
                         </span>
-                        <span class="text-sm leading-tight">
-                            <span class="block font-bold text-ink">{{ $title }}</span>
-                            <span class="mt-1 block text-ink-muted">{{ $sub }}</span>
+                        <span class="min-w-0 leading-tight">
+                            <span class="block text-sm font-bold text-ink">{{ $title }}</span>
+                            <span class="mt-0.5 block text-[11px] whitespace-nowrap text-ink-muted">{{ $sub }}</span>
                         </span>
                     </li>
                 @endforeach
@@ -130,7 +130,7 @@
             <div class="relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg">
                 <x-img name="purrquery-hero-cat-owner-smiling"
                        alt="Cat owner holding her fluffy cat — PurrQuery cat care tools and guides"
-                       sizes="(max-width: 1023px) 92vw, 700px"
+                       sizes="(max-width: 1023px) 92vw, 780px"
                        :priority="true"/>
             </div>
 

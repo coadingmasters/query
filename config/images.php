@@ -20,7 +20,7 @@ return [
      | squashing the picture.
      */
     'presets' => [
-        'hero' => [700, 560],
+        'hero' => [780, 624],
         'tool' => [400, 250],
         'food' => [300, 200],
         'blog' => [600, 400],

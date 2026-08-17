@@ -74,7 +74,7 @@
 
         {{-- The rotator is decorative motion, so it is hidden from screen
              readers and the full list is exposed as one static sentence. --}}
-        <p class="rise mt-5 text-xl text-ink-soft sm:text-2xl" style="--rise-delay: 180ms">
+        <p class="rise mt-5 text-xl text-ink-muted sm:text-2xl" style="--rise-delay: 180ms">
             <span class="sr-only">Practical {{ implode(', ', $rotates) }} — coming soon.</span>
             <span aria-hidden="true">
                 Practical
@@ -90,7 +90,7 @@
         <div class="rise sweep relative mt-10 h-1 w-56 overflow-hidden rounded-full bg-line"
              style="--rise-delay: 300ms" role="presentation"></div>
 
-        <p class="rise mt-10 text-sm text-ink-soft" style="--rise-delay: 360ms">
+        <p class="rise mt-10 text-sm text-ink-muted" style="--rise-delay: 360ms">
             Questions or partnerships?
             <a href="mailto:{{ $email }}"
                class="font-medium text-primary underline decoration-line-strong underline-offset-4 transition-colors hover:text-primary-hover">
@@ -99,7 +99,7 @@
         </p>
     </main>
 
-    <footer class="relative z-10 pb-8 text-center text-sm text-ink-soft">
+    <footer class="relative z-10 pb-8 text-center text-sm text-ink-muted">
         &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
     </footer>
 

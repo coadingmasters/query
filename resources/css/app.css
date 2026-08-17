@@ -1,7 +1,13 @@
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
+
+/* storage/framework/views is deliberately NOT scanned. It holds compiled
+   Blade output, so whatever happens to be cached there leaks into the
+   bundle: templates deleted months ago still contributed ~26 KB of dead
+   utilities. Scanning it also makes the build non-deterministic, because
+   CI starts with an empty cache and a developer's machine does not.
+   Our own views under resources/ are scanned automatically. */
 
 /* ==========================================================================
    Design tokens
@@ -19,8 +25,8 @@
     --color-primary-light:   #EEEDFE;  /* tinted surface */
 
     /* ── Accent ──────────────────────────────────────────────────────────── */
-    --color-accent:          #198563;  /* 4.59:1 — safe for text and buttons */
-    --color-accent-vivid:    #1D9E75;  /* 3.39:1 — large text / icons only */
+    --color-accent:          #167758;  /* 4.77:1 worst case — text and buttons */
+    --color-accent-vivid:    #1D9E75;  /* brand green, 2.93:1 — fills/icons only */
     --color-accent-dark:     #0F6E56;  /* 6.20:1 */
     --color-accent-light:    #E1F5EE;  /* tinted surface */
 
@@ -30,9 +36,8 @@
     --color-surface-section: #F4F3FE;
 
     /* ── Text ────────────────────────────────────────────────────────────── */
-    --color-ink:             #1A1A2E;  /* 17.06:1 — body copy */
-    --color-ink-soft:        #636B77;  /* 4.90:1 on the darkest surface */
-    --color-ink-muted:       #6D7687;  /* 4.57:1 — still AA, unlike a grey tint */
+    --color-ink:             #1A1A2E;  /* 14.77:1 worst case — body copy */
+    --color-ink-muted:       #636976;  /* 4.77:1 worst case — secondary text */
     --color-ink-inverse:     #FFFFFF;
 
     /* ── Lines ───────────────────────────────────────────────────────────── */
@@ -40,15 +45,26 @@
     --color-line-strong:     #C4C0F0;
 
     /* ── Status ──────────────────────────────────────────────────────────── */
-    --color-success:         #198563;  /* 4.59:1 */
-    --color-warning:         #A6680C;  /* 4.56:1 */
-    --color-danger:          #DE3231;  /* 4.56:1 */
-    --color-info:            #2377CC;  /* 4.58:1 */
+    /* Each one clears 4.5:1 against every surface in this file, not just
+       white — on the tinted surfaces the previous values dropped to ~3.95. */
+    --color-success:         #167759;  /* 4.76:1 worst case */
+    --color-warning:         #935C0B;  /* 4.81:1 worst case */
+    --color-danger:          #CC2221;  /* 4.76:1 worst case */
+    --color-info:            #1F6AB6;  /* 4.79:1 worst case */
 
-    --color-success-vivid:   #1D9E75;  /* decorative fills / icons */
-    --color-warning-vivid:   #EF9F27;
-    --color-danger-vivid:    #E24B4A;
-    --color-info-vivid:      #378ADD;
+    /* Fills. These are placed *behind* content, so what matters is
+       that the standard ink label stays readable on top of them — checked in
+       PaletteContrastTest. The old danger red managed only 4.34:1 with ink
+       and 3.93:1 with white, so it could not be labelled either way. */
+    --color-success-vivid:   #1D9E75;  /* ink label: 5.04:1 */
+    --color-warning-vivid:   #EF9F27;  /* ink label: 7.85:1 */
+    --color-danger-vivid:    #E45554;  /* ink label: 4.65:1 */
+    --color-info-vivid:      #378ADD;  /* ink label: 4.75:1 */
+
+    /* A bare indicator that carries meaning on its own — a status dot with no
+       text beside it — must use the solid tokens above, not these. Amber in
+       particular is only 2.17:1 against white, which is invisible as a shape
+       even though it carries an ink label perfectly well. */
 
     /* ── Typography ──────────────────────────────────────────────────────── */
     --font-sans:    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -74,7 +90,7 @@
     --color-bg-soft:        var(--color-surface-soft);
     --color-bg-section:     var(--color-surface-section);
     --color-text-main:      var(--color-ink);
-    --color-text-secondary: var(--color-ink-soft);
+    --color-text-secondary: var(--color-ink-muted);
     --color-text-muted:     var(--color-ink-muted);
     --color-text-white:     var(--color-ink-inverse);
     --color-border:         var(--color-line);

@@ -235,6 +235,85 @@ class CatPregnancyCalculatorTest extends TestCase
         $this->assertStringContainsString('Coming soon', $html);
     }
 
+    public function test_the_faq_renders_every_question_and_answer(): void
+    {
+        $response = $this->get(self::PATH);
+
+        foreach (config('pregnancy-faq') as $item) {
+            $response->assertSee($item['q'], false);
+            $response->assertSee($item['a'], false);
+        }
+    }
+
+    /**
+     * FAQ markup has to describe content the visitor can reach, so this
+     * compares the structured data against the rendered text rather than
+     * assuming the two agree.
+     */
+    public function test_the_faq_markup_matches_the_rendered_page(): void
+    {
+        $html = $this->get(self::PATH)->getContent();
+
+        preg_match('/<script type="application\/ld\+json">\s*(.*?)\s*<\/script>/s', $html, $m);
+        $graph = json_decode($m[1], true);
+
+        $types = array_column($graph['@graph'], '@type');
+        $faq = $graph['@graph'][array_search('FAQPage', $types, true)];
+        $text = html_entity_decode(strip_tags($html));
+
+        $this->assertCount(9, $faq['mainEntity']);
+
+        foreach ($faq['mainEntity'] as $entry) {
+            $this->assertStringContainsString($entry['name'], $text);
+            $this->assertStringContainsString($entry['acceptedAnswer']['text'], $text);
+        }
+    }
+
+    public function test_it_declares_itself_a_veterinary_web_application(): void
+    {
+        $this->get(self::PATH)
+            ->assertSee('"@type":"WebApplication"', false)
+            ->assertSee('"@type":"MedicalWebPage"', false)
+            ->assertSee('"@type":"MedicalAudience"', false)
+            ->assertSee('schema.org/Veterinary', false)
+            ->assertSee('"disclaimer"', false);
+    }
+
+    /** Free is the main claim, so it is stated where a machine can read it. */
+    public function test_the_application_schema_states_it_is_free(): void
+    {
+        $html = $this->get(self::PATH)->getContent();
+
+        preg_match('/<script type="application\/ld\+json">\s*(.*?)\s*<\/script>/s', $html, $m);
+        $graph = json_decode($m[1], true);
+
+        $types = array_column($graph['@graph'], '@type');
+        $app = $graph['@graph'][array_search('WebApplication', $types, true)];
+
+        $this->assertSame('0', $app['offers']['price']);
+        $this->assertNotEmpty($app['featureList']);
+    }
+
+    public function test_the_description_fits_a_search_result(): void
+    {
+        $html = $this->get(self::PATH)->getContent();
+
+        preg_match('/<meta name="description" content="(.*?)">/s', $html, $m);
+
+        $this->assertLessThanOrEqual(160, mb_strlen(html_entity_decode($m[1])));
+    }
+
+    /**
+     * The comment that explains the unparsed block must not name the
+     * directive: Blade pulls those blocks out before stripping comments, so
+     * naming it opens a block early and the comment leaks onto the page —
+     * which is exactly what happened once.
+     */
+    public function test_no_blade_comment_leaks_into_the_output(): void
+    {
+        $this->get(self::PATH)->assertDontSee('{{--', false);
+    }
+
     public function test_the_sitemap_lists_the_tool(): void
     {
         $this->get('/sitemap.xml')

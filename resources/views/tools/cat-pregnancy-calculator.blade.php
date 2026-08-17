@@ -181,10 +181,20 @@
             <p data-error role="alert" hidden
                class="mt-5 rounded-xl border border-danger/30 bg-danger-light px-4 py-3 text-sm font-medium text-danger"></p>
 
-            <button type="submit" data-calculate class="btn-primary mt-6 w-full rounded-full sm:w-auto sm:px-8">
-                Calculate due date
-                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                     stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+            <button type="submit" data-calculate
+                    class="btn-primary mt-6 w-full rounded-full disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-8">
+                <span data-calculate-label>Calculate due date</span>
+
+                <svg data-calculate-arrow class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+
+                {{-- Shown while the result is being prepared. aria-hidden
+                     because the button's own label already announces it. --}}
+                <svg data-calculate-spinner hidden class="size-4 animate-spin" viewBox="0 0 24 24"
+                     fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" opacity="0.25"/>
+                    <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                </svg>
             </button>
         </form>
 
@@ -206,6 +216,19 @@
                     <p data-result-window class="mt-3 text-base text-ink-inverse/85">
                         Likely birth window: 9 – 15 October 2026
                     </p>
+
+                    {{-- Copying a date is the thing people do next: into a
+                         calendar, or a message to whoever else is watching. --}}
+                    <button type="button" data-copy
+                            class="mt-5 inline-flex items-center gap-2 rounded-full border border-surface/40 px-4 py-2 text-sm font-semibold text-ink-inverse transition hover:bg-surface/10 focus-visible:ring-2 focus-visible:ring-surface/60 focus-visible:outline-none">
+                        <svg data-copy-icon class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="9" y="9" width="12" height="12" rx="2"/>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                        </svg>
+                        <span data-copy-label>Copy the dates</span>
+                    </button>
+                    <span data-copy-status role="status" aria-live="polite" class="sr-only"></span>
                 </div>
 
                 {{-- An overdue or past-term pregnancy says so here, above the
@@ -373,7 +396,43 @@
     </div>
 </section>
 
-{{-- ══ 5. FOOTER NOTE ════════════════════════════════════════════════════ --}}
+{{-- ══ 5. FAQ ══════════════════════════════════════════════════════════
+     Rendered into the markup, which is what lets the FAQPage data on this
+     page describe content a visitor can actually reach. details/summary, so
+     it opens with a keyboard and works with scripting off.
+     ═══════════════════════════════════════════════════════════════════════ --}}
+<section id="faq" class="section-tight scroll-mt-24 bg-surface">
+    <div class="container-page max-w-3xl">
+        <div class="text-center">
+            <p class="eyebrow">Common questions</p>
+            <h2 class="section-title">Cat pregnancy, answered</h2>
+            <p class="section-intro">
+                The questions owners ask most once the calculator has given them
+                a date.
+            </p>
+        </div>
+
+        <div class="mt-10 space-y-3">
+            @foreach (config('pregnancy-faq') as $item)
+                <details id="{{ $item['id'] }}"
+                         class="reveal group scroll-mt-24 rounded-xl border border-line bg-surface px-5 shadow-sm transition hover:border-line-strong open:shadow-md">
+                    <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-heading font-bold text-ink marker:content-['']">
+                        {{ $item['q'] }}
+                        <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary transition-transform duration-200 group-open:rotate-45">
+                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                        </span>
+                    </summary>
+                    <p class="pb-5 text-base leading-relaxed text-ink-muted">{{ $item['a'] }}</p>
+                </details>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- ══ 6. FOOTER NOTE ════════════════════════════════════════════════════ --}}
 <section class="bg-surface pt-8 pb-14">
     <div class="container-page max-w-3xl">
         <p class="flex items-start gap-3 rounded-xl border border-line bg-surface-soft px-5 py-4 text-sm leading-relaxed text-ink-muted">
@@ -388,9 +447,14 @@
 </section>
 
 @push('scripts')
-    {{-- @verbatim so Blade leaves the JavaScript alone. Without it, any "{{"
-         in the script — a JSDoc type, a nested object literal — is compiled as
-         a Blade echo and the page dies with a parse error. --}}
+    {{-- The block below is left unparsed on purpose: a double brace anywhere
+         in the script — a JSDoc type, a nested object literal — would be read
+         as an echo and take the page down.
+
+         Note the directive name is not written inside this comment. Blade
+         pulls unparsed blocks out before it strips comments, so naming it here
+         would open a block early and swallow this comment's own closing tag,
+         which is exactly how it leaked onto the page once. --}}
     @verbatim
     <script>
         (() => {
@@ -435,6 +499,13 @@
 
             const MS_PER_DAY = 86400000;
 
+            // A deliberate pause before the result appears. The arithmetic is
+            // instant; this is presentation, so it is skipped for anyone who
+            // has asked for reduced motion rather than making them wait for a
+            // spinner they cannot see the point of.
+            const CALCULATING_MS = 800;
+            const COPIED_FEEDBACK_MS = 2000;
+
             // ══ ELEMENTS ═══════════════════════════════════════════════════
             const form        = document.getElementById('calculator-form');
             const results     = document.getElementById('results');
@@ -455,6 +526,21 @@
                 note:  document.querySelector('[data-confidence-note]'),
             };
             const dueBanner = document.querySelector('[data-result-due-date]').closest('div');
+
+            const button = {
+                el:      document.querySelector('[data-calculate]'),
+                label:   document.querySelector('[data-calculate-label]'),
+                arrow:   document.querySelector('[data-calculate-arrow]'),
+                spinner: document.querySelector('[data-calculate-spinner]'),
+            };
+
+            const copy = {
+                el:     document.querySelector('[data-copy]'),
+                label:  document.querySelector('[data-copy-label]'),
+                status: document.querySelector('[data-copy-status]'),
+            };
+
+            const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
             const weekCards = document.querySelectorAll('[data-week-card]');
 
@@ -681,9 +767,11 @@
             };
 
             // ══ RENDER ═════════════════════════════════════════════════════
-            const calculate = () => {
+            const render = () => {
                 const resolved = resolveMatingDate();
 
+                // calculate() has already rejected the error cases; this is a
+                // guard, not the validation path.
                 if (resolved.error) {
                     showError(resolved.error);
                     return;
@@ -754,8 +842,88 @@
 
                 paintTimeline(week);
 
+                // What the copy button will put on the clipboard. Built here,
+                // where the figures are, rather than scraped back out of the
+                // DOM afterwards.
+                copyText = [
+                    nameInput.value.trim()
+                        ? `${nameInput.value.trim()} — cat pregnancy`
+                        : 'Cat pregnancy',
+                    `Due date: ${formatDate(dueDate)}`,
+                    `Birth window: ${formatDate(windowStart)} to ${formatDate(windowEnd)}`,
+                    `Currently: week ${week} of ${TOTAL_WEEKS}, ${trimesterFor(week).toLowerCase()} trimester`,
+                    resolved.approximate ? 'Symptom-based estimate, accuracy ±5 days.' : '',
+                ].filter(Boolean).join('\n');
+
                 results.hidden = false;
                 results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            };
+
+            // ══ SUBMIT ═════════════════════════════════════════════════════
+            let copyText = '';
+            let busy = false;
+
+            const setBusy = (state) => {
+                busy = state;
+                button.el.disabled = state;
+                button.label.textContent = state ? 'Calculating…' : 'Calculate due date';
+
+                // toggleAttribute, not .hidden. SVGElement has no hidden IDL
+                // property — assigning to it creates a meaningless expando
+                // while the attribute stays exactly where it was, so the
+                // spinner would never have appeared and the arrow never left.
+                button.arrow.toggleAttribute('hidden', state);
+                button.spinner.toggleAttribute('hidden', !state);
+            };
+
+            const calculate = () => {
+                if (busy) return;
+
+                // Validation runs immediately — there is nothing premium about
+                // waiting eight hundred milliseconds to be told a field is empty.
+                const resolved = resolveMatingDate();
+
+                if (resolved.error) {
+                    showError(resolved.error);
+                    return;
+                }
+
+                if (prefersReducedMotion) {
+                    render();
+                    return;
+                }
+
+                setBusy(true);
+                setTimeout(() => {
+                    setBusy(false);
+                    render();
+                }, CALCULATING_MS);
+            };
+
+            // ══ COPY ═══════════════════════════════════════════════════════
+            const showCopied = (message) => {
+                copy.label.textContent = message;
+                copy.status.textContent = message;
+                setTimeout(() => { copy.label.textContent = 'Copy the dates'; }, COPIED_FEEDBACK_MS);
+            };
+
+            const copyToClipboard = async () => {
+                if (!copyText) return;
+
+                try {
+                    await navigator.clipboard.writeText(copyText);
+                    showCopied('Copied');
+                } catch {
+                    // Clipboard access is refused on insecure origins and in
+                    // some embedded browsers. Say so plainly instead of
+                    // silently doing nothing.
+                    showCopied('Press Ctrl+C to copy');
+                    const range = document.createRange();
+                    range.selectNodeContents(out.dueDate);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
             };
 
             // ══ EVENTS ═════════════════════════════════════════════════════
@@ -776,6 +944,7 @@
             }));
 
             form.addEventListener('submit', calculate);
+            copy.el.addEventListener('click', copyToClipboard);
         })();
     </script>
     @endverbatim

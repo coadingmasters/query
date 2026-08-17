@@ -201,36 +201,26 @@
     </div>
 </section>
 
-{{-- ══ Disclaimer ════════════════════════════════════════════════════════ --}}
-<section class="section-tight bg-surface">
-    <div class="container-page max-w-3xl">
-        <div class="reveal rounded-2xl border border-warning-light bg-warning-light p-7 sm:p-8">
-            <div class="flex items-start gap-4">
-                <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-surface text-warning shadow-sm">
-                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M12 9v4.5M12 17h.01"/>
-                        <path d="M10.3 3.9 2.4 17.5A2 2 0 0 0 4.1 20.5h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/>
-                    </svg>
-                </span>
-                <div>
-                    <h2 class="font-heading text-xl font-bold text-ink">A note on our content</h2>
-                    <div class="mt-3 space-y-3 text-base leading-relaxed text-ink-muted">
-                        <p>
-                            Everything published here is general information. We work
-                            to keep it accurate and grounded in published veterinary
-                            sources, but it is not a substitute for professional
-                            veterinary advice, diagnosis or treatment.
-                        </p>
-                        <p class="font-medium text-ink">
-                            Always speak to a qualified vet about a specific concern.
-                            If your cat is having a medical emergency, contact your
-                            vet or an emergency animal clinic straight away.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
+{{-- ══ Disclaimer ════════════════════════════════════════════════════════
+     Kept, but compact. This is health guidance about someone's animal, so
+     saying plainly that it is not veterinary advice matters — for the reader,
+     and for the ad networks the site is heading towards. The footer carries
+     the short form on every page; this is the fuller sentence in one line.
+     ═══════════════════════════════════════════════════════════════════════ --}}
+<section class="bg-surface pt-2 pb-10">
+    <div class="container-page">
+        <p class="mx-auto flex max-w-3xl items-start gap-3 rounded-xl border border-line bg-surface-soft px-5 py-4 text-sm leading-relaxed text-ink-muted">
+            <svg class="mt-0.5 size-4 shrink-0 text-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 9v4.5M12 17h.01"/>
+                <path d="M10.3 3.9 2.4 17.5A2 2 0 0 0 4.1 20.5h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/>
+            </svg>
+            <span>
+                <strong class="font-semibold text-ink">General information, not veterinary advice.</strong>
+                Always speak to a qualified vet about a specific concern — and in an
+                emergency, contact your vet or an emergency clinic straight away.
+            </span>
+        </p>
     </div>
 </section>
 

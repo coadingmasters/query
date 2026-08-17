@@ -1,4 +1,24 @@
 {
+    "about-our-story": {
+        "width": 560,
+        "height": 420,
+        "preset": "story",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 560,
+                "src": "/images/about-our-story-560.ee876ede.webp"
+            },
+            {
+                "w": 840,
+                "src": "/images/about-our-story-840.ee876ede.webp"
+            },
+            {
+                "w": 1120,
+                "src": "/images/about-our-story-1120.ee876ede.webp"
+            }
+        ]
+    },
     "best-indoor-cat-food-premium-ingredients": {
         "width": 600,
         "height": 400,
@@ -414,7 +434,7 @@
                 "src": "/images/purrquery-hero-cat-owner-smiling-1170.9bddbe66.webp"
             },
             {
-                "w": 1402,
+                "w": 1560,
                 "src": "/images/purrquery-hero-cat-owner-smiling-1560.9bddbe66.webp"
             }
         ]

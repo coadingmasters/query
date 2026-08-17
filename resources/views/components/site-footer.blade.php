@@ -6,7 +6,7 @@
             'heading' => 'Free Tools',
             'span' => 'lg:col-span-3',
             'items' => collect(config('catalog.tools'))
-                ->map(fn ($t) => [$t['title'], '#tools'])->all(),
+                ->map(fn ($t) => [$t['title'], '/#tools'])->all(),
         ],
         [
             // Short labels here, not the full questions: a footer column is
@@ -14,15 +14,16 @@
             'heading' => 'Food Guides',
             'span' => 'lg:col-span-3',
             'items' => collect(config('catalog.foods'))->take(6)
-                ->map(fn ($f) => [$f['title'], '#food-guides'])->all(),
+                ->map(fn ($f) => [$f['title'], '/#food-guides'])->all(),
         ],
         [
             'heading' => 'Site',
             'span' => 'lg:col-span-2',
             'items' => [
-                ['How it works', '#how-it-works'],
-                ['Blog', '#blog'],
-                ['All food guides', '#food-guides'],
+                ['About us', route('about')],
+                ['How it works', '/#how-it-works'],
+                ['Blog', '/#blog'],
+                ['All food guides', '/#food-guides'],
                 ['Contact', 'mailto:'.config('brand.email')],
             ],
         ],

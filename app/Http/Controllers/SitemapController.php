@@ -15,17 +15,25 @@ class SitemapController extends Controller
     public function __invoke(): Response
     {
         // lastmod tells a crawler whether a re-fetch is worth it. It is taken
-        // from the deployed view file rather than "now", because claiming a
+        // from each page's own view file rather than "now", because claiming a
         // page changed today when it did not trains crawlers to ignore it.
-        $home = resource_path('views/home.blade.php');
+        $base = rtrim(config('app.url'), '/');
 
-        $urls = [
-            [
-                'loc' => rtrim(config('app.url'), '/').'/',
-                'lastmod' => date('Y-m-d', is_file($home) ? filemtime($home) : time()),
-                'priority' => '1.0',
-            ],
+        $pages = [
+            ['', 'views/home.blade.php', '1.0'],
+            ['/about', 'views/about.blade.php', '0.7'],
         ];
+
+        $urls = collect($pages)->map(function (array $page) use ($base): array {
+            [$path, $view, $priority] = $page;
+            $file = resource_path($view);
+
+            return [
+                'loc' => $base.($path ?: '/'),
+                'lastmod' => date('Y-m-d', is_file($file) ? filemtime($file) : time()),
+                'priority' => $priority,
+            ];
+        })->all();
 
         return response()
             ->view('sitemap', ['urls' => $urls])

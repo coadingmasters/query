@@ -1,9 +1,12 @@
 @php
+    // Rooted at "/" rather than bare fragments: a bare "#tools" only scrolls
+    // on the home page, and does nothing from /about.
     $links = [
-        ['#tools', 'Tools'],
-        ['#food-guides', 'Food Guides'],
-        ['#blog', 'Blog'],
-        ['#how-it-works', 'How It Works'],
+        ['/#tools', 'Tools'],
+        ['/#food-guides', 'Food Guides'],
+        ['/#blog', 'Blog'],
+        ['/#how-it-works', 'How It Works'],
+        [route('about'), 'About'],
     ];
 @endphp
 
@@ -30,7 +33,7 @@
         </nav>
 
         <div class="flex items-center gap-2">
-            <a href="#tools"
+            <a href="/#tools"
                class="hidden rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-ink-inverse shadow-sm transition-colors hover:bg-primary-hover sm:inline-flex">
                 Try Free Tools
             </a>
@@ -57,7 +60,7 @@
                     {{ $label }}
                 </a>
             @endforeach
-            <a href="#tools"
+            <a href="/#tools"
                class="mt-2 block rounded-lg bg-primary px-4 py-2.5 text-center text-base font-semibold text-ink-inverse">
                 Try Free Tools
             </a>

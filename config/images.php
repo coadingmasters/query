@@ -25,6 +25,7 @@ return [
         'food' => [300, 200],
         'blog' => [600, 400],
         'logo' => [96, 96],
+        'story' => [560, 420],
     ],
 
     /*
@@ -40,6 +41,7 @@ return [
 
         // The mark carries fine linework and sits on every page.
         'logo' => 90,
+        'story' => 80,
     ],
 
     /*
@@ -48,6 +50,7 @@ return [
      */
     'images' => [
         'purrquerylogo' => 'logo',
+        'about-our-story' => 'story',
 
         'purrquery-hero-cat-owner-smiling' => 'hero',
 
@@ -86,6 +89,7 @@ return [
      | the pages already reference the real name.
      */
     'placeholders' => [
+        'about-our-story' => 'cat-breed-quiz-multiple-cat-breeds',
         'how-much-feed-cat-eating-food-bowl' => 'cat-calorie-calculator-cat-food-bowl',
         'signs-cat-is-sick-vet-examination' => 'cat-vaccination-tracker-vet-examination',
         'best-indoor-cat-food-premium-ingredients' => 'can-cats-eat-cat-treats-snacks',

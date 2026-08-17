@@ -56,6 +56,9 @@
        that the standard ink label stays readable on top of them — checked in
        PaletteContrastTest. The old danger red managed only 4.34:1 with ink
        and 3.93:1 with white, so it could not be labelled either way. */
+    --color-warning-light:   #FDF3E2;  /* backing for the caution pill */
+    --color-danger-light:    #FDECEC;  /* backing for the unsafe pill */
+
     --color-success-vivid:   #1D9E75;  /* ink label: 5.04:1 */
     --color-warning-vivid:   #EF9F27;  /* ink label: 7.85:1 */
     --color-danger-vivid:    #E45554;  /* ink label: 4.65:1 */
@@ -169,6 +172,64 @@
     .ad-slot {
         @apply mx-auto flex w-full items-center justify-center overflow-hidden;
         contain: layout size;
+    }
+
+    /* ── Layout ──────────────────────────────────────────────────────────
+       Two classes carry the page rhythm, so section spacing and gutters stay
+       identical everywhere instead of drifting per section. */
+    .container-page { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+    .section        { @apply py-16 sm:py-20 lg:py-24; }
+
+    /* ── Cards ───────────────────────────────────────────────────────────
+       The lift on hover is a transform, not a change to width/height or
+       margin, so hovering a card cannot reflow the grid around it. */
+    .card {
+        @apply relative flex flex-col overflow-hidden rounded-xl border border-line
+               bg-surface shadow-sm transition duration-200
+               hover:-translate-y-1 hover:border-line-strong hover:shadow-lg;
+    }
+    .card-media { @apply relative overflow-hidden bg-surface-section; }
+    .card-body  { @apply flex flex-1 flex-col p-5; }
+    .card-title { @apply font-heading text-lg font-bold text-ink; }
+    .card-text  { @apply mt-2 text-sm leading-relaxed text-ink-muted; }
+
+    /* ── Buttons ─────────────────────────────────────────────────────────
+       Tailwind 4 will not @apply one custom class inside another, so the
+       shared base is spelled out in each variant rather than composed. */
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3
+               text-sm font-semibold transition duration-200
+               bg-primary text-ink-inverse shadow-md hover:bg-primary-hover;
+    }
+    .btn-outline {
+        @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3
+               text-sm font-semibold transition duration-200
+               border border-line-strong bg-surface text-ink hover:border-primary hover:text-primary;
+    }
+
+    /* ── Section headings ────────────────────────────────────────────────── */
+    .eyebrow {
+        @apply inline-flex items-center gap-2 rounded-full border border-line
+               bg-surface-soft px-3.5 py-1.5 text-xs font-semibold tracking-wide
+               text-primary-dark uppercase;
+    }
+    .section-title  { @apply mt-4 font-heading text-3xl font-extrabold tracking-tight text-ink sm:text-4xl; }
+    .section-intro  { @apply mx-auto mt-4 max-w-2xl text-base leading-relaxed text-ink-muted sm:text-lg; }
+
+    /* ── Verdict pills ───────────────────────────────────────────────────
+       The answer shown on a food card. Each pairs a tinted background with
+       the AA-safe text colour, never the -vivid one. */
+    .pill-safe {
+        @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold
+               bg-accent-light text-accent-dark;
+    }
+    .pill-caution {
+        @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold
+               bg-warning-light text-warning;
+    }
+    .pill-unsafe {
+        @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold
+               bg-danger-light text-danger;
     }
 }
 

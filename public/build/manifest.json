@@ -1,7 +1,7 @@
 {
-  "_fonts-B0cmWihK.css": {
-    "file": "assets/fonts-B0cmWihK.css",
-    "src": "_fonts-B0cmWihK.css"
+  "_fonts-Dnp0D5Bq.css": {
+    "file": "assets/fonts-Dnp0D5Bq.css",
+    "src": "_fonts-Dnp0D5Bq.css"
   },
   "_inter-400-normal-C38fXH4l.woff2": {
     "file": "assets/inter-400-normal-C38fXH4l.woff2",
@@ -35,14 +35,6 @@
     "file": "assets/inter-700-normal-Yt3aPRUw.woff2",
     "src": "_inter-700-normal-Yt3aPRUw.woff2"
   },
-  "_plus-jakarta-sans-600-normal-BR_Ojra4.woff": {
-    "file": "assets/plus-jakarta-sans-600-normal-BR_Ojra4.woff",
-    "src": "_plus-jakarta-sans-600-normal-BR_Ojra4.woff"
-  },
-  "_plus-jakarta-sans-600-normal-DLTa1BUW.woff2": {
-    "file": "assets/plus-jakarta-sans-600-normal-DLTa1BUW.woff2",
-    "src": "_plus-jakarta-sans-600-normal-DLTa1BUW.woff2"
-  },
   "_plus-jakarta-sans-700-normal-CfpNZvy6.woff2": {
     "file": "assets/plus-jakarta-sans-700-normal-CfpNZvy6.woff2",
     "src": "_plus-jakarta-sans-700-normal-CfpNZvy6.woff2"
@@ -60,7 +52,7 @@
     "src": "_plus-jakarta-sans-800-normal-CusIZhrK.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-CdTsMih2.css",
+    "file": "assets/app-gA9S76WC.css",
     "name": "app",
     "names": [
       "app.css"

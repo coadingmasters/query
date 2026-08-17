@@ -16,8 +16,30 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    # The suite needs a real MySQL: pdo_sqlite is not installed on this
+    # project's machines, so the tests are written against MySQL rather than
+    # the Laravel default of an in-memory SQLite file.
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: puurquery_test
+        ports: ['3306:3306']
+        options: >-
+          --health-cmd="mysqladmin ping -proot"
+          --health-interval=10s --health-timeout=5s --health-retries=5
+
     steps:
       - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: gd, pdo_mysql, intl, zip, mbstring
+
+      - name: Install PHP dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress
 
       - uses: actions/setup-node@v4
         with:
@@ -44,6 +66,18 @@ jobs:
           else
             echo "build output already up to date"
           fi
+
+      # Nothing ships that does not pass. Before this, a broken commit would
+      # have been published and only noticed on the live site.
+      - name: Run tests
+        env:
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_USERNAME: root
+          DB_PASSWORD: root
+        run: |
+          php artisan key:generate --env=testing || true
+          php artisan test
 
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v1.2.0

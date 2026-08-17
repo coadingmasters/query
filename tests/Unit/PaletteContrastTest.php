@@ -117,6 +117,32 @@ class PaletteContrastTest extends TestCase
     }
 
     /**
+     * The status pills pair a tinted backing with its own status colour.
+     * Those tints are not general surfaces — only the matching status text
+     * ever sits on them — so the pairs are asserted explicitly.
+     */
+    public function test_status_pills_are_readable(): void
+    {
+        $tokens = $this->tokens();
+
+        $pairs = [
+            'accent-dark' => 'accent-light',
+            'warning' => 'warning-light',
+            'danger' => 'danger-light',
+        ];
+
+        foreach ($pairs as $fg => $bg) {
+            $ratio = $this->contrast($tokens[$fg], $tokens[$bg]);
+
+            $this->assertGreaterThanOrEqual(
+                self::AA,
+                $ratio,
+                sprintf('%s on %s is %.2f:1, below AA', $fg, $bg, $ratio)
+            );
+        }
+    }
+
+    /**
      * The brand green is too light for body text, so the token that reads as
      * the default ("accent") must be the safe one. If the two were swapped,
      * every `text-accent` in the codebase would quietly fail.

@@ -10,10 +10,10 @@ W, H = 1200, 630
 SURFACE = (255, 255, 255)
 SURFACE_SOFT = (248, 247, 255)
 PRIMARY = (83, 74, 183)
-ACCENT = (25, 133, 99)
+ACCENT = (22, 119, 88)
 ACCENT_VIVID = (29, 158, 117)
 INK = (26, 26, 46)
-INK_SOFT = (99, 107, 119)
+INK_SOFT = (99, 105, 118)
 LINE = (229, 227, 248)
 
 FONT_DIR = "/usr/share/fonts/truetype/lato"
@@ -54,11 +54,11 @@ for tx, ty in ((-25, -14), (-10, -27), (10, -27), (25, -14)):          # toes
     d.ellipse((cx + tx - 7, cy + ty - 7, cx + tx + 7, cy + ty + 7), fill=PRIMARY)
 
 # --- wordmark and copy ------------------------------------------------------
-centred(d, 288, "PuurQuery", black, INK)
-centred(d, 418, "Free online tools and practical guides", regular, INK_SOFT)
+centred(d, 288, "PurrQuery", black, INK)
+centred(d, 418, "Smart tools and clear answers for cat owners", regular, INK_SOFT)
 
 # --- "launching soon" pill --------------------------------------------------
-label = "LAUNCHING SOON"
+label = "FREE CAT CARE TOOLS"
 left, top, right, bottom = d.textbbox((0, 0), label, font=semibold)
 tw, th = right - left, bottom - top
 pw, ph = tw + 108, th + 40

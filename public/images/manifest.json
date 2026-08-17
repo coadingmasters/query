@@ -1,0 +1,462 @@
+{
+    "best-indoor-cat-food-premium-ingredients": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/best-indoor-cat-food-premium-ingredients-600.0e70f4e7.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/best-indoor-cat-food-premium-ingredients-900.0e70f4e7.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/best-indoor-cat-food-premium-ingredients-1200.0e70f4e7.webp"
+            }
+        ]
+    },
+    "can-cats-eat-broccoli-cat-sniffing": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/can-cats-eat-broccoli-cat-sniffing-600.152324a3.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/can-cats-eat-broccoli-cat-sniffing-900.152324a3.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/can-cats-eat-broccoli-cat-sniffing-1200.152324a3.webp"
+            }
+        ]
+    },
+    "can-cats-eat-cat-treats-snacks": {
+        "width": 300,
+        "height": 200,
+        "preset": "food",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 300,
+                "src": "/images/can-cats-eat-cat-treats-snacks-300.a63ad17c.webp"
+            },
+            {
+                "w": 450,
+                "src": "/images/can-cats-eat-cat-treats-snacks-450.a63ad17c.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/can-cats-eat-cat-treats-snacks-600.a63ad17c.webp"
+            }
+        ]
+    },
+    "can-cats-eat-chicken-cat-looking": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/can-cats-eat-chicken-cat-looking-600.4d3fad12.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/can-cats-eat-chicken-cat-looking-900.4d3fad12.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/can-cats-eat-chicken-cat-looking-1200.4d3fad12.webp"
+            }
+        ]
+    },
+    "can-cats-eat-dairy-eggs-milk-cheese": {
+        "width": 300,
+        "height": 200,
+        "preset": "food",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 300,
+                "src": "/images/can-cats-eat-dairy-eggs-milk-cheese-300.0f5f4489.webp"
+            },
+            {
+                "w": 450,
+                "src": "/images/can-cats-eat-dairy-eggs-milk-cheese-450.0f5f4489.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/can-cats-eat-dairy-eggs-milk-cheese-600.0f5f4489.webp"
+            }
+        ]
+    },
+    "can-cats-eat-fruits-fresh-colorful-fruits": {
+        "width": 300,
+        "height": 200,
+        "preset": "food",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 300,
+                "src": "/images/can-cats-eat-fruits-fresh-colorful-fruits-300.0fd33d35.webp"
+            },
+            {
+                "w": 450,
+                "src": "/images/can-cats-eat-fruits-fresh-colorful-fruits-450.0fd33d35.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/can-cats-eat-fruits-fresh-colorful-fruits-600.0fd33d35.webp"
+            }
+        ]
+    },
+    "can-cats-eat-grains-seeds-rice-oats": {
+        "width": 300,
+        "height": 200,
+        "preset": "food",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 300,
+                "src": "/images/can-cats-eat-grains-seeds-rice-oats-300.215474f0.webp"
+            },
+            {
+                "w": 450,
+                "src": "/images/can-cats-eat-grains-seeds-rice-oats-450.215474f0.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/can-cats-eat-grains-seeds-rice-oats-600.215474f0.webp"
+            }
+        ]
+    },
+    "can-cats-eat-herbs-spices-basil-mint": {
+        "width": 300,
+        "height": 200,
+        "preset": "food",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 300,
+                "src": "/images/can-cats-eat-herbs-spices-basil-mint-300.aa9a0604.webp"
+            },
+            {
+                "w": 450,
+                "src": "/images/can-cats-eat-herbs-spices-basil-mint-450.aa9a0604.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/can-cats-eat-herbs-spices-basil-mint-600.aa9a0604.webp"
+            }
+        ]
+    },
+    "can-cats-eat-junk-food-fast-food": {
+        "width": 300,
+        "height": 200,
+        "preset": "food",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 300,
+                "src": "/images/can-cats-eat-junk-food-fast-food-300.c3f7c6c5.webp"
+            },
+            {
+                "w": 450,
+                "src": "/images/can-cats-eat-junk-food-fast-food-450.c3f7c6c5.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/can-cats-eat-junk-food-fast-food-600.c3f7c6c5.webp"
+            }
+        ]
+    },
+    "can-cats-eat-meat-seafood-chicken-fish": {
+        "width": 300,
+        "height": 200,
+        "preset": "food",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 300,
+                "src": "/images/can-cats-eat-meat-seafood-chicken-fish-300.8d020e91.webp"
+            },
+            {
+                "w": 450,
+                "src": "/images/can-cats-eat-meat-seafood-chicken-fish-450.8d020e91.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/can-cats-eat-meat-seafood-chicken-fish-600.8d020e91.webp"
+            }
+        ]
+    },
+    "can-cats-eat-sweets-desserts-unsafe": {
+        "width": 300,
+        "height": 200,
+        "preset": "food",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 300,
+                "src": "/images/can-cats-eat-sweets-desserts-unsafe-300.d0f926c1.webp"
+            },
+            {
+                "w": 450,
+                "src": "/images/can-cats-eat-sweets-desserts-unsafe-450.d0f926c1.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/can-cats-eat-sweets-desserts-unsafe-600.d0f926c1.webp"
+            }
+        ]
+    },
+    "can-cats-eat-vegetables-fresh-greens": {
+        "width": 300,
+        "height": 200,
+        "preset": "food",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 300,
+                "src": "/images/can-cats-eat-vegetables-fresh-greens-300.ff089ef3.webp"
+            },
+            {
+                "w": 450,
+                "src": "/images/can-cats-eat-vegetables-fresh-greens-450.ff089ef3.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/can-cats-eat-vegetables-fresh-greens-600.ff089ef3.webp"
+            }
+        ]
+    },
+    "cat-age-calculator-senior-tabby-cat": {
+        "width": 400,
+        "height": 250,
+        "preset": "tool",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 400,
+                "src": "/images/cat-age-calculator-senior-tabby-cat-400.4a5e20e6.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/cat-age-calculator-senior-tabby-cat-600.4a5e20e6.webp"
+            },
+            {
+                "w": 800,
+                "src": "/images/cat-age-calculator-senior-tabby-cat-800.4a5e20e6.webp"
+            }
+        ]
+    },
+    "cat-breed-quiz-multiple-cat-breeds": {
+        "width": 400,
+        "height": 250,
+        "preset": "tool",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 400,
+                "src": "/images/cat-breed-quiz-multiple-cat-breeds-400.7a3ad302.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/cat-breed-quiz-multiple-cat-breeds-600.7a3ad302.webp"
+            },
+            {
+                "w": 800,
+                "src": "/images/cat-breed-quiz-multiple-cat-breeds-800.7a3ad302.webp"
+            }
+        ]
+    },
+    "cat-calorie-calculator-cat-food-bowl": {
+        "width": 400,
+        "height": 250,
+        "preset": "tool",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 400,
+                "src": "/images/cat-calorie-calculator-cat-food-bowl-400.5fea4f82.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/cat-calorie-calculator-cat-food-bowl-600.5fea4f82.webp"
+            },
+            {
+                "w": 800,
+                "src": "/images/cat-calorie-calculator-cat-food-bowl-800.5fea4f82.webp"
+            }
+        ]
+    },
+    "cat-name-generator-cute-kitten": {
+        "width": 400,
+        "height": 250,
+        "preset": "tool",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 400,
+                "src": "/images/cat-name-generator-cute-kitten-400.8ac0d88c.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/cat-name-generator-cute-kitten-600.8ac0d88c.webp"
+            },
+            {
+                "w": 800,
+                "src": "/images/cat-name-generator-cute-kitten-800.8ac0d88c.webp"
+            }
+        ]
+    },
+    "cat-vaccination-tracker-vet-examination": {
+        "width": 400,
+        "height": 250,
+        "preset": "tool",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 400,
+                "src": "/images/cat-vaccination-tracker-vet-examination-400.6947c82c.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/cat-vaccination-tracker-vet-examination-600.6947c82c.webp"
+            },
+            {
+                "w": 800,
+                "src": "/images/cat-vaccination-tracker-vet-examination-800.6947c82c.webp"
+            }
+        ]
+    },
+    "cat-weight-checker-cat-on-scale": {
+        "width": 400,
+        "height": 250,
+        "preset": "tool",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 400,
+                "src": "/images/cat-weight-checker-cat-on-scale-400.c64e012d.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/cat-weight-checker-cat-on-scale-600.c64e012d.webp"
+            },
+            {
+                "w": 800,
+                "src": "/images/cat-weight-checker-cat-on-scale-800.c64e012d.webp"
+            }
+        ]
+    },
+    "how-much-feed-cat-eating-food-bowl": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/how-much-feed-cat-eating-food-bowl-600.97e9395e.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/how-much-feed-cat-eating-food-bowl-900.97e9395e.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/how-much-feed-cat-eating-food-bowl-1200.97e9395e.webp"
+            }
+        ]
+    },
+    "new-cat-owner-guide-couple-kitten": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/new-cat-owner-guide-couple-kitten-600.520a0714.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/new-cat-owner-guide-couple-kitten-900.520a0714.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/new-cat-owner-guide-couple-kitten-1200.520a0714.webp"
+            }
+        ]
+    },
+    "purrquery-hero-cat-owner-smiling": {
+        "width": 600,
+        "height": 500,
+        "preset": "hero",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/purrquery-hero-cat-owner-smiling-600.55ebf98b.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/purrquery-hero-cat-owner-smiling-900.55ebf98b.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/purrquery-hero-cat-owner-smiling-1200.55ebf98b.webp"
+            }
+        ]
+    },
+    "signs-cat-is-sick-vet-examination": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/signs-cat-is-sick-vet-examination-600.e1c56e39.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/signs-cat-is-sick-vet-examination-900.e1c56e39.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/signs-cat-is-sick-vet-examination-1200.e1c56e39.webp"
+            }
+        ]
+    },
+    "toxic-foods-cats-must-avoid-dangerous": {
+        "width": 300,
+        "height": 200,
+        "preset": "food",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 300,
+                "src": "/images/toxic-foods-cats-must-avoid-dangerous-300.527ef1d8.webp"
+            },
+            {
+                "w": 450,
+                "src": "/images/toxic-foods-cats-must-avoid-dangerous-450.527ef1d8.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/toxic-foods-cats-must-avoid-dangerous-600.527ef1d8.webp"
+            }
+        ]
+    }
+}

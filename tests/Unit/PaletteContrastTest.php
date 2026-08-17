@@ -129,6 +129,12 @@ class PaletteContrastTest extends TestCase
             'accent-dark' => 'accent-light',
             'warning' => 'warning-light',
             'danger' => 'danger-light',
+
+            // The four category cards: each sets its own colour on its own
+            // tint, so those pairings are asserted rather than assumed.
+            'primary' => 'primary-light',
+            'accent' => 'accent-light',
+            'info' => 'info-light',
         ];
 
         foreach ($pairs as $fg => $bg) {

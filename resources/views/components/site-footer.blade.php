@@ -13,7 +13,15 @@
     ];
 @endphp
 
-<footer class="border-t border-line bg-surface-soft">
+<footer class="relative bg-surface-soft">
+    {{-- Mirrors the wave under the hero, flipped, so the page opens and
+         closes on the same shape. Decorative, so it is hidden from assistive
+         tech and adds no request. --}}
+    <svg class="absolute inset-x-0 top-0 h-10 w-full -translate-y-full text-surface-soft sm:h-14"
+         viewBox="0 0 1440 80" preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
+        <path d="M0 80c180-30 360-30 540-8s360 36 540 13 300-36 360-40V80Z"/>
+    </svg>
+
     <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
 

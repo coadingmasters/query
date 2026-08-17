@@ -11,43 +11,41 @@
 @endpush
 
 {{-- ══ 1. Hero ═══════════════════════════════════════════════════════════ --}}
-<section class="relative overflow-hidden bg-surface-soft">
+<section class="relative overflow-hidden bg-surface-soft pb-24 lg:pb-32">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary opacity-10 blur-3xl"></div>
         <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-10 blur-3xl"></div>
 
         @foreach ([
-            ['left-[4%]  top-[16%]', 'size-10', 0,    22, 'text-primary'],
-            ['left-[13%] top-[68%]', 'size-7',  -6,   26, 'text-accent-vivid'],
-            ['left-[30%] top-[8%]',  'size-6',  -11,  19, 'text-primary'],
-            ['right-[6%] top-[12%]', 'size-9',  -3,   24, 'text-accent-vivid'],
-            ['right-[2%] bottom-[8%]','size-11',-15,  28, 'text-primary'],
-            ['left-[46%] bottom-[4%]','size-6', -8,   21, 'text-accent-vivid'],
+            ['left-[4%]  top-[16%]', 'size-10', 0,   22, 'text-primary'],
+            ['left-[13%] top-[68%]', 'size-7',  -6,  26, 'text-accent-vivid'],
+            ['left-[30%] top-[8%]',  'size-6',  -11, 19, 'text-primary'],
+            ['right-[6%] top-[10%]', 'size-9',  -3,  24, 'text-accent-vivid'],
+            ['left-[46%] bottom-[16%]','size-6',-8,  21, 'text-accent-vivid'],
         ] as [$position, $size, $delay, $duration, $tone])
             <x-paw-print class="paw absolute {{ $position }} {{ $size }} {{ $tone }}"
                          style="animation-delay: {{ $delay }}s; animation-duration: {{ $duration }}s"/>
         @endforeach
     </div>
 
-    <div class="container-page relative grid items-center gap-12 py-14 lg:grid-cols-[1fr_1.15fr] lg:gap-14 lg:py-20">
+    <div class="container-page relative grid items-center gap-12 py-14 lg:grid-cols-[1.08fr_1fr] lg:gap-12 lg:py-20">
         <div>
             <p class="eyebrow">
                 <span class="size-1.5 rounded-full bg-accent-vivid"></span>
-                Tools + Guides
+                22 free tools and guides
             </p>
 
-            <h1 class="mt-5 font-heading text-4xl leading-[1.1] font-extrabold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-                Smarter Cat Care<br>
-                <span class="text-primary">Starts Here</span>
+            <h1 class="mt-5 font-heading text-4xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-5xl lg:text-6xl">
+                Everything You Need for a
+                <span class="text-primary">Healthy,</span>
+                <span class="text-accent">Happy</span> Cat
             </h1>
 
             <p class="mt-5 max-w-xl text-lg leading-relaxed text-ink-muted">
-                Smart tools. Clear answers. Better decisions for your cat —
-                free, and without handing over an email address.
+                Free smart tools and clear, sourced answers — all in one place,
+                with no account and nothing to install.
             </p>
 
-            {{-- Filters the tools and guides already on this page, so it does
-                 something useful the moment it is typed in. --}}
             <form class="mt-7 max-w-lg" role="search" onsubmit="return false">
                 <label for="site-search" class="sr-only">Search cat care tools and guides</label>
                 <div class="relative">
@@ -56,77 +54,133 @@
                         <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/>
                     </svg>
                     <input id="site-search" type="search" data-search
-                           placeholder="Search cat care tools and guides…"
+                           placeholder="Search cat care tools, guides & more…"
                            autocomplete="off"
-                           class="w-full rounded-xl border border-line bg-surface py-3.5 pr-4 pl-12 text-base text-ink shadow-sm transition placeholder:text-ink-muted focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                           class="w-full rounded-full border border-line bg-surface py-4 pr-16 pl-12 text-base text-ink shadow-sm transition placeholder:text-ink-muted focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                    <span aria-hidden="true"
+                          class="absolute top-1/2 right-2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-ink-inverse">
+                        <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+                            <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/>
+                        </svg>
+                    </span>
                 </div>
                 <p data-search-status class="sr-only" role="status" aria-live="polite"></p>
             </form>
 
             <div class="mt-6 flex flex-wrap gap-3">
-                <a href="#tools" class="btn-primary">
-                    Try Free Tools
-                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                         stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                <a href="#tools" class="btn-primary rounded-full px-7">
+                    Explore Free Tools
+                    <svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M13 2 4.5 12.5a.6.6 0 0 0 .5 1h4.5l-1 7.5a.3.3 0 0 0 .54.24L17.5 10.5a.6.6 0 0 0-.47-1H12.5l1-7.2a.3.3 0 0 0-.5-.3Z"/>
+                    </svg>
                 </a>
-                <a href="#food-guides" class="btn-outline">Explore Food Guides</a>
+                <a href="#food-guides" class="btn-outline rounded-full px-7">
+                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 7.5v13"/>
+                        <path d="M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z"/>
+                    </svg>
+                    Browse Food Guides
+                </a>
             </div>
 
-            <ul class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
-                @foreach (config('brand.promises') as $promise)
-                    <li class="flex items-center gap-2 text-sm font-medium text-ink">
-                        <svg class="size-4 shrink-0 text-accent" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                  d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 1 1 1.4-1.4l3.8 3.8 6.8-6.8a1 1 0 0 1 1.4 0Z"/>
-                        </svg>
-                        {{ $promise }}
+            {{-- Each of these is true of the site as it stands. Counts and
+                 endorsements that cannot be backed are deliberately absent. --}}
+            <ul class="mt-9 grid max-w-lg grid-cols-2 gap-x-6 gap-y-5">
+                @foreach ([
+                    ['100% Free', 'Always will be', [
+                        'M12.6 2.9 20.8 11a1.5 1.5 0 0 1 0 2.1l-7.7 7.7a1.5 1.5 0 0 1-2.1 0L2.9 12.6a1.5 1.5 0 0 1-.4-1.1V4.3a1.7 1.7 0 0 1 1.7-1.7h7.2c.4 0 .8.1 1.1.3Z',
+                        'M7.4 7.4h.01',
+                    ]],
+                    ['No Sign-up', 'Start right away', [
+                        'M4.5 20.5a7.5 7.5 0 0 1 12-6',
+                        'M12 11.5a4.2 4.2 0 1 0 0-8.5 4.2 4.2 0 0 0 0 8.5Z',
+                        'm15.5 18.5 2 2 4-4',
+                    ]],
+                    ['Privacy First', 'Nothing is stored', [
+                        'M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z',
+                        'm9.4 12.2 1.9 1.9 3.6-3.7',
+                    ]],
+                    ['Vet Sources', 'Published guidance', [
+                        'M12 7.5v13',
+                        'M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z',
+                    ]],
+                ] as [$title, $sub, $paths])
+                    <li class="flex items-start gap-3">
+                        <span class="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary-light text-primary">
+                            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                @foreach ($paths as $d)
+                                    <path d="{{ $d }}"/>
+                                @endforeach
+                            </svg>
+                        </span>
+                        <span class="text-sm leading-tight">
+                            <span class="block font-bold text-ink">{{ $title }}</span>
+                            <span class="mt-1 block text-ink-muted">{{ $sub }}</span>
+                        </span>
                     </li>
                 @endforeach
             </ul>
         </div>
 
         <div class="relative">
-            <div class="overflow-hidden rounded-2xl border border-line bg-surface shadow-lg">
+            {{-- The soft off-square corners come from a border-radius, not an
+                 SVG clip path: a clip would cut the shadow off with it. --}}
+            <div class="relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg">
                 <x-img name="purrquery-hero-cat-owner-smiling"
-                       alt="Happy cat owner sitting with her fluffy cat on a couch — PurrQuery cat care guides"
+                       alt="Cat owner holding her fluffy cat — PurrQuery cat care tools and guides"
                        sizes="(max-width: 1023px) 92vw, 700px"
                        :priority="true"/>
             </div>
+
+            <span aria-hidden="true"
+                  class="absolute -bottom-4 left-2 flex size-16 items-center justify-center rounded-full bg-accent shadow-lg sm:size-20">
+                <x-paw-print class="size-8 text-ink-inverse sm:size-10"/>
+            </span>
         </div>
     </div>
+
+    {{-- Wave into the next section. Inline SVG so it scales to any width and
+         costs no request; aria-hidden because it is pure decoration. --}}
+    <svg class="absolute inset-x-0 bottom-0 h-16 w-full text-surface sm:h-24" viewBox="0 0 1440 120"
+         preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
+        <path d="M0 60c180-45 360-45 540-10s360 55 540 20 300-55 360-60v110H0Z"/>
+    </svg>
 </section>
 
-{{-- ══ 2. Trust badges ═══════════════════════════════════════════════════ --}}
+{{-- ══ 2. Category cards ═════════════════════════════════════════════════ --}}
 @php
-    // Properly drawn multi-path icons rather than one improvised outline each:
-    // a phone, a shield with a tick, a bolt and an open book read as what they
-    // are at 24px, which single-stroke approximations do not.
-    $trust = [
-        ['Easy to use', 'Answers in a few taps, on any device.', 'primary', [
-            'M7 2h10a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z',
-            'M11 18.5h2',
-        ]],
-        ['Accurate data', 'Built on published veterinary guidance.', 'accent', [
-            'M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z',
-            'm9.4 12.2 1.9 1.9 3.6-3.7',
-        ]],
-        ['Fast results', 'Everything runs instantly in your browser.', 'primary', [
-            'M13.2 2.4 4.5 12.9a.7.7 0 0 0 .5 1.1h5l-1.2 7.6a.35.35 0 0 0 .62.28l8.7-10.5a.7.7 0 0 0-.54-1.15h-5l1.2-7.6a.35.35 0 0 0-.62-.28Z',
-        ]],
-        ['Care guides', 'Plain-English answers, not a wall of jargon.', 'accent', [
-            'M12 7.5v13',
-            'M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z',
-        ]],
+    // These replace the old "easy to use / fast results" row. Those made a
+    // claim; these take you somewhere, which is what the page needs at this
+    // point. Each tint and its text colour are asserted in PaletteContrastTest.
+    $categories = [
+        ['Smart Tools', 'Instant calculators, checkers and trackers for your cat.', 'Try tools', '#tools',
+         'primary', ['M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0H5a2 2 0 0 1-2-2v-4m6 6h10a2 2 0 0 0 2-2v-4M3 9h18M3 15h18']],
+        ['Food Guides', 'What is safe, what needs care, and what to never feed.', 'View guides', '#food-guides',
+         'accent', ['M8 3v6a4 4 0 0 1-4 4 4 4 0 0 0 4 4v4', 'M16 3c-1.5 3-2 5-2 7a3 3 0 0 0 3 3h1v8']],
+        ['How It Works', 'Three steps from a question to an answer you can act on.', 'See how', '#how-it-works',
+         'warning', ['M12 6v6l4 2', 'M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z']],
+        ['Cat Care Blog', 'Longer reads for the questions a calculator cannot settle.', 'Read blog', '#blog',
+         'info', ['M12 7.5v13', 'M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z']],
     ];
 @endphp
-<section class="border-b border-line bg-surface py-14">
+<section class="bg-surface pb-4">
     <div class="container-page grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        @foreach ($trust as [$title, $text, $tone, $paths])
-            <div class="group rounded-xl border border-line bg-surface p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-line-strong hover:shadow-md">
+        @foreach ($categories as [$title, $text, $cta, $href, $tone, $paths])
+            <a href="{{ $href }}" @class([
+                'group relative flex flex-col overflow-hidden rounded-2xl border p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg',
+                'border-line-strong bg-primary-light' => $tone === 'primary',
+                'border-accent-light bg-accent-light' => $tone === 'accent',
+                'border-warning-light bg-warning-light' => $tone === 'warning',
+                'border-info-light bg-info-light' => $tone === 'info',
+            ])>
                 <span @class([
-                    'flex size-12 items-center justify-center rounded-xl transition-colors duration-200',
-                    'bg-primary-light text-primary group-hover:bg-primary group-hover:text-ink-inverse' => $tone === 'primary',
-                    'bg-accent-light text-accent-dark group-hover:bg-accent group-hover:text-ink-inverse' => $tone === 'accent',
+                    'flex size-12 items-center justify-center rounded-xl bg-surface shadow-sm',
+                    'text-primary' => $tone === 'primary',
+                    'text-accent' => $tone === 'accent',
+                    'text-warning' => $tone === 'warning',
+                    'text-info' => $tone === 'info',
                 ])>
                     <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -135,9 +189,23 @@
                         @endforeach
                     </svg>
                 </span>
+
                 <h2 class="mt-5 font-heading text-lg font-bold text-ink">{{ $title }}</h2>
-                <p class="mt-1.5 text-sm leading-relaxed text-ink-muted">{{ $text }}</p>
-            </div>
+                <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{{ $text }}</p>
+
+                <span @class([
+                    'mt-5 inline-flex items-center gap-1.5 text-sm font-semibold',
+                    'text-primary' => $tone === 'primary',
+                    'text-accent' => $tone === 'accent',
+                    'text-warning' => $tone === 'warning',
+                    'text-info' => $tone === 'info',
+                ])>
+                    {{ $cta }}
+                    <svg class="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                         stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                </span>
+            </a>
         @endforeach
     </div>
 </section>

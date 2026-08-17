@@ -10,7 +10,7 @@ class HomeTest extends TestCase
     {
         $this->get('/')
             ->assertOk()
-            ->assertSee('Smarter Cat Care')
+            ->assertSee('Everything You Need')
             ->assertSee(config('brand.description'));
     }
 

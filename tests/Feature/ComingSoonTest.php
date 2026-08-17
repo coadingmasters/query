@@ -32,7 +32,7 @@ class ComingSoonTest extends TestCase
         $url = rtrim(config('app.url'), '/');
 
         $this->get('/')
-            ->assertSee('<link rel="canonical" href="'.$url.'">', false)
+            ->assertSee('<link rel="canonical" href="'.$url.'/">', false)
             ->assertSee('<meta property="og:image" content="'.$url.'/og-image.png">', false)
             ->assertSee('"@type":"WebSite"', false);
     }

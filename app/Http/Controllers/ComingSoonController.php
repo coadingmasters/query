@@ -23,6 +23,10 @@ class ComingSoonController extends Controller
         return view('coming-soon', [
             'title' => $title,
             'description' => $description,
+            // Trailing slash so the canonical tag, og:url and the sitemap all
+            // name the home page identically. Mismatched forms make search
+            // engines pick their own canonical instead of honouring ours.
+            'canonical' => $url.'/',
             'url' => $url,
             'email' => config('brand.email'),
             'rotates' => config('brand.rotates'),

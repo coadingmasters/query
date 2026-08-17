@@ -10,13 +10,13 @@
          before the full site ships. --}}
     <title>{{ $title }}</title>
     <meta name="description" content="{{ $description }}">
-    <link rel="canonical" href="{{ $url }}">
+    <link rel="canonical" href="{{ $canonical }}">
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ config('app.name') }}">
     <meta property="og:title" content="{{ $title }}">
     <meta property="og:description" content="{{ $description }}">
-    <meta property="og:url" content="{{ $url }}">
+    <meta property="og:url" content="{{ $canonical }}">
     <meta property="og:image" content="{{ $url }}/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">

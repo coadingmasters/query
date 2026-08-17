@@ -61,6 +61,32 @@
 
     <x-site-footer/>
 
+    <script>
+        // Reveals sections as they come into view. The hidden state is added
+        // here rather than in the stylesheet, so if this never runs the page
+        // is simply visible. Skipped outright for reduced-motion visitors.
+        (() => {
+            const items = document.querySelectorAll('.reveal');
+
+            if (!items.length || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
+
+            items.forEach(el => el.classList.add('is-armed'));
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { rootMargin: '0px 0px -10% 0px' });
+
+            items.forEach(el => observer.observe(el));
+        })();
+    </script>
+
     @stack('scripts')
 </body>
 </html>

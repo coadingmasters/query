@@ -80,11 +80,40 @@ return [
         ],
     ],
 
-    'mission' => [
-        'Free tools that give an instant, accurate answer',
-        'Food-safety guides written from published veterinary sources',
-        'Health writing in plain, clear English',
-        'A library that grows from the questions cat owners actually ask',
-        'No misleading claims, no invented numbers, no paid bias',
+    /*
+     | Mission is what the site does today; vision is where it is going.
+     | Kept as two short blocks rather than a long list — the page is meant
+     | to be read, not waded through.
+     */
+    'purpose' => [
+        [
+            'label' => 'Our mission',
+            'title' => 'Put a straight answer within reach',
+            'body' => 'To make accurate, practical cat care knowledge free and easy '
+                .'to reach for every owner — no account, no payment, and no need to '
+                .'weigh up nine conflicting sources before deciding what to do. '
+                .'Every tool gives an instant result, and every guide states its '
+                .'answer before its reasoning.',
+            'tone' => 'primary',
+            'paths' => [
+                'M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19Z',
+                'M12 16.2a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4Z',
+                'M12 13.4a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8Z',
+            ],
+        ],
+        [
+            'label' => 'Our vision',
+            'title' => 'The place owners check first',
+            'body' => 'A cat care resource people come back to because it is '
+                .'consistently right, and because it is honest about the limits of '
+                .'what is known. Growing from the questions owners actually ask, '
+                .'staying free as it grows, and never letting what pays for the '
+                .'site decide what a guide says.',
+            'tone' => 'accent',
+            'paths' => [
+                'M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z',
+                'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
+            ],
+        ],
     ],
 ];

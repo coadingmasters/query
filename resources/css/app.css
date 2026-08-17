@@ -161,6 +161,28 @@
 /* ==========================================================================
    Reusable component classes
    ========================================================================== */
+/* ==========================================================================
+   Scroll reveal
+   --------------------------------------------------------------------------
+   The hidden state is only applied once the script has armed the element, so
+   a visitor without JavaScript sees everything immediately rather than a
+   blank page. Only opacity and transform are animated, both of which the
+   compositor handles, so revealing cannot shift the layout.
+   ========================================================================== */
+.reveal.is-armed {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+}
+
+.reveal.is-armed.is-visible {
+    opacity: 1;
+    transform: none;
+    transition:
+        opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
 @keyframes paw-drift {
     0%, 100% { transform: translate3d(0, 0, 0) rotate(-8deg); }
     50%      { transform: translate3d(6px, -22px, 0) rotate(6deg); }
@@ -194,6 +216,10 @@
        identical everywhere instead of drifting per section. */
     .container-page { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
     .section        { @apply py-16 sm:py-20 lg:py-24; }
+
+    /* Content pages sit closer together — the home page uses the space to
+       separate browsing blocks, but here it just becomes scrolling. */
+    .section-tight  { @apply py-10 sm:py-12 lg:py-14; }
 
     /* ── Cards ───────────────────────────────────────────────────────────
        The lift on hover is a transform, not a change to width/height or

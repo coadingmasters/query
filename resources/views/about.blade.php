@@ -1,7 +1,7 @@
 <x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema">
 
 {{-- ══ Hero ══════════════════════════════════════════════════════════════ --}}
-<section class="relative overflow-hidden bg-surface-soft pb-16 lg:pb-20">
+<section class="relative overflow-hidden bg-surface-soft pb-12 lg:pb-14">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary opacity-10 blur-3xl"></div>
         <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-10 blur-3xl"></div>
@@ -9,28 +9,14 @@
         <x-paw-print class="paw absolute top-[24%] right-[8%] hidden size-8 text-accent-vivid sm:block" style="animation-delay: -7s; animation-duration: 21s"/>
     </div>
 
-    <div class="container-page relative py-14 text-center lg:py-18">
-        {{-- A visible trail, matching the BreadcrumbList in the structured
-             data — the markup should never claim a path the page does not show. --}}
-        <nav aria-label="Breadcrumb" class="flex justify-center">
-            {{-- The ancestor is a link, so it is coloured as one. It also has
-                 to be: the decorative blob tints this band to #E8E6F8, where
-                 muted grey measures 4.49:1 and misses AA by a hair. Primary
-                 clears it at 5.64:1. --}}
-            <ol class="flex items-center gap-2 text-sm">
-                <li><a href="/" class="font-medium text-primary transition-colors hover:text-primary-hover">Home</a></li>
-                <li aria-hidden="true" class="text-ink-muted">/</li>
-                <li><span aria-current="page" class="font-medium text-ink">About</span></li>
-            </ol>
-        </nav>
-
-        <h1 class="mt-6 font-heading text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
+    <div class="container-page relative py-10 text-center lg:py-12">
+        <h1 class="font-heading text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
             About {{ config('app.name') }}
         </h1>
         <p class="mt-4 font-heading text-xl font-bold text-primary sm:text-2xl">
             Your trusted hub for smarter, safer cat care
         </p>
-        <p class="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-ink-muted sm:text-lg">
+        <p class="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-ink-muted sm:text-lg">
             Every cat deserves the best care its owner can give, and every owner
             deserves clear, honest, research-backed answers to make that happen.
             PurrQuery is a free platform for cat owners who want reliable tools,
@@ -45,7 +31,7 @@
 </section>
 
 {{-- ══ Our story ═════════════════════════════════════════════════════════ --}}
-<section class="section bg-surface">
+<section class="section-tight bg-surface">
     <div class="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div>
             <p class="eyebrow">Our story</p>
@@ -85,43 +71,61 @@
     </div>
 </section>
 
-{{-- ══ Mission ═══════════════════════════════════════════════════════════ --}}
-<section class="section bg-surface-soft">
-    <div class="container-page max-w-4xl text-center">
-        <p class="eyebrow">Our mission</p>
-        <h2 class="section-title">To be the cat care resource owners actually trust</h2>
-        <p class="section-intro">
-            Trust is earned by being right and by being straight about what we
-            know. That is the whole strategy. In practice it means:
-        </p>
+{{-- ══ Mission and vision ═══════════════════════════════════════════════ --}}
+<section class="section-tight bg-surface-soft">
+    <div class="container-page">
+        <div class="grid gap-6 lg:grid-cols-2">
+            @foreach (config('about.purpose') as $i => $block)
+                <article class="reveal group relative overflow-hidden rounded-2xl border border-line bg-surface p-8 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg sm:p-10"
+                         style="--reveal-delay: {{ $i * 120 }}ms">
+                    <div aria-hidden="true" @class([
+                        'pointer-events-none absolute -top-16 -right-16 size-48 rounded-full opacity-40 blur-3xl transition-opacity duration-300 group-hover:opacity-60',
+                        'bg-primary-light' => $block['tone'] === 'primary',
+                        'bg-accent-light' => $block['tone'] === 'accent',
+                    ])></div>
 
-        <ul class="mx-auto mt-10 grid max-w-2xl gap-4 text-left">
-            @foreach (config('about.mission') as $point)
-                <li class="flex items-start gap-3 rounded-xl border border-line bg-surface p-4 shadow-sm">
-                    <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent-light">
-                        <svg class="size-3.5 text-accent-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M20 6 9 17l-5-5"/>
-                        </svg>
-                    </span>
-                    <span class="text-base text-ink">{{ $point }}</span>
-                </li>
+                    <div class="relative">
+                        <span @class([
+                            'flex size-12 items-center justify-center rounded-xl',
+                            'bg-primary-light text-primary' => $block['tone'] === 'primary',
+                            'bg-accent-light text-accent' => $block['tone'] === 'accent',
+                        ])>
+                            <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                @foreach ($block['paths'] as $d)
+                                    <path d="{{ $d }}"/>
+                                @endforeach
+                            </svg>
+                        </span>
+
+                        <p @class([
+                            'mt-6 text-xs font-bold tracking-wider uppercase',
+                            'text-primary' => $block['tone'] === 'primary',
+                            'text-accent' => $block['tone'] === 'accent',
+                        ])>{{ $block['label'] }}</p>
+
+                        <h2 class="mt-2 font-heading text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
+                            {{ $block['title'] }}
+                        </h2>
+                        <p class="mt-4 text-base leading-relaxed text-ink-muted">{{ $block['body'] }}</p>
+                    </div>
+                </article>
             @endforeach
-        </ul>
+        </div>
     </div>
 </section>
 
 {{-- ══ What we offer ═════════════════════════════════════════════════════ --}}
-<section class="section bg-surface">
+<section class="section-tight bg-surface">
     <div class="container-page">
         <div class="text-center">
             <p class="eyebrow">What we offer</p>
             <h2 class="section-title">Three things, done properly</h2>
         </div>
 
-        <div class="mt-12 grid gap-6 md:grid-cols-3">
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
             @foreach (config('about.offers') as $offer)
-                <article class="card p-6">
+                <article class="reveal card p-6">
                     <span @class([
                         'flex size-12 items-center justify-center rounded-xl',
                         'bg-primary-light text-primary' => $offer['tone'] === 'primary',
@@ -144,16 +148,16 @@
 </section>
 
 {{-- ══ Values ════════════════════════════════════════════════════════════ --}}
-<section class="section bg-surface-soft">
+<section class="section-tight bg-surface-soft">
     <div class="container-page">
         <div class="text-center">
             <p class="eyebrow">What we stand for</p>
             <h2 class="section-title">Four commitments</h2>
         </div>
 
-        <div class="mt-12 grid gap-6 sm:grid-cols-2">
+        <div class="mt-10 grid gap-6 sm:grid-cols-2">
             @foreach (config('about.values') as $i => $value)
-                <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
+                <div class="reveal rounded-2xl border border-line bg-surface p-6 shadow-sm">
                     <div class="flex items-center gap-3">
                         <span class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary font-heading text-sm font-extrabold text-ink-inverse">
                             {{ $i + 1 }}
@@ -167,36 +171,8 @@
     </div>
 </section>
 
-{{-- ══ Founder ═══════════════════════════════════════════════════════════ --}}
-<section class="section bg-surface">
-    <div class="container-page max-w-3xl text-center">
-        <p class="eyebrow">Who is behind it</p>
-        <h2 class="section-title">The person behind PurrQuery</h2>
-
-        <div class="mt-10 rounded-2xl border border-line bg-surface-soft p-8 text-left shadow-sm sm:flex sm:items-start sm:gap-6">
-            {{-- A monogram, not a stock headshot. A borrowed face on an "about
-                 the founder" card is the one image on a site that cannot be a
-                 placeholder. Swap in a real photo when there is one. --}}
-            <span aria-hidden="true"
-                  class="mx-auto flex size-20 shrink-0 items-center justify-center rounded-2xl bg-primary font-heading text-2xl font-extrabold text-ink-inverse shadow-md sm:mx-0">
-                AN
-            </span>
-            <div class="mt-5 text-center sm:mt-0 sm:text-left">
-                <h3 class="font-heading text-xl font-bold text-ink">Ahsan Nawaz</h3>
-                <p class="mt-1 text-sm font-semibold text-primary">Founder and developer</p>
-                <p class="mt-3 text-base leading-relaxed text-ink-muted">
-                    Ahsan founded PurrQuery and builds it. It is a one-person
-                    project at the moment: the tools, the guides and the site
-                    itself are his work, driven by an interest in cats and a
-                    dislike of having to open nine tabs to answer one question.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
 {{-- ══ By the numbers ════════════════════════════════════════════════════ --}}
-<section class="section bg-primary-dark">
+<section class="section-tight bg-primary-dark">
     <div class="container-page">
         <div class="text-center">
             <p class="inline-flex items-center rounded-full border border-surface/25 bg-surface/10 px-3.5 py-1.5 text-xs font-semibold tracking-wide text-ink-inverse uppercase">
@@ -211,9 +187,9 @@
             </p>
         </div>
 
-        <dl class="mt-12 grid grid-cols-2 gap-5 lg:grid-cols-4">
+        <dl class="mt-10 grid grid-cols-2 gap-5 lg:grid-cols-4">
             @foreach ($stats as [$figure, $label])
-                <div class="rounded-2xl bg-surface/10 p-6 text-center ring-1 ring-surface/15">
+                <div class="reveal rounded-2xl bg-surface/10 p-6 text-center ring-1 ring-surface/15">
                     <dt class="sr-only">{{ $label }}</dt>
                     <dd>
                         <span class="block font-heading text-4xl font-extrabold tracking-tight text-ink-inverse sm:text-5xl">{{ $figure }}</span>
@@ -226,9 +202,9 @@
 </section>
 
 {{-- ══ Disclaimer ════════════════════════════════════════════════════════ --}}
-<section class="section bg-surface">
+<section class="section-tight bg-surface">
     <div class="container-page max-w-3xl">
-        <div class="rounded-2xl border border-warning-light bg-warning-light p-7 sm:p-8">
+        <div class="reveal rounded-2xl border border-warning-light bg-warning-light p-7 sm:p-8">
             <div class="flex items-start gap-4">
                 <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-surface text-warning shadow-sm">
                     <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -259,7 +235,7 @@
 </section>
 
 {{-- ══ CTA ═══════════════════════════════════════════════════════════════ --}}
-<section class="pb-20 bg-surface">
+<section class="pb-14 bg-surface">
     <div class="container-page">
         <div class="relative overflow-hidden rounded-2xl bg-primary px-6 py-14 text-center shadow-lg sm:px-12">
             <div aria-hidden="true" class="pointer-events-none absolute inset-0">

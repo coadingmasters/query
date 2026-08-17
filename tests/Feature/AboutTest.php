@@ -11,7 +11,8 @@ class AboutTest extends TestCase
         $this->get('/about')
             ->assertOk()
             ->assertSee('About '.config('app.name'))
-            ->assertSee('Ahsan Nawaz');
+            ->assertSee('Our mission')
+            ->assertSee('Our vision');
     }
 
     public function test_it_is_reachable_from_the_header_and_footer(): void
@@ -74,15 +75,18 @@ class AboutTest extends TestCase
     {
         $this->get('/about')
             ->assertSee('"@type":"AboutPage"', false)
-            ->assertSee('"@type":"BreadcrumbList"', false)
-            ->assertSee('"@type":"Person"', false);
+            ->assertSee('"@type":"BreadcrumbList"', false);
     }
 
-    public function test_the_breadcrumb_trail_is_visible_on_the_page(): void
+    /**
+     * The founder section was removed, so nothing should still describe a
+     * person — structured data included.
+     */
+    public function test_it_does_not_describe_a_person(): void
     {
         $this->get('/about')
-            ->assertSee('aria-label="Breadcrumb"', false)
-            ->assertSee('aria-current="page"', false);
+            ->assertDontSee('"@type":"Person"', false)
+            ->assertDontSee('Ahsan Nawaz');
     }
 
     public function test_the_sitemap_lists_the_about_page(): void

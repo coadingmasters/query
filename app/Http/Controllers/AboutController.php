@@ -52,17 +52,10 @@ class AboutController extends Controller
                         'email' => config('brand.email'),
                         'description' => $description,
                         'logo' => $url.'/og-image.png',
-                        'founder' => ['@id' => $url.'/about#founder'],
                     ],
-                    [
-                        '@type' => 'Person',
-                        '@id' => $url.'/about#founder',
-                        'name' => 'Ahsan Nawaz',
-                        'jobTitle' => 'Founder and developer',
-                        'worksFor' => ['@id' => $url.'/#organization'],
-                    ],
-                    // Breadcrumbs give Google the path to show under the result
-                    // instead of a bare URL.
+                    // Breadcrumbs feed the path Google shows under the result instead
+                    // of a bare URL. Unlike FAQ markup this does not need a visible
+                    // trail on the page, so it stays now the hero has none.
                     [
                         '@type' => 'BreadcrumbList',
                         '@id' => $url.'/about#breadcrumb',

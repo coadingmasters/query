@@ -26,7 +26,7 @@
     <link rel="icon" href="/favicon.ico" sizes="any">
 
     @fonts
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css'])
 
     <script type="application/ld+json">
         @json($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
@@ -62,35 +62,35 @@
         </svg>
 
         <p class="rise mt-8 inline-flex items-center gap-2 rounded-full border border-line bg-surface-soft px-4 py-1.5 text-sm font-medium text-primary-dark shadow-sm"
-           style="--rise-delay: 120ms">
+           style="--rise-delay: 60ms">
             <span class="beacon size-2 rounded-full bg-accent-vivid"></span>
             In development
         </p>
 
         <h1 class="rise mt-6 text-5xl font-extrabold tracking-tight text-ink sm:text-6xl"
-            style="--rise-delay: 220ms">
+            style="--rise-delay: 120ms">
             {{ config('app.name') }}
         </h1>
 
         {{-- The rotator is decorative motion, so it is hidden from screen
              readers and the full list is exposed as one static sentence. --}}
-        <p class="rise mt-5 text-xl text-ink-soft sm:text-2xl" style="--rise-delay: 320ms">
+        <p class="rise mt-5 text-xl text-ink-soft sm:text-2xl" style="--rise-delay: 180ms">
             <span class="sr-only">Practical {{ implode(', ', $rotates) }} — coming soon.</span>
-            <span aria-hidden="true" x-data="rotator(@js($rotates))">
+            <span aria-hidden="true">
                 Practical
-                <span class="font-semibold text-primary" x-text="current">{{ $rotates[0] }}</span>
+                <span class="font-semibold text-primary" data-rotate='{{ json_encode($rotates) }}'>{{ $rotates[0] }}</span>
             </span>
         </p>
 
         <p class="rise mt-6 max-w-lg text-base leading-relaxed text-ink-muted sm:text-lg"
-           style="--rise-delay: 420ms">
+           style="--rise-delay: 240ms">
             {{ $description }}
         </p>
 
         <div class="rise sweep relative mt-10 h-1 w-56 overflow-hidden rounded-full bg-line"
-             style="--rise-delay: 520ms" role="presentation"></div>
+             style="--rise-delay: 300ms" role="presentation"></div>
 
-        <p class="rise mt-10 text-sm text-ink-soft" style="--rise-delay: 620ms">
+        <p class="rise mt-10 text-sm text-ink-soft" style="--rise-delay: 360ms">
             Questions or partnerships?
             <a href="mailto:{{ $email }}"
                class="font-medium text-primary underline decoration-line-strong underline-offset-4 transition-colors hover:text-primary-hover">
@@ -102,5 +102,25 @@
     <footer class="relative z-10 pb-8 text-center text-sm text-ink-soft">
         &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
     </footer>
+
+    {{-- Deferred so it never blocks the first paint, and skipped entirely for
+         visitors who prefer reduced motion. The first word is already in the
+         markup, so the line reads correctly if this never runs. --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const el = document.querySelector('[data-rotate]');
+            const words = JSON.parse(el.dataset.rotate);
+
+            if (words.length < 2 || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                return;
+            }
+
+            let i = 0;
+            setInterval(() => {
+                i = (i + 1) % words.length;
+                el.textContent = words[i];
+            }, 2600);
+        });
+    </script>
 </body>
 </html>

@@ -50,6 +50,24 @@ class ComingSoonTest extends TestCase
         }
     }
 
+    /**
+     * The rotator reads its words from a data attribute. Blade's @js helper
+     * emits a JS expression rather than JSON, which parses as HTML but throws
+     * in the browser, so the attribute is checked as real JSON here.
+     */
+    public function test_the_rotator_words_are_valid_json(): void
+    {
+        $html = $this->get('/')->getContent();
+
+        $this->assertMatchesRegularExpression("/data-rotate='([^']*)'/", $html);
+        preg_match("/data-rotate='([^']*)'/", $html, $m);
+
+        $words = json_decode(html_entity_decode($m[1]), true);
+
+        $this->assertSame(JSON_ERROR_NONE, json_last_error());
+        $this->assertSame(config('brand.rotates'), $words);
+    }
+
     public function test_the_sitemap_lists_the_home_page(): void
     {
         $this->get('/sitemap.xml')

@@ -22,6 +22,7 @@ class SitemapController extends Controller
         $pages = [
             ['', 'views/home.blade.php', '1.0'],
             ['/about', 'views/about.blade.php', '0.7'],
+            ['/faq', 'views/faq.blade.php', '0.8'],
             ['/contact', 'views/contact.blade.php', '0.5'],
             ['/terms', 'views/terms.blade.php', '0.3'],
             ['/privacy', 'views/privacy.blade.php', '0.3'],

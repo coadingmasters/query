@@ -20,6 +20,7 @@
             'heading' => 'Site',
             'span' => 'lg:col-span-2',
             'items' => [
+                ['FAQ', route('faq')],
                 ['About Us', route('about')],
                 ['How it works', '/#how-it-works'],
                 ['Blog', '/#blog'],

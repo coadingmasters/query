@@ -6,6 +6,7 @@
         ['/#food-guides', 'Food Guides'],
         ['/#blog', 'Blog'],
         ['/#how-it-works', 'How It Works'],
+        [route('faq'), 'FAQ'],
         [route('about'), 'About Us'],
         [route('contact'), 'Contact Us'],
     ];

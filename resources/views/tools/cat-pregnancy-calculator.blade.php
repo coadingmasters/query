@@ -76,12 +76,20 @@
                     <label for="cat-breed" class="block text-sm font-semibold text-ink">Breed</label>
                     <select id="cat-breed" name="cat-breed"
                             class="mt-2 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-sm transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                        <option value="">Select a breed</option>
-                        <option value="domestic-shorthair">Domestic Shorthair</option>
-                        <option value="persian">Persian</option>
-                        <option value="siamese">Siamese</option>
-                        <option value="maine-coon">Maine Coon</option>
+                        {{-- Values match the gestation table in the script. A
+                             breed listed here without an entry there would
+                             silently fall back to the 65-day default. --}}
+                        <option value="mixed">Mixed breed / unknown</option>
+                        <option value="abyssinian">Abyssinian</option>
                         <option value="bengal">Bengal</option>
+                        <option value="british-shorthair">British Shorthair</option>
+                        <option value="burmese">Burmese</option>
+                        <option value="devon-rex">Devon Rex</option>
+                        <option value="maine-coon">Maine Coon</option>
+                        <option value="oriental-shorthair">Oriental Shorthair</option>
+                        <option value="persian">Persian</option>
+                        <option value="ragdoll">Ragdoll</option>
+                        <option value="siamese">Siamese</option>
                     </select>
                 </div>
             </div>
@@ -123,6 +131,11 @@
                 </div>
             </div>
 
+            {{-- Validation messages land here. role=alert so a screen reader
+                 hears them without the focus being moved. --}}
+            <p data-error role="alert" hidden
+               class="mt-5 rounded-xl border border-danger/30 bg-danger-light px-4 py-3 text-sm font-medium text-danger"></p>
+
             <button type="submit" data-calculate class="btn-primary mt-6 w-full rounded-full sm:w-auto sm:px-8">
                 Calculate due date
                 <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -150,7 +163,12 @@
                     </p>
                 </div>
 
-                {{-- Current week and days remaining --}}
+                {{-- An overdue or past-term pregnancy says so here, above the
+                     figures, because it is the only thing that matters then. --}}
+                <p data-result-warning hidden role="alert"
+                   class="mx-6 mt-6 flex items-start gap-3 rounded-xl border border-danger/30 bg-danger-light px-4 py-3 text-sm font-medium text-danger sm:mx-8"></p>
+
+                {{-- Week, days remaining, trimester, pinking up --}}
                 <div class="grid gap-5 p-6 sm:grid-cols-2 sm:p-8">
                     <div class="rounded-xl border border-line bg-surface-soft p-5 text-center">
                         <p class="text-sm font-semibold text-ink-muted">Current stage</p>
@@ -164,6 +182,21 @@
                         <p data-result-days class="mt-2 font-heading text-3xl font-extrabold tracking-tight text-ink">
                             28 days
                         </p>
+                    </div>
+
+                    <div class="rounded-xl border border-line bg-surface-soft p-5 text-center">
+                        <p class="text-sm font-semibold text-ink-muted">Trimester</p>
+                        <p data-result-trimester class="mt-2 font-heading text-lg font-bold text-ink">
+                            Second
+                        </p>
+                    </div>
+
+                    <div class="rounded-xl border border-line bg-surface-soft p-5 text-center">
+                        <p class="text-sm font-semibold text-ink-muted">Pinking up</p>
+                        <p data-result-pinking class="mt-2 font-heading text-lg font-bold text-ink">
+                            1 September 2026
+                        </p>
+                        <p class="mt-1 text-xs text-ink-muted">Nipples redden, around day 21</p>
                     </div>
                 </div>
             </div>
@@ -221,32 +254,250 @@
 </section>
 
 @push('scripts')
+    {{-- @verbatim so Blade leaves the JavaScript alone. Without it, any "{{"
+         in the script — a JSDoc type, a nested object literal — is compiled as
+         a Blade echo and the page dies with a parse error. --}}
+    @verbatim
     <script>
-        // UI only. The toggle shows and hides its panel; the button reveals the
-        // results section with the dummy values already in the markup. No
-        // arithmetic happens here yet.
         (() => {
-            const toggle = document.querySelector('[data-unknown-toggle]');
-            const panel = document.getElementById('unknown-date-panel');
-            const form = document.getElementById('calculator-form');
-            const results = document.getElementById('results');
+            'use strict';
 
+            // ══ GESTATION TABLE ════════════════════════════════════════════
+            // Days from mating to birth, per breed. Keys match the option
+            // values in the breed select; anything missing falls back to the
+            // mixed-breed figure.
+            const GESTATION_DAYS = {
+                'abyssinian':         66,
+                'bengal':             65,
+                'british-shorthair':  65,
+                'burmese':            64,
+                'devon-rex':          65,
+                'maine-coon':         66,
+                'oriental-shorthair': 66,
+                'persian':            65,
+                'ragdoll':            65,
+                'siamese':            63,
+                'mixed':              65,
+            };
+
+            const DEFAULT_GESTATION = 65;   // mixed breed
+            const BIRTH_WINDOW_DAYS = 4;    // due date give or take
+            const PINKING_UP_DAY   = 21;    // nipples redden around here
+            const TOTAL_WEEKS      = 9;
+            const OVERDUE_DAY      = 72;    // past this, it is a vet call
+
+            // Roughly how long ago mating was, if the owner only knows when
+            // signs appeared. Signs show around the pinking-up mark, so the
+            // midpoint of each range is pushed back by that much.
+            const DAYS_SINCE_SIGNS = { '1': 3, '2': 10, '3': 21, '4': 35, '5': 49 };
+
+            const MS_PER_DAY = 86400000;
+
+            // ══ ELEMENTS ═══════════════════════════════════════════════════
+            const form        = document.getElementById('calculator-form');
+            const results     = document.getElementById('results');
+            const errorBox    = document.querySelector('[data-error]');
+            const warningBox  = document.querySelector('[data-result-warning]');
+            const toggle      = document.querySelector('[data-unknown-toggle]');
+            const panel       = document.getElementById('unknown-date-panel');
+
+            const matingInput = document.getElementById('mating-date');
+            const breedInput  = document.getElementById('cat-breed');
+            const nameInput   = document.getElementById('cat-name');
+            const signsInput  = document.getElementById('signs-noticed');
+
+            const out = {
+                dueDate:   document.querySelector('[data-result-due-date]'),
+                window:    document.querySelector('[data-result-window]'),
+                week:      document.querySelector('[data-result-week]'),
+                days:      document.querySelector('[data-result-days]'),
+                trimester: document.querySelector('[data-result-trimester]'),
+                pinking:   document.querySelector('[data-result-pinking]'),
+            };
+
+            if (!form) return;
+
+            // ══ DATE HELPERS ═══════════════════════════════════════════════
+
+            /**
+             * Parse a YYYY-MM-DD value as a LOCAL date.
+             *
+             * new Date('2026-08-18') is parsed as UTC midnight, which lands on
+             * the 17th for anyone west of Greenwich — a whole day of error in
+             * a tool whose entire job is counting days.
+             */
+            const parseLocalDate = (value) => {
+                const [year, month, day] = value.split('-').map(Number);
+                return new Date(year, month - 1, day);
+            };
+
+            /** Today at local midnight, so day arithmetic is not skewed by the clock. */
+            const startOfToday = () => {
+                const now = new Date();
+                return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            };
+
+            const addDays = (date, days) => {
+                const copy = new Date(date);
+                copy.setDate(copy.getDate() + days);
+                return copy;
+            };
+
+            /** Whole days between two local midnights. */
+            const daysBetween = (from, to) => Math.round((to - from) / MS_PER_DAY);
+
+            const formatDate = (date) => date.toLocaleDateString('en-GB', {
+                day: 'numeric', month: 'long', year: 'numeric',
+            });
+
+            const formatShort = (date) => date.toLocaleDateString('en-GB', {
+                day: 'numeric', month: 'short',
+            });
+
+            // ══ CALCULATION ════════════════════════════════════════════════
+
+            /** Gestation length for the chosen breed. */
+            const gestationFor = (breed) => GESTATION_DAYS[breed] ?? DEFAULT_GESTATION;
+
+            /** Which of the nine weeks a given day count falls in, clamped. */
+            const weekFor = (daysElapsed) =>
+                Math.min(Math.max(Math.floor(daysElapsed / 7) + 1, 1), TOTAL_WEEKS);
+
+            /** Weeks 1-3 first, 4-6 second, 7-9 third. */
+            const trimesterFor = (week) => {
+                if (week <= 3) return 'First';
+                if (week <= 6) return 'Second';
+                return 'Third';
+            };
+
+            /**
+             * Work out the mating date from the form.
+             *
+             * The unknown-date path was not specified, so it is treated as an
+             * estimate rather than dropped: the ranges ask when signs were
+             * first noticed, and signs appear around the pinking-up mark, so
+             * mating is estimated as that many days ago plus 21.
+             *
+             * @returns {{date: Date, approximate: boolean}|{error: string}}
+             */
+            const resolveMatingDate = () => {
+                const today = startOfToday();
+
+                if (toggle && toggle.checked) {
+                    const choice = signsInput ? signsInput.value : '';
+
+                    if (!choice) {
+                        return { error: 'Choose roughly when you first noticed signs, or untick the box and give the mating date.' };
+                    }
+
+                    const daysAgo = DAYS_SINCE_SIGNS[choice] + PINKING_UP_DAY;
+                    return { date: addDays(today, -daysAgo), approximate: true };
+                }
+
+                if (!matingInput.value) {
+                    return { error: 'Please enter the mating date, or tick the box if you do not know it.' };
+                }
+
+                const mating = parseLocalDate(matingInput.value);
+
+                if (Number.isNaN(mating.getTime())) {
+                    return { error: 'That date could not be read. Please pick one from the calendar.' };
+                }
+
+                if (mating > today) {
+                    return { error: 'The mating date is in the future. Please check it and try again.' };
+                }
+
+                return { date: mating, approximate: false };
+            };
+
+            const showError = (message) => {
+                errorBox.textContent = message;
+                errorBox.hidden = false;
+                results.hidden = true;
+            };
+
+            const clearError = () => {
+                errorBox.hidden = true;
+                errorBox.textContent = '';
+            };
+
+            // ══ RENDER ═════════════════════════════════════════════════════
+            const calculate = () => {
+                const resolved = resolveMatingDate();
+
+                if (resolved.error) {
+                    showError(resolved.error);
+                    return;
+                }
+
+                clearError();
+
+                const mating      = resolved.date;
+                const today       = startOfToday();
+                const gestation   = gestationFor(breedInput.value);
+
+                const dueDate     = addDays(mating, gestation);
+                const windowStart = addDays(dueDate, -BIRTH_WINDOW_DAYS);
+                const windowEnd   = addDays(dueDate, BIRTH_WINDOW_DAYS);
+                const pinkingDate = addDays(mating, PINKING_UP_DAY);
+
+                const daysElapsed   = daysBetween(mating, today);
+                const daysRemaining = daysBetween(today, dueDate);
+                const week          = weekFor(daysElapsed);
+
+                // --- due date and window ---
+                out.dueDate.textContent = formatDate(dueDate);
+                out.window.textContent  = resolved.approximate
+                    ? `Roughly ${formatShort(windowStart)} – ${formatDate(windowEnd)}`
+                    : `Likely birth window: ${formatShort(windowStart)} – ${formatDate(windowEnd)}`;
+
+                // --- stage ---
+                out.week.textContent      = `Week ${week} of ${TOTAL_WEEKS}`;
+                out.trimester.textContent = `${trimesterFor(week)} trimester`;
+
+                // --- days remaining, which can be negative ---
+                if (daysRemaining > 0) {
+                    out.days.textContent = daysRemaining === 1 ? '1 day' : `${daysRemaining} days`;
+                } else if (daysRemaining === 0) {
+                    out.days.textContent = 'Due today';
+                } else {
+                    const over = Math.abs(daysRemaining);
+                    out.days.textContent = `${over} ${over === 1 ? 'day' : 'days'} overdue`;
+                }
+
+                // --- pinking up: only ahead of us if it has not passed ---
+                out.pinking.textContent = formatDate(pinkingDate);
+
+                // --- warnings ---
+                // Past day 72 a cat is beyond any normal gestation, and that
+                // is a call to the vet rather than a number on a screen.
+                if (daysElapsed > OVERDUE_DAY) {
+                    warningBox.textContent = `It has been ${daysElapsed} days since mating, which is past the normal range for a cat. Please contact your vet.`;
+                    warningBox.hidden = false;
+                } else if (resolved.approximate) {
+                    warningBox.textContent = 'This is estimated from when you noticed signs, so treat the dates as approximate.';
+                    warningBox.hidden = false;
+                } else {
+                    warningBox.hidden = true;
+                }
+
+                results.hidden = false;
+                results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            };
+
+            // ══ EVENTS ═════════════════════════════════════════════════════
             if (toggle && panel) {
                 toggle.addEventListener('change', () => {
                     panel.hidden = !toggle.checked;
+                    clearError();
                 });
             }
 
-            if (form && results) {
-                form.addEventListener('submit', () => {
-                    results.hidden = false;
-                    // Bring the result into view rather than leaving it to be
-                    // found — on a phone it opens below the fold.
-                    results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                });
-            }
+            form.addEventListener('submit', calculate);
         })();
     </script>
+    @endverbatim
 @endpush
 
 </x-layouts.app>

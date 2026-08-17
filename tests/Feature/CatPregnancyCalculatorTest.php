@@ -31,16 +31,57 @@ class CatPregnancyCalculatorTest extends TestCase
         $this->assertStringContainsString('type="date"', $html, 'the mating date is not a date picker');
     }
 
-    /** Five placeholder breeds, as specified. */
-    public function test_the_breed_dropdown_has_five_options(): void
+    /**
+     * Every breed offered must have a gestation figure in the script, or it
+     * silently falls back to the 65-day default and the tool quietly lies.
+     */
+    public function test_every_breed_offered_has_a_gestation_value(): void
     {
         $html = $this->get(self::PATH)->getContent();
 
-        preg_match('/<select id="cat-breed".*?<\/select>/s', $html, $m);
+        preg_match('/<select id="cat-breed".*?<\/select>/s', $html, $select);
+        preg_match_all('/<option value="([^"]+)"/', $select[0], $options);
 
-        // The prompt asked for five breeds; the sixth option is the empty
-        // "Select a breed" placeholder.
-        $this->assertSame(6, substr_count($m[0], '<option'));
+        preg_match('/const GESTATION_DAYS = \{(.*?)\};/s', $html, $table);
+        preg_match_all("/'([a-z-]+)':\s*(\d+)/", $table[1], $entries);
+
+        $offered = $options[1];
+        $known = $entries[1];
+
+        $this->assertNotEmpty($offered, 'the breed select has no options');
+        $this->assertSame([], array_diff($offered, $known),
+            'a breed is offered with no gestation value behind it');
+
+        // The eleven from the brief.
+        $this->assertCount(11, $known);
+    }
+
+    public function test_the_gestation_values_match_the_brief(): void
+    {
+        $html = $this->get(self::PATH)->getContent();
+
+        preg_match('/const GESTATION_DAYS = \{(.*?)\};/s', $html, $table);
+
+        foreach ([
+            'persian' => 65, 'siamese' => 63, 'maine-coon' => 66,
+            'british-shorthair' => 65, 'bengal' => 65, 'ragdoll' => 65,
+            'oriental-shorthair' => 66, 'burmese' => 64, 'abyssinian' => 66,
+            'devon-rex' => 65, 'mixed' => 65,
+        ] as $breed => $days) {
+            $this->assertMatchesRegularExpression(
+                "/'".preg_quote($breed, '/')."':\s*$days\b/", $table[1],
+                "$breed should be $days days"
+            );
+        }
+    }
+
+    public function test_the_results_carry_slots_for_every_figure(): void
+    {
+        $html = $this->get(self::PATH)->getContent();
+
+        foreach (['due-date', 'window', 'week', 'days', 'trimester', 'pinking'] as $slot) {
+            $this->assertStringContainsString('data-result-'.$slot, $html, "no slot for $slot");
+        }
     }
 
     public function test_the_results_section_starts_hidden(): void

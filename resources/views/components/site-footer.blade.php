@@ -25,6 +25,7 @@
                 ['Blog', '/#blog'],
                 ['All food guides', '/#food-guides'],
                 ['Contact Us', route('contact')],
+                ['Terms & Conditions', route('terms')],
             ],
         ],
     ];

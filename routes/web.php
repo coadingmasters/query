@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TermsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManifestController;
 use App\Http\Controllers\SitemapController;
@@ -17,6 +18,8 @@ Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');
+
+Route::get('/terms', TermsController::class)->name('terms');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/site.webmanifest', ManifestController::class)->name('manifest');

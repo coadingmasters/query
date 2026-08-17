@@ -54,6 +54,7 @@ return [
 
         'purrquery-hero-cat-owner-smiling' => 'hero',
 
+        'cat-pregnancy-calculator-kitten' => 'tool',
         'cat-age-calculator-senior-tabby-cat' => 'tool',
         'cat-calorie-calculator-cat-food-bowl' => 'tool',
         'cat-weight-checker-cat-on-scale' => 'tool',
@@ -89,6 +90,7 @@ return [
      | the pages already reference the real name.
      */
     'placeholders' => [
+        'cat-pregnancy-calculator-kitten' => 'cat-name-generator-cute-kitten',
         'about-our-story' => 'cat-breed-quiz-multiple-cat-breeds',
         'how-much-feed-cat-eating-food-bowl' => 'cat-calorie-calculator-cat-food-bowl',
         'signs-cat-is-sick-vet-examination' => 'cat-vaccination-tracker-vet-examination',

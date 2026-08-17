@@ -339,6 +339,26 @@
             }
         ]
     },
+    "cat-pregnancy-calculator-kitten": {
+        "width": 400,
+        "height": 250,
+        "preset": "tool",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 400,
+                "src": "/images/cat-pregnancy-calculator-kitten-400.8ac0d88c.webp"
+            },
+            {
+                "w": 600,
+                "src": "/images/cat-pregnancy-calculator-kitten-600.8ac0d88c.webp"
+            },
+            {
+                "w": 800,
+                "src": "/images/cat-pregnancy-calculator-kitten-800.8ac0d88c.webp"
+            }
+        ]
+    },
     "cat-vaccination-tracker-vet-examination": {
         "width": 400,
         "height": 250,

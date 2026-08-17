@@ -16,6 +16,14 @@ return [
 
     'tools' => [
         [
+            'slug' => 'cat-pregnancy-calculator',
+            'url' => '/tools/cat-pregnancy-calculator',
+            'title' => 'Cat Pregnancy Calculator',
+            'blurb' => 'Work out your cat’s due date and follow the pregnancy week by week.',
+            'image' => 'cat-pregnancy-calculator-kitten',
+            'alt' => 'Newborn kitten — cat pregnancy calculator on PurrQuery',
+        ],
+        [
             'slug' => 'cat-age-calculator',
             'title' => 'Cat Age Calculator',
             'blurb' => 'Turn your cat’s age into human years, using the life-stage curve vets actually use.',

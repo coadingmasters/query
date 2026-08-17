@@ -224,21 +224,40 @@
 
         <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @foreach (config('catalog.tools') as $tool)
-                <article class="card" data-filter data-terms="{{ Str::lower($tool['title'].' '.$tool['blurb']) }}">
+                {{-- A tool with a page behind it becomes a link; the rest stay
+                     as plain cards until theirs exist, rather than pointing at
+                     a URL that is not there. --}}
+                @php $isLive = isset($tool['url']); @endphp
+                <{{ $isLive ? 'a' : 'article' }}
+                    @if ($isLive) href="{{ $tool['url'] }}" @endif
+                    class="card group" data-filter data-terms="{{ Str::lower($tool['title'].' '.$tool['blurb']) }}">
                     <div class="card-media">
                         <x-img :name="$tool['image']" :alt="$tool['alt']"
                                sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 30vw"/>
+
+                        @unless ($isLive)
+                            <span class="absolute top-3 right-3 rounded-full bg-surface/90 px-3 py-1 text-xs font-bold text-ink-muted shadow-sm">
+                                Coming soon
+                            </span>
+                        @endunless
                     </div>
                     <div class="card-body">
                         <h3 class="card-title">{{ $tool['title'] }}</h3>
                         <p class="card-text flex-1">{{ $tool['blurb'] }}</p>
-                        <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                            Open tool
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        <span @class([
+                            'mt-4 inline-flex items-center gap-1.5 text-sm font-semibold',
+                            'text-primary' => $isLive,
+                            'text-ink-muted' => ! $isLive,
+                        ])>
+                            {{ $isLive ? 'Open tool' : 'In development' }}
+                            @if ($isLive)
+                                <svg class="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                            @endif
                         </span>
                     </div>
-                </article>
+                </{{ $isLive ? 'a' : 'article' }}>
             @endforeach
         </div>
     </div>

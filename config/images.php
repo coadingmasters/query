@@ -162,6 +162,10 @@ return [
     'recolour' => [
         'cat-age-calculator-senior-tabby-cat' => ['from' => 235, 'to' => 305, 'target' => 8],
         'cat-age-life-stages' => ['from' => 235, 'to' => 305, 'target' => 8],
+
+        // Stands in on two cards, so the clash showed twice.
+        'cat-name-generator-cute-kitten' => ['from' => 235, 'to' => 305, 'target' => 8],
+        'cat-pregnancy-calculator-kitten' => ['from' => 235, 'to' => 305, 'target' => 8],
     ],
 
     /*

@@ -16,21 +16,14 @@
         <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
         <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
 
-        {{-- Timings are classes rather than an inline style attribute. Blade
-             interpolation inside style="" is valid output but not valid CSS,
-             so an editor lints it as broken every time it is opened.
-
-             The negative delays are deliberate: a negative delay starts the
-             animation partway through, which is what stops five paws drifting
-             in lockstep. Durations are all coprime-ish for the same reason. --}}
         @foreach ([
             'left-[4%] top-[16%] size-10 text-primary [animation-delay:0s] [animation-duration:22s]',
             'left-[13%] top-[68%] size-7 text-accent-vivid [animation-delay:-6s] [animation-duration:26s]',
             'left-[30%] top-[8%] size-6 text-primary [animation-delay:-11s] [animation-duration:19s]',
             'right-[6%] top-[10%] size-9 text-accent-vivid [animation-delay:-3s] [animation-duration:24s]',
             'left-[46%] bottom-[16%] size-6 text-accent-vivid [animation-delay:-8s] [animation-duration:21s]',
-        ] as $paw)
-            <x-paw-print class="paw absolute {{ $paw }}"/>
+        ] as $classes)
+            <x-paw-print class="paw absolute {{ $classes }}"/>
         @endforeach
     </div>
 
@@ -38,7 +31,7 @@
         <div>
             <p class="eyebrow">
                 <span class="size-1.5 rounded-full bg-accent-vivid"></span>
-                22 free tools and guides
+                {{ count(config('catalog.tools')) + count(config('catalog.foods')) + count(config('catalog.posts')) }} free tools and guides
             </p>
 
             <h1 class="mt-5 font-heading text-4xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-5xl">
@@ -92,7 +85,7 @@
 
             {{-- Each of these is true of the site as it stands. Counts and
                  endorsements that cannot be backed are deliberately absent. --}}
-            <ul class="mt-7 grid grid-cols-2 gap-x-4 gap-y-4 xl:grid-cols-4 xl:gap-x-2">
+            <ul class="mt-7 grid max-w-lg grid-cols-2 gap-3">
                 @foreach ([
                     ['100% Free', 'Always will be', [
                         'M12.6 2.9 20.8 11a1.5 1.5 0 0 1 0 2.1l-7.7 7.7a1.5 1.5 0 0 1-2.1 0L2.9 12.6a1.5 1.5 0 0 1-.4-1.1V4.3a1.7 1.7 0 0 1 1.7-1.7h7.2c.4 0 .8.1 1.1.3Z',
@@ -112,9 +105,9 @@
                         'M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z',
                     ]],
                 ] as [$title, $sub, $paths])
-                    <li class="flex items-start gap-2">
-                        <span class="mt-px flex size-6 shrink-0 items-center justify-center rounded-md bg-primary-light text-primary">
-                            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    <li class="flex items-center gap-2.5 rounded-xl border border-line bg-surface/70 px-3 py-2.5 shadow-sm backdrop-blur-sm">
+                        <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary-light text-primary">
+                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 @foreach ($paths as $d)
                                     <path d="{{ $d }}"/>
@@ -123,7 +116,7 @@
                         </span>
                         <span class="min-w-0 leading-tight">
                             <span class="block text-sm font-bold text-ink">{{ $title }}</span>
-                            <span class="mt-0.5 block text-[11px] whitespace-nowrap text-ink-muted">{{ $sub }}</span>
+                            <span class="mt-0.5 block text-xs text-ink-muted">{{ $sub }}</span>
                         </span>
                     </li>
                 @endforeach
@@ -140,10 +133,18 @@
                        :priority="true"/>
             </div>
 
-            <span aria-hidden="true"
-                  class="absolute -bottom-4 left-2 flex size-16 items-center justify-center rounded-full bg-accent shadow-lg sm:size-20">
-                <x-paw-print class="size-8 text-ink-inverse sm:size-10"/>
-            </span>
+            {{-- Duplicates a line from the trust row below, so it is hidden
+                 from screen readers rather than read out twice. --}}
+            <div aria-hidden="true"
+                 class="absolute -bottom-5 left-4 hidden items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 shadow-lg sm:flex">
+                <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent-light text-accent-dark">
+                    <x-paw-print class="size-5"/>
+                </span>
+                <span>
+                    <span class="block font-heading text-sm font-extrabold text-ink">Free forever</span>
+                    <span class="mt-0.5 block text-xs text-ink-muted">No account, no paywall</span>
+                </span>
+            </div>
         </div>
     </div>
 
@@ -174,19 +175,26 @@
 <section class="bg-surface pb-4">
     <div class="container-page grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         @foreach ($categories as [$title, $text, $cta, $href, $tone, $paths])
-            <a href="{{ $href }}" @class([
-                'group relative flex flex-col overflow-hidden rounded-2xl border p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-lg',
-                'border-line-strong bg-primary-light' => $tone === 'primary',
-                'border-accent-light bg-accent-light' => $tone === 'accent',
-                'border-warning-light bg-warning-light' => $tone === 'warning',
-                'border-info-light bg-info-light' => $tone === 'info',
-            ])>
+            <a href="{{ $href }}"
+               class="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-line-strong hover:shadow-lg">
+
+                {{-- A wash of the card's colour bled in from the corner, so the
+                     four stay distinguishable without becoming four flat
+                     rectangles of paint. --}}
+                <span aria-hidden="true" @class([
+                    'pointer-events-none absolute -top-12 -right-12 size-32 rounded-full blur-2xl transition-opacity duration-200 opacity-60 group-hover:opacity-100',
+                    'bg-primary-light' => $tone === 'primary',
+                    'bg-accent-light' => $tone === 'accent',
+                    'bg-warning-light' => $tone === 'warning',
+                    'bg-info-light' => $tone === 'info',
+                ])></span>
+
                 <span @class([
-                    'flex size-12 items-center justify-center rounded-xl bg-surface shadow-sm',
-                    'text-primary' => $tone === 'primary',
-                    'text-accent' => $tone === 'accent',
-                    'text-warning' => $tone === 'warning',
-                    'text-info' => $tone === 'info',
+                    'relative flex size-12 items-center justify-center rounded-xl shadow-sm',
+                    'bg-primary-light text-primary' => $tone === 'primary',
+                    'bg-accent-light text-accent' => $tone === 'accent',
+                    'bg-warning-light text-warning' => $tone === 'warning',
+                    'bg-info-light text-info' => $tone === 'info',
                 ])>
                     <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -196,11 +204,11 @@
                     </svg>
                 </span>
 
-                <h2 class="mt-5 font-heading text-lg font-bold text-ink">{{ $title }}</h2>
-                <p class="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{{ $text }}</p>
+                <h2 class="relative mt-5 font-heading text-lg font-bold text-ink">{{ $title }}</h2>
+                <p class="relative mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{{ $text }}</p>
 
                 <span @class([
-                    'mt-5 inline-flex items-center gap-1.5 text-sm font-semibold',
+                    'relative mt-5 inline-flex items-center gap-1.5 text-sm font-semibold',
                     'text-primary' => $tone === 'primary',
                     'text-accent' => $tone === 'accent',
                     'text-warning' => $tone === 'warning',

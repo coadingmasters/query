@@ -207,7 +207,19 @@ foreach ($config['images'] as $name => $preset) {
 
     // Hash covers the source bytes and every setting that shapes the output,
     // so any change to either produces a new filename.
-    $hash = substr(hash('xxh128', md5_file($sourcePath)."$dw:$dh:$quality"), 0, 8);
+    //
+    // The transforms belong in here as much as the dimensions do. They were
+    // missing, which meant adding a crop or a recolour changed nothing: the
+    // filename stayed the same, the file was found on disk, and the build
+    // reported success while serving the old pixels. Only --force worked, and
+    // only if you knew to reach for it.
+    $transforms = json_encode([
+        $config['crops'][$name] ?? null,
+        in_array($name, $config['keyed'] ?? [], true),
+        $config['recolour'][$name] ?? null,
+    ]);
+
+    $hash = substr(hash('xxh128', md5_file($sourcePath)."$dw:$dh:$quality:$transforms"), 0, 8);
 
     $variants = [];
 

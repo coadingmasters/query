@@ -8,6 +8,7 @@ use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManifestController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\Tools\CatAgeCalculatorController;
 use App\Http\Controllers\Tools\CatPregnancyCalculatorController;
 use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,9 @@ Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');
+
+Route::get('/tools/cat-age-calculator', CatAgeCalculatorController::class)
+    ->name('tools.cat-age-calculator');
 
 Route::get('/tools/cat-pregnancy-calculator', CatPregnancyCalculatorController::class)
     ->name('tools.cat-pregnancy-calculator');

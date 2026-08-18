@@ -29,6 +29,64 @@ $force = in_array('--force', $argv, true);
 @mkdir($outputDir, 0755, true);
 
 /**
+ * Rotate one band of hues onto another, leaving the rest of the picture alone.
+ *
+ * Artwork commissioned against the old purple palette is otherwise unusable on
+ * the current one: a lavender panel in the middle of a coral and teal page
+ * reads as a mistake. Only pixels inside $from..$to degrees move, so a cat's
+ * orange, cream and grey fur, which sits nowhere near violet, is untouched.
+ *
+ * Greys are excluded by the saturation floor. Without it, every neutral pixel
+ * would pick up a colour cast from whatever hue the maths happened to find.
+ */
+function shiftHue(GdImage $src, int $from, int $to, int $target): GdImage
+{
+    $w = imagesx($src);
+    $h = imagesy($src);
+
+    $out = imagecreatetruecolor($w, $h);
+    imagealphablending($out, false);
+    imagesavealpha($out, true);
+
+    for ($y = 0; $y < $h; $y++) {
+        for ($x = 0; $x < $w; $x++) {
+            $c = imagecolorat($src, $x, $y);
+            $a = ($c >> 24) & 0x7F;
+            $r = ($c >> 16) & 0xFF;
+            $g = ($c >> 8) & 0xFF;
+            $b = $c & 0xFF;
+
+            $max = max($r, $g, $b);
+            $min = min($r, $g, $b);
+            $delta = $max - $min;
+
+            if ($delta > 8) {
+                $hue = match ($max) {
+                    $r => fmod(($g - $b) / $delta, 6),
+                    $g => (($b - $r) / $delta) + 2,
+                    default => (($r - $g) / $delta) + 4,
+                };
+                $hue = fmod($hue * 60 + 360, 360);
+
+                if ($hue >= $from && $hue <= $to) {
+                    $saturation = $max === 0 ? 0 : $delta / $max;
+                    $value = $max / 255;
+                    $f = $target / 60;
+
+                    $r = (int) round($value * 255);
+                    $g = (int) round($value * (1 - $saturation * (1 - $f)) * 255);
+                    $b = (int) round($value * (1 - $saturation) * 255);
+                }
+            }
+
+            imagesetpixel($out, $x, $y, ($a << 24) | ($r << 16) | ($g << 8) | $b);
+        }
+    }
+
+    return $out;
+}
+
+/**
  * Turn a flat white studio surround into transparency.
  *
  * Some artwork arrives as a subject on white rather than on alpha, which
@@ -182,6 +240,10 @@ foreach ($config['images'] as $name => $preset) {
 
             if (in_array($name, $config['keyed'] ?? [], true)) {
                 $src = keyOutWhite($src);
+            }
+
+            if ($shift = $config['recolour'][$name] ?? null) {
+                $src = shiftHue($src, $shift['from'], $shift['to'], $shift['target']);
             }
 
             $cropped = cropToRatio($src, $ratio);

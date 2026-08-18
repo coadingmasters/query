@@ -271,6 +271,26 @@
             }
         ]
     },
+    "cat-age-life-stages": {
+        "width": 760,
+        "height": 380,
+        "preset": "figure",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 760,
+                "src": "/images/cat-age-life-stages-760.b22b5149.webp"
+            },
+            {
+                "w": 1140,
+                "src": "/images/cat-age-life-stages-1140.b22b5149.webp"
+            },
+            {
+                "w": 1520,
+                "src": "/images/cat-age-life-stages-1520.b22b5149.webp"
+            }
+        ]
+    },
     "cat-breed-quiz-multiple-cat-breeds": {
         "width": 400,
         "height": 250,

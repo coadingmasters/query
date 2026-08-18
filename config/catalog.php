@@ -25,6 +25,7 @@ return [
         ],
         [
             'slug' => 'cat-age-calculator',
+            'url' => '/tools/cat-age-calculator',
             'title' => 'Cat Age Calculator',
             'blurb' => 'Turn your cat’s age into human years, using the life-stage curve vets actually use.',
             'image' => 'cat-age-calculator-senior-tabby-cat',

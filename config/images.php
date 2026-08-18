@@ -38,6 +38,9 @@ return [
         // emitted at whatever it can honestly provide rather than stretched.
         'avatar' => [128, 128],
 
+        // A wide figure, for a diagram sitting inside the body of a page.
+        'figure' => [760, 380],
+
         // The about page runs its artwork larger than the contact page does.
         'feature' => [640, 427],
         'portrait-wide' => [760, 507],
@@ -65,6 +68,7 @@ return [
         'cutout-sm' => 84,
         'cutout-tall' => 84,
         'avatar' => 88,
+        'figure' => 82,
 
         'feature' => 82,
         'portrait-wide' => 82,
@@ -97,6 +101,7 @@ return [
 
         'cat-pregnancy-calculator-kitten' => 'tool',
         'cat-age-calculator-senior-tabby-cat' => 'tool',
+        'cat-age-life-stages' => 'figure',
         'cat-calorie-calculator-cat-food-bowl' => 'tool',
         'cat-weight-checker-cat-on-scale' => 'tool',
         'cat-name-generator-cute-kitten' => 'tool',
@@ -139,6 +144,24 @@ return [
      */
     'crops' => [
         'purrquery-care-smarter-cat-illustration' => [575, 285, 700, 555],
+
+        // The life-stage artwork carries a Cat Age / Human Age table across
+        // the bottom as pixels. Text in an image cannot be read by Google,
+        // translated, or resized, and the same table is rendered properly
+        // further down the page, so the crop keeps the cats and drops it.
+        'cat-age-calculator-senior-tabby-cat' => [0, 0, 1536, 760],
+        'cat-age-life-stages' => [0, 0, 1536, 760],
+    ],
+
+    /*
+     | Artwork drawn against the old purple palette. Only the violet band of
+     | hues is rotated onto the brand coral; the cats in these pictures are
+     | orange, cream and grey, which sit nowhere near violet and are left as
+     | they are. Cheaper and more faithful than recommissioning the artwork.
+     */
+    'recolour' => [
+        'cat-age-calculator-senior-tabby-cat' => ['from' => 235, 'to' => 305, 'target' => 8],
+        'cat-age-life-stages' => ['from' => 235, 'to' => 305, 'target' => 8],
     ],
 
     /*
@@ -152,6 +175,9 @@ return [
     ],
 
     'placeholders' => [
+        // Same artwork, run at figure size for the body of the age calculator.
+        'cat-age-life-stages' => 'cat-age-calculator-senior-tabby-cat',
+
         'cat-pregnancy-calculator-kitten' => 'cat-name-generator-cute-kitten',
         'how-much-feed-cat-eating-food-bowl' => 'cat-calorie-calculator-cat-food-bowl',
         'signs-cat-is-sick-vet-examination' => 'cat-vaccination-tracker-vet-examination',

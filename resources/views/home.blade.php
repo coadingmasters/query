@@ -17,7 +17,7 @@
         <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
 
         @foreach ([
-            ['left-[4%]  top-[16%]', 'size-10', 0,   22, 'text-primary'],
+            ['left-[4%] top-[16%]', 'size-10', 0,   22, 'text-primary'],
             ['left-[13%] top-[68%]', 'size-7',  -6,  26, 'text-accent-vivid'],
             ['left-[30%] top-[8%]',  'size-6',  -11, 19, 'text-primary'],
             ['right-[6%] top-[10%]', 'size-9',  -3,  24, 'text-accent-vivid'],
@@ -217,7 +217,7 @@
             <p class="eyebrow">Free tools</p>
             <h2 class="section-title">Answers in seconds, not searches</h2>
             <p class="section-intro">
-                Six calculators built for the questions cat owners actually ask.
+                {{ ucfirst(\Illuminate\Support\Number::spell(count(config('catalog.tools')))) }} calculators built for the questions cat owners actually ask.
                 Nothing to install, no account, no limits.
             </p>
         </div>
@@ -362,7 +362,7 @@
 
             <ul class="mt-8 space-y-4">
                 @foreach ([
-                    'Six calculators covering age, weight, calories and health',
+                    ucfirst(\Illuminate\Support\Number::spell(count(config('catalog.tools')))).' calculators covering age, weight, calories and health',
                     'Ten food-safety guides with the verdict up front',
                     'Guides reviewed against published veterinary sources',
                     'Free forever, with no account, no paywall and no email wall',

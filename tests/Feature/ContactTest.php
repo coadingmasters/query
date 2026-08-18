@@ -148,6 +148,66 @@ class ContactTest extends TestCase
         }
     }
 
+    /**
+     * The form used to be swapped out for a success panel, which meant a
+     * second message cost a page load to get back to. It now stays put and
+     * simply comes back empty.
+     */
+    public function test_the_form_survives_a_successful_send(): void
+    {
+        $html = $this->post('/contact', [
+            'name' => 'Alex Morgan',
+            'email' => 'alex@example.com',
+            'subject' => 'A question about cat care',
+            'message' => 'This is a long enough message to pass validation.',
+        ])->assertRedirect()->getContent();
+
+        $html = $this->followingRedirects()->get('/contact')->getContent();
+
+        $this->assertStringContainsString('name="message"', $html, 'the form was replaced');
+    }
+
+    public function test_a_successful_send_announces_itself(): void
+    {
+        $html = $this->withSession(['sent' => true])->get('/contact')->getContent();
+
+        $this->assertStringContainsString('data-result-dialog', $html);
+        $this->assertStringContainsString('Message sent!', $html);
+        $this->assertStringContainsString('name="message"', $html, 'the form was replaced');
+    }
+
+    /**
+     * The dialog carries the open attribute in the markup, so someone without
+     * JavaScript reads the result as an ordinary panel instead of nothing.
+     */
+    public function test_the_result_is_readable_without_javascript(): void
+    {
+        $html = $this->withSession(['sent' => true])->get('/contact')->getContent();
+
+        $this->assertMatchesRegularExpression('/<dialog[^>]*\sopen\b/', $html);
+    }
+
+    public function test_validation_errors_are_announced_and_keep_what_was_typed(): void
+    {
+        $html = $this->from('/contact')->post('/contact', [
+            'name' => 'Alex Morgan',
+            'email' => 'alex@example.com',
+            'subject' => 'A question about cat care',
+            'message' => 'too short',
+        ])->assertRedirect('/contact');
+
+        $html = $this->followingRedirects()->from('/contact')->post('/contact', [
+            'name' => 'Alex Morgan',
+            'email' => 'alex@example.com',
+            'subject' => 'A question about cat care',
+            'message' => 'too short',
+        ])->getContent();
+
+        $this->assertStringContainsString('data-result-dialog', $html);
+        $this->assertStringContainsString('Almost there', $html);
+        $this->assertStringContainsString('value="Alex Morgan"', $html);
+    }
+
     public function test_the_sitemap_lists_the_contact_page(): void
     {
         $this->get('/sitemap.xml')

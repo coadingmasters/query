@@ -46,7 +46,10 @@
 <section class="bg-surface py-10 lg:py-14">
     <div class="container-page grid items-center gap-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-12">
 
-        <div class="reveal mx-auto w-full max-w-sm lg:max-w-none">
+        {{-- Hidden on phones: the mission reads perfectly well without it
+             there, and it was the tallest thing between the hero and
+             the pillars. --}}
+        <div class="reveal mx-auto hidden w-full max-w-sm sm:block lg:max-w-none">
             <div class="aspect-[3/2] overflow-hidden rounded-2xl bg-surface-soft">
                 <x-img name="purrquery-cat-cozy-blanket"
                        alt="Tabby kitten resting comfortably in a soft blanket"
@@ -68,7 +71,8 @@
 
             <ul class="mt-8 grid gap-x-6 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach (config('about.pillars') as $pillar)
-                    <li class="lg:border-l lg:border-line lg:pl-5 lg:first:border-l-0 lg:first:pl-0">
+                    <li class="reveal lg:border-l lg:border-line lg:pl-5 lg:first:border-l-0 lg:first:pl-0"
+                        style="--reveal-delay: {{ $loop->index * 90 }}ms">
                         <span @class([
                             'flex size-10 items-center justify-center rounded-xl',
                             'bg-primary-light text-primary' => $pillar['tone'] === 'primary',
@@ -171,7 +175,7 @@
 
             <ul class="mt-6 space-y-3.5">
                 @foreach (config('about.trust') as $point)
-                    <li class="flex items-start gap-3">
+                    <li class="reveal flex items-start gap-3" style="--reveal-delay: {{ $loop->index * 70 }}ms">
                         <span class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary-vivid text-ink">
                             <svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"
                                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

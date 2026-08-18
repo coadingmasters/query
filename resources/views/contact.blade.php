@@ -69,25 +69,6 @@
         {{-- ── Form ────────────────────────────────────────────────────── --}}
         <div class="reveal">
             <div class="rounded-2xl border border-line bg-surface p-6 shadow-md sm:p-8">
-                @if (session('sent'))
-                    {{-- role=status so a screen reader hears the result without
-                         the focus being yanked away. --}}
-                    <div role="status" class="flex items-start gap-4 rounded-xl bg-accent-light p-5">
-                        <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent text-ink-inverse">
-                            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M20 6 9 17l-5-5"/>
-                            </svg>
-                        </span>
-                        <span>
-                            <span class="block font-heading text-lg font-bold text-ink">Message sent</span>
-                            <span class="mt-1 block text-sm leading-relaxed text-ink-muted">
-                                Thank you — it is with us. Replies usually take a few
-                                days, and corrections get looked at first.
-                            </span>
-                        </span>
-                    </div>
-                @else
                     <div class="flex items-center gap-4">
                         <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary-light text-primary">
                             <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
@@ -104,15 +85,6 @@
                             </p>
                         </div>
                     </div>
-
-                    @if ($errors->any())
-                        <div role="alert" class="mt-6 rounded-xl border border-danger/30 bg-danger-light p-4">
-                            <p class="text-sm font-semibold text-danger">
-                                Please check the form — {{ $errors->count() }}
-                                {{ Str::plural('field', $errors->count()) }} needs attention.
-                            </p>
-                        </div>
-                    @endif
 
                     <form method="POST" action="{{ route('contact.store') }}" class="mt-6 space-y-5">
                         @csrf
@@ -223,14 +195,14 @@
                             </p>
                         </div>
                     </form>
-                @endif
             </div>
         </div>
 
         {{-- ── Sidebar ─────────────────────────────────────────────────── --}}
-        <div class="reveal space-y-6" style="--reveal-delay: 120ms">
+        <div class="space-y-6">
 
-            <div class="relative overflow-hidden rounded-2xl border border-line bg-surface-soft p-6 pr-28 sm:pr-36">
+            <div class="reveal relative overflow-hidden rounded-2xl border border-line bg-surface-soft p-6 pr-28 sm:pr-36"
+                 style="--reveal-delay: 80ms">
                 <span aria-hidden="true"
                       class="absolute top-5 right-5 z-10 flex size-9 items-center justify-center rounded-full bg-surface shadow-sm">
                     <svg class="size-4 text-primary-vivid" viewBox="0 0 24 24" fill="currentColor">
@@ -253,7 +225,7 @@
                 </div>
             </div>
 
-            <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
+            <div class="reveal rounded-2xl border border-line bg-surface p-6 shadow-sm" style="--reveal-delay: 160ms">
                 <h2 class="font-heading text-lg font-extrabold text-ink">What happens next?</h2>
 
                 <ol class="mt-5">
@@ -281,7 +253,7 @@
                 </ol>
             </div>
 
-            <div class="rounded-2xl border border-line bg-accent-light p-6">
+            <div class="reveal rounded-2xl border border-line bg-accent-light p-6" style="--reveal-delay: 240ms">
                 <h2 class="flex items-center gap-2.5 font-heading text-lg font-extrabold text-ink">
                     <x-paw-print class="size-5 text-accent-dark"/>
                     Contact info
@@ -323,14 +295,14 @@
 
     <div class="container-page relative grid items-center gap-6 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:gap-8">
 
-        <div class="mx-auto w-56 lg:w-full lg:max-w-xs">
+        <div class="reveal mx-auto w-56 lg:w-full lg:max-w-xs">
             <x-img name="purrquery-cat-waving-paw"
                    alt="Cute gray and white tabby cat waving its paw"
                    sizes="(min-width: 1024px) 320px, 224px" fit="contain"/>
         </div>
 
         <div>
-            <div class="text-center">
+            <div class="reveal text-center" style="--reveal-delay: 80ms">
                 <p class="text-xs font-bold tracking-[0.14em] text-primary uppercase">Before you write</p>
                 <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
                     Answers to common questions
@@ -395,6 +367,34 @@
         </div>
     </div>
 </section>
+
+{{-- ══ RESULT ════════════════════════════════════════════════════════════ --}}
+{{-- The form is never replaced: it stays on screen and simply comes back
+     empty, so a second message costs nothing. What happened is announced
+     here instead. --}}
+@if (session('sent'))
+    <x-result-dialog tone="success" heading="Message sent!">
+        <p>
+            Thank you — it is with us. Replies usually take a few days, and
+            corrections get looked at first.
+        </p>
+    </x-result-dialog>
+@elseif ($errors->any())
+    <x-result-dialog tone="error" heading="Almost there">
+        <p>
+            {{ $errors->count() }} {{ Str::plural('field', $errors->count()) }}
+            {{ $errors->count() === 1 ? 'needs' : 'need' }} a look before this can go:
+        </p>
+        <ul class="mt-3 space-y-1.5 text-left text-sm">
+            @foreach ($errors->all() as $message)
+                <li class="flex items-start gap-2">
+                    <span class="mt-1.5 size-1.5 shrink-0 rounded-full bg-warning"></span>
+                    {{ $message }}
+                </li>
+            @endforeach
+        </ul>
+    </x-result-dialog>
+@endif
 
 @push('scripts')
     <script>

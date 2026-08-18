@@ -6,6 +6,7 @@
     $columns = [
         [
             'heading' => 'Explore',
+            'span' => 'lg:col-span-2',
             'items' => [
                 ['All tools', '/#tools'],
                 ['Food guides', '/#food-guides'],
@@ -17,13 +18,17 @@
         ],
         [
             'heading' => 'Popular tools',
+            'span' => 'lg:col-span-2',
             'items' => collect(config('catalog.tools'))->take(6)
                 ->map(fn ($t) => [$t['title'], '/#tools'])->all(),
         ],
         [
             // Short labels here, not the full questions: a footer column is
             // for scanning, and the questions are already on the cards.
+            // Hidden on phones: two link columns is enough to scan there, and
+            // the third only makes the footer longer to scroll past.
             'heading' => 'Resources',
+            'span' => 'hidden sm:block lg:col-span-2',
             'items' => collect(config('catalog.foods'))->take(5)
                 ->map(fn ($f) => [$f['title'], '/#food-guides'])
                 ->prepend(['FAQ', route('faq')])->all(),
@@ -52,29 +57,29 @@
         <x-paw-print class="paw absolute bottom-[8%] left-[2%] hidden size-12 text-ink-inverse opacity-[0.07] sm:block" style="animation-delay: -9s; animation-duration: 22s"/>
     </div>
 
-    <div class="container-page relative pt-16 pb-10 sm:pt-20">
-        <div class="grid gap-x-8 gap-y-10 min-[480px]:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+    <div class="container-page relative pt-12 pb-8 sm:pt-14">
+        <div class="grid grid-cols-2 gap-x-8 gap-y-8 sm:grid-cols-3 lg:grid-cols-12 lg:gap-8">
 
             {{-- Brand --}}
-            <div class="min-[480px]:col-span-2 lg:col-span-3">
+            <div class="col-span-2 sm:col-span-3 lg:col-span-3">
                 <div class="flex items-center gap-3">
                     {{-- The badge is dark on transparent, so it needs a light
                          chip behind it to stay visible on this ground. --}}
-                    <span class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-surface p-2 shadow-md">
-                        <x-img name="purrquerylogo" alt="{{ config('app.name') }}" sizes="48px" fit="contain"/>
+                    <span class="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-surface p-1.5 shadow-md">
+                        <x-img name="purrquerylogo" alt="{{ config('app.name') }}" sizes="40px" fit="contain"/>
                     </span>
                     <span class="font-heading text-xl font-extrabold tracking-tight">
                         {{ config('app.name') }}
                     </span>
                 </div>
 
-                <p class="mt-5 max-w-xs text-sm leading-relaxed text-ink-inverse/75">
+                <p class="mt-4 max-w-xs text-sm leading-relaxed text-ink-inverse/75">
                     {{ config('brand.tagline') }}. Free to use, no account required,
                     and nothing about your cat leaves your device.
                 </p>
 
                 <a href="mailto:{{ config('brand.email') }}"
-                   class="mt-5 inline-flex items-center gap-2 rounded-full bg-surface/10 px-4 py-2.5 text-sm font-semibold ring-1 ring-surface/20 transition hover:bg-surface/20">
+                   class="mt-4 inline-flex items-center gap-2 rounded-full bg-surface/10 px-4 py-2 text-sm font-semibold ring-1 ring-surface/20 transition hover:bg-surface/20">
                     <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5Z"/>
@@ -86,9 +91,9 @@
 
             {{-- Link columns --}}
             @foreach ($columns as $column)
-                <nav class="lg:col-span-2" aria-label="{{ $column['heading'] }}">
+                <nav class="{{ $column['span'] }}" aria-label="{{ $column['heading'] }}">
                     <h2 class="font-heading text-sm font-bold tracking-wider text-ink-inverse uppercase">{{ $column['heading'] }}</h2>
-                    <ul class="mt-4 space-y-3">
+                    <ul class="mt-4 space-y-2.5">
                         @foreach ($column['items'] as [$label, $href])
                             <li>
                                 <a href="{{ $href }}"
@@ -104,9 +109,9 @@
             {{-- Newsletter. Posts to the same endpoint as the one on the home
                  page; the ids differ because both render on that page and a
                  repeated id would break the label association. --}}
-            <div class="min-[480px]:col-span-2 lg:col-span-3">
+            <div class="col-span-2 sm:col-span-3 lg:col-span-3">
                 <h2 class="font-heading text-sm font-bold tracking-wider text-ink-inverse uppercase">Stay in the loop</h2>
-                <p class="mt-4 text-sm leading-relaxed text-ink-inverse/75">
+                <p class="mt-3 text-sm leading-relaxed text-ink-inverse/75">
                     One email a month with new tools and guides. No selling your
                     address, and one click to leave.
                 </p>
@@ -116,7 +121,7 @@
                         You are on the list — thank you.
                     </p>
                 @else
-                    <form method="POST" action="{{ route('subscribe') }}" class="mt-5 space-y-3">
+                    <form method="POST" action="{{ route('subscribe') }}" class="mt-4 space-y-2.5">
                         @csrf
                         <label for="footer-email" class="sr-only">Email address</label>
                         <input id="footer-email" name="email" type="email" required
@@ -141,10 +146,19 @@
         </div>
 
         {{-- Bottom bar --}}
-        <div class="mt-12 flex flex-col gap-4 border-t border-surface/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
-            <p class="text-sm text-ink-inverse/80">
-                &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
-                <span class="mt-1 block sm:mt-0 sm:inline">General information, not veterinary advice.</span>
+        <div class="mt-10 flex flex-col gap-3 border-t border-surface/15 pt-5 sm:flex-row sm:items-center sm:justify-between">
+            <p class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-ink-inverse/80">
+                <span>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</span>
+                <span class="inline-flex items-center gap-1.5">
+                    Made with
+                    {{-- Not aria-hidden: the heart is a word in this sentence,
+                         and hiding it leaves "Made with for cat owners". --}}
+                    <svg class="size-4 text-primary-vivid" viewBox="0 0 24 24" fill="currentColor" role="img">
+                        <title>love</title>
+                        <path d="M12 21c-4.2-2.5-8-5.2-8-9.4A4.4 4.4 0 0 1 12 9a4.4 4.4 0 0 1 8 2.6c0 4.2-3.8 6.9-8 9.4Z"/>
+                    </svg>
+                    for cat owners
+                </span>
             </p>
             <ul class="flex flex-wrap items-center gap-x-6 gap-y-2">
                 @foreach ([['Privacy Policy', route('privacy')], ['Terms & Conditions', route('terms')], ['Sitemap', route('sitemap')]] as [$label, $href])

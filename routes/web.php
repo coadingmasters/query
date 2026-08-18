@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\TermsController;
@@ -21,6 +22,9 @@ Route::get('/about', AboutController::class)->name('about');
 // authorship is a claim about a person, and it reads as one when it has a
 // page of its own.
 Route::get('/author', AuthorController::class)->name('author');
+
+Route::get('/blog/{slug}', [BlogController::class, 'show'])
+    ->name('blog.show');
 
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 

@@ -770,5 +770,25 @@
                 "src": "/images/toxic-foods-cats-must-avoid-dangerous-600.8d9912da.webp"
             }
         ]
+    },
+    "why-do-cats-knead-hero": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/why-do-cats-knead-hero-600.573f6a79.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/why-do-cats-knead-hero-900.573f6a79.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/why-do-cats-knead-hero-1200.573f6a79.webp"
+            }
+        ]
     }
 }

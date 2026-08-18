@@ -25,6 +25,7 @@ class SitemapController extends Controller
             ['/author', 'views/author.blade.php', '0.6'],
             ['/tools/cat-age-calculator', 'views/tools/cat-age-calculator.blade.php', '0.9'],
             ['/tools/cat-pregnancy-calculator', 'views/tools/cat-pregnancy-calculator.blade.php', '0.9'],
+            ['/blog/why-do-cats-knead', 'views/blog/posts/why-do-cats-knead.blade.php', '0.8'],
             ['/faq', 'views/faq.blade.php', '0.8'],
             ['/contact', 'views/contact.blade.php', '0.5'],
             ['/terms', 'views/terms.blade.php', '0.3'],

@@ -178,6 +178,18 @@ return [
 
     'posts' => [
         [
+            'slug' => 'why-do-cats-knead',
+            'url' => '/blog/why-do-cats-knead',
+            'title' => 'Why Do Cats Knead? Making Biscuits Explained',
+            'excerpt' => 'Kneading, or making biscuits, is a comfort behavior cats keep '
+                .'from kittenhood. What it means when they do it to you, to a blanket, '
+                .'at night, and with claws out.',
+            'category' => 'Behavior',
+            'minutes' => 8,
+            'image' => 'why-do-cats-knead-hero',
+            'alt' => 'Tabby cat kneading a soft cream blanket with both front paws',
+        ],
+        [
             'slug' => 'can-cats-eat-broccoli',
             'title' => 'Can Cats Eat Broccoli?',
             'excerpt' => 'Broccoli is one of the few vegetables that is genuinely safe for cats, but only plain, only cooked, and only in small amounts. Here is why, and how much is too much.',

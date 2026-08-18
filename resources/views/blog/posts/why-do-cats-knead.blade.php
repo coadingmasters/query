@@ -1,0 +1,237 @@
+{{-- Body copy for /blog/why-do-cats-knead.
+
+     Every h2 carries an id, because the contents in the sidebar is built from
+     them and each one is a heading someone actually searches for. The keyword
+     variants people use ("making biscuits", "pummelling", "kneading blankets")
+     are answered under their own headings rather than stuffed into paragraphs,
+     which is what lets one article serve the whole cluster. --}}
+
+<p>
+    If you have ever sat down with a cat on your lap and felt two paws pushing
+    rhythmically into your leg, you have watched one of the oldest behaviors a
+    cat has. It is called kneading, and most people know it better as
+    <strong>making biscuits</strong>, because the motion looks like a baker
+    working dough.
+</p>
+
+<p>
+    It looks odd, it sometimes hurts, and it almost always means something good.
+    Here is what is actually happening.
+</p>
+
+<h2 id="why-cats-knead">Why do cats knead? The real reason</h2>
+
+<p>
+    Kneading starts before a kitten can see. Newborns press their front paws
+    against their mother's belly while nursing, and that pressure helps milk
+    let down. It is one of the first things a kitten learns to do, and it is
+    tied from the beginning to warmth, food and safety.
+</p>
+
+<p>
+    Most cats never let go of it. The behavior stops being about milk and
+    becomes about the feeling that came with it. An adult cat kneading your
+    lap is doing something closer to what a person does when they wrap their
+    hands around a warm mug.
+</p>
+
+<blockquote>
+    Kneading is not a request. It is a cat telling you, without meaning to,
+    that nothing here needs guarding.
+</blockquote>
+
+<p>There are three things going on at once:</p>
+
+<ul>
+    <li>
+        <strong>Comfort.</strong> The motion is self-soothing, which is why it
+        so often comes with purring, half-closed eyes and a cat who has clearly
+        stopped paying attention to the room.
+    </li>
+    <li>
+        <strong>Scent marking.</strong> Cats have scent glands in their paw
+        pads. Every push leaves a trace of them on whatever they are kneading.
+        It is not territorial in the way spraying is; it is closer to putting
+        their name on something.
+    </li>
+    <li>
+        <strong>Nesting.</strong> Wild cats pat down grass and leaves before
+        lying down. A cushion, a folded blanket or your thigh all trigger the
+        same ancient check that the spot is soft enough.
+    </li>
+</ul>
+
+<h2 id="other-names">Pummelling, padding, marching: same thing, different names</h2>
+
+<p>
+    There is no agreed word for this, which is why searching for it is
+    frustrating. Depending on where you are and who you ask, the same behavior
+    is called:
+</p>
+
+<ul>
+    <li><strong>Making biscuits</strong>, easily the most common online</li>
+    <li><strong>Kneading</strong>, the term most vets and behaviorists use</li>
+    <li><strong>Pummelling</strong> or <strong>pummelling the dough</strong></li>
+    <li><strong>Padding</strong>, <strong>marching</strong> or <strong>paddling</strong></li>
+    <li><strong>Pushing with their paws</strong>, which is what most people type before they know the word</li>
+</ul>
+
+<p>
+    All of them describe one behavior: alternating pressure from the front
+    paws, usually slow, usually accompanied by purring. If you have seen your
+    cat do it, you have seen all of the above.
+</p>
+
+<h2 id="knead-me">Why does my cat knead me specifically?</h2>
+
+<p>
+    Because kneading is a vulnerable thing to do, and cats do it where they
+    feel least on guard. A cat mid-knead is not watching exits. If yours picks
+    you over the sofa, that is a preference built on the fact that nothing bad
+    has ever happened to them on your lap.
+</p>
+
+<p>
+    The scent marking matters here too. Cats build a shared group smell with
+    the animals and people they live with, and kneading is one of the ways they
+    top it up. Head-butting and rubbing along your shins do the same job.
+</p>
+
+<div class="note">
+    <span class="note-title">If your cat never kneads</span>
+    <p>
+        Nothing is wrong, and it is not a verdict on your relationship. Kneading
+        is one of several ways cats show contentment. Slow blinking, sitting
+        with their back to you, and simply choosing the room you are in all say
+        the same thing.
+    </p>
+</div>
+
+<h2 id="knead-blankets">Why does my cat knead blankets and soft fabric?</h2>
+
+<p>
+    Soft, slightly yielding material is the closest thing in your house to a
+    mother cat. Fleece blankets, wool jumpers, duvets and cushions all get the
+    same response, and it is usually the most enthusiastic kneading you will
+    see.
+</p>
+
+<p>
+    Some cats add suckling or drooling to it, and a few take a corner of the
+    fabric into their mouth while their paws work. That combination looks
+    strange but it is a normal part of the same package, especially in cats who
+    were separated from their mother early. It is worth keeping an eye on only
+    if the cat is swallowing fabric rather than mouthing it, which is a
+    different behavior called pica and one to raise with your vet.
+</p>
+
+<h2 id="claws-out">Why does my cat knead with claws out?</h2>
+
+<p>
+    Because claws extend and retract as a natural part of the paw flexing, and
+    most cats have no idea they are digging in. It is not aggression, and it is
+    not your cat testing you.
+</p>
+
+<p>Three things help, in order of how well they work:</p>
+
+<ol>
+    <li>
+        <strong>Keep the nails trimmed.</strong> A blunt claw on a lap is a
+        completely different experience. Every two to three weeks is typical.
+    </li>
+    <li>
+        <strong>Put a barrier down.</strong> Keep a folded blanket or a
+        cushion where your cat likes to settle and move it onto your lap when
+        they arrive.
+    </li>
+    <li>
+        <strong>Redirect rather than reject.</strong> If it becomes too much,
+        gently lift them onto the blanket beside you instead of pushing them
+        off. Pushing a cat away mid-knead teaches them that settling on you
+        ends badly.
+    </li>
+</ol>
+
+<p>
+    What does not work is punishment of any kind. The cat is not doing anything
+    wrong, and the only lesson available is that your lap is unpredictable.
+</p>
+
+<h2 id="kitten-biscuits">Why is my kitten making biscuits on me?</h2>
+
+<p>
+    Kittens knead more than adults, and more intensely, because for them the
+    behavior is still fresh from nursing. A kitten making biscuits on your arm
+    is running the same routine it ran on its mother a few weeks earlier.
+</p>
+
+<p>
+    It usually settles down as they mature, though plenty of cats keep it for
+    life. If you have just brought a kitten home, it is one of the earliest
+    signs that they have decided you are safe, and it tends to appear before
+    they will sleep in the open near you.
+</p>
+
+<p>
+    Kittens change fast in their first year, and knowing roughly where yours is
+    in that stretch makes a lot of their behavior easier to read. Our
+    <a href="{{ route('tools.cat-age-calculator') }}">cat age calculator</a>
+    converts an age into human years and tells you which life stage they are in
+    and what that stage changes about their care.
+</p>
+
+<h2 id="knead-at-night">Why do cats knead at night?</h2>
+
+<p>
+    Evening is usually when the house goes quiet and the cat finally settles,
+    and settling is exactly the state that brings kneading out. There is nothing
+    nocturnal or strange about it.
+</p>
+
+<p>
+    Cats are crepuscular, which means they are naturally most active around
+    dawn and dusk. A burst of energy in the evening followed by a long, kneading
+    wind-down on your lap is the normal shape of a cat's day, not a sleep
+    problem.
+</p>
+
+<h2 id="worried">Should I be worried about kneading?</h2>
+
+<p>
+    Almost never. Kneading itself is normal at every age and in every breed, and
+    a cat that does it a lot is usually a cat that is comfortable.
+</p>
+
+<p>
+    What is worth attention is <strong>change</strong>. Cats hide discomfort
+    extremely well, and a shift in any habit is often the first visible sign
+    that something is wrong. Call your vet if kneading appears alongside:
+</p>
+
+<ul>
+    <li>Hiding, or a sudden drop in how much they seek you out</li>
+    <li>Eating noticeably more or less than usual</li>
+    <li>Grooming one area until the fur thins</li>
+    <li>Vocalising when picked up or touched in a particular spot</li>
+    <li>Any change in litter tray habits or how much they drink</li>
+</ul>
+
+<p>
+    The kneading is not the symptom in any of those. The change is. If you want
+    a fuller list of what to watch for, our guide to the
+    <a href="/#blog">early signs a cat is unwell</a> covers the ones that show
+    up first.
+</p>
+
+<div class="note">
+    <span class="note-title">The short version</span>
+    <ul>
+        <li>Kneading is a comfort behavior held over from nursing.</li>
+        <li>On you, it means safety and a bit of scent marking.</li>
+        <li>Claws out is anatomy, not attitude. Trim them and use a blanket.</li>
+        <li>Kittens do it most. Some cats never do, and that is fine.</li>
+        <li>Only a <em>change</em> in behavior, with other signs, needs a vet.</li>
+    </ul>
+</div>

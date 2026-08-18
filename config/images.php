@@ -119,6 +119,7 @@ return [
         'can-cats-eat-herbs-spices-basil-mint' => 'food',
         'can-cats-eat-cat-treats-snacks' => 'food',
 
+        'why-do-cats-knead-hero' => 'blog',
         'can-cats-eat-broccoli-cat-sniffing' => 'blog',
         'how-much-feed-cat-eating-food-bowl' => 'blog',
         'signs-cat-is-sick-vet-examination' => 'blog',
@@ -179,6 +180,7 @@ return [
     ],
 
     'placeholders' => [
+        'why-do-cats-knead-hero' => 'purrquery-cat-cozy-blanket',
         // Same artwork, run at figure size for the body of the age calculator.
         'cat-age-life-stages' => 'cat-age-calculator-senior-tabby-cat',
 

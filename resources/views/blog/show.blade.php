@@ -6,55 +6,93 @@
     <div data-reading-progress class="h-full w-0 bg-primary-vivid transition-[width] duration-150 ease-out"></div>
 </div>
 
-{{-- ══ 1. HEADER ═════════════════════════════════════════════════════════ --}}
+{{-- ══ 1. HERO ═════════════════════════════════════════════════════════ --}}
 <article>
-    <header class="bg-surface-soft">
-        <div class="container-page max-w-3xl py-8 lg:py-10">
-            <nav aria-label="Breadcrumb" class="text-sm text-ink-muted">
-                <ol class="flex flex-wrap items-center gap-1.5">
-                    <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
-                    <li aria-hidden="true">/</li>
-                    <li><a href="{{ route('blog.index') }}" class="transition-colors hover:text-primary">Blog</a></li>
-                    <li aria-hidden="true">/</li>
-                    <li class="font-medium text-ink">{{ $post['category'] }}</li>
-                </ol>
-            </nav>
-
-            <div class="mt-5 flex flex-wrap items-center gap-3 text-xs font-semibold">
-                <span class="rounded-full bg-primary-light px-2.5 py-1 text-primary-dark">{{ $post['category'] }}</span>
-                <span class="text-ink-muted">{{ $post['minutes'] }} min read</span>
-                <span aria-hidden="true" class="size-1 rounded-full bg-line-strong"></span>
-                <span class="text-ink-muted">
-                    Updated
-                    <time datetime="{{ $post['updated'] }}">
-                        {{ \Illuminate\Support\Carbon::parse($post['updated'])->format('F j, Y') }}
-                    </time>
-                </span>
-            </div>
-
-            <h1 class="mt-4 font-heading text-4xl leading-[1.1] font-extrabold tracking-tight text-ink sm:text-5xl">
-                {{ $post['title'] }}
-            </h1>
-
-            <p class="mt-4 text-lg leading-relaxed text-ink-muted">{{ $post['excerpt'] }}</p>
-
-            <div class="mt-6 border-t border-line pt-5">
-                <x-byline :reviewed="true"/>
-            </div>
+    <header class="relative overflow-hidden bg-surface-soft">
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+            <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
+            <div class="absolute -right-20 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.10] blur-3xl"></div>
+            <x-paw-print class="paw absolute bottom-[12%] left-[1.5%] hidden size-9 text-primary lg:block [animation-duration:23s]"/>
+            <x-paw-print class="paw absolute top-[10%] right-[1.5%] hidden size-6 text-accent-vivid lg:block [animation-delay:-7s] [animation-duration:26s]"/>
         </div>
+
+        <div class="container-page relative grid items-center gap-8 pt-8 pb-14 lg:grid-cols-2 lg:gap-12 lg:pt-6 lg:pb-20">
+
+            <div class="min-w-0">
+                <nav aria-label="Breadcrumb" class="reveal text-sm text-ink-muted">
+                    <ol class="flex flex-wrap items-center gap-1.5">
+                        <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
+                        <li aria-hidden="true">/</li>
+                        <li><a href="{{ route('blog.index') }}" class="transition-colors hover:text-primary">Blog</a></li>
+                        <li aria-hidden="true">/</li>
+                        <li class="font-medium text-ink">{{ $post['category'] }}</li>
+                    </ol>
+                </nav>
+
+                <div class="reveal mt-5 flex flex-wrap items-center gap-2.5" style="--reveal-delay: 60ms">
+                    <span class="rounded-full bg-primary-vivid px-3 py-1 text-xs font-bold text-ink">{{ $post['category'] }}</span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-ink-muted shadow-sm">
+                        <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 6v6l4 2"/><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z"/>
+                        </svg>
+                        {{ $post['minutes'] }} min read
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-ink-muted shadow-sm">
+                        Updated
+                        <time datetime="{{ $post['updated'] }}">
+                            {{ \Illuminate\Support\Carbon::parse($post['updated'])->format('M j, Y') }}
+                        </time>
+                    </span>
+                </div>
+
+                <h1 class="reveal mt-5 font-heading text-4xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-5xl"
+                    style="--reveal-delay: 120ms">
+                    {{ $post['title'] }}
+                </h1>
+
+                <p class="reveal mt-5 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg"
+                   style="--reveal-delay: 180ms">
+                    {{ $post['excerpt'] }}
+                </p>
+
+                <div class="reveal mt-7 flex flex-wrap items-center gap-4 border-t border-line pt-5"
+                     style="--reveal-delay: 240ms">
+                    <x-byline :reviewed="true"/>
+                </div>
+            </div>
+
+            {{-- The image is not given a reveal: it is the largest thing on
+                 screen and therefore what Largest Contentful Paint measures,
+                 and fading it in delays the moment that metric records. --}}
+            @if (\App\Support\Images::get($post['image']))
+                <div class="relative">
+                    <figure class="overflow-hidden rounded-[3.5rem_1.5rem_3.5rem_1.5rem] border-4 border-primary/15 bg-surface shadow-xl sm:rounded-[5rem_2rem_5rem_2rem]">
+                        <x-img :name="$post['image']" :alt="$post['alt']"
+                               sizes="(min-width: 1024px) 46vw, 92vw" :priority="true"/>
+                    </figure>
+
+                    {{-- Repeats the read time above, so it is hidden from screen
+                         readers rather than announced twice. --}}
+                    <div aria-hidden="true"
+                         class="absolute -bottom-5 right-5 hidden items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 shadow-lg sm:flex">
+                        <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-light text-primary">
+                            <x-paw-print class="size-5"/>
+                        </span>
+                        <span>
+                            <span class="block font-heading text-sm font-extrabold text-ink">{{ $post['minutes'] }} minute read</span>
+                            <span class="mt-0.5 block text-xs text-ink-muted">Sources named at the foot</span>
+                        </span>
+                    </div>
+                </div>
+            @endif
+        </div>
+
+        <svg class="absolute inset-x-0 bottom-0 h-8 w-full text-surface sm:h-12" viewBox="0 0 1440 120"
+             preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
+            <path d="M0 60c180-45 360-45 540-10s360 55 540 20 300-55 360-60v110H0Z"/>
+        </svg>
     </header>
-
-    {{-- ══ 2. HERO IMAGE ═════════════════════════════════════════════════ --}}
-    @if (\App\Support\Images::get($post['image']))
-        <div class="bg-surface-soft pb-8">
-            <div class="container-page max-w-4xl">
-                <figure class="overflow-hidden rounded-2xl bg-surface shadow-lg ring-1 ring-line">
-                    <x-img :name="$post['image']" :alt="$post['alt']"
-                           sizes="(min-width: 1024px) 56rem, 92vw" :priority="true"/>
-                </figure>
-            </div>
-        </div>
-    @endif
 
     {{-- ══ 3. BODY ═══════════════════════════════════════════════════════ --}}
     <div class="bg-surface py-10 lg:py-12">

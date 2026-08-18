@@ -152,6 +152,11 @@ return [
     'privacy' => [
         [
             'id' => 'scope',
+            'paths' => [
+                'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z',
+                'M14 3v5h5',
+                'M9 13h6M9 17h4',
+            ],
             'heading' => 'What this policy covers',
             'body' => [
                 'This policy explains what PurrQuery does with personal information when you use the site. It covers purrquery.com and everything published on it.',
@@ -160,6 +165,11 @@ return [
         ],
         [
             'id' => 'what-we-collect',
+            'paths' => [
+                'M9 4H7a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2',
+                'M9 4a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 4v.5a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5Z',
+                'M9 12h6M9 16h4',
+            ],
             'heading' => 'What we collect',
             'body' => [
                 'There are exactly two ways you can give us personal information, and one thing recorded automatically.',
@@ -172,6 +182,11 @@ return [
         ],
         [
             'id' => 'why',
+            'paths' => [
+                'M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19Z',
+                'M9.4 9.2a2.7 2.7 0 0 1 5.2.9c0 1.8-2.6 2.4-2.6 4',
+                'M12 17.4h.01',
+            ],
             'heading' => 'Why we hold it, and on what basis',
             'body' => [
                 'The email address you subscribe with is used to send the updates you asked for, and for nothing else. The basis for that is your consent, which you give by subscribing and can withdraw at any time.',
@@ -181,6 +196,10 @@ return [
         ],
         [
             'id' => 'cookies',
+            'paths' => [
+                'M20.9 12.4A9 9 0 1 1 11.6 3.1a3.4 3.4 0 0 0 4.6 4.2 3.4 3.4 0 0 0 4.7 5.1Z',
+                'M9 10h.01M13.5 14.5h.01M8.5 15h.01',
+            ],
             'heading' => 'Cookies',
             'body' => [
                 'PurrQuery sets two cookies, both strictly necessary and both first-party. One keeps track of your session; the other carries a token that protects our forms against cross-site request forgery. Neither identifies you, follows you between sites, or is used for advertising.',
@@ -190,15 +209,27 @@ return [
         ],
         [
             'id' => 'advertising',
+            'paths' => [
+                'M4 10v4a1 1 0 0 0 1 1h2.6l6.4 4V5L7.6 9H5a1 1 0 0 0-1 1Z',
+                'M18 9.5a4 4 0 0 1 0 5',
+            ],
             'heading' => 'Advertising and affiliate links',
             'body' => [
-                'There is no advertising on PurrQuery today and no advertising cookies are set.',
-                'The site is intended to be funded by advertising and affiliate links in future. Ad networks generally do set cookies and may use them to personalise what they show. Before any of that goes live, this policy will be updated to name the networks involved and explain what they collect, and consent will be requested where the law requires it.',
+                'There is no advertising on PurrQuery today, and no advertising cookies are set. Everything below describes what will apply once advertising is introduced, and is stated in advance so you can read it before it affects you.',
+                'The site is intended to be funded by advertising and affiliate links. Third-party vendors, including Google, use cookies to serve ads based on your previous visits to this site or to other sites. Google\'s use of advertising cookies enables it and its partners to serve ads to you based on those visits.',
+                'You can opt out of personalised advertising by Google at any time through Google Ads Settings at adssettings.google.com. Advertising from many other vendors can be turned off at aboutads.info/choices, and in the UK and EU at youronlinechoices.eu. Opting out stops the personalisation, not the ads themselves.',
+                'Where an affiliate link earns us a commission, that is disclosed on the page it appears on. Clicking one may set a cookie in your browser so the merchant can attribute a sale. It costs you nothing and does not change the price you pay.',
+                'When advertising goes live this policy will be updated to name the networks involved, and consent will be requested first wherever the law requires it.',
             ],
             'highlight' => true,
         ],
         [
             'id' => 'sharing',
+            'paths' => [
+                'M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20',
+                'M10 12a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z',
+                'M20 20v-1.5a3.5 3.5 0 0 0-2.6-3.4M15.5 5.2a3.5 3.5 0 0 1 0 6.6',
+            ],
             'heading' => 'Who else sees it',
             'body' => [
                 'We do not sell your personal information, and we do not share it with anyone for their own marketing.',
@@ -207,6 +238,10 @@ return [
         ],
         [
             'id' => 'retention',
+            'paths' => [
+                'M12 6v6l4 2',
+                'M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z',
+            ],
             'heading' => 'How long we keep it',
             'body' => [
                 'Subscriber email addresses are kept until you unsubscribe or ask us to remove you. If you unsubscribe we keep a record that the address opted out, so a later sign-up form cannot quietly add you back.',
@@ -216,6 +251,10 @@ return [
         ],
         [
             'id' => 'your-rights',
+            'paths' => [
+                'M15.5 14a5.5 5.5 0 1 0-5.2-3.7L3 17.6V21h3.4v-2.2h2.2v-2.2h2.2l1.5-1.5c.7.2 1.4.3 2.2.3Z',
+                'M17 8.5h.01',
+            ],
             'heading' => 'Your rights',
             'body' => [
                 'Wherever you live, you can ask us what we hold about you, ask us to correct it, or ask us to delete it. If you are in the UK or EU, the GDPR gives you those rights explicitly, along with the right to object to processing, to request a copy of your data, and to complain to your data protection authority. If you are in California, the CCPA gives you comparable rights, including the right to know and to delete — and note that we have no personal information to sell in the first place.',
@@ -225,6 +264,11 @@ return [
         ],
         [
             'id' => 'security',
+            'paths' => [
+                'M6 10.5V8a6 6 0 1 1 12 0v2.5',
+                'M5.5 10.5h13a1.5 1.5 0 0 1 1.5 1.5v7a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19v-7a1.5 1.5 0 0 1 1.5-1.5Z',
+                'M12 14.5v2.5',
+            ],
             'heading' => 'How it is protected',
             'body' => [
                 'The whole site is served over HTTPS, so anything you send us is encrypted in transit. Stored data sits in a database that is not publicly reachable, and access to it is limited to what is needed to run the site.',
@@ -233,6 +277,11 @@ return [
         ],
         [
             'id' => 'children',
+            'paths' => [
+                'M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19Z',
+                'M9 10h.01M15 10h.01',
+                'M8.8 14.5a4.3 4.3 0 0 0 6.4 0',
+            ],
             'heading' => 'Children',
             'body' => [
                 'PurrQuery is written for adults looking after cats, and is not directed at children. We do not knowingly collect personal information from anyone under 16.',
@@ -241,6 +290,11 @@ return [
         ],
         [
             'id' => 'international',
+            'paths' => [
+                'M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19Z',
+                'M2.5 12h19',
+                'M12 2.5a14 14 0 0 1 0 19 14 14 0 0 1 0-19Z',
+            ],
             'heading' => 'Where your data is held',
             'body' => [
                 'The site is hosted in Europe. If you are visiting from elsewhere, including the United States, the information you send us is processed there.',
@@ -249,6 +303,9 @@ return [
         ],
         [
             'id' => 'changes',
+            'paths' => [
+                'm14.5 5.5 4 4M4 20l1-4.4 10-10a1.6 1.6 0 0 1 2.3 0l2.1 2.1a1.6 1.6 0 0 1 0 2.3l-10 10Z',
+            ],
             'heading' => 'Changes to this policy',
             'body' => [
                 'We will update this policy when what we do changes — most likely when advertising is introduced. The date at the top shows when the current version took effect.',
@@ -257,10 +314,40 @@ return [
         ],
         [
             'id' => 'contact',
+            'paths' => [
+                'M3 7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5Z',
+                'm3.5 8 7.6 5a1.6 1.6 0 0 0 1.8 0l7.6-5',
+            ],
             'heading' => 'Getting in touch',
             'body' => [
                 'For anything about this policy, or to make a request about your data, use the contact page or email us directly. We answer these ourselves — there is no privacy department to be routed through.',
             ],
+        ],
+    ],
+
+    /*
+     | The three reassurances above the closing call to action. Each restates
+     | something the policy above actually commits to, rather than adding a
+     | claim that appears nowhere else.
+     */
+    'privacy_assurances' => [
+        [
+            'title' => 'We hold very little',
+            'body' => 'An email address if you subscribe, and your message if you write to us. Nothing else.',
+            'tone' => 'accent',
+            'paths' => ['M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z', 'm9.4 12.2 1.9 1.9 3.6-3.7'],
+        ],
+        [
+            'title' => 'Nothing is sold',
+            'body' => 'Your details are not sold, and not shared with anyone for their own marketing.',
+            'tone' => 'primary',
+            'paths' => ['M12 21c-4.2-2.5-8-5.2-8-9.4A4.4 4.4 0 0 1 12 9a4.4 4.4 0 0 1 8 2.6c0 4.2-3.8 6.9-8 9.4Z'],
+        ],
+        [
+            'title' => 'You can undo it',
+            'body' => 'Ask us what we hold, ask for a copy, or ask us to delete it. One email is enough.',
+            'tone' => 'info',
+            'paths' => ['M3.5 12a8.5 8.5 0 1 0 2.6-6.1', 'M3 4v5h5'],
         ],
     ],
 ];

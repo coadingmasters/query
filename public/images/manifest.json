@@ -454,7 +454,7 @@
                 "src": "/images/purrquery-care-smarter-cat-illustration-570.93f1963b.webp"
             },
             {
-                "w": 760,
+                "w": 700,
                 "src": "/images/purrquery-care-smarter-cat-illustration-760.93f1963b.webp"
             }
         ]
@@ -634,7 +634,7 @@
                 "src": "/images/purrquery-hero-cat-owner-smiling-1170.9bddbe66.webp"
             },
             {
-                "w": 1560,
+                "w": 1402,
                 "src": "/images/purrquery-hero-cat-owner-smiling-1560.9bddbe66.webp"
             }
         ]
@@ -656,6 +656,26 @@
             {
                 "w": 1200,
                 "src": "/images/purrquery-orange-tabby-cat-hero-1200.a5789aa6.webp"
+            }
+        ]
+    },
+    "purrquery-privacy-policy-cat-shield": {
+        "width": 600,
+        "height": 400,
+        "preset": "cutout",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/purrquery-privacy-policy-cat-shield-600.cc0d1c66.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/purrquery-privacy-policy-cat-shield-900.cc0d1c66.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/purrquery-privacy-policy-cat-shield-1200.cc0d1c66.webp"
             }
         ]
     },

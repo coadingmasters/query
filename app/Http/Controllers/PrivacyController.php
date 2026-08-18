@@ -22,6 +22,7 @@ class PrivacyController extends Controller
             'canonical' => $url.'/privacy',
             'sections' => config('legal.privacy'),
             'summary' => config('legal.privacy_summary'),
+            'assurances' => config('legal.privacy_assurances'),
             'effective' => config('legal.privacy_effective'),
             'schema' => Schema::graph([
                 [

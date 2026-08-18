@@ -407,18 +407,27 @@
             </p>
         </div>
 
-        {{-- Six equal cards, two rows of three. The tall featured card this
-             replaces had to stretch one photo down a whole column, which
-             cropped most of it away and left the two columns wildly different
-             heights. Here every image sits at its own 3:2 ratio, at the same
-             size, and the rows line up. --}}
-        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            @foreach (config('catalog.posts') as $post)
-                <article class="card" data-filter
-                         data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}">
+        {{-- Magazine layout: two lead stories at full card size, then the
+             rest as a compact list beside them. The earlier featured layout
+             stretched one photo down the whole column and cropped most of it
+             away; here no image is asked to fill a shape it was not cut for.
+             Every photo sits at its own 3:2, and the thumbnails are square
+             crops of the same files rather than separate artwork. --}}
+        @php
+            $posts = collect(config('catalog.posts'));
+            $leads = $posts->take(2);
+            $rest = $posts->slice(2);
+        @endphp
+
+        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-12">
+
+            @foreach ($leads as $post)
+                <article class="card reveal lg:col-span-4" data-filter
+                         data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}"
+                         style="--reveal-delay: {{ $loop->index * 80 }}ms">
                     <div class="card-media">
                         <x-img :name="$post['image']" :alt="$post['alt']"
-                               sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 30vw"/>
+                               sizes="(max-width: 1023px) 92vw, 32vw"/>
                     </div>
 
                     <div class="card-body">
@@ -438,6 +447,33 @@
                     </div>
                 </article>
             @endforeach
+
+            {{-- The remaining guides, headline first. A reader scanning this
+                 column wants the titles, not four more photographs. --}}
+            <div class="grid gap-3 sm:col-span-2 sm:grid-cols-2 lg:col-span-4 lg:grid-cols-1 lg:content-between">
+                @foreach ($rest as $post)
+                    <article class="reveal group flex items-center gap-4 rounded-xl border border-line bg-surface p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md"
+                             data-filter
+                             data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}"
+                             style="--reveal-delay: {{ 160 + $loop->index * 70 }}ms">
+                        <div class="size-20 shrink-0 overflow-hidden rounded-lg bg-surface-section">
+                            <x-img :name="$post['image']" :alt="$post['alt']" sizes="80px"/>
+                        </div>
+
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-2 text-xs font-semibold">
+                                <span class="text-primary">{{ $post['category'] }}</span>
+                                <span aria-hidden="true" class="size-1 rounded-full bg-line-strong"></span>
+                                <span class="text-ink-muted">{{ $post['minutes'] }} min</span>
+                            </div>
+
+                            <h3 class="mt-1 font-heading text-sm leading-snug font-bold text-ink transition-colors group-hover:text-primary">
+                                {{ $post['title'] }}
+                            </h3>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
         </div>
     </div>
 </section>

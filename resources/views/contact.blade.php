@@ -288,9 +288,9 @@
 {{-- ══ 3. FAQ ════════════════════════════════════════════════════════════ --}}
 <section class="relative overflow-hidden bg-surface-section py-10 lg:py-14">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-        <x-paw-print class="paw absolute top-[14%] right-[6%] hidden size-9 text-primary-vivid/40 lg:block" style="animation-duration: 24s"/>
-        <x-paw-print class="paw absolute bottom-[18%] right-[10%] hidden size-7 text-primary-vivid/30 lg:block" style="animation-delay: -9s; animation-duration: 21s"/>
-        <x-paw-print class="paw absolute bottom-[26%] left-[4%] hidden size-8 text-primary-vivid/30 lg:block" style="animation-delay: -5s; animation-duration: 26s"/>
+        <x-paw-print class="paw absolute top-[14%] right-[6%] hidden size-9 text-primary-vivid/40 lg:block [animation-duration:24s]"/>
+        <x-paw-print class="paw absolute bottom-[18%] right-[10%] hidden size-7 text-primary-vivid/30 lg:block [animation-delay:-9s] [animation-duration:21s]"/>
+        <x-paw-print class="paw absolute bottom-[26%] left-[4%] hidden size-8 text-primary-vivid/30 lg:block [animation-delay:-5s] [animation-duration:26s]"/>
     </div>
 
     <div class="container-page relative grid items-center gap-6 lg:grid-cols-[minmax(0,0.42fr)_minmax(0,1fr)] lg:gap-8">

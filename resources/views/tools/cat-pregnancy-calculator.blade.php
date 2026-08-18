@@ -16,8 +16,8 @@
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
         <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
-        <x-paw-print class="paw absolute top-[22%] left-[6%] hidden size-10 text-primary sm:block" style="animation-duration: 23s"/>
-        <x-paw-print class="paw absolute top-[28%] right-[7%] hidden size-8 text-accent-vivid sm:block" style="animation-delay: -8s; animation-duration: 20s"/>
+        <x-paw-print class="paw absolute top-[22%] left-[6%] hidden size-10 text-primary sm:block [animation-duration:23s]"/>
+        <x-paw-print class="paw absolute top-[28%] right-[7%] hidden size-8 text-accent-vivid sm:block [animation-delay:-8s] [animation-duration:20s]"/>
     </div>
 
     <div class="container-page relative py-10 text-center lg:py-12">

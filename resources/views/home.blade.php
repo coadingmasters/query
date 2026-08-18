@@ -16,15 +16,21 @@
         <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
         <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
 
+        {{-- Timings are classes rather than an inline style attribute. Blade
+             interpolation inside style="" is valid output but not valid CSS,
+             so an editor lints it as broken every time it is opened.
+
+             The negative delays are deliberate: a negative delay starts the
+             animation partway through, which is what stops five paws drifting
+             in lockstep. Durations are all coprime-ish for the same reason. --}}
         @foreach ([
-            ['left-[4%] top-[16%]', 'size-10', 0,   22, 'text-primary'],
-            ['left-[13%] top-[68%]', 'size-7',  -6,  26, 'text-accent-vivid'],
-            ['left-[30%] top-[8%]',  'size-6',  -11, 19, 'text-primary'],
-            ['right-[6%] top-[10%]', 'size-9',  -3,  24, 'text-accent-vivid'],
-            ['left-[46%] bottom-[16%]','size-6',-8,  21, 'text-accent-vivid'],
-        ] as [$position, $size, $delay, $duration, $tone])
-            <x-paw-print class="paw absolute {{ $position }} {{ $size }} {{ $tone }}"
-                         style="animation-delay: {{ $delay }}s; animation-duration: {{ $duration }}s"/>
+            'left-[4%] top-[16%] size-10 text-primary [animation-delay:0s] [animation-duration:22s]',
+            'left-[13%] top-[68%] size-7 text-accent-vivid [animation-delay:-6s] [animation-duration:26s]',
+            'left-[30%] top-[8%] size-6 text-primary [animation-delay:-11s] [animation-duration:19s]',
+            'right-[6%] top-[10%] size-9 text-accent-vivid [animation-delay:-3s] [animation-duration:24s]',
+            'left-[46%] bottom-[16%] size-6 text-accent-vivid [animation-delay:-8s] [animation-duration:21s]',
+        ] as $paw)
+            <x-paw-print class="paw absolute {{ $paw }}"/>
         @endforeach
     </div>
 

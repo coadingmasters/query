@@ -53,8 +53,8 @@
     <div aria-hidden="true" class="pointer-events-none absolute inset-0">
         <div class="absolute -top-24 -left-20 size-72 rounded-full bg-primary opacity-30 blur-3xl"></div>
         <div class="absolute -right-16 bottom-0 size-64 rounded-full bg-accent-vivid opacity-20 blur-3xl"></div>
-        <x-paw-print class="paw absolute top-[30%] right-[3%] hidden size-20 text-ink-inverse opacity-[0.07] sm:block" style="animation-duration: 26s"/>
-        <x-paw-print class="paw absolute bottom-[8%] left-[2%] hidden size-12 text-ink-inverse opacity-[0.07] sm:block" style="animation-delay: -9s; animation-duration: 22s"/>
+        <x-paw-print class="paw absolute top-[30%] right-[3%] hidden size-20 text-ink-inverse opacity-[0.07] sm:block [animation-duration:26s]"/>
+        <x-paw-print class="paw absolute bottom-[8%] left-[2%] hidden size-12 text-ink-inverse opacity-[0.07] sm:block [animation-delay:-9s] [animation-duration:22s]"/>
     </div>
 
     <div class="container-page relative pt-12 pb-8 sm:pt-14">

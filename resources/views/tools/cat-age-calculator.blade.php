@@ -14,8 +14,8 @@
 {{-- ══ 1. HERO ═══════════════════════════════════════════════════════════ --}}
 <section class="relative overflow-hidden bg-surface-soft">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-        <x-paw-print class="paw absolute top-[18%] left-[4%] hidden size-10 text-primary-vivid/30 lg:block" style="animation-duration: 24s"/>
-        <x-paw-print class="paw absolute bottom-[22%] left-[9%] hidden size-7 text-primary-vivid/25 lg:block" style="animation-delay: -7s; animation-duration: 21s"/>
+        <x-paw-print class="paw absolute top-[18%] left-[4%] hidden size-10 text-primary-vivid/30 lg:block [animation-duration:24s]"/>
+        <x-paw-print class="paw absolute bottom-[22%] left-[9%] hidden size-7 text-primary-vivid/25 lg:block [animation-delay:-7s] [animation-duration:21s]"/>
     </div>
 
     <div class="container-page relative grid items-center gap-8 pt-8 pb-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:pt-6">

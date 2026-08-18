@@ -187,6 +187,21 @@
 }
 
 /* ==========================================================================
+   Cursors
+   --------------------------------------------------------------------------
+   Tailwind 4's preflight sets buttons to cursor:default, matching the native
+   control. Every button on this site is a call to action, and an arrow over
+   "Send message" reads as though it is not clickable. Disabled stays default,
+   because there the arrow is telling the truth.
+   ========================================================================== */
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]),
+label[for],
+summary {
+    cursor: pointer;
+}
+
+/* ==========================================================================
    Result dialog
    --------------------------------------------------------------------------
    The cat is drawn rather than fetched: it animates, it has to be crisp at

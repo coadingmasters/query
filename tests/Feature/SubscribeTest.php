@@ -67,4 +67,34 @@ class SubscribeTest extends TestCase
 
         $this->assertDatabaseCount('subscribers', 0);
     }
+
+    /**
+     * The home page section that used to show this was removed, and the footer
+     * form is now the only one on the site. A rejected address is announced in
+     * the same dialog the contact form uses, rather than swallowed.
+     */
+    public function test_a_rejected_address_is_reported_in_the_footer(): void
+    {
+        $html = $this->followingRedirects()
+            ->from('/')
+            ->post('/subscribe', ['email' => 'not-an-address'])
+            ->getContent();
+
+        $this->assertStringContainsString('data-result-dialog', $html);
+        $this->assertStringContainsString('valid email', $html);
+
+        // And the form is still there, so a corrected address costs one edit
+        // rather than finding the footer again.
+        $this->assertStringContainsString('id="footer-email"', $html);
+    }
+
+    /** The subscribe form lives in the footer, so it is on every page. */
+    public function test_the_form_is_reachable_from_any_page(): void
+    {
+        foreach (['/', '/about', '/faq'] as $path) {
+            $this->get($path)
+                ->assertSee('action="'.route('subscribe').'"', false)
+                ->assertSee('id="footer-email"', false);
+        }
+    }
 }

@@ -530,47 +530,6 @@
     </div>
 </section>
 
-{{-- ══ 9. Newsletter ═════════════════════════════════════════════════════ --}}
-<section class="border-t border-line bg-surface-soft py-16">
-    <div class="container-page max-w-3xl text-center">
-        <h2 class="font-heading text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
-            New guides, once a month
-        </h2>
-        <p class="mx-auto mt-3 max-w-xl text-base leading-relaxed text-ink-muted">
-            One email a month with new tools and guides. No selling, no sharing
-            your address, and one click to leave.
-        </p>
-
-        @if (session('subscribed'))
-            <p class="mx-auto mt-6 max-w-md rounded-lg bg-accent-light px-4 py-3 text-sm font-medium text-accent-dark" role="status">
-                You are on the list. Thank you.
-            </p>
-        @else
-            <form method="POST" action="{{ route('subscribe') }}"
-                  class="mx-auto mt-7 flex max-w-md flex-col gap-3 sm:flex-row">
-                @csrf
-                <label for="newsletter-email" class="sr-only">Email address</label>
-                <input id="newsletter-email" name="email" type="email" required
-                       placeholder="you@example.com" autocomplete="email"
-                       class="w-full rounded-lg border border-line bg-surface px-4 py-3 text-base text-ink shadow-sm transition placeholder:text-ink-muted focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-
-                {{-- Honeypot: a real person never sees this, so anything that
-                     fills it in is a bot. Cheaper and less hostile than a captcha. --}}
-                <div class="absolute left-[-9999px]" aria-hidden="true">
-                    <label for="website">Leave this empty</label>
-                    <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
-                </div>
-
-                <button type="submit" class="btn-primary shrink-0">Subscribe</button>
-            </form>
-
-            @error('email')
-                <p class="mt-3 text-sm font-medium text-danger" role="alert">{{ $message }}</p>
-            @enderror
-        @endif
-    </div>
-</section>
-
 @push('scripts')
     <script>
         // Filters the cards already on the page. Everything it searches is in

@@ -116,32 +116,29 @@
                     address, and one click to leave.
                 </p>
 
-                @if (session('subscribed'))
-                    <p role="status" class="mt-5 rounded-lg bg-surface/15 px-4 py-3 text-sm font-medium ring-1 ring-surface/25">
-                        You are on the list. Thank you.
-                    </p>
-                @else
-                    <form method="POST" action="{{ route('subscribe') }}" class="mt-4 space-y-2.5">
-                        @csrf
-                        <label for="footer-email" class="sr-only">Email address</label>
-                        <input id="footer-email" name="email" type="email" required
-                               placeholder="Enter your email" autocomplete="email"
-                               class="w-full rounded-lg border border-surface/25 bg-surface px-4 py-2.5 text-sm text-ink transition placeholder:text-ink-muted focus:border-primary-vivid focus:ring-2 focus:ring-primary-vivid/40 focus:outline-none">
+                {{-- The form is never replaced. It stays on screen and comes
+                     back empty, and what happened is announced in the dialog
+                     below, the same way the contact form does it. --}}
+                <form method="POST" action="{{ route('subscribe') }}" class="mt-4 space-y-2.5">
+                    @csrf
+                    <label for="footer-email" class="sr-only">Email address</label>
+                    <input id="footer-email" name="email" type="email" required
+                           placeholder="Enter your email" autocomplete="email"
+                           class="w-full rounded-lg border border-surface/25 bg-surface px-4 py-2.5 text-sm text-ink transition placeholder:text-ink-muted focus:border-primary-vivid focus:ring-2 focus:ring-primary-vivid/40 focus:outline-none">
 
-                        {{-- Honeypot: a real person never sees this, so anything
-                             that fills it in is a bot. Cheaper and less hostile
-                             than a captcha. --}}
-                        <div class="absolute left-[-9999px]" aria-hidden="true">
-                            <label for="footer-website">Leave this empty</label>
-                            <input id="footer-website" name="website" type="text" tabindex="-1" autocomplete="off">
-                        </div>
+                    {{-- Honeypot: a real person never sees this, so anything
+                         that fills it in is a bot. Cheaper and less hostile
+                         than a captcha. --}}
+                    <div class="absolute left-[-9999px]" aria-hidden="true">
+                        <label for="footer-website">Leave this empty</label>
+                        <input id="footer-website" name="website" type="text" tabindex="-1" autocomplete="off">
+                    </div>
 
-                        <button type="submit"
-                                class="w-full rounded-lg bg-primary-vivid px-4 py-2.5 text-sm font-bold text-ink shadow-md transition hover:brightness-95">
-                            Subscribe
-                        </button>
-                    </form>
-                @endif
+                    <button type="submit"
+                            class="w-full rounded-lg bg-primary-vivid px-4 py-2.5 text-sm font-bold text-ink shadow-md transition hover:brightness-95">
+                        Subscribe
+                    </button>
+                </form>
             </div>
         </div>
 
@@ -170,3 +167,19 @@
         </div>
     </div>
 </footer>
+
+{{-- ══ Subscribe result ══════════════════════════════════════════════════ --}}
+{{-- Outside the footer element: the footer clips its overflow and paints its
+     own background, and a modal inside it inherits both. --}}
+@if (session('subscribed'))
+    <x-result-dialog tone="success" heading="You are on the list!" focus="#footer-email">
+        <p>
+            Thank you. One email a month, nothing else, and every one of them
+            carries a one-click unsubscribe link.
+        </p>
+    </x-result-dialog>
+@elseif ($errors->has('email'))
+    <x-result-dialog tone="error" heading="That address did not look right" focus="#footer-email">
+        <p>{{ $errors->first('email') }}</p>
+    </x-result-dialog>
+@endif

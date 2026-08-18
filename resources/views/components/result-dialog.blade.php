@@ -1,6 +1,11 @@
 @props([
     'tone' => 'success',   // success | error
     'heading',
+
+    // Where to send focus once the dialog closes, as a CSS selector. The
+    // footer form and the contact form both render this component, so the
+    // field to return to cannot be assumed.
+    'focus' => null,
 ])
 
 @php
@@ -11,7 +16,10 @@
      where it lays out as an ordinary panel above the form. The script below
      upgrades it to a real modal, with backdrop, focus trap and Escape to
      close, when the browser has showModal(). --}}
-<dialog data-result-dialog open aria-labeledby="result-heading"
+@php $headingId = 'result-heading-'.Str::random(6); @endphp
+
+<dialog data-result-dialog open aria-labelledby="{{ $headingId }}"
+        @if ($focus) data-result-focus="{{ $focus }}" @endif
         class="result-card m-auto w-[calc(100%-2rem)] max-w-md rounded-2xl border border-line bg-surface p-0 shadow-2xl backdrop:bg-ink/50 backdrop:backdrop-blur-sm">
 
     <div class="p-6 text-center sm:p-8">
@@ -71,7 +79,7 @@
             </svg>
         </div>
 
-        <h2 id="result-heading" class="mt-5 font-heading text-2xl font-extrabold tracking-tight text-ink">
+        <h2 id="{{ $headingId }}" class="mt-5 font-heading text-2xl font-extrabold tracking-tight text-ink">
             {{ $heading }}
         </h2>
 
@@ -91,10 +99,10 @@
         <script>
             // Upgrades the panel to a real modal. Kept out of the markup so a
             // visitor without JavaScript still sees the message, just inline.
-            (() => {
-                const dialog = document.querySelector('[data-result-dialog]');
-                if (!dialog) return;
-
+            // querySelectorAll, not querySelector: the contact page renders
+            // this component and so does the footer, so a page can carry more
+            // than one.
+            document.querySelectorAll('[data-result-dialog]').forEach((dialog) => {
                 const close = () => dialog.close ? dialog.close() : dialog.removeAttribute('open');
 
                 if (typeof dialog.showModal === 'function') {
@@ -106,9 +114,10 @@
                     close();
 
                     // Send them where they can act: the first field that needs
-                    // attention, or back to the top of the form.
+                    // attention, else whichever field this dialog names.
+                    const selector = dialog.dataset.resultFocus;
                     const target = document.querySelector('[aria-invalid="true"]')
-                        ?? document.querySelector('form [name="name"]');
+                        ?? (selector ? document.querySelector(selector) : null);
                     target?.focus({ preventScroll: false });
                 });
 
@@ -117,7 +126,7 @@
                 dialog.addEventListener('click', (event) => {
                     if (event.target === dialog) close();
                 });
-            })();
+            });
         </script>
     @endpush
 @endonce

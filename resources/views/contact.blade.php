@@ -373,14 +373,14 @@
      empty, so a second message costs nothing. What happened is announced
      here instead. --}}
 @if (session('sent'))
-    <x-result-dialog tone="success" heading="Message sent!">
+    <x-result-dialog tone="success" heading="Message sent!" focus="#name">
         <p>
             Thank you. It is with us. Replies usually take a few days, and
             corrections get looked at first.
         </p>
     </x-result-dialog>
 @elseif ($errors->any())
-    <x-result-dialog tone="error" heading="Almost there">
+    <x-result-dialog tone="error" heading="Almost there" focus="#name">
         <p>
             {{ $errors->count() }} {{ Str::plural('field', $errors->count()) }}
             {{ $errors->count() === 1 ? 'needs' : 'need' }} a look before this can go:

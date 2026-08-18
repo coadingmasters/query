@@ -352,7 +352,8 @@ return [
             ],
             'heading' => 'Where your data is held',
             'body' => [
-                'The site is hosted by Hostinger on servers in Malaysia. If you are visiting from elsewhere, including the United States, the information you send us is processed there.',
+                'The site is hosted by Hostinger on servers in the United States, in Massachusetts, and backups are held in Boston. If you are visiting from outside the United States, the information you send us is processed there.',
+                'Pages are delivered through Hostinger\'s content delivery network, which has servers in many countries and passes your request on to ours. It handles the page you are reading, not the information you send us through a form.',
                 'The same protections described in this policy apply wherever you are reading from.',
             ],
         ],

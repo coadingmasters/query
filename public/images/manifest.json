@@ -439,6 +439,86 @@
             }
         ]
     },
+    "purrquery-cat-food-bowl-heart": {
+        "width": 320,
+        "height": 213,
+        "preset": "cutout-sm",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 320,
+                "src": "/images/purrquery-cat-food-bowl-heart-320.77e8a6f7.webp"
+            },
+            {
+                "w": 480,
+                "src": "/images/purrquery-cat-food-bowl-heart-480.77e8a6f7.webp"
+            },
+            {
+                "w": 640,
+                "src": "/images/purrquery-cat-food-bowl-heart-640.77e8a6f7.webp"
+            }
+        ]
+    },
+    "purrquery-cat-saying-hi": {
+        "width": 320,
+        "height": 213,
+        "preset": "cutout-sm",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 320,
+                "src": "/images/purrquery-cat-saying-hi-320.243b8153.webp"
+            },
+            {
+                "w": 480,
+                "src": "/images/purrquery-cat-saying-hi-480.243b8153.webp"
+            },
+            {
+                "w": 640,
+                "src": "/images/purrquery-cat-saying-hi-640.243b8153.webp"
+            }
+        ]
+    },
+    "purrquery-cat-waving-paw": {
+        "width": 360,
+        "height": 311,
+        "preset": "cutout-tall",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 360,
+                "src": "/images/purrquery-cat-waving-paw-360.5bfb440d.webp"
+            },
+            {
+                "w": 540,
+                "src": "/images/purrquery-cat-waving-paw-540.5bfb440d.webp"
+            },
+            {
+                "w": 720,
+                "src": "/images/purrquery-cat-waving-paw-720.5bfb440d.webp"
+            }
+        ]
+    },
+    "purrquery-cat-yarn-ball": {
+        "width": 320,
+        "height": 213,
+        "preset": "cutout-sm",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 320,
+                "src": "/images/purrquery-cat-yarn-ball-320.b5b602d9.webp"
+            },
+            {
+                "w": 480,
+                "src": "/images/purrquery-cat-yarn-ball-480.b5b602d9.webp"
+            },
+            {
+                "w": 640,
+                "src": "/images/purrquery-cat-yarn-ball-640.b5b602d9.webp"
+            }
+        ]
+    },
     "purrquery-hero-cat-owner-smiling": {
         "width": 780,
         "height": 624,
@@ -456,6 +536,26 @@
             {
                 "w": 1560,
                 "src": "/images/purrquery-hero-cat-owner-smiling-1560.9bddbe66.webp"
+            }
+        ]
+    },
+    "purrquery-orange-tabby-cat-hero": {
+        "width": 600,
+        "height": 400,
+        "preset": "cutout",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/purrquery-orange-tabby-cat-hero-600.a5789aa6.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/purrquery-orange-tabby-cat-hero-900.a5789aa6.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/purrquery-orange-tabby-cat-hero-1200.a5789aa6.webp"
             }
         ]
     },

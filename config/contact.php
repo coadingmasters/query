@@ -56,27 +56,49 @@ return [
     ],
 
     /*
-     | What to expect, stated honestly. "We read every message" is true and
+     | What to expect, stated honestly. "Every message is read" is true and
      | costs nothing to keep; "we reply within 24 hours" would not be.
      */
-    'expectations' => [
+    'steps' => [
         [
-            'title' => 'Every message is read',
-            'body' => 'By a person, not a filter. Corrections and bug reports get '
-                .'looked at first.',
-            'paths' => ['M3 7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5Z', 'm3.5 8 7.6 5a1.6 1.6 0 0 0 1.8 0l7.6-5'],
+            'title' => 'We receive your message',
+            'body' => 'Every message is read by a real person, not a filter.',
+            'paths' => [
+                'M4 13h4l1.5 2.5h5L16 13h4',
+                'M6.2 5h11.6a2 2 0 0 1 1.9 1.4L21 13v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4l1.3-6.6A2 2 0 0 1 6.2 5Z',
+            ],
         ],
         [
-            'title' => 'Replies take a few days',
-            'body' => 'This is a small project, so it is not instant. It is not a '
-                .'black hole either.',
-            'paths' => ['M12 6v6l4 2', 'M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z'],
+            'title' => 'We review and research',
+            'body' => 'We look into it properly rather than guessing at an answer.',
+            'paths' => ['M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14Z', 'm20 20-4-4'],
         ],
         [
-            'title' => 'Nothing is passed on',
-            'body' => 'Your details are used to reply to you, and for nothing else '
-                .'at all.',
-            'paths' => ['M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z', 'm9.4 12.2 1.9 1.9 3.6-3.7'],
+            'title' => 'We reply to you',
+            'body' => 'You hear back by email. It takes a few days, not minutes.',
+            'paths' => ['M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5Z', 'M8.5 12h.01M12 12h.01M15.5 12h.01'],
+        ],
+    ],
+
+    /*
+     | The three reassurances beside the headline. Each is a plain statement
+     | of fact — none of them is a service-level promise.
+     */
+    'assurances' => [
+        [
+            'title' => 'Real people',
+            'body' => 'No bots here',
+            'paths' => ['M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20', 'M10 12a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z', 'M20 20v-1.5a3.5 3.5 0 0 0-2.6-3.4M15.5 5.2a3.5 3.5 0 0 1 0 6.6'],
+        ],
+        [
+            'title' => 'We read it all',
+            'body' => 'Every message',
+            'paths' => ['M20 15.5a2.5 2.5 0 0 1-2.5 2.5H9l-4 3v-3H6.5A2.5 2.5 0 0 1 4 15.5v-8A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5Z'],
+        ],
+        [
+            'title' => 'Cat lovers',
+            'body' => 'We get it',
+            'paths' => ['M12 20.5c-3.6-2.2-7-4.6-7-8.4A3.9 3.9 0 0 1 12 9.6a3.9 3.9 0 0 1 7 2.5c0 3.8-3.4 6.2-7 8.4Z'],
         ],
     ],
 ];

@@ -21,7 +21,9 @@ class ContactTest extends TestCase
     {
         $this->get('/contact')
             ->assertOk()
-            ->assertSee('Get in touch')
+            // The h1 itself, not the header's "Get in touch" link — that one
+            // is on every page and would pass whatever this page rendered.
+            ->assertSee('hear</span> from you!', false)
             ->assertSee(config('brand.email'));
     }
 
@@ -124,6 +126,26 @@ class ContactTest extends TestCase
         $this->assertStringNotContainsString('"telephone"', $html);
         $this->assertStringNotContainsString('"address"', $html);
         $this->assertStringNotContainsString('tel:', $html);
+    }
+
+    /**
+     * The artwork is the page. If a source file is renamed or dropped out of
+     * config/images.php the component renders nothing at all, silently — so
+     * the count is asserted rather than trusted.
+     */
+    public function test_every_illustration_on_the_page_resolves(): void
+    {
+        $html = $this->get('/contact')->getContent();
+
+        foreach ([
+            'purrquery-orange-tabby-cat-hero',
+            'purrquery-cat-saying-hi',
+            'purrquery-cat-waving-paw',
+            'purrquery-cat-yarn-ball',
+            'purrquery-cat-food-bowl-heart',
+        ] as $name) {
+            $this->assertStringContainsString("/images/$name-", $html, "$name did not render");
+        }
     }
 
     public function test_the_sitemap_lists_the_contact_page(): void

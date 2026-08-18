@@ -26,6 +26,13 @@ return [
         'blog' => [600, 400],
         'logo' => [96, 96],
         'story' => [560, 420],
+
+        // Cut-out artwork: a subject on transparency, with its doodles baked
+        // into the file. The ratios match the sources, so the centre crop is
+        // a no-op and no whisker or raised paw gets clipped off.
+        'cutout' => [600, 400],
+        'cutout-sm' => [320, 213],
+        'cutout-tall' => [360, 311],
     ],
 
     /*
@@ -42,6 +49,12 @@ return [
         // The mark carries fine linework and sits on every page.
         'logo' => 90,
         'story' => 80,
+
+        // Flat illustration over transparency compresses well, but banding
+        // shows in the soft gradients below this.
+        'cutout' => 84,
+        'cutout-sm' => 84,
+        'cutout-tall' => 84,
     ],
 
     /*
@@ -53,6 +66,12 @@ return [
         'about-our-story' => 'story',
 
         'purrquery-hero-cat-owner-smiling' => 'hero',
+
+        'purrquery-orange-tabby-cat-hero' => 'cutout',
+        'purrquery-cat-waving-paw' => 'cutout-tall',
+        'purrquery-cat-saying-hi' => 'cutout-sm',
+        'purrquery-cat-yarn-ball' => 'cutout-sm',
+        'purrquery-cat-food-bowl-heart' => 'cutout-sm',
 
         'cat-pregnancy-calculator-kitten' => 'tool',
         'cat-age-calculator-senior-tabby-cat' => 'tool',

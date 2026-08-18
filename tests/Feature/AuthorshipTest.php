@@ -27,25 +27,72 @@ class AuthorshipTest extends TestCase
 
         $html = $this->get('/about')->assertOk()->getContent();
 
-        $this->assertStringNotContainsString('id="founder"', $html);
+        $this->assertStringNotContainsString('Written by', $html);
         $this->assertStringNotContainsString('"@type":"Person"', $html);
         $this->assertStringNotContainsString('"founder"', $html);
+    }
+
+    /**
+     * A profile page for nobody is worse than a 404: it is an authorship claim
+     * with nothing behind it.
+     */
+    public function test_the_author_page_is_absent_while_no_author_is_configured(): void
+    {
+        config(['author.founder.name' => null]);
+
+        $this->get('/author')->assertNotFound();
+    }
+
+    /**
+     * Authorship gets its own URL rather than an anchor inside /about. It is a
+     * claim about a person, and a page of its own is what search engines and
+     * quality raters expect to find behind a byline.
+     */
+    public function test_the_author_page_carries_the_profile(): void
+    {
+        $this->withAuthor();
+
+        $html = $this->get('/author')->assertOk()->getContent();
+
+        $this->assertStringContainsString('A Real Person', $html);
+        $this->assertStringContainsString('"@type":"ProfilePage"', $html);
+        $this->assertStringContainsString('"mainEntity"', $html);
+    }
+
+    /** The about page links out to it rather than repeating it. */
+    public function test_the_about_page_points_at_the_author_page(): void
+    {
+        $this->withAuthor();
+
+        $this->get('/about')
+            ->assertSee('href="'.route('author').'"', false)
+            ->assertSee('A Real Person');
+    }
+
+    public function test_the_sitemap_lists_the_author_page(): void
+    {
+        $this->get('/sitemap.xml')
+            ->assertOk()
+            ->assertSee(rtrim(config('app.url'), '/').'/author', false);
     }
 
     public function test_a_configured_author_appears_on_the_page_and_in_the_graph(): void
     {
         $this->withAuthor();
 
-        $html = $this->get('/about')->assertOk()->getContent();
+        $html = $this->get('/author')->assertOk()->getContent();
 
-        $this->assertStringContainsString('id="founder"', $html);
         $this->assertStringContainsString('A Real Person', $html);
         $this->assertStringContainsString('"@type":"Person"', $html);
 
-        // The Organization points at the Person, and the page names them as
-        // its author. Both are what turn a bio into an authorship signal.
+        // The Organization points at the Person, and the profile page names
+        // them as its subject. A ProfilePage takes mainEntity for that, not
+        // author: the page is about the person rather than written by them.
         $this->assertStringContainsString('"founder":{"@id"', $html);
-        $this->assertStringContainsString('"author":{"@id"', $html);
+        $this->assertStringContainsString('"mainEntity":{"@id"', $html);
+
+        // author is the right relationship on a page they wrote.
+        $this->assertStringContainsString('"author":{"@id"', $this->get('/about')->getContent());
     }
 
     /**
@@ -56,7 +103,7 @@ class AuthorshipTest extends TestCase
     {
         $this->withAuthor();
 
-        $html = $this->get('/about')->getContent();
+        $html = $this->get('/author')->getContent();
 
         $this->assertStringContainsString('"sameAs"', $html);
         $this->assertStringContainsString('rel="me noopener"', $html);
@@ -89,7 +136,7 @@ class AuthorshipTest extends TestCase
     {
         $this->withAuthor(['author.reviewer.name' => null]);
 
-        $this->assertStringNotContainsString('Reviewed by', $this->get('/about')->getContent());
+        $this->assertStringNotContainsString('Reviewed by', $this->get('/author')->getContent());
     }
 
     public function test_a_named_reviewer_is_credited_when_one_exists(): void
@@ -100,7 +147,7 @@ class AuthorshipTest extends TestCase
             'author.reviewer.reviewed_on' => '2026-08-18',
         ]);
 
-        $this->get('/about')
+        $this->get('/author')
             ->assertSee('Reviewed by')
             ->assertSee('Dr Example')
             ->assertSee('DVM');

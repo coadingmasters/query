@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\TermsController;
@@ -15,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/about', AboutController::class)->name('about');
+
+// The author page carries its own slug rather than an anchor on /about:
+// authorship is a claim about a person, and it reads as one when it has a
+// page of its own.
+Route::get('/author', AuthorController::class)->name('author');
 
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 

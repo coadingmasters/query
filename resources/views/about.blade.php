@@ -129,71 +129,38 @@
     </div>
 </section>
 
-{{-- ══ 3b. WHO WRITES THIS ══════════════════════════════════════════════ --}}
-{{-- The whole section is behind a configured name. Cat health is YMYL, where
-     Google's guidance leans hardest on who wrote a thing and whether they can
-     be checked, and an invented author is precisely what that guidance exists
-     to catch. No name configured, no section. --}}
+{{-- ══ 3b. AUTHOR ══════════════════════════════════════════════════════ --}}
 @if (config('author.founder.name'))
     @php $author = config('author.founder'); @endphp
 
-    <section id="founder" class="scroll-mt-24 bg-surface pb-10 lg:pb-14">
+    <section class="bg-surface pb-10 lg:pb-14">
         <div class="container-page">
-            <div class="reveal grid gap-8 rounded-2xl border border-line bg-surface-section p-6 shadow-sm sm:p-9 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-10">
+            <a href="{{ route('author') }}"
+               class="reveal group flex flex-col gap-5 rounded-2xl border border-line bg-surface-section p-6 shadow-sm transition hover:border-line-strong hover:shadow-md sm:flex-row sm:items-center sm:gap-6 sm:p-7">
+                @if ($author['image'])
+                    <span class="size-20 shrink-0 overflow-hidden rounded-2xl bg-surface ring-1 ring-line">
+                        <x-img :name="$author['image']" :alt="$author['name']" sizes="80px"/>
+                    </span>
+                @else
+                    <span class="flex size-20 shrink-0 items-center justify-center rounded-2xl bg-primary-light">
+                        <x-paw-print class="size-9 text-primary"/>
+                    </span>
+                @endif
 
-                <div class="flex items-center gap-4 lg:block">
-                    @if ($author['image'])
-                        <div class="size-24 shrink-0 overflow-hidden rounded-2xl bg-surface-soft lg:size-28">
-                            <x-img :name="$author['image']" :alt="$author['name']" sizes="112px"/>
-                        </div>
-                    @else
-                        <div class="flex size-24 shrink-0 items-center justify-center rounded-2xl bg-primary-light lg:size-44">
-                            <x-paw-print class="size-10 text-primary lg:size-16"/>
-                        </div>
-                    @endif
+                <span class="flex-1">
+                    <span class="block text-xs font-bold tracking-[0.14em] text-primary uppercase">Written by</span>
+                    <span class="mt-1.5 block font-heading text-xl font-extrabold text-ink">{{ $author['name'] }}</span>
+                    <span class="mt-1 block text-sm text-ink-muted">{{ $author['tagline'] }}</span>
+                </span>
 
-                    <div class="lg:mt-4">
-                        <p class="font-heading text-lg font-extrabold tracking-tight text-ink">{{ $author['name'] }}</p>
-                        <p class="mt-0.5 text-sm text-ink-muted">{{ $author['role'] }}</p>
-                    </div>
-                </div>
-
-                <div>
-                    <p class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.14em] text-primary uppercase">
-                        <x-paw-print class="size-4"/>
-                        Who writes this
-                    </p>
-
-                    <div class="mt-4 space-y-3 text-base leading-relaxed text-ink-muted">
-                        @foreach ($author['bio'] as $paragraph)
-                            <p>{{ $paragraph }}</p>
-                        @endforeach
-                    </div>
-
-                    <div class="mt-6 flex flex-wrap items-center gap-3">
-                        <a href="{{ route('contact') }}" class="btn-primary rounded-full px-6">Get in touch</a>
-
-                        @foreach ($author['profiles'] as $profile)
-                            {{-- rel=me is what ties this page to that profile, and
-                                 it is the link that makes the name checkable. --}}
-                            <a href="{{ $profile }}" rel="me noopener" target="_blank"
-                               class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink transition hover:border-line-strong">
-                                {{ Str::of($profile)->after('//')->after('www.')->before('/')->toString() }}
-                                <svg class="size-3.5 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                    <path d="M7 17 17 7M9 7h8v8"/>
-                                </svg>
-                            </a>
-                        @endforeach
-                    </div>
-
-                    @if (config('author.reviewer.name'))
-                        <div class="mt-6 border-t border-line pt-5">
-                            <x-byline :reviewed="true"/>
-                        </div>
-                    @endif
-                </div>
-            </div>
+                <span class="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary">
+                    Read the full profile
+                    <svg class="size-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                        <path d="m9 6 6 6-6 6"/>
+                    </svg>
+                </span>
+            </a>
         </div>
     </section>
 @endif

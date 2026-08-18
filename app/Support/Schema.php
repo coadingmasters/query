@@ -71,7 +71,7 @@ class Schema
             'name' => $name,
             'jobTitle' => config('author.founder.role'),
             'description' => config('author.founder.tagline'),
-            'url' => self::url('/about#founder'),
+            'url' => self::url('/author'),
             'email' => config('brand.email'),
             'worksFor' => ['@id' => self::url('/#organization')],
         ];

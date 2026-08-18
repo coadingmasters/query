@@ -20,7 +20,7 @@
                 </span>
             @endif
             <span class="text-ink-muted">
-                By <a href="{{ route('about') }}#founder" class="font-semibold text-ink underline decoration-line-strong underline-offset-4 transition-colors hover:text-primary">{{ $author['name'] }}</a>
+                By <a href="{{ route('author') }}" class="font-semibold text-ink underline decoration-line-strong underline-offset-4 transition-colors hover:text-primary">{{ $author['name'] }}</a>
             </span>
         </span>
 

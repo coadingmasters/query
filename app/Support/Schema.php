@@ -36,7 +36,9 @@ class Schema
                 'width' => 1200,
                 'height' => 630,
             ],
-        ];
+        ] + (config('author.founder.name') ? [
+            'founder' => ['@id' => self::url('/#founder')],
+        ] : []);
     }
 
     /**
@@ -46,6 +48,49 @@ class Schema
      * send a query to, and there is no such endpoint here. The search box on
      * the home page filters what is already on screen.
      */
+    /**
+     * The person behind the site.
+     *
+     * Returns null when no name is configured, and every caller drops the node
+     * rather than substituting a placeholder. A Person node naming nobody real
+     * is worse than none: it is an assertion to Google about authorship that
+     * cannot be checked, which is what its guidance for health topics exists
+     * to catch.
+     */
+    public static function person(): ?array
+    {
+        $name = config('author.founder.name');
+
+        if (! $name) {
+            return null;
+        }
+
+        $node = [
+            '@type' => 'Person',
+            '@id' => self::url('/#founder'),
+            'name' => $name,
+            'jobTitle' => config('author.founder.role'),
+            'description' => config('author.founder.tagline'),
+            'url' => self::url('/about#founder'),
+            'email' => config('brand.email'),
+            'worksFor' => ['@id' => self::url('/#organization')],
+        ];
+
+        // sameAs is the part that makes the name checkable, so it is only
+        // emitted when there is something to check.
+        if ($profiles = config('author.founder.profiles')) {
+            $node['sameAs'] = $profiles;
+        }
+
+        if ($image = config('author.founder.image')) {
+            if ($resolved = \App\Support\Images::get($image)) {
+                $node['image'] = self::url($resolved['src']);
+            }
+        }
+
+        return $node;
+    }
+
     public static function website(): array
     {
         return [
@@ -87,8 +132,13 @@ class Schema
     }
 
     /** Wraps a page-level node with the shared publisher and site nodes. */
-    public static function graph(array ...$nodes): array
+    public static function graph(?array ...$nodes): array
     {
+        // Nullable, so a builder that has nothing to say can return null and
+        // the caller does not have to guard every one of them. person() is the
+        // case that matters: no configured author, no node.
+        $nodes = array_filter($nodes);
+
         return [
             '@context' => 'https://schema.org',
             '@graph' => [self::organization(), self::website(), ...array_merge(...$nodes)],

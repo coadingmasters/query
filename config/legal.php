@@ -352,7 +352,7 @@ return [
             ],
             'heading' => 'Where your data is held',
             'body' => [
-                'The site is hosted in Europe. If you are visiting from elsewhere, including the United States, the information you send us is processed there.',
+                'The site is hosted by Hostinger on servers in Malaysia. If you are visiting from elsewhere, including the United States, the information you send us is processed there.',
                 'The same protections described in this policy apply wherever you are reading from.',
             ],
         ],

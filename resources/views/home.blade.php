@@ -486,11 +486,32 @@
                 <div class="absolute -top-16 -right-10 size-64 rounded-full bg-primary-vivid/20 blur-2xl"></div>
                 <div class="absolute -bottom-20 -left-10 size-72 rounded-full bg-accent-vivid/20 blur-2xl"></div>
             </div>
-            <div class="relative">
+            {{-- Decorative, and the copy stands on its own without them, so
+                 they drop out at the widths where they would crowd it.
+
+                 The box matches the artwork's own 3:2 so object-contain fits
+                 it exactly; the column it sits in is the full height of the
+                 band, and letting the image fill that would letterbox it. --}}
+            <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 left-0 hidden w-48 items-center lg:flex xl:w-60">
+                <div class="aspect-[3/2] w-full">
+                    <x-img name="purrquery-cat-food-bowl-heart"
+                           alt="Pink cat food bowl filled with kibble beside a heart-shaped toy"
+                           sizes="240px" fit="contain"/>
+                </div>
+            </div>
+            <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-0 hidden w-52 items-center lg:flex xl:w-64">
+                <div class="aspect-[3/2] w-full">
+                    <x-img name="purrquery-happy-tabby-cat-relaxing"
+                           alt="Happy tabby cat relaxing comfortably with its paws raised"
+                           sizes="256px" fit="contain"/>
+                </div>
+            </div>
+
+            <div class="relative mx-auto max-w-xl">
                 <h2 class="font-heading text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
                     Ready to care smarter?
                 </h2>
-                <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
+                <p class="mx-auto mt-4 text-base leading-relaxed text-ink-muted sm:text-lg">
                     Start with your cat’s age or ideal weight. It takes about
                     thirty seconds, and you will know where you stand.
                 </p>

@@ -141,7 +141,15 @@ class Schema
 
         return [
             '@context' => 'https://schema.org',
-            '@graph' => [self::organization(), self::website(), ...array_merge(...$nodes)],
+            '@graph' => array_values(array_filter([
+                self::organization(),
+                self::website(),
+                // Every page's Organization points at #founder, so the Person
+                // has to be defined everywhere too. Defining it only on /about
+                // left that reference dangling on the other five.
+                self::person(),
+                ...array_merge(...$nodes),
+            ])),
         ];
     }
 

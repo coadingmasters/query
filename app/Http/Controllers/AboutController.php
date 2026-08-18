@@ -47,9 +47,6 @@ class AboutController extends Controller
                     'mainEntity' => ['@id' => $url.'/#founder'],
                 ] : []) + [
                 ],
-                // Named author, when there is one. array_filter drops it
-                // cleanly while the name is unset.
-                Schema::person(),
                 Schema::breadcrumbs('/about', ['Home' => '/', 'About' => null]),
             ]),
         ]);

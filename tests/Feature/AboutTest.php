@@ -79,14 +79,37 @@ class AboutTest extends TestCase
     }
 
     /**
-     * The founder section was removed, so nothing should still describe a
-     * person — structured data included.
+     * This once asserted the opposite. The founder section had been removed to
+     * keep the focus off personal branding, and the test held that line.
+     *
+     * That changed for a reason: cat health is YMYL, and an anonymous site
+     * asking people to act on health information is the weakest position it
+     * can take. The intent behind the old test survives in the new one, which
+     * is that the only person described is the configured one. An invented
+     * author is still the thing being guarded against.
      */
-    public function test_it_does_not_describe_a_person(): void
+    public function test_the_only_person_it_describes_is_the_configured_one(): void
     {
-        $this->get('/about')
-            ->assertDontSee('"@type":"Person"', false)
-            ->assertDontSee('Ahsan Nawaz');
+        $configured = config('author.founder.name');
+
+        if (! $configured) {
+            $this->get('/about')->assertDontSee('"@type":"Person"', false);
+
+            return;
+        }
+
+        $html = $this->get('/about')->assertSee($configured)->getContent();
+
+        preg_match_all('/"@type":"Person".*?"name":"([^"]+)"/', $html, $matches);
+
+        $this->assertNotEmpty($matches[1], 'the Person node is missing its name');
+
+        foreach ($matches[1] as $name) {
+            $this->assertSame(
+                $configured, $name,
+                "the page describes \"$name\", who is not the configured author"
+            );
+        }
     }
 
     public function test_the_sitemap_lists_the_about_page(): void

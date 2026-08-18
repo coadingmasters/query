@@ -82,6 +82,7 @@ return [
         'purrquery-cat-food-bowl-heart' => 'cutout-sm',
 
         'purrquery-about-hero-three-kittens' => 'cutout',
+        'purrquery-faq-hero-kitten-blanket' => 'cutout',
         'purrquery-cat-cozy-blanket' => 'feature',
         'purrquery-cat-lover-cuddling-cat' => 'portrait-wide',
         'purrquery-happy-tabby-cat-relaxing' => 'feature',

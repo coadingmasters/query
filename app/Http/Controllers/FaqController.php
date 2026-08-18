@@ -25,6 +25,15 @@ class FaqController extends Controller
             'canonical' => $url.'/faq',
             'groups' => $groups,
             'count' => $count,
+
+            // Counted from the catalogue and from this page's own questions,
+            // so the strip cannot claim more than the site actually holds.
+            'stats' => [
+                [$count, 'Questions answered'],
+                [count(config('catalog.tools')), 'Free cat care tools'],
+                [count(config('catalog.foods')) + count(config('catalog.posts')), 'Guides and articles'],
+                ['$0', 'Cost to use, always'],
+            ],
             'schema' => Schema::graph([
                 [
                     '@type' => 'WebPage',

@@ -23,6 +23,14 @@ return [
 
         [
             'id' => 'using-purrquery',
+            'tone' => 'primary',
+            'image' => 'purrquery-cat-waving-paw',
+            'image_alt' => 'Cute gray and white tabby cat waving its paw',
+            'paths' => [
+                'M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19Z',
+                'M9.4 9.2a2.7 2.7 0 0 1 5.2.9c0 1.8-2.6 2.4-2.6 4',
+                'M12 17.4h.01',
+            ],
             'title' => 'Using PurrQuery',
             'blurb' => 'What the site is, what it costs, and how far to trust it.',
             'items' => [
@@ -51,6 +59,13 @@ return [
 
         [
             'id' => 'feeding',
+            'tone' => 'accent',
+            'image' => 'purrquery-cat-food-bowl-heart',
+            'image_alt' => 'Pink cat food bowl filled with kibble beside a heart-shaped toy',
+            'paths' => [
+                'M3.5 12.5h17a8.5 8.5 0 0 1-17 0Z',
+                'M6 9.2c0-1.6 1.4-2.2 1.4-3.4M10.5 9.2c0-1.6 1.4-2.2 1.4-3.4M15 9.2c0-1.6 1.4-2.2 1.4-3.4',
+            ],
             'title' => 'Feeding and diet',
             'blurb' => 'How much, how often, and what to look at on the label.',
             'items' => [
@@ -83,6 +98,13 @@ return [
 
         [
             'id' => 'health',
+            'tone' => 'info',
+            'image' => 'purrquery-cat-cozy-blanket',
+            'image_alt' => 'Tabby kitten resting comfortably in a soft blanket',
+            'paths' => [
+                'M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z',
+                'M12 9v5M9.5 11.5h5',
+            ],
             'title' => 'Health and vet care',
             'blurb' => 'What is normal, what is not, and when it cannot wait.',
             'items' => [
@@ -115,6 +137,14 @@ return [
 
         [
             'id' => 'age-and-weight',
+            'tone' => 'warning',
+            'image' => 'purrquery-cat-yarn-ball',
+            'image_alt' => 'Playful tabby cat lying beside a green yarn ball',
+            'paths' => [
+                'M12 21a8 8 0 1 1 0-16 8 8 0 0 1 0 16Z',
+                'M12 13V9.5',
+                'M9 3.5h6',
+            ],
             'title' => 'Age, weight and growth',
             'blurb' => 'Reading your cat’s age and condition without guesswork.',
             'items' => [
@@ -143,6 +173,14 @@ return [
 
         [
             'id' => 'behaviour',
+            'tone' => 'accent',
+            'image' => 'purrquery-happy-tabby-cat-relaxing',
+            'image_alt' => 'Happy tabby cat relaxing comfortably with its paws raised',
+            'paths' => [
+                'M4 19v-6.5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2V19',
+                'M6.5 10.5V8a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v2.5',
+                'M3 19h18',
+            ],
             'title' => 'Behaviour and home life',
             'blurb' => 'The everyday things that are easier to fix than they look.',
             'items' => [

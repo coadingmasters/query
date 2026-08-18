@@ -10,7 +10,10 @@ class FaqTest extends TestCase
     {
         $this->get('/faq')
             ->assertOk()
-            ->assertSee('Cat care questions, answered');
+            // The headline is split across a line break and a span, so it
+            // is asserted in the two pieces the markup actually renders.
+            ->assertSee('Cat care questions,')
+            ->assertSee('answered');
     }
 
     public function test_every_question_and_answer_is_on_the_page(): void
@@ -82,7 +85,7 @@ class FaqTest extends TestCase
     {
         $count = collect(config('faq.groups'))->sum(fn (array $g): int => count($g['items']));
 
-        $this->get('/faq')->assertSee($count.' questions answered');
+        $this->get('/faq')->assertSee($count.' answers to');
     }
 
     public function test_it_is_reachable_from_the_header_and_footer(): void

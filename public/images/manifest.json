@@ -454,7 +454,7 @@
                 "src": "/images/purrquery-care-smarter-cat-illustration-570.93f1963b.webp"
             },
             {
-                "w": 700,
+                "w": 760,
                 "src": "/images/purrquery-care-smarter-cat-illustration-760.93f1963b.webp"
             }
         ]
@@ -576,6 +576,26 @@
             {
                 "w": 640,
                 "src": "/images/purrquery-cat-yarn-ball-640.b5b602d9.webp"
+            }
+        ]
+    },
+    "purrquery-faq-hero-kitten-blanket": {
+        "width": 600,
+        "height": 400,
+        "preset": "cutout",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/purrquery-faq-hero-kitten-blanket-600.5c713d8d.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/purrquery-faq-hero-kitten-blanket-900.5c713d8d.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/purrquery-faq-hero-kitten-blanket-1200.5c713d8d.webp"
             }
         ]
     },

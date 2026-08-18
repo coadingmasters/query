@@ -59,7 +59,7 @@ class TermsTest extends TestCase
     public function test_it_states_when_the_terms_took_effect(): void
     {
         $this->get('/terms')
-            ->assertSee('In effect from')
+            ->assertSee('Last updated')
             ->assertSee('datetime="'.config('legal.terms_effective').'"', false);
     }
 

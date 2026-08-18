@@ -31,6 +31,10 @@ return [
     'terms' => [
         [
             'id' => 'agreement',
+            'paths' => [
+                'm11 17-2.6 2.6a3 3 0 0 1-4.2-4.2l5.6-5.6a3 3 0 0 1 4.2 0l.8.8',
+                'm13 7 2.6-2.6a3 3 0 0 1 4.2 4.2l-5.6 5.6a3 3 0 0 1-4.2 0l-.8-.8',
+            ],
             'heading' => 'Agreement to these terms',
             'body' => [
                 'These terms govern your use of PurrQuery. By visiting the site or using any tool or guide on it, you accept them. If you do not accept them, please do not use the site.',
@@ -39,6 +43,11 @@ return [
         ],
         [
             'id' => 'what-we-provide',
+            'paths' => [
+                'M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 14.5Z',
+                'M9 20h6M12 16v4',
+                'm7.5 12 3-3 2 2 4-4',
+            ],
             'heading' => 'What PurrQuery provides',
             'body' => [
                 'PurrQuery is a free website offering cat care calculators, food-safety guides and written articles. There is no account to create, no subscription, and no charge for anything on the site.',
@@ -47,6 +56,12 @@ return [
         ],
         [
             'id' => 'not-veterinary-advice',
+            'paths' => [
+                'M8 3v5a4 4 0 0 0 8 0V3',
+                'M6 3h4M14 3h4',
+                'M12 12v3a4 4 0 0 0 8 0v-.5',
+                'M20 12.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z',
+            ],
             'heading' => 'Not veterinary advice',
             'highlight' => true,
             'body' => [
@@ -57,6 +72,10 @@ return [
         ],
         [
             'id' => 'acceptable-use',
+            'paths' => [
+                'M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z',
+                'm9.4 12.2 1.9 1.9 3.6-3.7',
+            ],
             'heading' => 'Acceptable use',
             'body' => [
                 'You may read, use and share PurrQuery for personal, non-commercial purposes. You may link to any page on the site freely.',
@@ -66,6 +85,12 @@ return [
         ],
         [
             'id' => 'intellectual-property',
+            'paths' => [
+                'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z',
+                'M14 3v5h5',
+                'M12 17.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z',
+                'm14 17 1.5 1.5',
+            ],
             'heading' => 'Content and ownership',
             'body' => [
                 'The text, design, tools, code and branding on PurrQuery belong to us unless stated otherwise, and are protected by copyright and related rights.',
@@ -74,6 +99,10 @@ return [
         ],
         [
             'id' => 'your-submissions',
+            'paths' => [
+                'M19 20v-1.5a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4V20',
+                'M12 11a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2Z',
+            ],
             'heading' => 'What you send us',
             'body' => [
                 'If you contact us or subscribe to updates, you give us the details needed to respond to you or to send what you asked for. We use them for that and nothing else, and we do not sell or share them.',
@@ -82,6 +111,10 @@ return [
         ],
         [
             'id' => 'advertising',
+            'paths' => [
+                'm10.5 13.5-6-2.2a1 1 0 0 1 0-1.9l14-5.2a1 1 0 0 1 1.3 1.3l-5.2 14a1 1 0 0 1-1.9 0Z',
+                'm10.5 13.5 4-4',
+            ],
             'heading' => 'Advertising and affiliate links',
             'body' => [
                 'PurrQuery is free to use and is intended to be funded in future by advertising and affiliate links. Where an affiliate link earns us a commission, that will be disclosed clearly on the page it appears on.',
@@ -90,6 +123,11 @@ return [
         ],
         [
             'id' => 'third-parties',
+            'paths' => [
+                'M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19Z',
+                'M2.5 12h19',
+                'M12 2.5a14 14 0 0 1 0 19 14 14 0 0 1 0-19Z',
+            ],
             'heading' => 'Links to other websites',
             'body' => [
                 'Some pages link to sites we do not run — veterinary sources, references and similar. Those links are provided because they are useful, not as an endorsement of everything on them.',
@@ -98,6 +136,10 @@ return [
         ],
         [
             'id' => 'availability',
+            'paths' => [
+                'M12 6v6l4 2',
+                'M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z',
+            ],
             'heading' => 'Availability of the site',
             'body' => [
                 'We aim to keep PurrQuery available and working, but we do not guarantee it. The site may be unavailable during maintenance, because of a fault, or for reasons outside our control.',
@@ -106,6 +148,10 @@ return [
         ],
         [
             'id' => 'liability',
+            'paths' => [
+                'M10.3 3.9 2.5 17.5A2 2 0 0 0 4.2 20.5h15.6a2 2 0 0 0 1.7-3l-7.8-13.6a2 2 0 0 0-3.4 0Z',
+                'M12 9.5v4M12 17h.01',
+            ],
             'heading' => 'Limitation of liability',
             'body' => [
                 'PurrQuery is provided as it is, without warranties of any kind. We do not warrant that the content is complete, current or free of error, or that the site will be uninterrupted or secure.',
@@ -115,6 +161,11 @@ return [
         ],
         [
             'id' => 'governing-law',
+            'paths' => [
+                'M12 3v18M8 21h8',
+                'm5 8 4-4 4 4-4 4Z',
+                'M15 12h6M18 12l-2 4h4Z',
+            ],
             'heading' => 'Governing law',
             'body' => [
                 $jurisdiction
@@ -125,6 +176,10 @@ return [
         ],
         [
             'id' => 'contact',
+            'paths' => [
+                'M3 7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5Z',
+                'm3.5 8 7.6 5a1.6 1.6 0 0 0 1.8 0l7.6-5',
+            ],
             'heading' => 'Getting in touch',
             'body' => [
                 'If anything on this page is unclear, or you need to raise something about these terms, please use the contact page or write to us directly. We would rather answer a question than have you guess.',

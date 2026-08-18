@@ -326,7 +326,7 @@
                 $verdictLabel = ['safe' => 'Safe', 'caution' => 'In moderation', 'unsafe' => 'Never'];
             @endphp
             @foreach (config('catalog.foods') as $food)
-                <article class="card" data-filter
+                <article id="food-{{ $food['slug'] }}" class="card scroll-mt-24" data-filter
                          data-terms="{{ Str::lower($food['question'].' '.$food['answer'].' '.$food['title']) }}">
                     <div class="card-media">
                         <x-img :name="$food['image']" :alt="$food['alt']"

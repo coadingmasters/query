@@ -209,8 +209,27 @@ foreach ($config['images'] as $name => $preset) {
         }
 
         $bytes += filesize($path);
-        $variants[] = ['w' => $tw, 'src' => "/images/$file"];
+
+        // Read the width back off the file rather than trusting $tw. The
+        // never-upscale cap above only runs on the branch that builds, so on a
+        // reused variant $tw is still the requested width — which for a source
+        // smaller than 2x is larger than the file really is. That difference
+        // goes straight into srcset, telling the browser a 256w candidate
+        // exists when the bytes are 100px wide.
+        $variants[] = ['w' => (int) (getimagesize($path)[0] ?? $tw), 'src' => "/images/$file"];
     }
+
+    // A source smaller than 2x makes the higher densities collapse onto the
+    // same width, which would emit a srcset repeating one descriptor three
+    // times. Keep the first of each width; the duplicates are byte-identical.
+    $seen = [];
+    $variants = array_values(array_filter($variants, function (array $v) use (&$seen): bool {
+        if (isset($seen[$v['w']])) {
+            return false;
+        }
+
+        return $seen[$v['w']] = true;
+    }));
 
     $manifest[$name] = [
         'width' => $dw,

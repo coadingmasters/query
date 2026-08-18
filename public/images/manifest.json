@@ -1,4 +1,16 @@
 {
+    "author-ahsan-nawaz": {
+        "width": 128,
+        "height": 128,
+        "preset": "avatar",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 100,
+                "src": "/images/author-ahsan-nawaz-128.4aedc731.webp"
+            }
+        ]
+    },
     "best-indoor-cat-food-premium-ingredients": {
         "width": 600,
         "height": 400,

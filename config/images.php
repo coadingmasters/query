@@ -34,6 +34,10 @@ return [
         'cutout-sm' => [320, 213],
         'cutout-tall' => [360, 311],
 
+        // Square, for a face. The build never upscales, so a small source is
+        // emitted at whatever it can honestly provide rather than stretched.
+        'avatar' => [128, 128],
+
         // The about page runs its artwork larger than the contact page does.
         'feature' => [640, 427],
         'portrait-wide' => [760, 507],
@@ -60,6 +64,7 @@ return [
         'cutout' => 84,
         'cutout-sm' => 84,
         'cutout-tall' => 84,
+        'avatar' => 88,
 
         'feature' => 82,
         'portrait-wide' => 82,
@@ -72,6 +77,7 @@ return [
      */
     'images' => [
         'purrquerylogo' => 'logo',
+        'author-ahsan-nawaz' => 'avatar',
 
         'purrquery-hero-cat-owner-smiling' => 'hero',
 

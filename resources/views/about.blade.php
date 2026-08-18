@@ -143,8 +143,8 @@
 
                 <div class="flex items-center gap-4 lg:block">
                     @if ($author['image'])
-                        <div class="size-24 shrink-0 overflow-hidden rounded-2xl bg-surface-soft lg:size-44">
-                            <x-img :name="$author['image']" :alt="$author['name']" sizes="176px"/>
+                        <div class="size-24 shrink-0 overflow-hidden rounded-2xl bg-surface-soft lg:size-28">
+                            <x-img :name="$author['image']" :alt="$author['name']" sizes="112px"/>
                         </div>
                     @else
                         <div class="flex size-24 shrink-0 items-center justify-center rounded-2xl bg-primary-light lg:size-44">

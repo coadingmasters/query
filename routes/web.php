@@ -23,6 +23,8 @@ Route::get('/about', AboutController::class)->name('about');
 // page of its own.
 Route::get('/author', AuthorController::class)->name('author');
 
+Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+
 Route::get('/blog/{slug}', [BlogController::class, 'show'])
     ->name('blog.show');
 

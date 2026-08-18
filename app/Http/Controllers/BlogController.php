@@ -8,6 +8,51 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BlogController extends Controller
 {
+    public function index(): View
+    {
+        $name = config('app.name');
+        $url = rtrim(config('app.url'), '/');
+
+        // Written ones first. A grid that opens with four "coming soon" cards
+        // tells a reader the blog is empty before they have read a word.
+        $posts = collect(config('catalog.posts'))
+            ->sortByDesc(fn (array $p): int => isset($p['url']) ? 1 : 0)
+            ->values();
+
+        $live = $posts->filter(fn (array $p): bool => isset($p['url']));
+
+        $description = 'Cat care guides from '.$name.'. Behavior, feeding, health '
+            .'and life stages, researched from published veterinary sources with '
+            .'those sources named.';
+
+        return view('blog.index', [
+            'title' => 'Cat Care Blog | '.$name,
+            'description' => $description,
+            'canonical' => $url.'/blog',
+            'posts' => $posts,
+            'live' => $live,
+            'categories' => $posts->pluck('category')->unique()->values(),
+            'schema' => Schema::graph([
+                [
+                    '@type' => 'CollectionPage',
+                    '@id' => $url.'/blog#page',
+                    'url' => $url.'/blog',
+                    'name' => 'Cat Care Blog',
+                    'description' => $description,
+                    'isPartOf' => ['@id' => $url.'/#website'],
+                ],
+                // Only the articles that exist. Listing the unwritten ones
+                // would describe a library that is not there.
+                Schema::itemList($url.'/blog#articles', 'Cat care articles',
+                    $live->map(fn (array $p): array => [
+                        'name' => $p['title'],
+                        'description' => $p['excerpt'],
+                    ])->all()),
+                Schema::breadcrumbs('/blog', ['Home' => '/', 'Blog' => null]),
+            ]),
+        ]);
+    }
+
     public function show(string $slug): View
     {
         $post = config("blog.$slug");

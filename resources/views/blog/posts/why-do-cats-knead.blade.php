@@ -221,7 +221,7 @@
 <p>
     The kneading is not the symptom in any of those. The change is. If you want
     a fuller list of what to watch for, our guide to the
-    <a href="/#blog">early signs a cat is unwell</a> covers the ones that show
+    <a href="{{ route('blog.index') }}">early signs a cat is unwell</a> covers the ones that show
     up first.
 </p>
 

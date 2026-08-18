@@ -168,7 +168,7 @@
          'accent', ['M8 3v6a4 4 0 0 1-4 4 4 4 0 0 0 4 4v4', 'M16 3c-1.5 3-2 5-2 7a3 3 0 0 0 3 3h1v8']],
         ['How It Works', 'Three steps from a question to an answer you can act on.', 'See how', '#how-it-works',
          'warning', ['M12 6v6l4 2', 'M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z']],
-        ['Cat Care Blog', 'Longer reads for the questions a calculator cannot settle.', 'Read blog', '#blog',
+        ['Cat Care Blog', 'Longer reads for the questions a calculator cannot settle.', 'Read blog', route('blog.index'),
          'info', ['M12 7.5v13', 'M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z']],
     ];
 @endphp

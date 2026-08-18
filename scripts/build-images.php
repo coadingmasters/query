@@ -216,7 +216,7 @@ foreach ($config['images'] as $name => $preset) {
     $transforms = json_encode([
         $config['crops'][$name] ?? null,
         in_array($name, $config['keyed'] ?? [], true),
-        $config['recolour'][$name] ?? null,
+        $config['recolour'][$name] ?? $config['recolour'][$sourceName] ?? null,
     ]);
 
     $hash = substr(hash('xxh128', md5_file($sourcePath)."$dw:$dh:$quality:$transforms"), 0, 8);
@@ -254,7 +254,9 @@ foreach ($config['images'] as $name => $preset) {
                 $src = keyOutWhite($src);
             }
 
-            if ($shift = $config['recolour'][$name] ?? null) {
+            $shift = $config['recolour'][$name] ?? $config['recolour'][$sourceName] ?? null;
+
+            if ($shift) {
                 $src = shiftHue($src, $shift['from'], $shift['to'], $shift['target']);
             }
 

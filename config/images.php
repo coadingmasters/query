@@ -164,9 +164,9 @@ return [
         'cat-age-calculator-senior-tabby-cat' => ['from' => 235, 'to' => 305, 'target' => 8],
         'cat-age-life-stages' => ['from' => 235, 'to' => 305, 'target' => 8],
 
-        // Stands in on two cards, so the clash showed twice.
+        // Stands in for three cards through the placeholders below. Listing
+        // the source once covers every name that borrows it.
         'cat-name-generator-cute-kitten' => ['from' => 235, 'to' => 305, 'target' => 8],
-        'cat-pregnancy-calculator-kitten' => ['from' => 235, 'to' => 305, 'target' => 8],
     ],
 
     /*

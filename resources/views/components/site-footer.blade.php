@@ -10,7 +10,7 @@
             'items' => [
                 ['All tools', '/#tools'],
                 ['Food guides', '/#food-guides'],
-                ['Blog', '/#blog'],
+                ['Blog', route('blog.index')],
                 ['How it works', '/#how-it-works'],
                 ['About Us', route('about')],
                 ['Contact Us', route('contact')],

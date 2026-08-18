@@ -14,7 +14,7 @@
                 <ol class="flex flex-wrap items-center gap-1.5">
                     <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
                     <li aria-hidden="true">/</li>
-                    <li><a href="/#blog" class="transition-colors hover:text-primary">Blog</a></li>
+                    <li><a href="{{ route('blog.index') }}" class="transition-colors hover:text-primary">Blog</a></li>
                     <li aria-hidden="true">/</li>
                     <li class="font-medium text-ink">{{ $post['category'] }}</li>
                 </ol>
@@ -193,7 +193,7 @@
             <ul class="mt-6 grid gap-4 sm:grid-cols-2">
                 @foreach ($posts as $next)
                     <li>
-                        <a href="{{ $next['url'] ?? '/#blog' }}"
+                        <a href="{{ $next['url'] ?? route('blog.index') }}"
                            class="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition hover:-translate-y-1 hover:shadow-md">
                             <div class="overflow-hidden bg-surface-section">
                                 <x-img :name="$next['image']" :alt="$next['alt']" sizes="(min-width: 640px) 22rem, 92vw"/>

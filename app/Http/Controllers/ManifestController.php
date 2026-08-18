@@ -22,7 +22,7 @@ class ManifestController extends Controller
             'start_url' => '/',
             'display' => 'standalone',
             'background_color' => '#F8F7FF',
-            'theme_color' => '#534AB7',
+            'theme_color' => '#F47C6B',
             'icons' => [
                 ['src' => '/icon-192.png', 'sizes' => '192x192', 'type' => 'image/png'],
                 ['src' => '/icon-512.png', 'sizes' => '512x512', 'type' => 'image/png', 'purpose' => 'any'],

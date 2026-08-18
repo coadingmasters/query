@@ -28,6 +28,75 @@ $force = in_array('--force', $argv, true);
 
 @mkdir($outputDir, 0755, true);
 
+/**
+ * Turn a flat white studio surround into transparency.
+ *
+ * Some artwork arrives as a subject on white rather than on alpha, which
+ * shows as a white rectangle the moment it is placed on a tinted band. The
+ * fill is seeded from the border and spreads only through connected near-white
+ * pixels, so enclosed white — a cat's chest, a whisker, the highlight in an
+ * eye — is left alone. A flat threshold over the whole image would eat those.
+ *
+ * Alpha ramps across $soft..$hard rather than switching at one value, or the
+ * cut leaves a hard fringe where the subject's own glow meets the surround.
+ */
+function keyOutWhite(GdImage $src, int $soft = 200, int $hard = 246): GdImage
+{
+    $w = imagesx($src);
+    $h = imagesy($src);
+
+    $out = imagecreatetruecolor($w, $h);
+    imagealphablending($out, false);
+    imagesavealpha($out, true);
+    imagecopy($out, $src, 0, 0, 0, 0, $w, $h);
+
+    $seen = array_fill(0, $w * $h, false);
+    $queue = [];
+
+    for ($x = 0; $x < $w; $x++) {
+        $queue[] = [$x, 0];
+        $queue[] = [$x, $h - 1];
+    }
+    for ($y = 0; $y < $h; $y++) {
+        $queue[] = [0, $y];
+        $queue[] = [$w - 1, $y];
+    }
+
+    for ($i = 0; $i < count($queue); $i++) {
+        [$x, $y] = $queue[$i];
+
+        if ($x < 0 || $y < 0 || $x >= $w || $y >= $h) {
+            continue;
+        }
+
+        $key = $y * $w + $x;
+        if ($seen[$key]) {
+            continue;
+        }
+        $seen[$key] = true;
+
+        $rgb = imagecolorat($src, $x, $y);
+        $min = min(($rgb >> 16) & 0xFF, ($rgb >> 8) & 0xFF, $rgb & 0xFF);
+
+        if ($min < $soft) {
+            continue;                 // subject edge — stop spreading here
+        }
+
+        $alpha = $min >= $hard
+            ? 127
+            : (int) round(127 * ($min - $soft) / ($hard - $soft));
+
+        imagesetpixel($out, $x, $y, ($alpha << 24) | ($rgb & 0xFFFFFF));
+
+        $queue[] = [$x + 1, $y];
+        $queue[] = [$x - 1, $y];
+        $queue[] = [$x, $y + 1];
+        $queue[] = [$x, $y - 1];
+    }
+
+    return $out;
+}
+
 /** Centre-crop $src to $ratio, so nothing is squashed out of proportion. */
 function cropToRatio(GdImage $src, float $ratio): GdImage
 {
@@ -99,6 +168,20 @@ foreach ($config['images'] as $name => $preset) {
             if (! $src) {
                 fwrite(STDERR, "  cannot read $sourcePath\n");
                 continue;
+            }
+
+            // A source that is mostly frame around the part we want: take the
+            // region first, so the preset's ratio crop works on the subject
+            // rather than on the whole artwork.
+            if ($box = $config['crops'][$name] ?? null) {
+                $region = imagecrop($src, array_combine(['x', 'y', 'width', 'height'], $box));
+                if ($region) {
+                    $src = $region;
+                }
+            }
+
+            if (in_array($name, $config['keyed'] ?? [], true)) {
+                $src = keyOutWhite($src);
             }
 
             $cropped = cropToRatio($src, $ratio);

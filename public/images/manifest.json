@@ -1,24 +1,4 @@
 {
-    "about-our-story": {
-        "width": 560,
-        "height": 420,
-        "preset": "story",
-        "placeholder": true,
-        "variants": [
-            {
-                "w": 560,
-                "src": "/images/about-our-story-560.ee876ede.webp"
-            },
-            {
-                "w": 840,
-                "src": "/images/about-our-story-840.ee876ede.webp"
-            },
-            {
-                "w": 1120,
-                "src": "/images/about-our-story-1120.ee876ede.webp"
-            }
-        ]
-    },
     "best-indoor-cat-food-premium-ingredients": {
         "width": 600,
         "height": 400,
@@ -439,6 +419,66 @@
             }
         ]
     },
+    "purrquery-about-hero-three-kittens": {
+        "width": 600,
+        "height": 400,
+        "preset": "cutout",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/purrquery-about-hero-three-kittens-600.945898a3.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/purrquery-about-hero-three-kittens-900.945898a3.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/purrquery-about-hero-three-kittens-1200.945898a3.webp"
+            }
+        ]
+    },
+    "purrquery-care-smarter-cat-illustration": {
+        "width": 380,
+        "height": 301,
+        "preset": "banner",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 380,
+                "src": "/images/purrquery-care-smarter-cat-illustration-380.93f1963b.webp"
+            },
+            {
+                "w": 570,
+                "src": "/images/purrquery-care-smarter-cat-illustration-570.93f1963b.webp"
+            },
+            {
+                "w": 700,
+                "src": "/images/purrquery-care-smarter-cat-illustration-760.93f1963b.webp"
+            }
+        ]
+    },
+    "purrquery-cat-cozy-blanket": {
+        "width": 640,
+        "height": 427,
+        "preset": "feature",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 640,
+                "src": "/images/purrquery-cat-cozy-blanket-640.9dbb7eb3.webp"
+            },
+            {
+                "w": 960,
+                "src": "/images/purrquery-cat-cozy-blanket-960.9dbb7eb3.webp"
+            },
+            {
+                "w": 1280,
+                "src": "/images/purrquery-cat-cozy-blanket-1280.9dbb7eb3.webp"
+            }
+        ]
+    },
     "purrquery-cat-food-bowl-heart": {
         "width": 320,
         "height": 213,
@@ -456,6 +496,26 @@
             {
                 "w": 640,
                 "src": "/images/purrquery-cat-food-bowl-heart-640.77e8a6f7.webp"
+            }
+        ]
+    },
+    "purrquery-cat-lover-cuddling-cat": {
+        "width": 760,
+        "height": 507,
+        "preset": "portrait-wide",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 760,
+                "src": "/images/purrquery-cat-lover-cuddling-cat-760.292cfe40.webp"
+            },
+            {
+                "w": 1140,
+                "src": "/images/purrquery-cat-lover-cuddling-cat-1140.292cfe40.webp"
+            },
+            {
+                "w": 1520,
+                "src": "/images/purrquery-cat-lover-cuddling-cat-1520.292cfe40.webp"
             }
         ]
     },
@@ -516,6 +576,26 @@
             {
                 "w": 640,
                 "src": "/images/purrquery-cat-yarn-ball-640.b5b602d9.webp"
+            }
+        ]
+    },
+    "purrquery-happy-tabby-cat-relaxing": {
+        "width": 640,
+        "height": 427,
+        "preset": "feature",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 640,
+                "src": "/images/purrquery-happy-tabby-cat-relaxing-640.3ff0e9ad.webp"
+            },
+            {
+                "w": 960,
+                "src": "/images/purrquery-happy-tabby-cat-relaxing-960.3ff0e9ad.webp"
+            },
+            {
+                "w": 1280,
+                "src": "/images/purrquery-happy-tabby-cat-relaxing-1280.3ff0e9ad.webp"
             }
         ]
     },

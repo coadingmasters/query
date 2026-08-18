@@ -1,4 +1,4 @@
-<x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema">
+<x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema" footer-wave="text-surface-soft">
 
 @push('head')
     {{-- The hero image is the largest thing painted on load, so the browser is

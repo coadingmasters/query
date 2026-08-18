@@ -33,6 +33,11 @@ return [
         'cutout' => [600, 400],
         'cutout-sm' => [320, 213],
         'cutout-tall' => [360, 311],
+
+        // The about page runs its artwork larger than the contact page does.
+        'feature' => [640, 427],
+        'portrait-wide' => [760, 507],
+        'banner' => [380, 301],
     ],
 
     /*
@@ -55,6 +60,10 @@ return [
         'cutout' => 84,
         'cutout-sm' => 84,
         'cutout-tall' => 84,
+
+        'feature' => 82,
+        'portrait-wide' => 82,
+        'banner' => 82,
     ],
 
     /*
@@ -63,7 +72,6 @@ return [
      */
     'images' => [
         'purrquerylogo' => 'logo',
-        'about-our-story' => 'story',
 
         'purrquery-hero-cat-owner-smiling' => 'hero',
 
@@ -72,6 +80,12 @@ return [
         'purrquery-cat-saying-hi' => 'cutout-sm',
         'purrquery-cat-yarn-ball' => 'cutout-sm',
         'purrquery-cat-food-bowl-heart' => 'cutout-sm',
+
+        'purrquery-about-hero-three-kittens' => 'cutout',
+        'purrquery-cat-cozy-blanket' => 'feature',
+        'purrquery-cat-lover-cuddling-cat' => 'portrait-wide',
+        'purrquery-happy-tabby-cat-relaxing' => 'feature',
+        'purrquery-care-smarter-cat-illustration' => 'banner',
 
         'cat-pregnancy-calculator-kitten' => 'tool',
         'cat-age-calculator-senior-tabby-cat' => 'tool',
@@ -108,9 +122,29 @@ return [
      | resources/images/ and delete its line here. Nothing else changes —
      | the pages already reference the real name.
      */
+    /*
+     | Take a region of the source before anything else, as [x, y, w, h] in
+     | source pixels. The care-smarter illustration carries its own headline
+     | across the top, which would repeat the live heading beside it, and a
+     | wide cream frame that shows as a pale blob on a tinted band. Only the
+     | kitten and its bed are wanted.
+     */
+    'crops' => [
+        'purrquery-care-smarter-cat-illustration' => [575, 285, 700, 555],
+    ],
+
+    /*
+     | Artwork that arrived as a subject on flat white rather than on alpha.
+     | Listed here, the build seeds a fill from the border and spreads it
+     | through connected near-white pixels only, so the surround goes and the
+     | subject's own white does not.
+     */
+    'keyed' => [
+        'purrquery-about-hero-three-kittens',
+    ],
+
     'placeholders' => [
         'cat-pregnancy-calculator-kitten' => 'cat-name-generator-cute-kitten',
-        'about-our-story' => 'cat-breed-quiz-multiple-cat-breeds',
         'how-much-feed-cat-eating-food-bowl' => 'cat-calorie-calculator-cat-food-bowl',
         'signs-cat-is-sick-vet-examination' => 'cat-vaccination-tracker-vet-examination',
         'best-indoor-cat-food-premium-ingredients' => 'can-cats-eat-cat-treats-snacks',

@@ -1,9 +1,20 @@
+@props([
+    'title',
+    'description',
+    'canonical',
+    'schema' => null,
+
+    // The footer opens with a curve painted in the colour of the band above
+    // it, so it reads as that section dipping into the footer. Pages that do
+    // not end on white say so here.
+    'footerWave' => 'text-surface',
+])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#534AB7">
+    <meta name="theme-color" content="#F47C6B">
 
     <title>{{ $title }}</title>
     <meta name="description" content="{{ $description }}">
@@ -59,7 +70,7 @@
         {{ $slot }}
     </main>
 
-    <x-site-footer/>
+    <x-site-footer :wave="$footerWave"/>
 
     <script>
         // Reveals sections as they come into view. The hidden state is added

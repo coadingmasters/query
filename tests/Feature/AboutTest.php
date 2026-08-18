@@ -12,7 +12,7 @@ class AboutTest extends TestCase
             ->assertOk()
             ->assertSee('About '.config('app.name'))
             ->assertSee('Our mission')
-            ->assertSee('Our vision');
+            ->assertSee('Our story');
     }
 
     public function test_it_is_reachable_from_the_header_and_footer(): void

@@ -1,4 +1,4 @@
-<x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema">
+<x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema" footer-wave="text-surface-section">
 
 {{-- ══ 1. HERO ═══════════════════════════════════════════════════════════ --}}
 {{-- The artwork carries its own peach field, paw and heart doodles, so this

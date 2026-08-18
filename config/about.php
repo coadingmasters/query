@@ -116,4 +116,49 @@ return [
             ],
         ],
     ],
+
+    /*
+     | The four short pillars beside the mission statement. Each is a
+     | description of how the site is made, not a claim about how many people
+     | use it — there is no traffic history to draw on yet.
+     */
+    'pillars' => [
+        [
+            'title' => 'Made for cat owners',
+            'body' => 'Written for the person holding the cat, not for other specialists.',
+            'tone' => 'primary',
+            'paths' => ['M12 20.5c-3.6-2.2-7-4.6-7-8.4A3.9 3.9 0 0 1 12 9.6a3.9 3.9 0 0 1 7 2.5c0 3.8-3.4 6.2-7 8.4Z'],
+        ],
+        [
+            'title' => 'Checked before it ships',
+            'body' => 'Guidance comes from published veterinary sources, not from memory.',
+            'tone' => 'accent',
+            'paths' => ['M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z', 'm9.4 12.2 1.9 1.9 3.6-3.7'],
+        ],
+        [
+            'title' => 'Honest about limits',
+            'body' => 'Where the evidence is thin or opinion is split, we say so.',
+            'tone' => 'primary',
+            'paths' => ['M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19Z', 'M12 8.2v5', 'M12 16.2h.01'],
+        ],
+        [
+            'title' => 'Always improving',
+            'body' => 'The library grows from the questions owners actually send us.',
+            'tone' => 'accent',
+            'paths' => ['M4 17.5 9 12l3.5 3.5L20 8', 'M15 8h5v5'],
+        ],
+    ],
+
+    /*
+     | The trust list. "Ad-free" was supplied and is not used: the site is
+     | intended to carry advertising in future, and promising otherwise on
+     | the about page would be a claim we would have to break.
+     */
+    'trust' => [
+        'Written from published veterinary sources, with the reasoning shown',
+        'Tools give an instant answer — no sign-up, no paywall, no email',
+        'Nothing about your cat is sent anywhere; the tools run in your browser',
+        'Clear about what is not known, instead of guessing to fill a gap',
+        'Corrections are welcome, and they get looked at first',
+    ],
 ];

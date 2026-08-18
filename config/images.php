@@ -41,6 +41,10 @@ return [
         // A wide figure, for a diagram sitting inside the body of a page.
         'figure' => [760, 380],
 
+        // 5:4, matching the in-article photography. A 3:2 preset would centre
+        // crop these and take the paws out of two of the three.
+        'figure-tall' => [720, 576],
+
         // The about page runs its artwork larger than the contact page does.
         'feature' => [640, 427],
         'portrait-wide' => [760, 507],
@@ -69,6 +73,7 @@ return [
         'cutout-tall' => 84,
         'avatar' => 88,
         'figure' => 82,
+        'figure-tall' => 82,
 
         'feature' => 82,
         'portrait-wide' => 82,
@@ -120,6 +125,9 @@ return [
         'can-cats-eat-cat-treats-snacks' => 'food',
 
         'why-do-cats-knead-hero' => 'blog',
+        'cat-kneading-lap' => 'figure-tall',
+        'kitten-making-biscuits' => 'figure-tall',
+        'cat-kneading-claws-out' => 'figure-tall',
         'can-cats-eat-broccoli-cat-sniffing' => 'blog',
         'how-much-feed-cat-eating-food-bowl' => 'blog',
         'signs-cat-is-sick-vet-examination' => 'blog',
@@ -180,7 +188,6 @@ return [
     ],
 
     'placeholders' => [
-        'why-do-cats-knead-hero' => 'purrquery-cat-cozy-blanket',
         // Same artwork, run at figure size for the body of the age calculator.
         'cat-age-life-stages' => 'cat-age-calculator-senior-tabby-cat',
 

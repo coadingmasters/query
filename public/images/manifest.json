@@ -331,6 +331,46 @@
             }
         ]
     },
+    "cat-kneading-claws-out": {
+        "width": 720,
+        "height": 576,
+        "preset": "figure-tall",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 720,
+                "src": "/images/cat-kneading-claws-out-720.f870ede6.webp"
+            },
+            {
+                "w": 1080,
+                "src": "/images/cat-kneading-claws-out-1080.f870ede6.webp"
+            },
+            {
+                "w": 1402,
+                "src": "/images/cat-kneading-claws-out-1440.f870ede6.webp"
+            }
+        ]
+    },
+    "cat-kneading-lap": {
+        "width": 720,
+        "height": 576,
+        "preset": "figure-tall",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 720,
+                "src": "/images/cat-kneading-lap-720.e1538ad4.webp"
+            },
+            {
+                "w": 1080,
+                "src": "/images/cat-kneading-lap-1080.e1538ad4.webp"
+            },
+            {
+                "w": 1402,
+                "src": "/images/cat-kneading-lap-1440.e1538ad4.webp"
+            }
+        ]
+    },
     "cat-name-generator-cute-kitten": {
         "width": 400,
         "height": 250,
@@ -428,6 +468,26 @@
             {
                 "w": 1200,
                 "src": "/images/how-much-feed-cat-eating-food-bowl-1200.9996859c.webp"
+            }
+        ]
+    },
+    "kitten-making-biscuits": {
+        "width": 720,
+        "height": 576,
+        "preset": "figure-tall",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 720,
+                "src": "/images/kitten-making-biscuits-720.38c754bb.webp"
+            },
+            {
+                "w": 1080,
+                "src": "/images/kitten-making-biscuits-1080.38c754bb.webp"
+            },
+            {
+                "w": 1402,
+                "src": "/images/kitten-making-biscuits-1440.38c754bb.webp"
             }
         ]
     },
@@ -775,19 +835,19 @@
         "width": 600,
         "height": 400,
         "preset": "blog",
-        "placeholder": true,
+        "placeholder": false,
         "variants": [
             {
                 "w": 600,
-                "src": "/images/why-do-cats-knead-hero-600.573f6a79.webp"
+                "src": "/images/why-do-cats-knead-hero-600.6dfcf35f.webp"
             },
             {
                 "w": 900,
-                "src": "/images/why-do-cats-knead-hero-900.573f6a79.webp"
+                "src": "/images/why-do-cats-knead-hero-900.6dfcf35f.webp"
             },
             {
                 "w": 1200,
-                "src": "/images/why-do-cats-knead-hero-1200.573f6a79.webp"
+                "src": "/images/why-do-cats-knead-hero-1200.6dfcf35f.webp"
             }
         ]
     }

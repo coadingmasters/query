@@ -92,6 +92,16 @@
     has ever happened to them on your lap.
 </p>
 
+<figure>
+    <x-img name="cat-kneading-lap"
+           alt="Ginger and white cat kneading a person's lap with both front paws"
+           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <figcaption>
+        Kneading on a lap is a vulnerable posture. A cat mid-knead has stopped
+        watching the room, which is the whole point of it.
+    </figcaption>
+</figure>
+
 <p>
     The scent marking matters here too. Cats build a shared group smell with
     the animals and people they live with, and kneading is one of the ways they
@@ -134,6 +144,16 @@
     not your cat testing you.
 </p>
 
+<figure>
+    <x-img name="cat-kneading-claws-out"
+           alt="Close view of a cat's front paw pressing into a knitted blanket with claws slightly extended"
+           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <figcaption>
+        Claws extend as the paw flexes. It is anatomy rather than intent, and
+        the fix is the nails, not the behavior.
+    </figcaption>
+</figure>
+
 <p>Three things help, in order of how well they work:</p>
 
 <ol>
@@ -166,6 +186,16 @@
     behavior is still fresh from nursing. A kitten making biscuits on your arm
     is running the same routine it ran on its mother a few weeks earlier.
 </p>
+
+<figure>
+    <x-img name="kitten-making-biscuits"
+           alt="Tabby kitten kneading a folded pale pink blanket with tiny front paws"
+           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <figcaption>
+        Kittens knead hardest, because for them the behavior is still fresh
+        from nursing. Most keep some of it for life.
+    </figcaption>
+</figure>
 
 <p>
     It usually settles down as they mature, though plenty of cats keep it for

@@ -41,7 +41,7 @@ class HomeController extends Controller
                 /*
                  | The food guides as a Q&A set. Every question and answer here
                  | is rendered on the cards, which is what Google requires of
-                 | FAQ markup — it must describe content the visitor can read.
+                 | FAQ markup: it must describe content the visitor can read.
                  |
                  | Worth being clear-eyed: since 2023 Google has shown FAQ rich
                  | results only for authoritative health and government sites,

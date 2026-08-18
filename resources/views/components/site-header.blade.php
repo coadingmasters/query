@@ -16,7 +16,7 @@
     <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
 
         {{-- The badge alone, with no wordmark beside it. It carries the name
-             around its rim, so it is sized to let that read — and the alt text
+             around its rim, so it is sized to let that read, and the alt text
              has to spell the name out, because it is now the only thing naming
              this link to a screen reader or to Google. --}}
         <a href="/" class="flex shrink-0 items-center">

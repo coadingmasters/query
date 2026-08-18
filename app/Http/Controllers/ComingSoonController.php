@@ -17,7 +17,7 @@ class ComingSoonController extends Controller
     {
         $name = config('app.name');
         $url = rtrim(config('app.url'), '/');
-        $title = $name.' — '.config('brand.tagline').', launching soon';
+        $title = $name.' | '.config('brand.tagline').', launching soon';
         $description = config('brand.description');
 
         return view('coming-soon', [
@@ -25,7 +25,7 @@ class ComingSoonController extends Controller
             'description' => $description,
             // Trailing slash so the canonical tag, og:url and the sitemap all
             // name the home page identically. Mismatched forms make search
-            // engines pick their own canonical instead of honouring ours.
+            // engines pick their own canonical instead of honoring ours.
             'canonical' => $url.'/',
             'url' => $url,
             'email' => config('brand.email'),

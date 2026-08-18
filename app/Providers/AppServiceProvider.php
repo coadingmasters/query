@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Apply strict Eloquent behaviour outside production.
+     * Apply strict Eloquent behavior outside production.
      *
      * Surfaces lazy-loading (N+1 queries) and typo'd attribute access during
      * development, where slow pages are cheap to fix, rather than in

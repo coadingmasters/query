@@ -9,7 +9,7 @@
 | the current day of the pregnancy.
 |
 | That gives a floor, not a measurement. A cat showing a day-55 sign is at
-| least day 55 — she may be further along — so the result is presented as an
+| least day 55, and she may be further along, so the result is presented as an
 | estimate throughout and never as a date to plan around.
 |
 | min_day is the source of truth. The script reads it off the rendered
@@ -44,7 +44,7 @@ return [
     [
         'id' => 'nesting',
         'question' => 'Has she started nesting?',
-        'detail' => 'Seeking out quiet, enclosed places — cupboards, under beds.',
+        'detail' => 'Seeking out quiet, enclosed places: cabinets, under beds.',
         'min_day' => 55,
     ],
     [

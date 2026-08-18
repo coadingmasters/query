@@ -4,13 +4,13 @@
     'canonical',
     'schema' => null,
 
-    // The footer opens with a curve painted in the colour of the band above
+    // The footer opens with a curve painted in the color of the band above
     // it, so it reads as that section dipping into the footer. Pages that do
     // not end on white say so here.
     'footerWave' => 'text-surface',
 ])
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ config('brand.lang') }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,11 +33,11 @@
     <meta property="og:image" content="{{ rtrim(config('app.url'), '/') }}/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="{{ config('app.name') }} — {{ config('brand.tagline') }}">
+    <meta property="og:image:alt" content="{{ config('app.name') }}: {{ config('brand.tagline') }}">
     <meta property="og:locale" content="{{ config('brand.og_locale') }}">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image:alt" content="{{ config('app.name') }} — {{ config('brand.tagline') }}">
+    <meta name="twitter:image:alt" content="{{ config('app.name') }}: {{ config('brand.tagline') }}">
 
     {{-- Small sizes carry the cat on its disc rather than the whole badge:
          the rim lettering is unreadable below about 48px. --}}

@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 | Source images live in resources/images/ at full size. `php scripts/
 | build-images.php` reads this file, then writes cropped, resized and
-| recompressed copies into public/images/ — that is what the site serves.
+| recompressed copies into public/images/, and that is what the site serves.
 |
 | Each preset is generated at 1x and 2x so high-density screens get a sharp
 | file without every visitor paying for the larger one.
@@ -15,7 +15,7 @@
 return [
 
     /*
-     | Display size in CSS pixels: [width, height]. The source is centre
+     | Display size in CSS pixels: [width, height]. The source is center
      | cropped to this aspect ratio, so a preset change re-crops rather than
      | squashing the picture.
      */
@@ -28,7 +28,7 @@ return [
         'story' => [560, 420],
 
         // Cut-out artwork: a subject on transparency, with its doodles baked
-        // into the file. The ratios match the sources, so the centre crop is
+        // into the file. The ratios match the sources, so the center crop is
         // a no-op and no whisker or raised paw gets clipped off.
         'cutout' => [600, 400],
         'cutout-sm' => [320, 213],
@@ -121,7 +121,7 @@ return [
      | the left does not exist, borrow the one on the right for now".
      |
      | To replace one for real, drop the properly named file into
-     | resources/images/ and delete its line here. Nothing else changes —
+     | resources/images/ and delete its line here. Nothing else changes:
      | the pages already reference the real name.
      */
     /*

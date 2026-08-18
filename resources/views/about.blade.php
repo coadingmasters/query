@@ -18,8 +18,8 @@
             </h1>
 
             <p class="mt-5 max-w-md text-base leading-relaxed text-ink-muted">
-                {{ config('app.name') }} exists to make cat care easier to get right —
-                free tools that answer in seconds, and guides that say where the
+                {{ config('app.name') }} exists to make cat care easier to get right.
+                Free tools that answer in seconds, and guides that say where the
                 answer came from.
             </p>
 
@@ -208,7 +208,7 @@
                     Ready to care smarter for your cat?
                 </h2>
                 <p class="mt-3 max-w-md text-base leading-relaxed text-ink-muted">
-                    Start with small steps today — for a healthier, happier tomorrow.
+                    Start with small steps today, for a healthier, happier tomorrow.
                 </p>
                 <a href="/#tools" class="btn-primary mt-6 rounded-full px-7">Explore our tools</a>
             </div>

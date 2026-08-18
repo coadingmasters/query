@@ -32,7 +32,7 @@
                 </svg>
                 Last updated
                 <time datetime="{{ $effective }}" class="font-semibold">
-                    {{ \Illuminate\Support\Carbon::parse($effective)->format('j F Y') }}
+                    {{ \Illuminate\Support\Carbon::parse($effective)->format('F j, Y') }}
                 </time>
             </p>
         </div>

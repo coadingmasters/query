@@ -1,5 +1,5 @@
 {{--
-    Cat Pregnancy Calculator — UI shell only.
+    Cat Pregnancy Calculator: UI shell only.
 
     There is deliberately no calculation here yet. The Calculate button reveals
     the results section with the dummy values written into the markup, and the
@@ -60,7 +60,7 @@
                 Your cat’s details
             </h2>
             <p class="mt-2 text-sm text-ink-muted">
-                Nothing is sent anywhere — this runs entirely in your browser.
+                Nothing is sent anywhere. This runs entirely in your browser.
             </p>
 
             <div class="mt-6 grid gap-5 sm:grid-cols-2">
@@ -71,7 +71,7 @@
                            class="mt-2 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-sm transition placeholder:text-ink-muted focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
                 </div>
 
-                {{-- Breed — five placeholder options for now --}}
+                {{-- Breed: five placeholder options for now --}}
                 <div>
                     <label for="cat-breed" class="block text-sm font-semibold text-ink">Breed</label>
                     <select id="cat-breed" name="cat-breed"
@@ -117,8 +117,8 @@
 
                 {{-- ══ SYMPTOM MODE ═════════════════════════════════════════
                      Shown when the mating date is unknown. Each card is a real
-                     checkbox with its label styled as a toggle — it keeps the
-                     keyboard behaviour and the screen-reader semantics that a
+                     checkbox with its label styled as a toggle. It keeps the
+                     keyboard behavior and the screen-reader semantics that a
                      div dressed up as a button would throw away.
 
                      min_day rides on the markup as data-min-day, so the script
@@ -200,7 +200,7 @@
 
         {{-- ══ 3. RESULTS ════════════════════════════════════════════════════
              Hidden until Calculate is pressed. Every figure below is dummy data
-             held in the markup — nothing here is computed yet.
+             held in the markup. Nothing here is computed yet.
              ═══════════════════════════════════════════════════════════════ --}}
         <section id="results" hidden aria-live="polite" class="mt-8">
             <div class="overflow-hidden rounded-2xl border border-line bg-surface shadow-md">
@@ -276,7 +276,7 @@
      The nine weeks, rendered from config/pregnancy-weeks.php.
 
      All of it is in the markup, open or shut, rather than injected from a
-     script — it is the substantial writing on this page, and content that
+     script. It is the substantial writing on this page, and content that
      only exists inside JavaScript is content a crawler may never read. The
      script's only job here is deciding which card is marked current, which
      are behind, and which are still ahead.
@@ -317,7 +317,7 @@
                             <span class="min-w-0 flex-1">
                                 <span class="flex flex-wrap items-center gap-x-3 gap-y-1">
                                     <span class="font-heading text-lg font-bold text-ink">
-                                        Week {{ $entry['week'] }} — {{ $entry['title'] }}
+                                        Week {{ $entry['week'] }}: {{ $entry['title'] }}
                                     </span>
 
                                     {{-- Filled in by the script once a week is known. --}}
@@ -448,7 +448,7 @@
 
 @push('scripts')
     {{-- The block below is left unparsed on purpose: a double brace anywhere
-         in the script — a JSDoc type, a nested object literal — would be read
+         in the script, whether a JSDoc type or a nested object literal, would be read
          as an echo and take the page down.
 
          Note the directive name is not written inside this comment. Blade
@@ -490,7 +490,7 @@
             const ESTIMATE_ACCURACY_DAYS = 5;
 
             // More corroborating signs means more confidence in the floor the
-            // estimate rests on — never certainty.
+            // estimate rests on, never certainty.
             const CONFIDENCE_LEVELS = [
                 { min: 4, label: 'Good',     width: 100, tone: 'accent',  note: 'Several signs agree, so the estimate rests on more than one observation.' },
                 { min: 2, label: 'Moderate', width: 66,  tone: 'warning', note: 'A couple of signs to go on. Ticking more will sharpen the estimate.' },
@@ -561,7 +561,7 @@
              * Parse a YYYY-MM-DD value as a LOCAL date.
              *
              * new Date('2026-08-18') is parsed as UTC midnight, which lands on
-             * the 17th for anyone west of Greenwich — a whole day of error in
+             * the 17th for anyone west of Greenwich, a whole day of error in
              * a tool whose entire job is counting days.
              */
             const parseLocalDate = (value) => {
@@ -618,7 +618,7 @@
              *
              * Two modes. With a mating date it is arithmetic. Without one, the
              * latest sign she is showing sets a floor for how far along she is
-             * — a cat with a day-55 sign is at least day 55 — and mating is
+             * a cat with a day-55 sign is at least day 55, and mating is
              * placed that many days back from today.
              *
              * The floor is the honest reading: she may be further along than
@@ -683,7 +683,7 @@
                 const tone = TONE_CLASSES[level.tone];
 
                 confidence.box.hidden = false;
-                confidence.label.textContent = `${level.label} — ${count} ${count === 1 ? 'sign' : 'signs'}`;
+                confidence.label.textContent = `${level.label}: ${count} ${count === 1 ? 'sign' : 'signs'}`;
                 confidence.label.className = `text-sm font-bold ${tone.text}`;
                 confidence.bar.className = `h-full rounded-full transition-all duration-300 ${tone.bar}`;
                 confidence.bar.style.width = `${level.width}%`;
@@ -754,7 +754,7 @@
                         badge.textContent = 'You are here';
                         badge.className += ' bg-primary-vivid text-ink';
 
-                        // Open the week she is actually in — it is the one
+                        // Open the week she is actually in. It is the one
                         // thing the visitor came for.
                         details.open = true;
                     } else {
@@ -824,8 +824,8 @@
                 // Past day 72 a cat is beyond any normal gestation, and that
                 // is a call to the vet rather than a number on a screen.
                 // Red is kept for the one case that needs acting on. An
-                // estimate is a caveat, not a problem, and colouring it like an
-                // error teaches people to ignore the colour that matters.
+                // estimate is a caveat, not a problem, and coloring it like an
+                // error teaches people to ignore the color that matters.
                 const WARNING_BASE = 'mx-6 mt-6 flex items-start gap-3 rounded-xl border px-4 py-3 text-sm font-medium sm:mx-8';
 
                 if (daysElapsed > OVERDUE_DAY) {
@@ -847,7 +847,7 @@
                 // DOM afterwards.
                 copyText = [
                     nameInput.value.trim()
-                        ? `${nameInput.value.trim()} — cat pregnancy`
+                        ? `${nameInput.value.trim()}: cat pregnancy`
                         : 'Cat pregnancy',
                     `Due date: ${formatDate(dueDate)}`,
                     `Birth window: ${formatDate(windowStart)} to ${formatDate(windowEnd)}`,
@@ -869,7 +869,7 @@
                 button.label.textContent = state ? 'Calculating…' : 'Calculate due date';
 
                 // toggleAttribute, not .hidden. SVGElement has no hidden IDL
-                // property — assigning to it creates a meaningless expando
+                // property, so assigning to it creates a meaningless expando
                 // while the attribute stays exactly where it was, so the
                 // spinner would never have appeared and the arrow never left.
                 button.arrow.toggleAttribute('hidden', state);
@@ -879,7 +879,7 @@
             const calculate = () => {
                 if (busy) return;
 
-                // Validation runs immediately — there is nothing premium about
+                // Validation runs immediately. There is nothing premium about
                 // waiting eight hundred milliseconds to be told a field is empty.
                 const resolved = resolveMatingDate();
 

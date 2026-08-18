@@ -12,12 +12,12 @@ class TermsController extends Controller
         $name = config('app.name');
         $url = rtrim(config('app.url'), '/');
 
-        $description = 'The terms that govern use of PurrQuery — what the site '
+        $description = 'The terms that govern use of PurrQuery: what the site '
             .'provides, what it does not, and the limits of relying on general '
             .'cat care information.';
 
         return view('terms', [
-            'title' => 'Terms & Conditions — '.$name,
+            'title' => 'Terms & Conditions | '.$name,
             'description' => $description,
             'canonical' => $url.'/terms',
             'sections' => config('legal.terms'),

@@ -10,7 +10,7 @@
 |
 | First: it is not legal advice, and it was not written by a lawyer. It is a
 | careful, standard set of terms for a free informational website, and it is
-| a sound starting point — but before relying on it, have someone qualified
+| a sound starting point. Before relying on it, have someone qualified
 | in your jurisdiction read it.
 |
 | Second: LEGAL_JURISDICTION must be set. A governing-law clause that does
@@ -66,7 +66,7 @@ return [
             'highlight' => true,
             'body' => [
                 'This is the most important term on this page. Everything published on PurrQuery is general information. It is not veterinary advice, it is not a diagnosis, and it is not a treatment plan. It cannot take the place of a vet who can examine your cat.',
-                'Always consult a qualified veterinary professional about your cat’s health, diet or behaviour, particularly before changing what your cat eats or how it is cared for. If your cat is unwell or you believe there is an emergency, contact your vet or an emergency animal clinic immediately rather than relying on anything you read here.',
+                'Always consult a qualified veterinary professional about your cat’s health, diet or behavior, particularly before changing what your cat eats or how it is cared for. If your cat is unwell or you believe there is an emergency, contact your vet or an emergency animal clinic immediately rather than relying on anything you read here.',
                 'You are responsible for decisions you make about your cat. PurrQuery does not accept liability for the consequences of acting on general information published on the site.',
             ],
         ],
@@ -117,7 +117,7 @@ return [
             ],
             'heading' => 'Advertising and affiliate links',
             'body' => [
-                'PurrQuery is free to use and is intended to be funded in future by advertising and affiliate links. Where an affiliate link earns us a commission, that will be disclosed clearly on the page it appears on.',
+                'PurrQuery is free to use and is intended to be funded in the future by advertising and affiliate links. Where an affiliate link earns us a commission, that will be disclosed clearly on the page it appears on.',
                 'Commercial arrangements do not decide what our guides say. A product being advertised or linked does not amount to a recommendation of it, and we do not accept payment to change the substance of published guidance.',
             ],
         ],
@@ -130,7 +130,7 @@ return [
             ],
             'heading' => 'Links to other websites',
             'body' => [
-                'Some pages link to sites we do not run — veterinary sources, references and similar. Those links are provided because they are useful, not as an endorsement of everything on them.',
+                'Some pages link to sites we do not run, such as veterinary sources and references. Those links are provided because they are useful, not as an endorsement of everything on them.',
                 'We have no control over other websites and are not responsible for their content, their accuracy or how they handle your data. Their terms and privacy policies apply once you leave PurrQuery.',
             ],
         ],
@@ -215,7 +215,7 @@ return [
             'heading' => 'What this policy covers',
             'body' => [
                 'This policy explains what PurrQuery does with personal information when you use the site. It covers purrquery.com and everything published on it.',
-                'PurrQuery is free and has no accounts. You can read every guide and use every tool without giving us anything at all — the only information we hold is what you actively send us.',
+                'PurrQuery is free and has no accounts. You can read every guide and use every tool without giving us anything at all. The only information we hold is what you actively send us.',
             ],
         ],
         [
@@ -230,7 +230,7 @@ return [
                 'There are exactly two ways you can give us personal information, and one thing recorded automatically.',
             ],
             'list' => [
-                'If you subscribe to updates: your email address. Nothing else — not your name, not where you subscribed from.',
+                'If you subscribe to updates: your email address. Nothing else. Not your name, and not where you subscribed from.',
                 'If you use the contact form: your name, email address, the subject you chose and the message you wrote.',
                 'Automatically: our hosting provider keeps standard server logs, which include IP addresses and browser details, in the ordinary course of running the server. Your IP is also used briefly to rate-limit our forms so they cannot be flooded.',
             ],
@@ -245,7 +245,7 @@ return [
             'heading' => 'Why we hold it, and on what basis',
             'body' => [
                 'The email address you subscribe with is used to send the updates you asked for, and for nothing else. The basis for that is your consent, which you give by subscribing and can withdraw at any time.',
-                'What you send through the contact form is used to read and answer your message. The basis for that is our legitimate interest in replying to people who write to us — you would reasonably expect a reply.',
+                'What you send through the contact form is used to read and answer your message. The basis for that is our legitimate interest in replying to people who write to us. You would reasonably expect a reply.',
                 'Server logs and rate limiting exist to keep the site available and to stop abuse. That is also a legitimate interest, and the data is not used to build any profile of you.',
             ],
         ],
@@ -258,7 +258,7 @@ return [
             'heading' => 'Cookies',
             'body' => [
                 'PurrQuery sets two cookies, both strictly necessary and both first-party. One keeps track of your session; the other carries a token that protects our forms against cross-site request forgery. Neither identifies you, follows you between sites, or is used for advertising.',
-                'We do not use analytics. There is no Google Analytics, no pixel, no heatmap and no tracker of any kind on this site, and our pages make no requests to third-party servers — even the fonts are served from our own domain.',
+                'We do not use analytics. There is no Google Analytics, no pixel, no heatmap and no tracker of any kind on this site, and our pages make no requests to third-party servers. Even the fonts are served from our own domain.',
                 'Because the only cookies are strictly necessary ones, there is no consent banner. If that ever changes, you will be asked before any non-essential cookie is set.',
             ],
         ],
@@ -312,7 +312,7 @@ return [
             ],
             'heading' => 'Your rights',
             'body' => [
-                'Wherever you live, you can ask us what we hold about you, ask us to correct it, or ask us to delete it. If you are in the UK or EU, the GDPR gives you those rights explicitly, along with the right to object to processing, to request a copy of your data, and to complain to your data protection authority. If you are in California, the CCPA gives you comparable rights, including the right to know and to delete — and note that we have no personal information to sell in the first place.',
+                'Wherever you live, you can ask us what we hold about you, ask us to correct it, or ask us to delete it. If you are in the UK or EU, the GDPR gives you those rights explicitly, along with the right to object to processing, to request a copy of your data, and to complain to your data protection authority. If you are in California, the CCPA gives you comparable rights, including the right to know and to delete. Note that we have no personal information to sell in the first place.',
                 'To exercise any of them, write to us at the address below. We do not require you to create an account or fill in a form to make a request, and we will not charge you for it.',
                 'Unsubscribing is simpler still: every update we send includes a one-click unsubscribe link.',
             ],
@@ -363,7 +363,7 @@ return [
             ],
             'heading' => 'Changes to this policy',
             'body' => [
-                'We will update this policy when what we do changes — most likely when advertising is introduced. The date at the top shows when the current version took effect.',
+                'We will update this policy when what we do changes, most likely when advertising is introduced. The date at the top shows when the current version took effect.',
                 'If a change materially affects how we handle information you have already given us, we will make that clear rather than quietly revising the page.',
             ],
         ],
@@ -375,7 +375,7 @@ return [
             ],
             'heading' => 'Getting in touch',
             'body' => [
-                'For anything about this policy, or to make a request about your data, use the contact page or email us directly. We answer these ourselves — there is no privacy department to be routed through.',
+                'For anything about this policy, or to make a request about your data, use the contact page or email us directly. We answer these ourselves. There is no privacy department to be routed through.',
             ],
         ],
     ],

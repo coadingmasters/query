@@ -4,12 +4,12 @@
 |--------------------------------------------------------------------------
 | Brand
 |--------------------------------------------------------------------------
-| Copy and identity that appears in more than one place — page titles, meta
+| Copy and identity that appears in more than one place: page titles, meta
 | descriptions, structured data and the footer. Keeping it here means the
 | wording stays consistent across the site and search results.
 |
 | The name is "PurrQuery", matching purrquery.com. It was previously spelled
-| "PuurQuery", which also put the contact address on puurquery.com — a domain
+| "PuurQuery", which also put the contact address on puurquery.com, a domain
 | the project does not own, so that mail would have bounced.
 */
 
@@ -18,15 +18,22 @@ return [
 
     'description' => env('BRAND_DESCRIPTION', 'Free cat care tools and '
         .'research-backed guides. Work out your cat’s age, calories and ideal '
-        .'weight, and check what is safe to feed — no sign-up needed.'),
+        .'weight, and check what is safe to feed. No sign-up needed.'),
 
     'email' => env('BRAND_EMAIL', 'hello@purrquery.com'),
+
+    // The html lang attribute. "en-US" rather than a bare "en", so spelling
+    // and date conventions are declared rather than guessed at.
+    'lang' => env('BRAND_LANG', 'en-US'),
 
     /*
      | Open Graph wants a language_TERRITORY pair, which app()->getLocale()
      | ("en") does not carry. Stated once here rather than assembled inline.
+     |
+     | US, not GB. The audience is American, and the pair is one of the
+     | signals telling search and social which market a page is written for.
      */
-    'og_locale' => env('BRAND_OG_LOCALE', 'en_GB'),
+    'og_locale' => env('BRAND_OG_LOCALE', 'en_US'),
 
     /*
      | The page title leads with what people search for and closes with the

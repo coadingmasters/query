@@ -18,9 +18,9 @@ class AboutController extends Controller
         $foods = count(config('catalog.foods'));
         $posts = count(config('catalog.posts'));
 
-        $title = 'About '.$name.' — Trusted Cat Care Tools & Guides';
+        $title = 'About '.$name.' | Trusted Cat Care Tools & Guides';
         $description = 'PurrQuery is a free hub of cat care tools and '
-            .'research-backed food-safety guides — built for cat owners who want '
+            .'research-backed food-safety guides, built for cat owners who want '
             .'clear, honest answers without a sign-up.';
 
         return view('about', [

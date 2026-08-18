@@ -15,12 +15,12 @@ class FaqController extends Controller
 
         $count = collect($groups)->sum(fn (array $g): int => count($g['items']));
 
-        $description = 'Answers to '.$count.' common cat care questions — feeding '
+        $description = 'Answers to '.$count.' common cat care questions: feeding '
             .'amounts, health warning signs, age and weight, litter tray problems '
             .'and more. Free, and written from published veterinary sources.';
 
         return view('faq', [
-            'title' => 'Cat Care FAQ — '.$count.' Questions Answered',
+            'title' => 'Cat Care FAQ | '.$count.' Questions Answered',
             'description' => $description,
             'canonical' => $url.'/faq',
             'groups' => $groups,
@@ -45,7 +45,7 @@ class FaqController extends Controller
                 ],
                 /*
                  | Every question and answer is rendered inside details/summary,
-                 | which keeps it in the DOM whether open or shut — that is what
+                 | which keeps it in the DOM whether open or shut, and that is what
                  | makes this markup honest, since Google requires FAQ data to
                  | describe content the visitor can reach.
                  */

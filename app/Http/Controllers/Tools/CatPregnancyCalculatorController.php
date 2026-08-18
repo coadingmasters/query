@@ -17,12 +17,12 @@ class CatPregnancyCalculatorController extends Controller
         // 158 characters. Google truncates a description around 160, and one
         // that is cut mid-sentence reads as carelessness in the one place a
         // searcher is deciding whether to click.
-        $description = 'Free cat pregnancy calculator. Enter the mating date — or '
-            .'just the signs you have noticed — for a due date, birth window and '
+        $description = 'Free cat pregnancy calculator. Enter the mating date, or '
+            .'just the signs you have noticed, for a due date, birth window and '
             .'a week-by-week timeline.';
 
         return view('tools.cat-pregnancy-calculator', [
-            'title' => 'Cat Pregnancy Calculator — Free Due Date & Gestation Timeline Tool',
+            'title' => 'Cat Pregnancy Calculator | Free Due Date & Gestation Timeline',
             'description' => $description,
             'canonical' => $canonical,
             'schema' => Schema::graph([

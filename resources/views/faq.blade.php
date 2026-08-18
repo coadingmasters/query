@@ -149,7 +149,7 @@
                     @foreach ($group['items'] as $item)
                         {{-- details/summary rather than a scripted accordion: it
                              opens with a keyboard, works without JavaScript, and
-                             keeps the answer in the DOM either way — which is
+                             keeps the answer in the DOM either way, which is
                              what lets the FAQ markup describe it honestly. --}}
                         <details data-faq-item
                                  data-terms="{{ Str::lower($item['q'].' '.$item['a']) }}"
@@ -187,7 +187,7 @@
                 </h2>
                 <p class="mt-3 max-w-sm text-base leading-relaxed text-ink-muted">
                     Ask it. The ones that come up more than once end up on this
-                    page, so you would be doing the next person a favour too.
+                    page, so you would be doing the next person a favor too.
                 </p>
                 <div class="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
                     <a href="{{ route('contact') }}" class="btn-primary rounded-full px-7">Contact us</a>
@@ -207,7 +207,7 @@
 </section>
 
 {{-- ══ 5. NUMBERS ════════════════════════════════════════════════════════ --}}
-{{-- Sits directly on the footer's colour, so the two read as one block and
+{{-- Sits directly on the footer's color, so the two read as one block and
      the footer's wave is set to match. --}}
 <section class="bg-primary-dark py-8 text-ink-inverse">
     <div class="container-page">

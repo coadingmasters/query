@@ -20,8 +20,8 @@
             </h1>
 
             <p class="mt-5 max-w-md text-base leading-relaxed text-ink-muted">
-                A question, a correction, a suggestion, or just hello — it reaches
-                a person, and a person answers it.
+                A question, a correction, a suggestion, or just hello.
+                It reaches a person, and a person answers it.
             </p>
 
             <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-5">
@@ -45,7 +45,7 @@
         {{-- Runs to the viewport edge on desktop, which is what stops the
              artwork reading as a card floating in the middle of the band. --}}
         {{-- The box matches the artwork's own 3:2, so object-contain fits it
-             exactly — a fixed height would letterbox it or scale it past the
+             exactly. A fixed height would letterbox it or scale it past the
              edge depending on the width it happened to get. --}}
         {{-- -mr-8 cancels the container padding so the artwork runs to the edge of
              the band. A percentage bleed would not work here: percentage margins
@@ -159,7 +159,7 @@
                                       data-counter-input
                                       @error('message') aria-invalid="true" aria-describedby="message-error" @enderror
                                       class="mt-2 w-full resize-y rounded-xl border border-line-strong bg-surface px-4 py-3 text-base leading-relaxed text-ink transition placeholder:text-ink-muted focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none"
-                                      placeholder="Tell us what is on your mind. Whether it is a question, feedback, or just a friendly hello — we would love to hear it.">{{ old('message') }}</textarea>
+                                      placeholder="Tell us what is on your mind. Whether it is a question, feedback, or just a friendly hello. We would love to hear it.">{{ old('message') }}</textarea>
                             <div class="mt-2 flex items-start justify-between gap-4">
                                 @error('message')
                                     <p id="message-error" class="text-sm font-medium text-danger">{{ $message }}</p>
@@ -277,7 +277,7 @@
                             <path d="M12 22s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/>
                             <path d="M12 13.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"/>
                         </svg>
-                        Email is the only channel — there is no phone line.
+                        Email is the only channel. There is no phone line.
                     </li>
                 </ul>
             </div>
@@ -356,7 +356,7 @@
                     While you’re here…
                 </h2>
                 <p class="mt-3 text-base leading-relaxed text-ink-muted">
-                    The tools answer most of what people write in about — and they
+                    The tools answer most of what people write in about, and they
                     answer it immediately.
                 </p>
                 <div class="mt-6 flex flex-wrap justify-center gap-3">
@@ -375,7 +375,7 @@
 @if (session('sent'))
     <x-result-dialog tone="success" heading="Message sent!">
         <p>
-            Thank you — it is with us. Replies usually take a few days, and
+            Thank you. It is with us. Replies usually take a few days, and
             corrections get looked at first.
         </p>
     </x-result-dialog>

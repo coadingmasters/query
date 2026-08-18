@@ -42,7 +42,7 @@
             </h1>
 
             <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
-                Free smart tools and clear, sourced answers — all in one place,
+                Free smart tools and clear, sourced answers, all in one place,
                 with no account and nothing to install.
             </p>
 
@@ -129,7 +129,7 @@
                  SVG clip path: a clip would cut the shadow off with it. --}}
             <div class="relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg">
                 <x-img name="purrquery-hero-cat-owner-smiling"
-                       alt="Cat owner holding her fluffy cat — PurrQuery cat care tools and guides"
+                       alt="Cat owner smiling as she holds her fluffy tabby"
                        sizes="(max-width: 1023px) 92vw, 780px"
                        :priority="true"/>
             </div>
@@ -153,7 +153,7 @@
 @php
     // These replace the old "easy to use / fast results" row. Those made a
     // claim; these take you somewhere, which is what the page needs at this
-    // point. Each tint and its text colour are asserted in PaletteContrastTest.
+    // point. Each tint and its text color are asserted in PaletteContrastTest.
     $categories = [
         ['Smart Tools', 'Instant calculators, checkers and trackers for your cat.', 'Try tools', '#tools',
          'primary', ['M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0H5a2 2 0 0 1-2-2v-4m6 6h10a2 2 0 0 0 2-2v-4M3 9h18M3 15h18']],
@@ -278,7 +278,7 @@
         <ol class="mt-12 grid gap-8 md:grid-cols-3">
             @foreach ([
                 ['Pick a tool', 'Choose the calculator or guide that matches your question.'],
-                ['Enter the details', 'Weight, age, breed — whatever that tool needs. It stays on your device.'],
+                ['Enter the details', 'Weight, age, breed, whatever that tool needs. It stays on your device.'],
                 ['Get your answer', 'A clear result you can act on, and save as a PDF report.'],
             ] as $i => [$title, $text])
                 <li class="relative">
@@ -365,7 +365,7 @@
                     'Six calculators covering age, weight, calories and health',
                     'Ten food-safety guides with the verdict up front',
                     'Guides reviewed against published veterinary sources',
-                    'Free forever — no account, no paywall, no email wall',
+                    'Free forever, with no account, no paywall and no email wall',
                 ] as $point)
                     <li class="flex items-start gap-3">
                         <span class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent-light">
@@ -491,7 +491,7 @@
                     Ready to care smarter?
                 </h2>
                 <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
-                    Start with your cat’s age or ideal weight — it takes about
+                    Start with your cat’s age or ideal weight. It takes about
                     thirty seconds, and you will know where you stand.
                 </p>
                 <div class="mt-8 flex flex-wrap justify-center gap-3">
@@ -522,7 +522,7 @@
 
         @if (session('subscribed'))
             <p class="mx-auto mt-6 max-w-md rounded-lg bg-accent-light px-4 py-3 text-sm font-medium text-accent-dark" role="status">
-                You are on the list — thank you.
+                You are on the list. Thank you.
             </p>
         @else
             <form method="POST" action="{{ route('subscribe') }}"

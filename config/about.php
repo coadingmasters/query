@@ -8,8 +8,8 @@
 | can be derived from the catalogue instead of typed out and left to rot.
 |
 | Every figure below is either computed or verifiably true today. Claims
-| that were supplied but cannot be backed — "100+ guides", "50,000+ monthly
-| visits", "4.9 star average rating", "thousands of cat owners" — are
+| that were supplied but cannot be backed are absent: "100+ guides", "50,000+ monthly
+| visits", "4.9 star average rating", "thousands of cat owners". They are
 | deliberately absent. The site is new, has no ratings and no traffic
 | history, and inventing that is both misleading to readers and the kind of
 | thing Google's quality guidance treats as a trust signal gone wrong.
@@ -33,7 +33,7 @@ return [
             'title' => 'Researched Food Guides',
             'body' => 'Our food-safety guides cover fruit, vegetables, meat and '
                 .'seafood, dairy and eggs, grains, herbs, treats and the foods that '
-                .'are outright toxic — with the verdict stated before the detail, '
+                .'are outright toxic. The verdict comes before the detail, '
                 .'so an answer takes seconds.',
             'tone' => 'accent',
             'paths' => [
@@ -74,15 +74,15 @@ return [
         [
             'title' => 'Transparent about the money',
             'body' => 'PurrQuery is free to use and is intended to be funded by '
-                .'advertising and affiliate links in future. There are none on the '
-                .'site today. When that changes it will be labelled clearly, and it '
+                .'advertising and affiliate links in the future. There are none on the '
+                .'site today. When that changes it will be labeled clearly, and it '
                 .'will never decide what a guide says.',
         ],
     ],
 
     /*
      | Mission is what the site does today; vision is where it is going.
-     | Kept as two short blocks rather than a long list — the page is meant
+     | Kept as two short blocks rather than a long list. The page is meant
      | to be read, not waded through.
      */
     'purpose' => [
@@ -90,7 +90,7 @@ return [
             'label' => 'Our mission',
             'title' => 'Put a straight answer within reach',
             'body' => 'To make accurate, practical cat care knowledge free and easy '
-                .'to reach for every owner — no account, no payment, and no need to '
+                .'to reach for every owner, with no account, no payment, and no need to '
                 .'weigh up nine conflicting sources before deciding what to do. '
                 .'Every tool gives an instant result, and every guide states its '
                 .'answer before its reasoning.',
@@ -120,7 +120,7 @@ return [
     /*
      | The four short pillars beside the mission statement. Each is a
      | description of how the site is made, not a claim about how many people
-     | use it — there is no traffic history to draw on yet.
+     | use it. There is no traffic history to draw on yet.
      */
     'pillars' => [
         [
@@ -151,12 +151,12 @@ return [
 
     /*
      | The trust list. "Ad-free" was supplied and is not used: the site is
-     | intended to carry advertising in future, and promising otherwise on
+     | intended to carry advertising in the future, and promising otherwise on
      | the about page would be a claim we would have to break.
      */
     'trust' => [
         'Written from published veterinary sources, with the reasoning shown',
-        'Tools give an instant answer — no sign-up, no paywall, no email',
+        'Tools give an instant answer, with no sign-up, no paywall and no email',
         'Nothing about your cat is sent anywhere; the tools run in your browser',
         'Clear about what is not known, instead of guessing to fill a gap',
         'Corrections are welcome, and they get looked at first',

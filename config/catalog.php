@@ -21,55 +21,55 @@ return [
             'title' => 'Cat Pregnancy Calculator',
             'blurb' => 'Work out your cat’s due date and follow the pregnancy week by week.',
             'image' => 'cat-pregnancy-calculator-kitten',
-            'alt' => 'Newborn kitten — cat pregnancy calculator on PurrQuery',
+            'alt' => 'Newborn kitten curled up asleep',
         ],
         [
             'slug' => 'cat-age-calculator',
             'title' => 'Cat Age Calculator',
             'blurb' => 'Turn your cat’s age into human years, using the life-stage curve vets actually use.',
             'image' => 'cat-age-calculator-senior-tabby-cat',
-            'alt' => 'Cats at five life stages from kitten to senior — cat age calculator on PurrQuery',
+            'alt' => 'Cats at five life stages from kitten to senior',
         ],
         [
             'slug' => 'cat-calorie-calculator',
             'title' => 'Calorie Calculator',
             'blurb' => 'Work out how much to feed each day from weight, age and activity level.',
             'image' => 'cat-calorie-calculator-cat-food-bowl',
-            'alt' => 'Cat beside a bowl of dry food — cat calorie calculator on PurrQuery',
+            'alt' => 'Cat beside a bowl of dry food',
         ],
         [
             'slug' => 'cat-weight-checker',
             'title' => 'Weight Checker',
             'blurb' => 'Find out whether your cat is underweight, ideal or carrying too much.',
             'image' => 'cat-weight-checker-cat-on-scale',
-            'alt' => 'Fluffy cat sitting on a digital pet scale — cat weight checker on PurrQuery',
+            'alt' => 'Fluffy cat sitting on a digital pet scale',
         ],
         [
             'slug' => 'vaccination-tracker',
             'title' => 'Vaccination Tracker',
             'blurb' => 'Build a shot schedule from your cat’s birth date and keep every booster on time.',
             'image' => 'cat-vaccination-tracker-vet-examination',
-            'alt' => 'Vet examining a calm tabby cat — cat vaccination tracker on PurrQuery',
+            'alt' => 'Veterinarian examining a calm tabby cat',
         ],
         [
             'slug' => 'cat-breed-quiz',
             'title' => 'Breed Quiz',
             'blurb' => 'Answer a few questions about coat, build and temperament to narrow down the breed.',
             'image' => 'cat-breed-quiz-multiple-cat-breeds',
-            'alt' => 'Persian, Siamese and Maine Coon cats side by side — cat breed quiz on PurrQuery',
+            'alt' => 'Persian, Siamese and Maine Coon cats side by side',
         ],
         [
             'slug' => 'cat-name-generator',
             'title' => 'Name Generator',
             'blurb' => 'Thousands of names filtered by style, origin and how they sound when called.',
             'image' => 'cat-name-generator-cute-kitten',
-            'alt' => 'Fluffy kitten beside a board of name ideas — cat name generator on PurrQuery',
+            'alt' => 'Fluffy kitten beside a board of name ideas',
         ],
     ],
 
     /*
-     | verdict drives the badge colour on each card: safe, caution or unsafe.
-     | Showing the answer on the card itself is the point — someone worried
+     | verdict drives the badge color on each card: safe, caution or unsafe.
+     | Showing the answer on the card itself is the point. Someone worried
      | about what their cat just ate gets it without a second click.
      */
     'foods' => [
@@ -81,7 +81,7 @@ return [
             'verdict' => 'caution',
             'note' => 'Some in small amounts',
             'image' => 'can-cats-eat-fruits-fresh-colorful-fruits',
-            'alt' => 'Strawberries, blueberries, watermelon and apple beside a cat — can cats eat fruit',
+            'alt' => 'Strawberries, blueberries, watermelon and apple beside a cat',
         ],
         [
             'slug' => 'vegetables',
@@ -91,17 +91,17 @@ return [
             'verdict' => 'caution',
             'note' => 'Cooked and plain only',
             'image' => 'can-cats-eat-vegetables-fresh-greens',
-            'alt' => 'Broccoli, cucumber, spinach and carrots beside a cat — can cats eat vegetables',
+            'alt' => 'Broccoli, cucumber, spinach and carrots beside a cat',
         ],
         [
             'slug' => 'meat-and-seafood',
             'title' => 'Meat & Seafood',
             'question' => 'Can cats eat meat and fish?',
-            'answer' => 'Yes — plain cooked chicken, turkey or fish, boneless and without salt, oil or seasoning.',
+            'answer' => 'Yes. Plain cooked chicken, turkey or fish, boneless and without salt, oil or seasoning.',
             'verdict' => 'safe',
             'note' => 'Cooked, unseasoned',
             'image' => 'can-cats-eat-meat-seafood-chicken-fish',
-            'alt' => 'Chicken, salmon and tuna beside a cat — can cats eat meat and seafood',
+            'alt' => 'Chicken, salmon and tuna beside a cat',
         ],
         [
             'slug' => 'dairy-and-eggs',
@@ -111,7 +111,7 @@ return [
             'verdict' => 'caution',
             'note' => 'Most cats are lactose intolerant',
             'image' => 'can-cats-eat-dairy-eggs-milk-cheese',
-            'alt' => 'Eggs, milk and cheese beside a cat — can cats eat dairy and eggs',
+            'alt' => 'Eggs, milk and cheese beside a cat',
         ],
         [
             'slug' => 'toxic-foods',
@@ -119,9 +119,9 @@ return [
             'question' => 'What foods are toxic to cats?',
             'answer' => 'Onion, garlic, chocolate, grapes, raisins, alcohol and xylitol. Call a vet if any is eaten.',
             'verdict' => 'unsafe',
-            'note' => 'Never — call a vet',
+            'note' => 'Never. Call a vet',
             'image' => 'toxic-foods-cats-must-avoid-dangerous',
-            'alt' => 'Chocolate, garlic, onion and grapes marked as dangerous — foods toxic to cats',
+            'alt' => 'Chocolate, garlic, onion and grapes marked as dangerous',
         ],
         [
             'slug' => 'grains-and-seeds',
@@ -131,7 +131,7 @@ return [
             'verdict' => 'caution',
             'note' => 'Cooked, in tiny amounts',
             'image' => 'can-cats-eat-grains-seeds-rice-oats',
-            'alt' => 'Rice, oats, quinoa and seeds in bowls beside a cat — can cats eat grains',
+            'alt' => 'Rice, oats, quinoa and seeds in bowls beside a cat',
         ],
         [
             'slug' => 'sweets',
@@ -141,7 +141,7 @@ return [
             'verdict' => 'unsafe',
             'note' => 'No nutritional value',
             'image' => 'can-cats-eat-sweets-desserts-unsafe',
-            'alt' => 'Chocolate cake, sweets and ice cream beside a cat — can cats eat sweets',
+            'alt' => 'Chocolate cake, sweets and ice cream beside a cat',
         ],
         [
             'slug' => 'junk-food',
@@ -151,7 +151,7 @@ return [
             'verdict' => 'unsafe',
             'note' => 'Salt and fat overload',
             'image' => 'can-cats-eat-junk-food-fast-food',
-            'alt' => 'Fries, burger and pizza beside a cat — can cats eat junk food',
+            'alt' => 'Fries, burger and pizza beside a cat',
         ],
         [
             'slug' => 'herbs-and-spices',
@@ -161,7 +161,7 @@ return [
             'verdict' => 'caution',
             'note' => 'A few safe, many are not',
             'image' => 'can-cats-eat-herbs-spices-basil-mint',
-            'alt' => 'Basil, mint, rosemary and spice jars beside a cat — can cats eat herbs',
+            'alt' => 'Basil, mint, rosemary and spice jars beside a cat',
         ],
         [
             'slug' => 'treats-and-snacks',
@@ -171,7 +171,7 @@ return [
             'verdict' => 'safe',
             'note' => 'Under 10% of daily calories',
             'image' => 'can-cats-eat-cat-treats-snacks',
-            'alt' => 'Cat treats in a white bowl beside a cat — healthy cat snacks',
+            'alt' => 'Cat treats in a white bowl beside a cat',
         ],
     ],
 
@@ -179,11 +179,11 @@ return [
         [
             'slug' => 'can-cats-eat-broccoli',
             'title' => 'Can Cats Eat Broccoli?',
-            'excerpt' => 'Broccoli is one of the few vegetables that is genuinely safe for cats — but only plain, only cooked, and only in small amounts. Here is why, and how much is too much.',
+            'excerpt' => 'Broccoli is one of the few vegetables that is genuinely safe for cats, but only plain, only cooked, and only in small amounts. Here is why, and how much is too much.',
             'category' => 'Food Safety',
             'minutes' => 6,
             'image' => 'can-cats-eat-broccoli-cat-sniffing',
-            'alt' => 'Fluffy cat sniffing fresh broccoli florets — can cats eat broccoli',
+            'alt' => 'Fluffy cat sniffing fresh broccoli florets',
         ],
         [
             'slug' => 'how-much-should-i-feed-my-cat',
@@ -192,7 +192,7 @@ return [
             'category' => 'Feeding',
             'minutes' => 8,
             'image' => 'how-much-feed-cat-eating-food-bowl',
-            'alt' => 'Cat eating from a white ceramic bowl — how much should I feed my cat',
+            'alt' => 'Cat eating from a white ceramic bowl',
         ],
         [
             'slug' => 'signs-your-cat-is-sick',
@@ -201,25 +201,25 @@ return [
             'category' => 'Health',
             'minutes' => 9,
             'image' => 'signs-cat-is-sick-vet-examination',
-            'alt' => 'Vet examining a cat on an examination table — early signs your cat is sick',
+            'alt' => 'Veterinarian examining a cat on an examination table',
         ],
         [
             'slug' => 'best-food-for-indoor-cats',
             'title' => 'Best Food for Indoor Cats',
-            'excerpt' => 'Indoor cats burn fewer calories and need different protein and fibre ratios. What to look for on the label.',
+            'excerpt' => 'Indoor cats burn fewer calories and need different protein and fiber ratios. What to look for on the label.',
             'category' => 'Feeding',
             'minutes' => 7,
             'image' => 'best-indoor-cat-food-premium-ingredients',
-            'alt' => 'Salmon, chicken and fresh ingredients — best food for indoor cats',
+            'alt' => 'Salmon, chicken and fresh ingredients',
         ],
         [
             'slug' => 'can-cats-eat-chicken',
             'title' => 'Can Cats Eat Chicken?',
-            'excerpt' => 'Yes — and it is one of the best things you can offer. The rules are about preparation, bones and how much.',
+            'excerpt' => 'Yes, and it is one of the best things you can offer. The rules are about preparation, bones and how much.',
             'category' => 'Food Safety',
             'minutes' => 5,
             'image' => 'can-cats-eat-chicken-cat-looking',
-            'alt' => 'Cat looking at cooked plain chicken on a white plate — can cats eat chicken',
+            'alt' => 'Cat looking at cooked plain chicken on a white plate',
         ],
         [
             'slug' => 'new-cat-owner-guide',
@@ -228,7 +228,7 @@ return [
             'category' => 'Getting Started',
             'minutes' => 12,
             'image' => 'new-cat-owner-guide-couple-kitten',
-            'alt' => 'Couple playing with a new kitten on a sofa — complete guide for new cat owners',
+            'alt' => 'Couple playing with a new kitten on a sofa',
         ],
     ],
 ];

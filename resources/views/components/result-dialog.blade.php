@@ -9,9 +9,9 @@
 
 {{-- Rendered with the open attribute so it is visible without JavaScript,
      where it lays out as an ordinary panel above the form. The script below
-     upgrades it to a real modal — backdrop, focus trap, Escape to close —
-     when the browser has showModal(). --}}
-<dialog data-result-dialog open aria-labelledby="result-heading"
+     upgrades it to a real modal, with backdrop, focus trap and Escape to
+     close, when the browser has showModal(). --}}
+<dialog data-result-dialog open aria-labeledby="result-heading"
         class="result-card m-auto w-[calc(100%-2rem)] max-w-md rounded-2xl border border-line bg-surface p-0 shadow-2xl backdrop:bg-ink/50 backdrop:backdrop-blur-sm">
 
     <div class="p-6 text-center sm:p-8">
@@ -32,7 +32,7 @@
                          class="{{ $success ? 'text-primary-vivid' : 'text-warning-vivid' }}"/>
 
                 {{-- Muzzle, so the nose and mouth sit on their own ground
-                     rather than on the body colour. --}}
+                     rather than on the body color. --}}
                 <ellipse cx="60" cy="64" rx="17" ry="12" fill="#FFF6F1"/>
 
                 <ellipse class="result-eye" cx="49" cy="50" rx="4.6" ry="6" fill="#12383B"/>

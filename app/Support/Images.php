@@ -27,7 +27,7 @@ class Images
 
         if (! is_file($path)) {
             throw new RuntimeException(
-                'public/images/manifest.json is missing — run: php scripts/build-images.php'
+                'public/images/manifest.json is missing. Run: php scripts/build-images.php'
             );
         }
 
@@ -40,7 +40,7 @@ class Images
      *
      * Width and height are the important part. Without them the browser does
      * not know how much room to leave, and the page jumps as each image
-     * arrives — which is exactly what Cumulative Layout Shift measures.
+     * arrives, which is exactly what Cumulative Layout Shift measures.
      *
      * @return array{src: string, srcset: string, width: int, height: int}|null
      */

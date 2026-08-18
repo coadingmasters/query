@@ -114,7 +114,7 @@ class CatPregnancyCalculatorTest extends TestCase
         $response = $this->get(self::PATH);
 
         foreach (config('pregnancy-weeks') as $entry) {
-            $response->assertSee('Week '.$entry['week'].' — '.$entry['title'], false);
+            $response->assertSee('Week '.$entry['week'].': '.$entry['title'], false);
             $response->assertSee($entry['what_happens'], false);
             $response->assertSee($entry['visible_signs'], false);
 

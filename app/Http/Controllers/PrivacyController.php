@@ -12,12 +12,12 @@ class PrivacyController extends Controller
         $name = config('app.name');
         $url = rtrim(config('app.url'), '/');
 
-        $description = 'What PurrQuery collects and why — an email if you '
+        $description = 'What PurrQuery collects and why: an email if you '
             .'subscribe, your message if you write in, and nothing else. No '
             .'analytics, no tracking cookies, no sharing.';
 
         return view('privacy', [
-            'title' => 'Privacy Policy — '.$name,
+            'title' => 'Privacy Policy | '.$name,
             'description' => $description,
             'canonical' => $url.'/privacy',
             'sections' => config('legal.privacy'),

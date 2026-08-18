@@ -41,7 +41,7 @@
 <footer class="relative overflow-hidden bg-primary-dark text-ink-inverse">
 
     {{-- The same curve as the wave under the hero, rotated a half turn and
-         painted in the colour of the section above, so it reads as that band
+         painted in the color of the section above, so it reads as that band
          dipping into this one. It sits inside the footer on purpose: the
          overflow-hidden here would clip anything placed above it. --}}
     <svg class="absolute inset-x-0 top-0 h-10 w-full {{ $wave }} sm:h-14"
@@ -118,7 +118,7 @@
 
                 @if (session('subscribed'))
                     <p role="status" class="mt-5 rounded-lg bg-surface/15 px-4 py-3 text-sm font-medium ring-1 ring-surface/25">
-                        You are on the list — thank you.
+                        You are on the list. Thank you.
                     </p>
                 @else
                     <form method="POST" action="{{ route('subscribe') }}" class="mt-4 space-y-2.5">

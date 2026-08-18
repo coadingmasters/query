@@ -25,12 +25,12 @@ class ContactController extends Controller
         $name = config('app.name');
         $url = rtrim(config('app.url'), '/');
 
-        $description = 'Get in touch with PurrQuery — questions about cat care, '
+        $description = 'Get in touch with PurrQuery about cat care questions, '
             .'corrections to a guide, or anything that is not working. Every '
             .'message is read.';
 
         return view('contact', [
-            'title' => 'Contact '.$name.' — Questions, Corrections, Feedback',
+            'title' => 'Contact '.$name.' | Questions, Corrections, Feedback',
             'description' => $description,
             'canonical' => $url.'/contact',
             'subjects' => self::SUBJECTS,
@@ -45,7 +45,7 @@ class ContactController extends Controller
                 ],
                 [
                     // No telephone or postal address: the site has neither, and
-                    // inventing contact details is worse than omitting them —
+                    // inventing contact details is worse than omitting them:
                     // someone eventually tries to use them.
                     '@type' => 'ContactPoint',
                     '@id' => $url.'/contact#point',

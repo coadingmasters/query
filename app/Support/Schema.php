@@ -6,7 +6,7 @@ namespace App\Support;
  * Builds the structured data every page shares.
  *
  * Before this existed, each controller declared its own Organization node and
- * pointed `isPartOf` at `/#website` — a node that was only ever defined on the
+ * pointed `isPartOf` at `/#website`, a node that was only ever defined on the
  * home page. Those references dangled: a crawler reading /about on its own had
  * nothing to resolve them against. Each page's graph is now self-contained,
  * and the shared nodes are identical everywhere, which is what lets Google
@@ -96,7 +96,7 @@ class Schema
     }
 
     /**
-     * A named collection — the tools, the food guides. It tells Google these
+     * A named collection: the tools, the food guides. It tells Google these
      * cards are one set rather than unrelated links, which is how a listing
      * page gets understood as a listing page.
      *

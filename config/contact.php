@@ -7,7 +7,7 @@
 | Copy for /contact.
 |
 | There is no telephone number and no postal address here, because the site
-| has neither. Contact details that do not work are worse than none at all —
+| has neither. Contact details that do not work are worse than none at all.
 | someone will eventually try to use them. Nor is there a promised response
 | time in hours: this is a one-person project, and a promise that cannot be
 | kept costs more trust than saying nothing.
@@ -24,8 +24,8 @@ return [
             'question' => 'Do you give veterinary advice?',
             'answer' => 'No. Everything here is general information, and it cannot '
                 .'take the place of a vet who can actually examine your cat. If '
-                .'something is wrong, or you are worried, speak to a vet — and in an '
-                .'emergency, contact an emergency clinic straight away.',
+                .'something is wrong, or you are worried, speak to a veterinarian. In an '
+                .'emergency, contact an emergency clinic right away.',
         ],
         [
             'question' => 'I think a guide is wrong. What should I do?',
@@ -43,14 +43,14 @@ return [
         [
             'question' => 'Do you accept sponsored posts or paid links?',
             'answer' => 'The site is intended to be funded by advertising and '
-                .'affiliate links in future, and there are none on it today. What '
+                .'affiliate links in the future, and there are none on it today. What '
                 .'we will not do is let a payment decide what a guide says, or '
-                .'publish a paid recommendation without labelling it as one.',
+                .'publish a paid recommendation without labeling it as one.',
         ],
         [
             'question' => 'Is my message stored anywhere?',
             'answer' => 'Your name, email and message are stored so we can reply, '
-                .'and nothing else — no tracking, no analytics profile, no passing '
+                .'and nothing else. No tracking, no analytics profile, no passing '
                 .'your address to anyone.',
         ],
     ],
@@ -82,7 +82,7 @@ return [
 
     /*
      | The three reassurances beside the headline. Each is a plain statement
-     | of fact — none of them is a service-level promise.
+     | of fact. None of them is a service-level promise.
      */
     'assurances' => [
         [

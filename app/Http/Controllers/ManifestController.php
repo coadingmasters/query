@@ -9,7 +9,7 @@ class ManifestController extends Controller
     /**
      * The web app manifest.
      *
-     * Served from a route rather than a static file so the name and colours
+     * Served from a route rather than a static file so the name and colors
      * follow config. A static copy went stale once already, when the brand
      * spelling changed.
      */

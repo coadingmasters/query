@@ -40,7 +40,7 @@ return [
                 ],
                 [
                     'q' => 'Do I need to create an account?',
-                    'a' => 'No. Nothing on the site is behind a login. You can use every calculator and read every guide without telling us who you are — the only information we hold is what you actively send us through a form.',
+                    'a' => 'No. Nothing on the site is behind a login. You can use every calculator and read every guide without telling us who you are. The only information we hold is what you actively send us through a form.',
                 ],
                 [
                     'q' => 'Where does your information come from?',
@@ -52,7 +52,7 @@ return [
                 ],
                 [
                     'q' => 'How do you make money if everything is free?',
-                    'a' => 'At the moment we do not. The plan is advertising and affiliate links in future, disclosed clearly where they appear. What we will not do is let a commercial arrangement change what a guide says.',
+                    'a' => 'At the moment we do not. The plan is advertising and affiliate links in the future, disclosed clearly where they appear. What we will not do is let a commercial arrangement change what a guide says.',
                 ],
             ],
         ],
@@ -71,11 +71,11 @@ return [
             'items' => [
                 [
                     'q' => 'How much should I feed my cat each day?',
-                    'a' => 'It depends on weight, age, whether your cat is neutered and how active it is — which is why the number on the packet is only ever a starting point. As a rough guide, an average adult indoor cat needs somewhere around 200 to 250 calories a day, but the honest answer is to work it out from your own cat and check against body condition every few weeks.',
+                    'a' => 'It depends on weight, age, whether your cat is neutered and how active it is, which is why the number on the label is only ever a starting point. As a rough guide, an average adult indoor cat needs somewhere around 200 to 250 calories a day, but the honest answer is to work it out from your own cat and check against body condition every few weeks.',
                 ],
                 [
                     'q' => 'How many times a day should a cat eat?',
-                    'a' => 'Most adult cats do well on two measured meals a day. Kittens need more frequent, smaller meals because they cannot hold much at once. Cats are natural grazers, so some owners split the daily amount across more meals — the total across the day matters far more than how it is divided.',
+                    'a' => 'Most adult cats do well on two measured meals a day. Kittens need more frequent, smaller meals because they cannot hold much at once. Cats are natural grazers, so some owners split the daily amount across more meals. The total across the day matters far more than how it is divided.',
                 ],
                 [
                     'q' => 'Is wet food better than dry food?',
@@ -86,12 +86,12 @@ return [
                     'a' => 'Slowly. Change it over about a week, starting with roughly a quarter new food to three quarters old, and shifting the ratio every couple of days. A sudden switch commonly causes an upset stomach, and it also makes cats suspicious of the new food.',
                 ],
                 [
-                    'q' => 'My cat begs constantly — is it actually hungry?',
-                    'a' => 'Sometimes, but food-seeking is often boredom or learned behaviour: it worked once, so it gets repeated. Check the daily amount is right for your cat first. If the portions are correct and the weight is healthy, more play and activity usually helps more than more food.',
+                    'q' => 'My cat begs constantly. Is it actually hungry?',
+                    'a' => 'Sometimes, but food-seeking is often boredom or learned behavior: it worked once, so it gets repeated. Check the daily amount is right for your cat first. If the portions are correct and the weight is healthy, more play and activity usually helps more than more food.',
                 ],
                 [
                     'q' => 'Do cats need treats?',
-                    'a' => 'No, but they are useful for training and bonding. The usual guidance is to keep treats under about a tenth of daily calories, and to subtract them from meals rather than adding them on top — treats are the most common quiet cause of weight gain.',
+                    'a' => 'No, but they are useful for training and bonding. The usual guidance is to keep treats under about a tenth of daily calories, and to subtract them from meals rather than adding them on top. Treats are the most common quiet cause of weight gain.',
                 ],
             ],
         ],
@@ -130,7 +130,7 @@ return [
                 ],
                 [
                     'q' => 'Should I brush my cat’s teeth?',
-                    'a' => 'If your cat will tolerate it, yes — dental disease is very common and painful, and it is easier to prevent than to treat. Use toothpaste made for cats, never human toothpaste, and build up slowly. Bad breath is worth mentioning to your vet rather than accepting as normal.',
+                    'a' => 'If your cat will tolerate it, yes. Dental disease is very common and painful, and it is easier to prevent than to treat. Use toothpaste made for cats, never human toothpaste, and build up slowly. Bad breath is worth mentioning to your vet rather than accepting as normal.',
                 ],
             ],
         ],
@@ -150,7 +150,7 @@ return [
             'items' => [
                 [
                     'q' => 'How do I convert my cat’s age to human years?',
-                    'a' => 'Not by multiplying by seven — cats age quickly at first and then level off. A one-year-old cat is roughly a fifteen-year-old person, a two-year-old is about twenty-four, and after that each cat year adds roughly four human years.',
+                    'a' => 'Not by multiplying by seven. Cats age quickly at first and then level off. A one-year-old cat is roughly a fifteen-year-old person, a two-year-old is about twenty-four, and after that each cat year adds roughly four human years.',
                 ],
                 [
                     'q' => 'When is a cat considered senior?',
@@ -172,7 +172,7 @@ return [
         ],
 
         [
-            'id' => 'behaviour',
+            'id' => 'behavior',
             'tone' => 'accent',
             'image' => 'purrquery-happy-tabby-cat-relaxing',
             'image_alt' => 'Happy tabby cat relaxing comfortably with its paws raised',
@@ -181,16 +181,16 @@ return [
                 'M6.5 10.5V8a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v2.5',
                 'M3 19h18',
             ],
-            'title' => 'Behaviour and home life',
+            'title' => 'Behavior and home life',
             'blurb' => 'The everyday things that are easier to fix than they look.',
             'items' => [
                 [
                     'q' => 'Why does my cat ignore the litter tray?',
-                    'a' => 'Litter tray problems are usually about the tray, not defiance: too dirty, too small, wrong litter, sited somewhere busy, or too few trays in a multi-cat home — the usual rule is one per cat plus one. Rule out a medical cause first, because urinary problems present the same way and need treating quickly.',
+                    'a' => 'Litter tray problems are usually about the tray, not defiance: too dirty, too small, wrong litter, sited somewhere busy, or too few trays in a multi-cat home. The usual rule is one per cat plus one. Rule out a medical cause first, because urinary problems present the same way and need treating quickly.',
                 ],
                 [
                     'q' => 'How do I stop my cat scratching the furniture?',
-                    'a' => 'Scratching is not optional behaviour — it maintains claws and marks territory — so the aim is to redirect it. Put a sturdy post next to the spot being scratched, make sure it is tall enough for a full stretch, and reward using it. Declawing is an amputation and is banned in many countries.',
+                    'a' => 'Scratching is not optional behavior. It maintains claws and marks territory, so the aim is to redirect it. Put a sturdy post next to the spot being scratched, make sure it is tall enough for a full stretch, and reward using it. Declawing is an amputation and is banned in many countries.',
                 ],
                 [
                     'q' => 'Should my cat go outside?',
@@ -198,7 +198,7 @@ return [
                 ],
                 [
                     'q' => 'How long can I leave my cat alone?',
-                    'a' => 'A healthy adult cat is generally fine alone for a working day with food, water and a clean tray. Beyond about twenty-four hours someone should be checking in — not only for feeding, but because a cat that becomes unwell alone can deteriorate quickly.',
+                    'a' => 'A healthy adult cat is generally fine alone for a working day with food, water and a clean tray. Beyond about twenty-four hours someone should be checking in, not only for feeding, but because a cat that becomes unwell alone can deteriorate quickly.',
                 ],
             ],
         ],

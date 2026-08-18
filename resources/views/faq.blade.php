@@ -3,8 +3,8 @@
 {{-- ══ Hero ══════════════════════════════════════════════════════════════ --}}
 <section class="relative overflow-hidden bg-surface-soft pb-12 lg:pb-14">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary opacity-10 blur-3xl"></div>
-        <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-10 blur-3xl"></div>
+        <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
+        <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
         <x-paw-print class="paw absolute top-[20%] left-[6%] hidden size-10 text-primary sm:block" style="animation-duration: 23s"/>
         <x-paw-print class="paw absolute top-[26%] right-[7%] hidden size-8 text-accent-vivid sm:block" style="animation-delay: -8s; animation-duration: 20s"/>
     </div>
@@ -104,26 +104,26 @@
 {{-- ══ Still stuck ═══════════════════════════════════════════════════════ --}}
 <section class="bg-surface pt-4 pb-14">
     <div class="container-page max-w-3xl">
-        <div class="reveal relative overflow-hidden rounded-2xl bg-primary px-6 py-12 text-center shadow-lg sm:px-12">
+        <div class="reveal relative overflow-hidden rounded-2xl border border-line bg-accent-light px-6 py-12 text-center shadow-lg sm:px-12">
             <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-                <div class="absolute -top-16 -right-10 size-64 rounded-full bg-surface/10 blur-2xl"></div>
-                <div class="absolute -bottom-20 -left-10 size-72 rounded-full bg-accent-vivid/20 blur-2xl"></div>
+                <div class="absolute -top-16 -right-10 size-64 rounded-full bg-primary-vivid/20 blur-2xl"></div>
+                <div class="absolute -bottom-20 -left-10 size-72 rounded-full bg-accent-vivid/30 blur-2xl"></div>
             </div>
             <div class="relative">
-                <h2 class="font-heading text-2xl font-extrabold tracking-tight text-ink-inverse sm:text-3xl">
+                <h2 class="font-heading text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
                     Question not here?
                 </h2>
-                <p class="mx-auto mt-3 max-w-xl text-base leading-relaxed text-ink-inverse/85">
+                <p class="mx-auto mt-3 max-w-xl text-base leading-relaxed text-ink-muted">
                     Ask it. The ones that come up more than once end up on this page,
                     so you would be doing the next person a favour too.
                 </p>
                 <div class="mt-7 flex flex-wrap justify-center gap-3">
                     <a href="{{ route('contact') }}"
-                       class="inline-flex items-center justify-center gap-2 rounded-full bg-surface px-7 py-3 text-sm font-semibold text-primary-dark shadow-md transition hover:bg-primary-light">
+                       class="btn-primary rounded-full px-7">
                         Ask a question
                     </a>
                     <a href="/#tools"
-                       class="inline-flex items-center justify-center gap-2 rounded-full border border-surface/40 px-7 py-3 text-sm font-semibold text-ink-inverse transition hover:bg-surface/10">
+                       class="btn-outline rounded-full px-7">
                         Try the free tools
                     </a>
                 </div>

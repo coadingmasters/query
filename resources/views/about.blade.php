@@ -3,8 +3,8 @@
 {{-- ══ Hero ══════════════════════════════════════════════════════════════ --}}
 <section class="relative overflow-hidden bg-surface-soft pb-12 lg:pb-14">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary opacity-10 blur-3xl"></div>
-        <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-10 blur-3xl"></div>
+        <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
+        <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
         <x-paw-print class="paw absolute top-[18%] left-[5%] hidden size-10 text-primary sm:block" style="animation-duration: 24s"/>
         <x-paw-print class="paw absolute top-[24%] right-[8%] hidden size-8 text-accent-vivid sm:block" style="animation-delay: -7s; animation-duration: 21s"/>
     </div>
@@ -227,32 +227,32 @@
 {{-- ══ CTA ═══════════════════════════════════════════════════════════════ --}}
 <section class="pb-14 bg-surface">
     <div class="container-page">
-        <div class="relative overflow-hidden rounded-2xl bg-primary px-6 py-14 text-center shadow-lg sm:px-12">
+        <div class="relative overflow-hidden rounded-2xl border border-line bg-accent-light px-6 py-14 text-center shadow-lg sm:px-12">
             <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-                <div class="absolute -top-16 -right-10 size-64 rounded-full bg-surface/10 blur-2xl"></div>
+                <div class="absolute -top-16 -right-10 size-64 rounded-full bg-primary-vivid/20 blur-2xl"></div>
                 <div class="absolute -bottom-20 -left-10 size-72 rounded-full bg-accent-vivid/20 blur-2xl"></div>
             </div>
             <div class="relative">
-                <h2 class="font-heading text-3xl font-extrabold tracking-tight text-ink-inverse sm:text-4xl">
+                <h2 class="font-heading text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
                     Ready to care smarter for your cat?
                 </h2>
-                <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-inverse/85 sm:text-lg">
+                <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
                     Start with your cat’s age or ideal weight. It takes about thirty
                     seconds, and there is nothing to sign up for.
                 </p>
 
                 <div class="mt-8 flex flex-wrap justify-center gap-3">
                     <a href="/#tools"
-                       class="inline-flex items-center justify-center gap-2 rounded-full bg-surface px-7 py-3 text-sm font-semibold text-primary-dark shadow-md transition hover:bg-primary-light">
+                       class="btn-primary rounded-full px-7">
                         Try our free tools
                     </a>
                     <a href="/#food-guides"
-                       class="inline-flex items-center justify-center gap-2 rounded-full border border-surface/40 px-7 py-3 text-sm font-semibold text-ink-inverse transition hover:bg-surface/10">
+                       class="btn-outline rounded-full px-7">
                         Explore food guides
                     </a>
                 </div>
 
-                <ul class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-ink-inverse/85">
+                <ul class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-ink-muted">
                     @foreach (['No sign-up required', 'Instant results', 'Free forever'] as $pill)
                         <li class="flex items-center gap-2">
                             <svg class="size-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"

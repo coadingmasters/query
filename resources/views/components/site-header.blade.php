@@ -36,7 +36,7 @@
 
         <div class="flex items-center gap-2">
             <a href="/#tools"
-               class="hidden rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-ink-inverse shadow-sm transition-colors hover:bg-primary-hover sm:inline-flex">
+               class="hidden rounded-lg bg-primary-vivid px-4 py-2.5 text-sm font-semibold text-ink shadow-sm transition hover:brightness-95 sm:inline-flex">
                 Try Free Tools
             </a>
 
@@ -63,7 +63,7 @@
                 </a>
             @endforeach
             <a href="/#tools"
-               class="mt-2 block rounded-lg bg-primary px-4 py-2.5 text-center text-base font-semibold text-ink-inverse">
+               class="mt-2 block rounded-lg bg-primary-vivid px-4 py-2.5 text-center text-base font-semibold text-ink">
                 Try Free Tools
             </a>
         </nav>

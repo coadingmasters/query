@@ -14,8 +14,8 @@
      ═══════════════════════════════════════════════════════════════════════ --}}
 <section class="relative overflow-hidden bg-surface-soft pb-12 lg:pb-14">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary opacity-10 blur-3xl"></div>
-        <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-10 blur-3xl"></div>
+        <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
+        <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
         <x-paw-print class="paw absolute top-[22%] left-[6%] hidden size-10 text-primary sm:block" style="animation-duration: 23s"/>
         <x-paw-print class="paw absolute top-[28%] right-[7%] hidden size-8 text-accent-vivid sm:block" style="animation-delay: -8s; animation-duration: 20s"/>
     </div>
@@ -206,21 +206,21 @@
             <div class="overflow-hidden rounded-2xl border border-line bg-surface shadow-md">
 
                 {{-- Due date, prominent --}}
-                <div class="bg-primary px-6 py-8 text-center sm:px-8">
-                    <p class="text-sm font-semibold tracking-wide text-ink-inverse/80 uppercase">
+                <div class="bg-primary-vivid px-6 py-8 text-center sm:px-8">
+                    <p class="text-sm font-semibold tracking-wide text-ink/70 uppercase">
                         Estimated due date
                     </p>
-                    <p data-result-due-date class="mt-2 font-heading text-4xl font-extrabold tracking-tight text-ink-inverse sm:text-5xl">
+                    <p data-result-due-date class="mt-2 font-heading text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
                         12 October 2026
                     </p>
-                    <p data-result-window class="mt-3 text-base text-ink-inverse/85">
+                    <p data-result-window class="mt-3 text-base text-ink/80">
                         Likely birth window: 9 – 15 October 2026
                     </p>
 
                     {{-- Copying a date is the thing people do next: into a
                          calendar, or a message to whoever else is watching. --}}
                     <button type="button" data-copy
-                            class="mt-5 inline-flex items-center gap-2 rounded-full border border-surface/40 px-4 py-2 text-sm font-semibold text-ink-inverse transition hover:bg-surface/10 focus-visible:ring-2 focus-visible:ring-surface/60 focus-visible:outline-none">
+                            class="mt-5 inline-flex items-center gap-2 rounded-full border border-ink/25 px-4 py-2 text-sm font-semibold text-ink transition hover:bg-ink/5 focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:outline-none">
                         <svg data-copy-icon class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                              stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <rect x="9" y="9" width="12" height="12" rx="2"/>
@@ -745,14 +745,14 @@
                         badge.className += ' bg-surface-soft text-ink-muted';
                         details.open = false;
                     } else if (week === currentWeek) {
-                        dot.className = dot.className.replace(/bg-\S+/, 'bg-primary');
+                        dot.className = dot.className.replace(/bg-\S+/, 'bg-primary-vivid');
                         number.className = number.className
-                            .replace(/bg-\S+/, 'bg-primary')
-                            .replace(/text-primary-dark/, 'text-ink-inverse');
+                            .replace(/bg-\S+/, 'bg-primary-vivid')
+                            .replace(/text-primary-dark/, 'text-ink');
                         details.classList.add('border-primary', 'ring-2', 'ring-primary/20');
                         badge.hidden = false;
                         badge.textContent = 'You are here';
-                        badge.className += ' bg-primary text-ink-inverse';
+                        badge.className += ' bg-primary-vivid text-ink';
 
                         // Open the week she is actually in — it is the one
                         // thing the visitor came for.
@@ -795,7 +795,7 @@
                 // --- due date and window ---
                 // Amber rather than the usual purple when the date came from
                 // symptoms, so an estimate never looks like a measurement.
-                dueBanner.classList.toggle('bg-primary', !resolved.approximate);
+                dueBanner.classList.toggle('bg-primary-vivid', !resolved.approximate);
                 dueBanner.classList.toggle('bg-warning', resolved.approximate);
 
                 out.dueDate.textContent = formatDate(dueDate);

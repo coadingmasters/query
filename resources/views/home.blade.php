@@ -13,8 +13,8 @@
 {{-- ══ 1. Hero ═══════════════════════════════════════════════════════════ --}}
 <section class="relative overflow-hidden bg-surface-soft pb-16 lg:pb-20">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary opacity-10 blur-3xl"></div>
-        <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-10 blur-3xl"></div>
+        <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
+        <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
 
         @foreach ([
             ['left-[4%]  top-[16%]', 'size-10', 0,   22, 'text-primary'],
@@ -58,7 +58,7 @@
                            autocomplete="off"
                            class="w-full rounded-full border border-line bg-surface py-4 pr-16 pl-12 text-base text-ink shadow-sm transition placeholder:text-ink-muted focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
                     <span aria-hidden="true"
-                          class="absolute top-1/2 right-2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-ink-inverse">
+                          class="absolute top-1/2 right-2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-primary-vivid text-ink">
                         <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                             <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/>
                         </svg>
@@ -445,26 +445,26 @@
 {{-- ══ 8. CTA banner ═════════════════════════════════════════════════════ --}}
 <section class="section bg-surface">
     <div class="container-page">
-        <div class="relative overflow-hidden rounded-2xl bg-primary px-6 py-14 text-center shadow-lg sm:px-12">
+        <div class="relative overflow-hidden rounded-2xl border border-line bg-accent-light px-6 py-14 text-center shadow-lg sm:px-12">
             <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-                <div class="absolute -top-16 -right-10 size-64 rounded-full bg-white/10 blur-2xl"></div>
+                <div class="absolute -top-16 -right-10 size-64 rounded-full bg-primary-vivid/20 blur-2xl"></div>
                 <div class="absolute -bottom-20 -left-10 size-72 rounded-full bg-accent-vivid/20 blur-2xl"></div>
             </div>
             <div class="relative">
-                <h2 class="font-heading text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+                <h2 class="font-heading text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
                     Ready to care smarter?
                 </h2>
-                <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
+                <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
                     Start with your cat’s age or ideal weight — it takes about
                     thirty seconds, and you will know where you stand.
                 </p>
                 <div class="mt-8 flex flex-wrap justify-center gap-3">
                     <a href="#tools"
-                       class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-6 py-3 text-sm font-semibold text-primary-dark shadow-md transition hover:bg-primary-light">
+                       class="btn-primary rounded-full px-6">
                         Try Free Tools
                     </a>
                     <a href="#blog"
-                       class="inline-flex items-center justify-center gap-2 rounded-lg border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
+                       class="btn-outline rounded-full px-6">
                         Read the guides
                     </a>
                 </div>

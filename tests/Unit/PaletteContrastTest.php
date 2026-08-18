@@ -26,6 +26,13 @@ class PaletteContrastTest extends TestCase
         'surface', 'surface-soft', 'surface-section', 'primary-light', 'accent-light',
     ];
 
+    /**
+     * Brand colours that are fills, never text. Both fail badly as words —
+     * coral is 2.27:1 on white and sage 1.64:1 — which is exactly why each
+     * has a darkened twin above for anything that has to be read.
+     */
+    private const NEVER_TEXT = ['primary-vivid', 'accent-vivid'];
+
     /** Tokens used for text, which must clear AA on every surface above. */
     private const TEXT = [
         'ink', 'ink-muted', 'primary', 'primary-hover', 'primary-dark',
@@ -37,7 +44,7 @@ class PaletteContrastTest extends TestCase
      * decorative fields on the launch page. Never body copy.
      */
     private const FILLS = [
-        'accent-vivid', 'success-vivid', 'warning-vivid', 'danger-vivid', 'info-vivid',
+        'primary-vivid', 'accent-vivid', 'success-vivid', 'warning-vivid', 'danger-vivid', 'info-vivid',
     ];
 
     /** @return array<string, string> token name => hex value */
@@ -149,18 +156,22 @@ class PaletteContrastTest extends TestCase
     }
 
     /**
-     * The brand green is too light for body text, so the token that reads as
-     * the default ("accent") must be the safe one. If the two were swapped,
-     * every `text-accent` in the codebase would quietly fail.
+     * The bare token name is what someone reaches for without thinking, so it
+     * has to be the readable one. If these were ever swapped, every
+     * `text-primary` and `text-accent` in the codebase would quietly fail.
      */
-    public function test_the_default_accent_is_the_text_safe_shade(): void
+    public function test_the_bare_token_is_always_the_text_safe_shade(): void
     {
         $tokens = $this->tokens();
 
-        $this->assertGreaterThan(
-            $this->contrast($tokens['accent-vivid'], $tokens['surface']),
-            $this->contrast($tokens['accent'], $tokens['surface']),
-            'accent must be darker than accent-vivid, or text-accent fails AA'
-        );
+        foreach (self::NEVER_TEXT as $fill) {
+            $safe = str_replace('-vivid', '', $fill);
+
+            $this->assertGreaterThan(
+                $this->contrast($tokens[$fill], $tokens['surface']),
+                $this->contrast($tokens[$safe], $tokens['surface']),
+                "$safe must be darker than $fill, or text-$safe fails AA"
+            );
+        }
     }
 }

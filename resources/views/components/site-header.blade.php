@@ -119,6 +119,9 @@
                 </div>
             </div>
 
+            <a href="{{ route('blog.index') }}" class="rounded-lg px-3 py-2 text-sm font-semibold text-ink-muted transition-colors hover:bg-surface-soft hover:text-primary">
+                Blog
+            </a>
             <a href="{{ route('about') }}" class="rounded-lg px-3 py-2 text-sm font-semibold text-ink-muted transition-colors hover:bg-surface-soft hover:text-primary">
                 About Us
             </a>
@@ -225,6 +228,7 @@
         </details>
 
         @foreach ([
+            [route('blog.index'), 'Blog', 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z|M14 3v5h5|M9 13h6M9 17h4'],
             [route('about'), 'About Us', 'M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19Z|M12 10.5v6M12 7.5h.01'],
             [route('contact'), 'Contact Us', 'M3 7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5Z|m3.5 8 7.6 5a1.6 1.6 0 0 0 1.8 0l7.6-5'],
         ] as [$href, $label, $paths])
@@ -241,7 +245,7 @@
 
         <div class="mt-4 border-t border-line pt-3">
             <p class="px-3 pb-1 text-xs font-bold tracking-wider text-ink-muted uppercase">More</p>
-            @foreach ([[route('faq'), 'FAQ'], [route('blog.index'), 'Blog'], ['/#how-it-works', 'How it works']] as [$href, $label])
+            @foreach ([[route('faq'), 'FAQ'], ['/#how-it-works', 'How it works']] as [$href, $label])
                 <a href="{{ $href }}" class="block rounded-lg px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-surface-soft hover:text-primary">
                     {{ $label }}
                 </a>

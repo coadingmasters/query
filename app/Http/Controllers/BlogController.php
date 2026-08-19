@@ -20,12 +20,26 @@ class BlogController extends Controller
             ->values();
 
         $live = $posts->filter(fn (array $p): bool => isset($p['url']));
+        $featuredSlug = $live->first()['slug'] ?? $posts->first()['slug'] ?? null;
 
         $description = 'Cat care guides from '.$name.'. Behavior, feeding, health '
             .'and life stages, researched from published veterinary sources with '
             .'those sources named.';
 
+        // An icon per category, so the topic row reads as a set of things
+        // rather than a row of identical pills.
+        $icons = [
+            'Behavior' => ['M12 20.5c-3.6-2.2-7-4.6-7-8.4A3.9 3.9 0 0 1 12 9.6a3.9 3.9 0 0 1 7 2.5c0 3.8-3.4 6.2-7 8.4Z'],
+            'Food Safety' => ['M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z', 'm9.4 12.2 1.9 1.9 3.6-3.7'],
+            'Feeding' => ['M3.5 12.5h17a8.5 8.5 0 0 1-17 0Z', 'M6 9.2c0-1.6 1.4-2.2 1.4-3.4M10.5 9.2c0-1.6 1.4-2.2 1.4-3.4M15 9.2c0-1.6 1.4-2.2 1.4-3.4'],
+            'Health' => ['M8 3v5a4 4 0 0 0 8 0V3', 'M6 3h4M14 3h4', 'M12 12v3a4 4 0 0 0 8 0v-.5', 'M20 12.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z'],
+            'Getting Started' => ['M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19Z', 'm8.4 12.2 2.4 2.4 4.8-4.8'],
+        ];
+
         return view('blog.index', [
+            'icons' => $icons,
+            'side' => $posts->reject(fn (array $p): bool => $featuredSlug === $p['slug'])->take(4),
+            'latest' => $posts->reject(fn (array $p): bool => $featuredSlug === $p['slug'])->take(4),
             'title' => 'Cat Care Blog | '.$name,
             'description' => $description,
             'canonical' => $url.'/blog',

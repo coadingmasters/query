@@ -30,16 +30,16 @@
 
     {{-- ═══ Sidebar ═══════════════════════════════════════════════════ --}}
     <aside
-        class="fixed inset-y-0 left-0 z-50 flex w-64 -translate-x-full flex-col border-r border-line bg-surface transition-transform duration-200 lg:translate-x-0"
+        class="fixed inset-y-0 left-0 z-50 flex w-64 -translate-x-full flex-col bg-primary-dark transition-transform duration-200 lg:translate-x-0"
         :class="sidebarOpen && '!translate-x-0'">
 
-        <div class="flex items-center gap-2.5 border-b border-line px-6 py-5">
-            <span class="flex size-9 items-center justify-center overflow-hidden rounded-full bg-surface-soft">
+        <div class="flex items-center gap-2.5 border-b border-white/10 px-6 py-5">
+            <span class="flex size-9 items-center justify-center overflow-hidden rounded-full bg-white">
                 <x-img name="purrquerylogo" alt="" sizes="36px" fit="contain"/>
             </span>
             <div class="leading-tight">
-                <p class="font-heading text-sm font-extrabold text-ink">{{ config('app.name') }}</p>
-                <p class="text-[11px] font-semibold tracking-wide text-ink-muted uppercase">Admin</p>
+                <p class="font-heading text-sm font-extrabold text-white">{{ config('app.name') }}</p>
+                <p class="text-[11px] font-semibold tracking-wide text-white/50 uppercase">Admin</p>
             </div>
         </div>
 
@@ -47,21 +47,21 @@
             @foreach ($navItems as $item)
                 @php $isActive = $item['key'] === $active; @endphp
                 @if ($item['soon'] ?? false)
-                    <span class="flex cursor-default items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold text-ink-muted opacity-70">
+                    <span class="flex cursor-default items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold text-white/40">
                         <span class="flex items-center gap-3">
                             <svg class="size-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                 <path d="{{ $item['icon'] }}"/>
                             </svg>
                             {{ $item['label'] }}
                         </span>
-                        <span class="rounded-full bg-surface-soft px-2 py-0.5 text-[10px] font-bold tracking-wide text-ink-muted uppercase">Soon</span>
+                        <span class="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-bold tracking-wide text-white/60 uppercase">Soon</span>
                     </span>
                 @else
                     <a href="{{ $item['href'] }}"
                        @class([
                             'flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold transition',
-                            'bg-primary-light text-primary' => $isActive,
-                            'text-ink-muted hover:bg-surface-soft hover:text-ink' => ! $isActive,
+                            'bg-white/10 text-white' => $isActive,
+                            'text-white/60 hover:bg-white/5 hover:text-white' => ! $isActive,
                        ])>
                         <span class="flex items-center gap-3">
                             <svg class="size-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -79,9 +79,9 @@
             @endforeach
         </nav>
 
-        <div class="border-t border-line p-4">
+        <div class="border-t border-white/10 p-4">
             <a href="{{ route('home') }}"
-               class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-ink-muted transition hover:bg-surface-soft hover:text-ink">
+               class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold text-white/60 transition hover:bg-white/5 hover:text-white">
                 <svg class="size-[18px] shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M3 10.5 12 3l9 7.5M5 9.5V21h5v-6h4v6h5V9.5"/>
                 </svg>
@@ -93,10 +93,10 @@
     {{-- ═══ Main column ═══════════════════════════════════════════════ --}}
     <div class="flex min-h-screen flex-col lg:pl-64">
 
-        <header class="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-line bg-surface/90 px-4 py-3.5 backdrop-blur sm:px-6">
+        <header class="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-line bg-surface-soft/95 px-4 py-3.5 backdrop-blur sm:px-6">
             <div class="flex items-center gap-3">
                 <button type="button" x-on:click="sidebarOpen = true"
-                        class="-ml-1 flex size-9 items-center justify-center rounded-lg text-ink-muted hover:bg-surface-soft lg:hidden">
+                        class="-ml-1 flex size-9 items-center justify-center rounded-lg text-ink-muted hover:bg-surface lg:hidden">
                     <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
                 <h1 class="hidden font-heading text-lg font-bold text-ink sm:block">{{ $title }}</h1>
@@ -122,11 +122,11 @@
             </div>
         </header>
 
-        <main class="flex-1 px-4 py-8 sm:px-6 lg:py-10">
+        <main class="flex-1 bg-surface-section px-4 py-8 sm:px-6 lg:py-10">
             {{ $slot }}
         </main>
 
-        <footer class="border-t border-line px-4 py-5 text-center text-xs text-ink-muted sm:px-6">
+        <footer class="border-t border-line bg-surface-soft px-4 py-5 text-center text-xs text-ink-muted sm:px-6">
             &copy; {{ date('Y') }} {{ config('app.name') }}. Admin dashboard.
         </footer>
     </div>

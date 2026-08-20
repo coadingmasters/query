@@ -64,6 +64,16 @@
     symptoms that genuinely cannot wait until morning.
 </p>
 
+<figure>
+    <x-img name="vet-checking-cat"
+           alt="Veterinarian calmly examining a cat's abdomen on an exam table"
+           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <figcaption>
+        A same-day or next-day visit, not a wait-and-see, is the right call
+        for anything on the emergency list above.
+    </figcaption>
+</figure>
+
 <div class="my-7 overflow-hidden rounded-2xl border border-line">
     <table class="w-full text-left text-sm">
         <thead>
@@ -116,6 +126,16 @@
     eaten in over 24 hours, particularly one who is already thin, is.
 </p>
 
+<figure>
+    <x-img name="cat-not-eating"
+           alt="Tabby cat sitting beside a full food bowl, not eating"
+           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <figcaption>
+        One skipped meal is rarely a problem. A cat that will not eat at
+        all for more than a day needs a vet, not more time.
+    </figcaption>
+</figure>
+
 <h2 id="hiding">Hiding more than usual</h2>
 
 <p>
@@ -125,6 +145,16 @@
     early behavioral signs precisely because it costs a cat nothing to do
     and requires no visible symptom at all.
 </p>
+
+<figure>
+    <x-img name="cat-hiding"
+           alt="Tabby cat tucked under furniture in a blanket, hiding"
+           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <figcaption>
+        Hiding costs a cat nothing and needs no visible symptom, which is
+        why it is often the very first sign an owner notices.
+    </figcaption>
+</figure>
 
 <h2 id="lethargic">Low energy or seeming lethargic</h2>
 

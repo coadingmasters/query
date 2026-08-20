@@ -331,6 +331,26 @@
             }
         ]
     },
+    "cat-hiding": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/cat-hiding-600.dbcd60cb.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/cat-hiding-900.dbcd60cb.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/cat-hiding-1200.dbcd60cb.webp"
+            }
+        ]
+    },
     "cat-kneading-claws-out": {
         "width": 720,
         "height": 576,
@@ -388,6 +408,26 @@
             {
                 "w": 800,
                 "src": "/images/cat-name-generator-cute-kitten-800.2f50e545.webp"
+            }
+        ]
+    },
+    "cat-not-eating": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/cat-not-eating-600.4d06a73a.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/cat-not-eating-900.4d06a73a.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/cat-not-eating-1200.4d06a73a.webp"
             }
         ]
     },
@@ -835,19 +875,19 @@
         "width": 600,
         "height": 400,
         "preset": "blog",
-        "placeholder": true,
+        "placeholder": false,
         "variants": [
             {
                 "w": 600,
-                "src": "/images/signs-cat-is-sick-hero-600.a6b041f9.webp"
+                "src": "/images/signs-cat-is-sick-hero-600.e91ccbd3.webp"
             },
             {
                 "w": 900,
-                "src": "/images/signs-cat-is-sick-hero-900.a6b041f9.webp"
+                "src": "/images/signs-cat-is-sick-hero-900.e91ccbd3.webp"
             },
             {
                 "w": 1200,
-                "src": "/images/signs-cat-is-sick-hero-1200.a6b041f9.webp"
+                "src": "/images/signs-cat-is-sick-hero-1200.e91ccbd3.webp"
             }
         ]
     },
@@ -868,6 +908,26 @@
             {
                 "w": 600,
                 "src": "/images/toxic-foods-cats-must-avoid-dangerous-600.8d9912da.webp"
+            }
+        ]
+    },
+    "vet-checking-cat": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/vet-checking-cat-600.ddcf3ff8.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/vet-checking-cat-900.ddcf3ff8.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/vet-checking-cat-1200.ddcf3ff8.webp"
             }
         ]
     },

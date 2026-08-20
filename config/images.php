@@ -130,6 +130,9 @@ return [
         'kitten-sneezing' => 'blog',
         'vet-examining-cat-sneezing' => 'blog',
         'signs-cat-is-sick-hero' => 'blog',
+        'cat-not-eating' => 'blog',
+        'cat-hiding' => 'blog',
+        'vet-checking-cat' => 'blog',
         'cat-kneading-lap' => 'figure-tall',
         'kitten-making-biscuits' => 'figure-tall',
         'cat-kneading-claws-out' => 'figure-tall',
@@ -192,9 +195,6 @@ return [
     ],
 
     'placeholders' => [
-        // Real photography is prompted for below; this stands in until it
-        // arrives.
-        'signs-cat-is-sick-hero' => 'cat-vaccination-tracker-vet-examination',
 
         // Same artwork, run at figure size for the body of the age calculator.
         'cat-age-life-stages' => 'cat-age-calculator-senior-tabby-cat',

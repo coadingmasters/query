@@ -52,7 +52,7 @@
     "src": "_plus-jakarta-sans-800-normal-CusIZhrK.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-WGi9h0U7.css",
+    "file": "assets/app-Qb-gRr9U.css",
     "name": "app",
     "names": [
       "app.css"
@@ -64,6 +64,12 @@
     "file": "assets/app-Cna13UPV.js",
     "name": "app",
     "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/cat-calorie-pdf.js": {
+    "file": "assets/cat-calorie-pdf-DtiQ3NRv.js",
+    "name": "cat-calorie-pdf",
+    "src": "resources/js/cat-calorie-pdf.js",
     "isEntry": true
   }
 }

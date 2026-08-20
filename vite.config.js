@@ -6,7 +6,14 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            // The PDF report is its own entry: it is several kilobytes of
+            // format-writing that only runs when someone asks for a download,
+            // so it stays out of the bundle every visitor pays for.
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+                'resources/js/cat-calorie-pdf.js',
+            ],
             refresh: true,
             // Fonts are downloaded at build time and served from our own
             // origin. That removes a third-party connection from the critical
@@ -35,6 +42,13 @@ export default defineConfig({
         // the production bundle.
         cssMinify: 'lightningcss',
         sourcemap: false,
+        rollupOptions: {
+            // Entries are treated as scripts by default, so anything they
+            // export is dead code and gets shaken out. The PDF report is an
+            // entry precisely so it can be imported on demand, and without
+            // this its one export was stripped and the file built to nothing.
+            preserveEntrySignatures: 'exports-only',
+        },
     },
     server: {
         watch: {

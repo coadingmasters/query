@@ -331,13 +331,27 @@
                             Formula based on the National Research Council (NRC) guidelines and AAFCO standards.
                         </p>
 
-                        <div class="grid gap-2 sm:grid-cols-2">
-                            <button type="button" data-cal-reset class="btn-outline w-full rounded-full">
+                        <div class="space-y-2.5">
+                            <button type="button" data-cal-pdf
+                                    data-logo="{{ \App\Support\Images::largest('purrquerylogo') }}"
+                                    data-module="{{ Vite::asset('resources/js/cat-calorie-pdf.js') }}"
+                                    class="group flex w-full items-center justify-center gap-2 rounded-full bg-primary-vivid px-5 py-3 text-sm font-bold text-ink shadow-md transition duration-200 hover:brightness-95 hover:shadow-lg active:scale-[0.99] disabled:cursor-default disabled:opacity-70">
+                                <svg data-cal-pdf-icon class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5"/>
+                                    <path d="M4 17v2.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V17"/>
+                                </svg>
+                                <span data-cal-pdf-label>Download PDF report</span>
+                            </button>
+
+                            <button type="button" data-cal-reset
+                                    class="flex w-full items-center justify-center gap-2 rounded-full border border-line-strong bg-surface px-5 py-3 text-sm font-semibold text-ink-muted transition duration-200 hover:border-primary hover:text-primary">
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M20 11.5A8 8 0 1 1 17.5 6"/><path d="M20 4v4h-4"/>
+                                </svg>
                                 Recalculate
                             </button>
-                            <a href="{{ route('tools.cat-age-calculator') }}" class="btn-outline w-full rounded-full">
-                                Cat age in human years &rarr;
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -636,7 +650,7 @@
 
 {{-- ══ 4. RELATED TOOLS ══════════════════════════════════════════════════ --}}
 <section class="bg-surface pt-2 pb-8 lg:pb-10">
-    <div class="container-page max-w-3xl">
+    <div class="container-page max-w-6xl">
         <h2 class="font-heading text-lg font-extrabold text-ink">Keep going</h2>
         <div class="mt-4 grid gap-4 sm:grid-cols-3">
             @foreach ([
@@ -666,7 +680,7 @@
 
 {{-- ══ 5. SOURCES AND BYLINE ═════════════════════════════════════════════ --}}
 <section class="bg-surface-section py-8 lg:py-10">
-    <div class="container-page max-w-3xl">
+    <div class="container-page max-w-6xl">
         <div class="rounded-2xl border border-line bg-surface p-6 sm:p-8">
             <h2 class="font-heading text-lg font-extrabold text-ink">Where this comes from</h2>
             <ul class="mt-4 space-y-3">
@@ -820,10 +834,14 @@
                 const name = $('#cat-name').value.trim();
 
                 return {
-                    weightKg, stage, neuterStatus, pregnancyStage, activityKey,
+                    weightKg, weightRaw, unit, stage, neuterStatus, pregnancyStage, activityKey,
                     bcsScore, livingKey, foodType, frequency, name,
                 };
             };
+
+            // The last full calculation, kept so the PDF report can be built
+            // from exactly what is on screen rather than recomputed.
+            let lastResult = null;
 
             const BCS_TONE = {
                 1: 'bg-warning-light text-warning', 2: 'bg-warning-light text-warning',
@@ -839,7 +857,7 @@
             };
 
             const render = (input) => {
-                const { weightKg, stage, neuterStatus, pregnancyStage, activityKey, bcsScore, livingKey, foodType, frequency, name } = input;
+                const { weightKg, weightRaw, unit: weightUnit, stage, neuterStatus, pregnancyStage, activityKey, bcsScore, livingKey, foodType, frequency, name } = input;
 
                 const restingEnergy = rer(weightKg);
                 const stageMultiplier = multiplierFor(stage, neuterStatus, pregnancyStage, bcsScore);
@@ -865,21 +883,24 @@
                 const dryCups = daily / MODEL.food.dry_kcal_per_cup;
                 const wetCans = daily / MODEL.food.wet_kcal_per_can;
                 const foodEl = $('[data-cal-food]');
+                let foodText;
                 if (foodType === 'dry') {
                     const grams = Math.round(dryCups * 120); // ~120g per US cup of kibble, a working average
-                    foodEl.textContent = `Approximately ${dryCups.toFixed(2)} cups (about ${grams}g) of dry food per day.`;
+                    foodText = `Approximately ${dryCups.toFixed(2)} cups (about ${grams}g) of dry food per day.`;
                 } else if (foodType === 'wet') {
-                    foodEl.textContent = `Approximately ${wetCans.toFixed(1)} cans (5.5oz) of wet food per day.`;
+                    foodText = `Approximately ${wetCans.toFixed(1)} cans (5.5oz) of wet food per day.`;
                 } else {
                     const halfDry = (daily / 2) / MODEL.food.dry_kcal_per_cup;
                     const halfWet = (daily / 2) / MODEL.food.wet_kcal_per_can;
-                    foodEl.textContent = `Split evenly: about ${halfDry.toFixed(2)} cups of dry food plus ${halfWet.toFixed(1)} cans of wet food per day.`;
+                    foodText = `Split evenly: about ${halfDry.toFixed(2)} cups of dry food plus ${halfWet.toFixed(1)} cans of wet food per day.`;
                 }
+                foodEl.textContent = foodText;
 
                 // Per meal.
                 const mealEl = $('[data-cal-meal]');
+                let mealText;
                 if (frequency === 0) {
-                    mealEl.textContent = 'Free-fed: leave the full daily amount out, split across clean bowls, and measure the total rather than refilling by eye.';
+                    mealText = 'Free-fed: leave the full daily amount out, split across clean bowls, and measure the total rather than refilling by eye.';
                 } else {
                     const perMealKcal = Math.round(daily / frequency);
                     const times = frequency === 1 ? 'once a day' : `${frequency} times a day`;
@@ -891,8 +912,9 @@
                     } else {
                         portionText = `${((dryCups / 2) / frequency).toFixed(2)} cups dry + ${((wetCans / 2) / frequency).toFixed(2)} cans wet`;
                     }
-                    mealEl.textContent = `If feeding ${times}: ${perMealKcal} kcal per meal, about ${portionText} per meal.`;
+                    mealText = `If feeding ${times}: ${perMealKcal} kcal per meal, about ${portionText} per meal.`;
                 }
+                mealEl.textContent = mealText;
 
                 // Personalised note.
                 const catLabel = name ? name : 'Your cat';
@@ -910,6 +932,50 @@
                 const bcsMsg = $('[data-cal-bcs-message]');
                 bcsMsg.className = `rounded-xl p-4 text-sm leading-relaxed font-medium ${BCS_TONE[bcsScore]}`;
                 bcsMsg.textContent = `${catLabel} ${BCS_MESSAGE[bcsScore]}`;
+
+                // Everything the PDF report needs, including the multipliers,
+                // so it can show the working rather than repeat the answer.
+                const FREQUENCY_LABELS = { 0: 'Free-fed', 1: 'Once a day', 2: 'Twice a day', 3: 'Three times a day' };
+                const FOOD_LABELS = { dry: 'Dry food', wet: 'Wet food', mixed: 'Mixed (dry and wet)' };
+                const pct = Math.round(bcsPercent * 100);
+
+                // Trailing zeros stripped, but never below one decimal, so a
+                // column of multipliers lines up as 2.0 / 1.6 / 2.25.
+                const multiplier = (n) => {
+                    const s = n.toFixed(2).replace(/0+$/, '');
+                    return s.endsWith('.') ? s + '0' : s;
+                };
+
+                lastResult = {
+                    name,
+                    daily: dailyRounded,
+                    rangeLow: low,
+                    rangeHigh: high,
+                    rer: Math.round(restingEnergy),
+                    weightKg: weightKg.toFixed(2),
+                    weightLabel: weightUnit === 'kg'
+                        ? `${weightRaw} kg`
+                        : `${weightRaw} lb (${weightKg.toFixed(1)} kg)`,
+                    stageLabel: stage.label,
+                    stageMultiplier: multiplier(stageMultiplier),
+                    neuterLabel: ['fixed', 'pregnancy', 'nursing'].includes(stage.kind)
+                        ? 'Not applicable at this life stage'
+                        : (neuterStatus === 'intact' ? 'Intact' : 'Spayed / neutered'),
+                    activityLabel: `${MODEL.activity[activityKey].label}, ${MODEL.activity[activityKey].description.toLowerCase()}`,
+                    activityMultiplier: multiplier(activityMultiplier),
+                    livingLabel: MODEL.living[livingKey].label,
+                    livingMultiplier: multiplier(livingMultiplier),
+                    bcsScore,
+                    bcsLabel: MODEL.bcs[bcsScore].label,
+                    bcsAdjustment: pct === 0 ? 'No adjustment' : `${pct > 0 ? '+' : ''}${pct}%`,
+                    bcsMessage: bcsMsg.textContent,
+                    foodLabel: FOOD_LABELS[foodType],
+                    foodPortion: foodText.replace(/^Approximately /, '').replace(/\.$/, ''),
+                    frequencyLabel: FREQUENCY_LABELS[frequency],
+                    mealPortion: frequency === 0
+                        ? 'Full daily amount available, measured rather than topped up by eye'
+                        : mealText.replace(/^If feeding [^:]+: /, '').replace(/\.$/, ''),
+                };
             };
 
             form.addEventListener('submit', (event) => {
@@ -945,9 +1011,38 @@
                 });
                 panel.setAttribute('hidden', '');
                 placeholder.removeAttribute('hidden');
+                lastResult = null;
                 hideError();
                 updateStageUI();
                 $('#cat-name').focus();
+            });
+
+            /* ── PDF report ──────────────────────────────────────────────
+               The module is fetched on the first click rather than up front:
+               it is several kilobytes of PDF-format writing that most
+               visitors never trigger. */
+            const pdfButton = $('[data-cal-pdf]');
+            const pdfLabel = $('[data-cal-pdf-label]');
+
+            pdfButton.addEventListener('click', async () => {
+                if (!lastResult) return;
+
+                const original = pdfLabel.textContent;
+                pdfButton.disabled = true;
+                pdfLabel.textContent = 'Preparing report...';
+
+                try {
+                    const { downloadCalorieReport } = await import(pdfButton.dataset.module);
+                    await downloadCalorieReport(lastResult, pdfButton.dataset.logo);
+                    pdfLabel.textContent = 'Report downloaded';
+                } catch {
+                    pdfLabel.textContent = 'Could not build the PDF';
+                }
+
+                setTimeout(() => {
+                    pdfLabel.textContent = original;
+                    pdfButton.disabled = false;
+                }, 2200);
             });
 
             updateStageUI();

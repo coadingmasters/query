@@ -33,8 +33,9 @@ return [
         ],
         [
             'slug' => 'cat-calorie-calculator',
-            'title' => 'Calorie Calculator',
-            'blurb' => 'Work out how much to feed each day from weight, age and activity level.',
+            'url' => '/tools/cat-calorie-calculator',
+            'title' => 'Cat Calorie Calculator',
+            'blurb' => 'Work out how much to feed each day from weight, life stage, activity and body condition.',
             'image' => 'cat-calorie-calculator-cat-food-bowl',
             'alt' => 'Cat beside a bowl of dry food',
         ],

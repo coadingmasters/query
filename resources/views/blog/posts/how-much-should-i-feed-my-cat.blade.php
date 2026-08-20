@@ -42,6 +42,14 @@
     ideally worked out with a vet rather than guessed at.
 </p>
 
+<p>
+    Rather than doing that arithmetic by hand, our
+    <a href="{{ route('tools.cat-calorie-calculator') }}">cat calorie calculator</a>
+    runs the full formula for you, factoring in life stage, activity, indoor
+    or outdoor living and body condition, then converts the result into
+    cups, cans or grams for the food you actually feed.
+</p>
+
 <figure>
     <x-img name="measuring-cat-food-portion"
            alt="Hand pouring a measured cup of kibble into a cat's bowl"

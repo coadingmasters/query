@@ -426,6 +426,21 @@
     </div>
 </section>
 
+{{-- ══ 5.5. RELATED TOOLS ════════════════════════════════════════════════ --}}
+<section class="bg-surface py-10 lg:py-12">
+    <div class="container-page max-w-3xl">
+        <h2 class="font-heading text-lg font-extrabold text-ink">Keep going</h2>
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            <a href="{{ route('tools.cat-calorie-calculator') }}" class="rounded-xl border border-line bg-surface-section p-4 text-sm font-semibold text-ink transition hover:border-primary hover:text-primary">
+                Cat Calorie Calculator &rarr;
+            </a>
+            <a href="{{ route('tools.cat-pregnancy-calculator') }}" class="rounded-xl border border-line bg-surface-section p-4 text-sm font-semibold text-ink transition hover:border-primary hover:text-primary">
+                Cat Pregnancy Calculator &rarr;
+            </a>
+        </div>
+    </div>
+</section>
+
 {{-- ══ 6. SOURCES AND BYLINE ═════════════════════════════════════════════ --}}
 <section class="bg-surface py-10 lg:py-12">
     <div class="container-page max-w-3xl">

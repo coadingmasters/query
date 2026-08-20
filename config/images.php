@@ -113,6 +113,7 @@ return [
         'cat-age-calculator-senior-tabby-cat' => 'tool',
         'cat-age-life-stages' => 'figure',
         'cat-calorie-calculator-cat-food-bowl' => 'tool',
+        'cat-calorie-calculator-hero' => 'hero',
         'cat-weight-checker-cat-on-scale' => 'tool',
         'cat-name-generator-cute-kitten' => 'tool',
         'cat-vaccination-tracker-vet-examination' => 'tool',
@@ -210,6 +211,7 @@ return [
         'cat-pregnancy-calculator-kitten' => 'cat-name-generator-cute-kitten',
 
         'purrquery-admin-login-cat-owner' => 'purrquery-hero-cat-owner-smiling',
+        'cat-calorie-calculator-hero' => 'cat-calorie-calculator-cat-food-bowl',
 
         'best-indoor-cat-food-premium-ingredients' => 'can-cats-eat-cat-treats-snacks',
         'can-cats-eat-chicken-cat-looking' => 'can-cats-eat-meat-seafood-chicken-fish',

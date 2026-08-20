@@ -35,6 +35,7 @@ class UsEnglishTest extends TestCase
             'new owner article' => ['/blog/new-cat-owner-guide'],
             'age calculator' => ['/tools/cat-age-calculator'],
             'pregnancy calculator' => ['/tools/cat-pregnancy-calculator'],
+            'calorie calculator' => ['/tools/cat-calorie-calculator'],
         ];
     }
 

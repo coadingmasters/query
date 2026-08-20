@@ -331,6 +331,26 @@
             }
         ]
     },
+    "cat-calorie-calculator-hero": {
+        "width": 780,
+        "height": 624,
+        "preset": "hero",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 780,
+                "src": "/images/cat-calorie-calculator-hero-780.f7b6faaf.webp"
+            },
+            {
+                "w": 1170,
+                "src": "/images/cat-calorie-calculator-hero-1170.f7b6faaf.webp"
+            },
+            {
+                "w": 1402,
+                "src": "/images/cat-calorie-calculator-hero-1560.f7b6faaf.webp"
+            }
+        ]
+    },
     "cat-hiding": {
         "width": 600,
         "height": 400,

@@ -41,7 +41,7 @@
 
                 <div class="max-w-md animate-[result-pop_0.6s_cubic-bezier(0.16,1,0.3,1)_both]">
                     <p class="text-xs font-bold tracking-[0.14em] text-white/70 uppercase">Admin</p>
-                    <h1 class="mt-3 font-heading text-3xl leading-tight font-extrabold tracking-tight text-balance">
+                    <h1 class="mt-3 font-heading text-3xl leading-tight font-extrabold tracking-tight text-balance text-white">
                         Everything for cat owners, managed from one place.
                     </h1>
                     <p class="mt-4 text-sm leading-relaxed text-white/80">

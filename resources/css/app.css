@@ -512,7 +512,15 @@ summary {
     /* ── Layout ──────────────────────────────────────────────────────────
        Two classes carry the page rhythm, so section spacing and gutters stay
        identical everywhere instead of drifting per section. */
-    .container-page { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+    /* max-w-7xl (1280px) capped the content column well short of the
+       viewport on anything wider than a laptop. mx-auto then centred that
+       short box, so the gutter was margin (whatever was left over) plus
+       padding, and grew past 380px a side at 1920px wide.
+       max-w is raised past any ordinary monitor so that margin drops to
+       zero and the gutter becomes just the padding: a size, not a
+       leftover. Sections that need a narrower reading column still add
+       their own max-w-4xl/6xl alongside this class, which is unaffected. */
+    .container-page { @apply mx-auto w-full max-w-[2400px] px-3 sm:px-6 lg:px-[100px]; }
     .section        { @apply py-16 sm:py-20 lg:py-24; }
 
     /* Content pages sit closer together — the home page uses the space to

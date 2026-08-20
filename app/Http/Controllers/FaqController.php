@@ -15,9 +15,9 @@ class FaqController extends Controller
 
         $count = collect($groups)->sum(fn (array $g): int => count($g['items']));
 
-        $description = 'Answers to '.$count.' common cat care questions: feeding '
-            .'amounts, health warning signs, age and weight, litter tray problems '
-            .'and more. Free, and written from published veterinary sources.';
+        $description = 'Answers to '.$count.' cat care questions: feeding, health '
+            .'warning signs, age and weight, and litter tray problems, written from '
+            .'published veterinary sources.';
 
         return view('faq', [
             'title' => 'Cat Care FAQ | '.$count.' Questions Answered',

@@ -19,10 +19,14 @@ class UsEnglishTest extends TestCase
         return [
             'home' => ['/'],
             'about' => ['/about'],
+            'author' => ['/author'],
             'contact' => ['/contact'],
             'faq' => ['/faq'],
             'terms' => ['/terms'],
             'privacy' => ['/privacy'],
+            'blog index' => ['/blog'],
+            'blog article' => ['/blog/why-do-cats-knead'],
+            'age calculator' => ['/tools/cat-age-calculator'],
             'pregnancy calculator' => ['/tools/cat-pregnancy-calculator'],
         ];
     }
@@ -50,13 +54,19 @@ class UsEnglishTest extends TestCase
     {
         $html = $this->get($path)->assertOk()->getContent();
 
+        // Checked against visible text, not raw HTML: a plain substring match
+        // over the markup flags aria-labelledby for containing "labelled",
+        // which is an attribute name, not a word choice. Script and style
+        // blocks are stripped for the same reason a class name could match.
+        $text = strip_tags(preg_replace('#<(script|style)\b[^>]*>.*?</\1>#is', ' ', $html));
+
         foreach ([
             'behaviour', 'colour', 'favour', 'honour', 'recognise', 'recognisably',
             'labelled', 'whilst', 'amongst', 'centre', 'labour', 'organisation',
             'analyse', 'licence', 'defence', 'programme',
         ] as $british) {
-            $this->assertStringNotContainsStringIgnoringCase(
-                $british, $html, "$path uses the British \"$british\""
+            $this->assertDoesNotMatchRegularExpression(
+                '/\b'.$british.'\w*/i', $text, "$path uses the British \"$british\""
             );
         }
     }

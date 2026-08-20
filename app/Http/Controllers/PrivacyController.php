@@ -17,7 +17,7 @@ class PrivacyController extends Controller
             .'analytics, no tracking cookies, no sharing.';
 
         return view('privacy', [
-            'title' => 'Privacy Policy | '.$name,
+            'title' => 'Privacy Policy | '.$name.' Cat Care',
             'description' => $description,
             'canonical' => $url.'/privacy',
             'sections' => config('legal.privacy'),

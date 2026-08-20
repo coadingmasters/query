@@ -24,9 +24,11 @@ return [
         // people search with, because they are the same question.
         'meta_title' => 'Why Do Cats Knead? Making Biscuits Explained',
 
+        // 153 characters. Google truncates a snippet around 155-160, so this
+        // is written to display in full rather than getting cut mid-word.
         'excerpt' => 'Kneading, or making biscuits, is a comfort behavior cats keep '
-            .'from kittenhood. Here is what it means when they do it to you, to a '
-            .'blanket, at night, and with claws out.',
+            .'from kittenhood. What it means when they knead you, a blanket, at '
+            .'night, or with claws out.',
 
         'category' => 'Behavior',
         'minutes' => 8,

@@ -12,6 +12,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->append(\App\Http\Middleware\AddRobotsHeader::class);
+
         // Behind a CDN or load balancer (Cloudflare, nginx, a managed host)
         // the real visitor scheme and host arrive in X-Forwarded-* headers.
         // Without trusting them Laravel sees plain http and generates

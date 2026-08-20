@@ -40,7 +40,7 @@ class BlogController extends Controller
             'icons' => $icons,
             'side' => $posts->reject(fn (array $p): bool => $featuredSlug === $p['slug'])->take(4),
             'latest' => $posts->reject(fn (array $p): bool => $featuredSlug === $p['slug'])->take(4),
-            'title' => 'Cat Care Blog | '.$name,
+            'title' => 'Cat Care Blog | Guides From '.$name,
             'description' => $description,
             'canonical' => $url.'/blog',
             'posts' => $posts,

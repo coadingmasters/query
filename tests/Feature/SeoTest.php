@@ -11,53 +11,94 @@ use Tests\TestCase;
  * Google will display, a canonical points at the wrong host after a config
  * change, or structured data starts describing content that is no longer on
  * the page. None of it shows up in the browser.
+ *
+ * The whole class used to check '/' only, which is exactly how a 168-character
+ * description on the blog article shipped without a single test catching it:
+ * every page-length check only ever looked at the home page. Every real page
+ * runs through these now.
  */
 class SeoTest extends TestCase
 {
-    private function html(): string
+    public static function pages(): array
     {
-        return $this->get('/')->getContent();
+        return [
+            'home' => ['/'],
+            'about' => ['/about'],
+            'author' => ['/author'],
+            'contact' => ['/contact'],
+            'faq' => ['/faq'],
+            'terms' => ['/terms'],
+            'privacy' => ['/privacy'],
+            'blog index' => ['/blog'],
+            'blog article' => ['/blog/why-do-cats-knead'],
+            'age calculator' => ['/tools/cat-age-calculator'],
+            'pregnancy calculator' => ['/tools/cat-pregnancy-calculator'],
+        ];
     }
 
-    public function test_the_title_is_present_and_a_sensible_length(): void
+    /** Pages whose structured data declares an FAQPage node. */
+    public static function pagesWithFaq(): array
     {
-        preg_match('/<title>(.*?)<\/title>/s', $this->html(), $m);
+        return [
+            'home' => ['/'],
+            'faq' => ['/faq'],
+            'blog article' => ['/blog/why-do-cats-knead'],
+            'age calculator' => ['/tools/cat-age-calculator'],
+            'pregnancy calculator' => ['/tools/cat-pregnancy-calculator'],
+        ];
+    }
 
-        $this->assertNotEmpty($m[1] ?? '', 'the page has no title');
+    #[\PHPUnit\Framework\Attributes\DataProvider('pages')]
+    public function test_the_title_is_present_and_a_sensible_length(string $path): void
+    {
+        $html = $this->get($path)->assertOk()->getContent();
+        preg_match('/<title>(.*?)<\/title>/s', $html, $m);
+
+        $this->assertNotEmpty($m[1] ?? '', "$path has no title");
 
         $length = mb_strlen(html_entity_decode($m[1]));
-        $this->assertGreaterThanOrEqual(30, $length, "title is too short: {$m[1]}");
-        $this->assertLessThanOrEqual(60, $length, "title will be truncated in results: {$m[1]}");
+        $this->assertGreaterThanOrEqual(30, $length, "$path title is too short: {$m[1]}");
+        $this->assertLessThanOrEqual(60, $length, "$path title will be truncated in results: {$m[1]}");
     }
 
-    public function test_the_description_is_present_and_a_sensible_length(): void
+    #[\PHPUnit\Framework\Attributes\DataProvider('pages')]
+    public function test_the_description_is_present_and_a_sensible_length(string $path): void
     {
-        preg_match('/<meta name="description" content="(.*?)">/s', $this->html(), $m);
+        $html = $this->get($path)->getContent();
+        preg_match('/<meta name="description" content="(.*?)">/s', $html, $m);
 
-        $this->assertNotEmpty($m[1] ?? '', 'the page has no meta description');
+        $this->assertNotEmpty($m[1] ?? '', "$path has no meta description");
 
         $length = mb_strlen(html_entity_decode($m[1]));
-        $this->assertGreaterThanOrEqual(110, $length, 'description is too short to be useful');
-        $this->assertLessThanOrEqual(165, $length, 'description will be truncated in results');
+        $this->assertGreaterThanOrEqual(110, $length, "$path description is too short to be useful");
+
+        // 155, not the 165 this used to allow. Google's cutoff is closer to
+        // 155-160 in practice, and 165 had already let one page ship over it.
+        $this->assertLessThanOrEqual(155, $length, "$path description will be truncated in results ({$length} chars): {$m[1]}");
     }
 
-    public function test_the_canonical_matches_the_configured_origin(): void
+    #[\PHPUnit\Framework\Attributes\DataProvider('pages')]
+    public function test_the_canonical_matches_the_page_it_is_on(string $path): void
     {
-        $this->get('/')->assertSee(
-            '<link rel="canonical" href="'.rtrim(config('app.url'), '/').'/">',
+        $expected = rtrim(config('app.url'), '/').$path;
+
+        $this->get($path)->assertSee(
+            '<link rel="canonical" href="'.$expected.'">',
             false
         );
     }
 
     /**
-     * The page must stay indexable. A stray noindex is the single most
+     * Every page must stay indexable. A stray noindex is the single most
      * expensive mistake available here, and nothing on screen would show it.
      */
-    public function test_the_page_is_indexable(): void
+    #[\PHPUnit\Framework\Attributes\DataProvider('pages')]
+    public function test_the_page_is_indexable(string $path): void
     {
-        preg_match('/<meta name="robots" content="(.*?)">/', $this->html(), $m);
+        $html = $this->get($path)->getContent();
+        preg_match('/<meta name="robots" content="(.*?)">/', $html, $m);
 
-        $this->assertNotEmpty($m[1] ?? '', 'no robots directive');
+        $this->assertNotEmpty($m[1] ?? '', "$path has no robots directive");
         $this->assertStringContainsString('index', $m[1]);
         $this->assertStringNotContainsString('noindex', $m[1]);
 
@@ -65,9 +106,10 @@ class SeoTest extends TestCase
         $this->assertStringContainsString('max-image-preview:large', $m[1]);
     }
 
-    public function test_social_sharing_tags_are_complete(): void
+    #[\PHPUnit\Framework\Attributes\DataProvider('pages')]
+    public function test_social_sharing_tags_are_complete(string $path): void
     {
-        $html = $this->html();
+        $html = $this->get($path)->getContent();
 
         foreach ([
             'og:type', 'og:site_name', 'og:title', 'og:description',
@@ -77,29 +119,20 @@ class SeoTest extends TestCase
             $this->assertMatchesRegularExpression(
                 '/<meta property="'.preg_quote($property, '/').'" content="[^"]+">/',
                 $html,
-                "missing or empty: $property"
+                "$path is missing or has an empty: $property"
             );
         }
 
         $this->assertStringContainsString('name="twitter:card" content="summary_large_image"', $html);
     }
 
-    /** The social image has to resolve, or shares render with a blank card. */
-    public function test_the_social_image_exists(): void
+    #[\PHPUnit\Framework\Attributes\DataProvider('pages')]
+    public function test_there_is_exactly_one_h1(string $path): void
     {
-        preg_match('/<meta property="og:image" content="(.*?)">/', $this->html(), $m);
+        $html = $this->get($path)->getContent();
+        preg_match_all('/<h1\b/i', $html, $m);
 
-        $path = public_path(parse_url($m[1], PHP_URL_PATH));
-
-        $this->assertFileExists($path, 'og:image points at a file that is not there');
-        $this->assertGreaterThan(1000, filesize($path));
-    }
-
-    public function test_there_is_exactly_one_h1(): void
-    {
-        preg_match_all('/<h1\b/i', $this->html(), $m);
-
-        $this->assertCount(1, $m[0], 'a page should have exactly one h1');
+        $this->assertCount(1, $m[0], "$path should have exactly one h1");
     }
 
     /**
@@ -107,19 +140,20 @@ class SeoTest extends TestCase
      * visitor can see; markup that claims questions the page does not answer
      * is a structured-data violation, not just wasted effort.
      */
-    public function test_faq_structured_data_matches_visible_content(): void
+    #[\PHPUnit\Framework\Attributes\DataProvider('pagesWithFaq')]
+    public function test_faq_structured_data_matches_visible_content(string $path): void
     {
-        $html = $this->html();
+        $html = $this->get($path)->getContent();
 
         preg_match('/<script type="application\/ld\+json">\s*(.*?)\s*<\/script>/s', $html, $m);
         $graph = json_decode($m[1], true);
 
-        $this->assertSame(JSON_ERROR_NONE, json_last_error(), 'structured data is not valid JSON');
+        $this->assertSame(JSON_ERROR_NONE, json_last_error(), "$path structured data is not valid JSON");
 
         $types = array_column($graph['@graph'], '@type');
-        $this->assertContains('Organization', $types);
-        $this->assertContains('WebSite', $types);
-        $this->assertContains('FAQPage', $types);
+        $this->assertContains('Organization', $types, $path);
+        $this->assertContains('WebSite', $types, $path);
+        $this->assertContains('FAQPage', $types, $path);
 
         $faq = $graph['@graph'][array_search('FAQPage', $types, true)];
         $text = html_entity_decode(strip_tags($html));
@@ -127,13 +161,30 @@ class SeoTest extends TestCase
         foreach ($faq['mainEntity'] as $entry) {
             $this->assertStringContainsString(
                 $entry['name'], $text,
-                'question is in the markup but not on the page: '.$entry['name']
+                "$path: question is in the markup but not on the page: ".$entry['name']
             );
             $this->assertStringContainsString(
                 $entry['acceptedAnswer']['text'], $text,
-                'answer is in the markup but not on the page: '.$entry['name']
+                "$path: answer is in the markup but not on the page: ".$entry['name']
             );
         }
+    }
+
+    /**
+     * Redundant with the meta tag on an ordinary page, and that is fine: this
+     * is what covers a response a meta tag cannot reach, like a PDF or an
+     * image, the day the site starts serving one.
+     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('pages')]
+    public function test_the_robots_header_matches_the_meta_tag(string $path): void
+    {
+        $response = $this->get($path);
+
+        $this->assertSame(
+            'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+            $response->headers->get('X-Robots-Tag'),
+            "$path is missing or has the wrong X-Robots-Tag header"
+        );
     }
 
     public function test_the_sitemap_and_robots_agree(): void

@@ -42,7 +42,7 @@
 
 <p>There are three things going on at once:</p>
 
-<ul class="reasons">
+<ul>
     <li>
         <strong>Comfort.</strong> The motion is self-soothing, which is why it
         so often comes with purring, half-closed eyes and a cat who has clearly
@@ -61,11 +61,10 @@
     </li>
 </ul>
 
-<div class="fact">
-    <strong>Worth knowing:</strong> kittens start kneading within days of being
-    born, before their eyes have opened. It is one of the first things a cat
-    ever learns to do.
-</div>
+<p>
+    Kittens start kneading within days of being born, before their eyes have
+    even opened. It is one of the first things a cat ever learns to do.
+</p>
 
 <h2 id="other-names">Pummelling, padding, marching: same thing, different names</h2>
 
@@ -114,15 +113,12 @@
     top it up. Head-butting and rubbing along your shins do the same job.
 </p>
 
-<div class="note">
-    <span class="note-title">If your cat never kneads</span>
-    <p>
-        Nothing is wrong, and it is not a verdict on your relationship. Kneading
-        is one of several ways cats show contentment. Slow blinking, sitting
-        with their back to you, and simply choosing the room you are in all say
-        the same thing.
-    </p>
-</div>
+<p>
+    If your own cat never kneads, nothing is wrong, and it is not a verdict on
+    your relationship. Kneading is one of several ways cats show contentment.
+    Slow blinking, sitting with their back to you, and simply choosing the
+    room you are in all say the same thing.
+</p>
 
 <h2 id="knead-blankets">Why does my cat knead blankets and soft fabric?</h2>
 
@@ -222,7 +218,7 @@
 
 <p>Whatever the trigger, it nearly always arrives with the same conditions:</p>
 
-<ul class="ticks">
+<ul>
     <li>Settling down, rather than mid-play</li>
     <li>Being stroked, or lying against you</li>
     <li>On something soft: a blanket, a cushion, a lap</li>
@@ -262,23 +258,15 @@
     that something is wrong. Call your vet if kneading appears alongside:
 </p>
 
-<div class="warn">
-    <span class="warn-title">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M10.3 3.9 2.5 17.5A2 2 0 0 0 4.2 20.5h15.6a2 2 0 0 0 1.7-3l-7.8-13.6a2 2 0 0 0-3.4 0Z"/>
-            <path d="M12 9.5v4M12 17h.01"/>
-        </svg>
-        When to call the vet
-    </span>
-    <ul class="crosses">
-        <li>Hiding, or a sudden drop in how much they seek you out</li>
-        <li>Eating noticeably more or less than usual</li>
-        <li>Grooming one area until the fur thins</li>
-        <li>Vocalising when picked up or touched in a particular spot</li>
-        <li>Any change in litter tray habits or how much they drink</li>
-    </ul>
-</div>
+<p><strong>Call your vet if kneading appears alongside any of the following:</strong></p>
+
+<ul>
+    <li>Hiding, or a sudden drop in how much they seek you out</li>
+    <li>Eating noticeably more or less than usual</li>
+    <li>Grooming one area until the fur thins</li>
+    <li>Vocalising when picked up or touched in a particular spot</li>
+    <li>Any change in litter tray habits or how much they drink</li>
+</ul>
 
 <p>
     The kneading is not the symptom in any of those. The change is. If you want
@@ -287,13 +275,8 @@
     up first.
 </p>
 
-<div class="note">
-    <span class="note-title">The short version</span>
-    <ul>
-        <li>Kneading is a comfort behavior held over from nursing.</li>
-        <li>On you, it means safety and a bit of scent marking.</li>
-        <li>Claws out is anatomy, not attitude. Trim them and use a blanket.</li>
-        <li>Kittens do it most. Some cats never do, and that is fine.</li>
-        <li>Only a <em>change</em> in behavior, with other signs, needs a vet.</li>
-    </ul>
-</div>
+<p>
+    None of it is a reason to worry on its own. Kneading is one of the more
+    reassuring things a cat does, and the only version of it worth watching
+    for is a sudden change from whatever is normal for yours.
+</p>

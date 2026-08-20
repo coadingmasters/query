@@ -19,7 +19,7 @@ class AuthorController extends Controller
         }
 
         $url = rtrim(config('app.url'), '/');
-        $title = $author['name'].' | '.config('app.name');
+        $title = $author['name'].', Founder | '.config('app.name');
 
         $description = $author['name'].' writes and builds '.config('app.name').'. '
             .'Not a veterinarian: guides here are researched from published '

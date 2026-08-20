@@ -22,7 +22,7 @@ class CatPregnancyCalculatorController extends Controller
             .'a week-by-week timeline.';
 
         return view('tools.cat-pregnancy-calculator', [
-            'title' => 'Cat Pregnancy Calculator | Free Due Date & Gestation Timeline',
+            'title' => 'Cat Pregnancy Calculator | Due Date & Gestation Timeline',
             'description' => $description,
             'canonical' => $canonical,
             'schema' => Schema::graph([

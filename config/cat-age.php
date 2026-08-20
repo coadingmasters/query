@@ -98,7 +98,7 @@ return [
             'care' => [
                 'Weigh regularly. Weight loss in an older cat is a reason to call the vet, not to wait.',
                 'Arthritis is common and rarely obvious. Watch for reluctance to jump.',
-                'Low-sided litter trays and a step up to favourite spots help more than you would think.',
+                'Low-sided litter trays and a step up to favorite spots help more than you would think.',
                 'Increased thirst, appetite changes and hiding all warrant a visit.',
             ],
         ],

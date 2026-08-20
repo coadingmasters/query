@@ -651,7 +651,7 @@
                     card.classList.toggle('shadow-md', match);
                 });
 
-                lastSummary = `${describeAge(years, estimated)} — about ${human} in human years. Life stage: ${stage.name}. ${stage.vet}`;
+                lastSummary = `${describeAge(years, estimated)}: about ${human} in human years. Life stage: ${stage.name}. ${stage.vet}`;
             };
 
             form.addEventListener('submit', (event) => {

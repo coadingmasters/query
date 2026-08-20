@@ -26,7 +26,7 @@ return [
 
     // The date the current wording took effect. Bump it whenever the terms
     // change in a way that matters, so a reader can tell what they agreed to.
-    'terms_effective' => env('LEGAL_TERMS_EFFECTIVE', '2026-08-18'),
+    'terms_effective' => env('LEGAL_TERMS_EFFECTIVE', '2026-08-21'),
 
     'terms' => [
         [
@@ -117,7 +117,7 @@ return [
             ],
             'heading' => 'Advertising and affiliate links',
             'body' => [
-                'PurrQuery is free to use and is intended to be funded in the future by advertising and affiliate links. Where an affiliate link earns us a commission, that will be disclosed clearly on the page it appears on.',
+                'PurrQuery is free to use and is intended to be funded by advertising, including Google AdSense, and by affiliate links. Where an affiliate link earns us a commission, that is disclosed on the page it appears on.',
                 'Commercial arrangements do not decide what our guides say. A product being advertised or linked does not amount to a recommendation of it, and we do not accept payment to change the substance of published guidance.',
             ],
         ],
@@ -187,7 +187,7 @@ return [
         ],
     ],
 
-    'privacy_effective' => env('LEGAL_PRIVACY_EFFECTIVE', '2026-08-18'),
+    'privacy_effective' => env('LEGAL_PRIVACY_EFFECTIVE', '2026-08-21'),
 
     /*
      | Every statement below was checked against the schema and the live
@@ -271,7 +271,7 @@ return [
             'heading' => 'Advertising and affiliate links',
             'body' => [
                 'There is no advertising on PurrQuery today, and no advertising cookies are set. Everything below describes what will apply once advertising is introduced, and is stated in advance so you can read it before it affects you.',
-                'The site is intended to be funded by advertising and affiliate links. Third-party vendors, including Google, use cookies to serve ads based on your previous visits to this site or to other sites. Google\'s use of advertising cookies enables it and its partners to serve ads to you based on those visits.',
+                'The site is intended to be funded by advertising, including Google AdSense, and by affiliate links. Third-party vendors, including Google, use cookies to serve ads based on your previous visits to this site or to other sites. Google\'s use of advertising cookies enables it and its partners to serve ads to you based on those visits.',
                 'You can opt out of personalised advertising by Google at any time through Google Ads Settings at adssettings.google.com. Advertising from many other vendors can be turned off at aboutads.info/choices, and in the UK and EU at youronlinechoices.eu. Opting out stops the personalisation, not the ads themselves.',
                 'Where an affiliate link earns us a commission, that is disclosed on the page it appears on. Clicking one may set a cookie in your browser so the merchant can attribute a sale. It costs you nothing and does not change the price you pay.',
                 'When advertising goes live this policy will be updated to name the networks involved, and consent will be requested first wherever the law requires it.',

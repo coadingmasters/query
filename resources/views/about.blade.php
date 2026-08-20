@@ -106,16 +106,41 @@
                     It started with a<br class="hidden sm:inline">
                     <span class="text-primary">simple frustration</span>
                 </h2>
-                <p class="mt-4 text-base leading-relaxed text-ink-muted">
-                    Looking up something as ordinary as whether a cat can eat a
-                    particular food meant wading through nine pages that contradicted
-                    each other, and none of them said where the answer came from.
-                </p>
-                <p class="mt-3 text-base leading-relaxed text-ink-muted">
-                    So we built the opposite: the verdict first, the reasoning
-                    underneath it, and the source named. Free, with no account, and
-                    no email needed to see a result.
-                </p>
+
+                {{-- Named and specific where there is a real name to be
+                     specific with; "we" only where there genuinely is no one
+                     to name. A solo project written in the plural is exactly
+                     the kind of vagueness that reads as a site with no one
+                     behind it. --}}
+                @if (config('author.founder.name'))
+                    <p class="mt-4 text-base leading-relaxed text-ink-muted">
+                        I'm {{ config('author.founder.name') }}, a developer, not a
+                        veterinarian. I started {{ config('app.name') }} because
+                        looking up something as ordinary as whether a cat can eat a
+                        particular food meant wading through nine pages that
+                        contradicted each other, and none of them said where the
+                        answer came from.
+                    </p>
+                    <p class="mt-3 text-base leading-relaxed text-ink-muted">
+                        So I built the opposite: the verdict first, the reasoning
+                        underneath it, and the source named. Free, with no account,
+                        and no email needed to see a result. I write and check
+                        every guide myself against published veterinary sources; you
+                        can read more about how at
+                        <a href="{{ route('author') }}" class="font-semibold text-ink underline decoration-accent-dark/40 underline-offset-4 transition-colors hover:text-primary">my author profile</a>.
+                    </p>
+                @else
+                    <p class="mt-4 text-base leading-relaxed text-ink-muted">
+                        Looking up something as ordinary as whether a cat can eat a
+                        particular food meant wading through nine pages that contradicted
+                        each other, and none of them said where the answer came from.
+                    </p>
+                    <p class="mt-3 text-base leading-relaxed text-ink-muted">
+                        So we built the opposite: the verdict first, the reasoning
+                        underneath it, and the source named. Free, with no account, and
+                        no email needed to see a result.
+                    </p>
+                @endif
             </div>
 
             <div class="order-1 lg:order-2">

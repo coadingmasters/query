@@ -110,6 +110,12 @@
    Base layer
    ========================================================================== */
 @layer base {
+    /* Alpine hides [x-cloak] itself once it boots; this is the state before
+       that, so a menu mid-transition does not flash open on load. */
+    [x-cloak] {
+        display: none !important;
+    }
+
     html {
         scroll-behavior: smooth;
         /* Stops horizontal jitter between short and tall pages, which would

@@ -49,6 +49,9 @@ return [
         'feature' => [640, 427],
         'portrait-wide' => [760, 507],
         'banner' => [380, 301],
+
+        // Full-height side panel on the admin login screen.
+        'auth-panel' => [760, 1040],
     ],
 
     /*
@@ -78,6 +81,7 @@ return [
         'feature' => 82,
         'portrait-wide' => 82,
         'banner' => 82,
+        'auth-panel' => 82,
     ],
 
     /*
@@ -89,6 +93,7 @@ return [
         'author-ahsan-nawaz' => 'avatar',
 
         'purrquery-hero-cat-owner-smiling' => 'hero',
+        'purrquery-admin-login-cat-owner' => 'auth-panel',
 
         'purrquery-orange-tabby-cat-hero' => 'cutout',
         'purrquery-cat-waving-paw' => 'cutout-tall',
@@ -203,6 +208,8 @@ return [
         'cat-age-life-stages' => 'cat-age-calculator-senior-tabby-cat',
 
         'cat-pregnancy-calculator-kitten' => 'cat-name-generator-cute-kitten',
+
+        'purrquery-admin-login-cat-owner' => 'purrquery-hero-cat-owner-smiling',
 
         'best-indoor-cat-food-premium-ingredients' => 'can-cats-eat-cat-treats-snacks',
         'can-cats-eat-chicken-cat-looking' => 'can-cats-eat-meat-seafood-chicken-fish',

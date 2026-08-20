@@ -651,6 +651,22 @@
             }
         ]
     },
+    "purrquery-admin-login-cat-owner": {
+        "width": 760,
+        "height": 1040,
+        "preset": "auth-panel",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 760,
+                "src": "/images/purrquery-admin-login-cat-owner-760.49a6a354.webp"
+            },
+            {
+                "w": 820,
+                "src": "/images/purrquery-admin-login-cat-owner-1140.49a6a354.webp"
+            }
+        ]
+    },
     "purrquery-care-smarter-cat-illustration": {
         "width": 380,
         "height": 301,

@@ -33,6 +33,7 @@ class SeoTest extends TestCase
             'blog article' => ['/blog/why-do-cats-knead'],
             'sneezing article' => ['/blog/why-is-my-cat-sneezing'],
             'signs article' => ['/blog/signs-your-cat-is-sick'],
+            'feeding article' => ['/blog/how-much-should-i-feed-my-cat'],
             'age calculator' => ['/tools/cat-age-calculator'],
             'pregnancy calculator' => ['/tools/cat-pregnancy-calculator'],
         ];
@@ -47,6 +48,7 @@ class SeoTest extends TestCase
             'blog article' => ['/blog/why-do-cats-knead'],
             'sneezing article' => ['/blog/why-is-my-cat-sneezing'],
             'signs article' => ['/blog/signs-your-cat-is-sick'],
+            'feeding article' => ['/blog/how-much-should-i-feed-my-cat'],
             'age calculator' => ['/tools/cat-age-calculator'],
             'pregnancy calculator' => ['/tools/cat-pregnancy-calculator'],
         ];

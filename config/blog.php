@@ -272,4 +272,85 @@ return [
         'related_posts' => ['why-is-my-cat-sneezing', 'why-do-cats-knead'],
     ],
 
+    'how-much-should-i-feed-my-cat' => [
+        'slug' => 'how-much-should-i-feed-my-cat',
+        'title' => 'How Much Should I Feed My Cat? A Feeding Guide',
+
+        'meta_title' => 'How Much Should I Feed My Cat? A Feeding Guide',
+
+        'excerpt' => 'Portion guidance on the bag is written for an average cat '
+            .'that does not exist. Work out how much to feed yours from '
+            .'weight, food type and life stage.',
+
+        'category' => 'Feeding',
+        'minutes' => 10,
+        'published' => '2026-08-20',
+        'updated' => '2026-08-20',
+
+        'image' => 'how-much-to-feed-cat-hero',
+        'alt' => 'Cat sitting beside a bowl being filled with a measured scoop of kibble',
+
+        'answer' => 'Most cats need roughly 20 calories per pound of body '
+            .'weight a day, adjusted for activity, age and whether they are '
+            .'neutered. Rather than trust the amount on the bag, work it out '
+            .'from your own cat\'s weight and check their body condition '
+            .'every few weeks, since that tells you more than any formula.',
+
+        'faq' => [
+            [
+                'q' => 'Why is the feeding guide on the bag not accurate?',
+                'a' => 'It is written for an average cat at an average activity level, and your cat is not an average. It is also written by the brand selling the food, and a generous guide sells more of it. Treat the number on the bag as a starting point to weigh against your cat\'s actual body condition, not a target.',
+            ],
+            [
+                'q' => 'How many calories does my cat actually need?',
+                'a' => 'A common starting point is around 20 calories per pound of body weight for an average neutered adult indoor cat, though the more precise version vets use is a formula based on weight, adjusted up for kittens and pregnant or nursing cats, and down for weight loss. It is a starting point either way, not a fixed number.',
+            ],
+            [
+                'q' => 'Should I feed my cat wet food or dry food?',
+                'a' => 'Both can be nutritionally complete; they are not interchangeable cup for cup. Wet food is roughly 75 to 80 percent water, dry food closer to 10 percent, so the same volume is not the same number of calories. What matters is total calories and a complete, balanced formula, not which texture you choose.',
+            ],
+            [
+                'q' => 'How many times a day should I feed my cat?',
+                'a' => 'Two measured meals a day is the most commonly recommended pattern, and it tends to prevent the weight gain that free-feeding dry food, available all day, often causes. Kittens need more frequent, smaller meals; some adult cats do fine on three or four if that suits your schedule better.',
+            ],
+            [
+                'q' => 'My cat is overweight. How do I safely feed them less?',
+                'a' => 'Gradually, and ideally with a vet involved. Cutting calories too fast in an overweight cat can cause a serious liver condition called hepatic lipidosis if the cat does not eat enough during the transition. A vet can set a target weight and a safe rate of loss, which is usually only around one to two percent of body weight a week.',
+            ],
+            [
+                'q' => 'How do I know if I am feeding the right amount?',
+                'a' => 'Body condition, not the scale alone. You should be able to feel your cat\'s ribs under a light layer of fat without pressing hard, and see a waist when looking down at them. Weigh your cat every few weeks: gradual, unexplained weight change in either direction is the signal to adjust the amount or see a vet.',
+            ],
+            [
+                'q' => 'Are treats okay, and how many can I give?',
+                'a' => 'Yes, in moderation. The common guidance is to keep treats under about ten percent of daily calories and subtract them from the day\'s food rather than adding them on top. Treats are one of the most common quiet causes of slow, unnoticed weight gain.',
+            ],
+            [
+                'q' => 'Does a kitten need to eat differently from an adult cat?',
+                'a' => 'Yes, meaningfully. Kittens need more calories per pound than adults because they are growing, along with a kitten-specific formula higher in protein and certain nutrients, and more frequent small meals rather than two large ones. Most cats can transition to adult food around twelve months.',
+            ],
+        ],
+
+        'sources' => [
+            [
+                'name' => 'Cornell Feline Health Center: feeding your cat',
+                'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feeding',
+                'note' => 'Guidance on how much and how often to feed a cat, and what a complete diet needs to provide.',
+            ],
+            [
+                'name' => 'WSAVA Global Nutrition Guidelines',
+                'url' => 'https://wsava.org/global-guidelines/global-nutrition-guidelines/',
+                'note' => 'The nutritional assessment framework, including body condition scoring, that vets use to build a feeding plan.',
+            ],
+            [
+                'name' => 'ASPCA: cat health and wellness',
+                'url' => 'https://www.aspca.org/pet-care/cat-care',
+                'note' => 'General guidance on feeding, weight and recognizing when something is off.',
+            ],
+        ],
+
+        'related_tools' => ['cat-age-calculator'],
+        'related_posts' => ['signs-your-cat-is-sick', 'why-do-cats-knead'],
+    ],
+
 ];

@@ -133,11 +133,14 @@ return [
         'cat-not-eating' => 'blog',
         'cat-hiding' => 'blog',
         'vet-checking-cat' => 'blog',
+        'how-much-to-feed-cat-hero' => 'blog',
+        'measuring-cat-food-portion' => 'blog',
+        'overweight-cat-resting' => 'blog',
+        'senior-cat-eating-wet-food' => 'blog',
         'cat-kneading-lap' => 'figure-tall',
         'kitten-making-biscuits' => 'figure-tall',
         'cat-kneading-claws-out' => 'figure-tall',
         'can-cats-eat-broccoli-cat-sniffing' => 'blog',
-        'how-much-feed-cat-eating-food-bowl' => 'blog',
         'best-indoor-cat-food-premium-ingredients' => 'blog',
         'can-cats-eat-chicken-cat-looking' => 'blog',
         'new-cat-owner-guide-couple-kitten' => 'blog',
@@ -200,7 +203,6 @@ return [
         'cat-age-life-stages' => 'cat-age-calculator-senior-tabby-cat',
 
         'cat-pregnancy-calculator-kitten' => 'cat-name-generator-cute-kitten',
-        'how-much-feed-cat-eating-food-bowl' => 'cat-calorie-calculator-cat-food-bowl',
 
         'best-indoor-cat-food-premium-ingredients' => 'can-cats-eat-cat-treats-snacks',
         'can-cats-eat-chicken-cat-looking' => 'can-cats-eat-meat-seafood-chicken-fish',

@@ -428,7 +428,12 @@
              Every photo sits at its own 3:2, and the thumbnails are square
              crops of the same files rather than separate artwork. --}}
         @php
-            $posts = collect(config('catalog.posts'));
+            // Published posts first, so a written article never gets bumped
+            // out of the two lead slots by an unwritten one that happens to
+            // sit earlier in the catalogue.
+            $posts = collect(config('catalog.posts'))
+                ->sortByDesc(fn (array $p): int => isset($p['url']) ? 1 : 0)
+                ->values();
             $leads = $posts->take(2);
             $rest = $posts->slice(2);
         @endphp
@@ -436,12 +441,20 @@
         <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-12">
 
             @foreach ($leads as $post)
-                <article class="card reveal lg:col-span-4" data-filter
-                         data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}"
-                         style="--reveal-delay: {{ $loop->index * 80 }}ms">
-                    <div class="card-media">
+                @php $isLive = isset($post['url']); @endphp
+                <{{ $isLive ? 'a' : 'article' }}
+                    @if ($isLive) href="{{ $post['url'] }}" @endif
+                    class="card reveal lg:col-span-4" data-filter
+                    data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}"
+                    style="--reveal-delay: {{ $loop->index * 80 }}ms">
+                    <div class="card-media relative">
                         <x-img :name="$post['image']" :alt="$post['alt']"
                                sizes="(max-width: 1023px) 92vw, 32vw"/>
+                        @unless ($isLive)
+                            <span class="absolute top-3 right-3 rounded-full bg-surface/90 px-3 py-1 text-xs font-bold text-ink-muted shadow-sm">
+                                Coming soon
+                            </span>
+                        @endunless
                     </div>
 
                     <div class="card-body">
@@ -453,25 +466,40 @@
                         <h3 class="mt-3 font-heading text-lg leading-snug font-bold text-ink">{{ $post['title'] }}</h3>
                         <p class="card-text flex-1">{{ $post['excerpt'] }}</p>
 
-                        <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-                            Read the guide
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                 stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        <span @class([
+                            'mt-4 inline-flex items-center gap-1.5 text-sm font-semibold',
+                            'text-primary' => $isLive,
+                            'text-ink-muted' => ! $isLive,
+                        ])>
+                            {{ $isLive ? 'Read the guide' : 'Being written' }}
+                            @if ($isLive)
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                     stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                            @endif
                         </span>
                     </div>
-                </article>
+                </{{ $isLive ? 'a' : 'article' }}>
             @endforeach
 
             {{-- The remaining guides, headline first. A reader scanning this
                  column wants the titles, not four more photographs. --}}
             <div class="grid gap-3 sm:col-span-2 sm:grid-cols-2 lg:col-span-4 lg:grid-cols-1 lg:content-between">
                 @foreach ($rest as $post)
-                    <article class="reveal group flex items-center gap-4 rounded-xl border border-line bg-surface p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md"
-                             data-filter
-                             data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}"
-                             style="--reveal-delay: {{ 160 + $loop->index * 70 }}ms">
-                        <div class="size-20 shrink-0 overflow-hidden rounded-lg bg-surface-section">
+                    @php $isLive = isset($post['url']); @endphp
+                    <{{ $isLive ? 'a' : 'article' }}
+                        @if ($isLive) href="{{ $post['url'] }}" @endif
+                        @class([
+                            'reveal group flex items-center gap-4 rounded-xl border border-line bg-surface p-3 shadow-sm transition',
+                            'hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md' => $isLive,
+                        ])
+                        data-filter
+                        data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}"
+                        style="--reveal-delay: {{ 160 + $loop->index * 70 }}ms">
+                        <div class="relative size-20 shrink-0 overflow-hidden rounded-lg bg-surface-section">
                             <x-img :name="$post['image']" :alt="$post['alt']" sizes="80px"/>
+                            @unless ($isLive)
+                                <span aria-hidden="true" class="absolute inset-0 bg-surface/45"></span>
+                            @endunless
                         </div>
 
                         <div class="min-w-0">
@@ -481,11 +509,18 @@
                                 <span class="text-ink-muted">{{ $post['minutes'] }} min</span>
                             </div>
 
-                            <h3 class="mt-1 font-heading text-sm leading-snug font-bold text-ink transition-colors group-hover:text-primary">
+                            <h3 @class([
+                                'mt-1 font-heading text-sm leading-snug font-bold text-ink transition-colors',
+                                'group-hover:text-primary' => $isLive,
+                            ])>
                                 {{ $post['title'] }}
                             </h3>
+
+                            @unless ($isLive)
+                                <span class="mt-0.5 inline-block text-xs font-bold text-ink-muted">Being written</span>
+                            @endunless
                         </div>
-                    </article>
+                    </{{ $isLive ? 'a' : 'article' }}>
                 @endforeach
             </div>
         </div>

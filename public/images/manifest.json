@@ -511,23 +511,23 @@
             }
         ]
     },
-    "how-much-feed-cat-eating-food-bowl": {
+    "how-much-to-feed-cat-hero": {
         "width": 600,
         "height": 400,
         "preset": "blog",
-        "placeholder": true,
+        "placeholder": false,
         "variants": [
             {
                 "w": 600,
-                "src": "/images/how-much-feed-cat-eating-food-bowl-600.9996859c.webp"
+                "src": "/images/how-much-to-feed-cat-hero-600.7f4ff1c4.webp"
             },
             {
                 "w": 900,
-                "src": "/images/how-much-feed-cat-eating-food-bowl-900.9996859c.webp"
+                "src": "/images/how-much-to-feed-cat-hero-900.7f4ff1c4.webp"
             },
             {
                 "w": 1200,
-                "src": "/images/how-much-feed-cat-eating-food-bowl-1200.9996859c.webp"
+                "src": "/images/how-much-to-feed-cat-hero-1200.7f4ff1c4.webp"
             }
         ]
     },
@@ -571,6 +571,26 @@
             }
         ]
     },
+    "measuring-cat-food-portion": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/measuring-cat-food-portion-600.74ad5220.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/measuring-cat-food-portion-900.74ad5220.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/measuring-cat-food-portion-1200.74ad5220.webp"
+            }
+        ]
+    },
     "new-cat-owner-guide-couple-kitten": {
         "width": 600,
         "height": 400,
@@ -588,6 +608,26 @@
             {
                 "w": 1200,
                 "src": "/images/new-cat-owner-guide-couple-kitten-1200.b0d8eaa5.webp"
+            }
+        ]
+    },
+    "overweight-cat-resting": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/overweight-cat-resting-600.fcd6580b.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/overweight-cat-resting-900.fcd6580b.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/overweight-cat-resting-1200.fcd6580b.webp"
             }
         ]
     },
@@ -868,6 +908,26 @@
             {
                 "w": 192,
                 "src": "/images/purrquerylogo-192.8d499c8e.webp"
+            }
+        ]
+    },
+    "senior-cat-eating-wet-food": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/senior-cat-eating-wet-food-600.bbca3330.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/senior-cat-eating-wet-food-900.bbca3330.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/senior-cat-eating-wet-food-1200.bbca3330.webp"
             }
         ]
     },

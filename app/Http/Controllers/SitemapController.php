@@ -29,6 +29,7 @@ class SitemapController extends Controller
             ['/blog/why-do-cats-knead', 'views/blog/posts/why-do-cats-knead.blade.php', '0.8'],
             ['/blog/why-is-my-cat-sneezing', 'views/blog/posts/why-is-my-cat-sneezing.blade.php', '0.8'],
             ['/blog/signs-your-cat-is-sick', 'views/blog/posts/signs-your-cat-is-sick.blade.php', '0.8'],
+            ['/blog/how-much-should-i-feed-my-cat', 'views/blog/posts/how-much-should-i-feed-my-cat.blade.php', '0.8'],
             ['/faq', 'views/faq.blade.php', '0.8'],
             ['/contact', 'views/contact.blade.php', '0.5'],
             ['/terms', 'views/terms.blade.php', '0.3'],

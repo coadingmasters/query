@@ -200,12 +200,15 @@ return [
         ],
         [
             'slug' => 'how-much-should-i-feed-my-cat',
-            'title' => 'How Much Should I Feed My Cat?',
-            'excerpt' => 'Portion guidance on the back of the packet is written for an average cat that does not exist. Work it out from weight and activity instead.',
+            'url' => '/blog/how-much-should-i-feed-my-cat',
+            'title' => 'How Much Should I Feed My Cat? A Feeding Guide',
+            'excerpt' => 'Portion guidance on the bag is written for an average cat '
+                .'that does not exist. Work out how much to feed yours from '
+                .'weight, food type and life stage.',
             'category' => 'Feeding',
-            'minutes' => 8,
-            'image' => 'how-much-feed-cat-eating-food-bowl',
-            'alt' => 'Cat eating from a white ceramic bowl',
+            'minutes' => 10,
+            'image' => 'how-much-to-feed-cat-hero',
+            'alt' => 'Cat sitting beside a bowl being filled with a measured scoop of kibble',
         ],
         [
             'slug' => 'why-is-my-cat-sneezing',

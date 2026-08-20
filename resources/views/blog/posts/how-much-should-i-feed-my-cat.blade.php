@@ -1,0 +1,220 @@
+{{-- Body copy for /blog/how-much-should-i-feed-my-cat.
+
+     The reference table gives real numbers, calculated from the RER formula
+     named in the text (70 x weight_kg^0.75, x1.2 for a typical neutered
+     adult) rather than invented figures. It is a starting range, and the
+     text says so twice: once above the table and once below it. --}}
+
+<p>
+    The feeding guide on the back of the bag is written for an average cat,
+    at an average activity level, eating that exact food. Your cat is not
+    that cat, and the company printing the guide is also selling the food,
+    which is not a reason to distrust every bag but is a reason to treat the
+    number as a starting point rather than an instruction.
+</p>
+
+<p>
+    Working it out properly takes about the same effort as reading the bag
+    anyway. Here is how.
+</p>
+
+<p>
+    This guide is written from published veterinary sources, named and
+    linked as they come up and listed again at the bottom. It is a starting
+    point for your own cat, not a substitute for a vet who has actually
+    weighed and examined them.
+</p>
+
+<h2 id="how-much">How much does my cat actually need?</h2>
+
+<p>
+    Vets calculate a baseline called resting energy requirement, or RER,
+    from body weight, then adjust it for life stage and activity. The
+    formula looks more technical than it is: 70 times your cat's weight in
+    kilograms, raised to the power of 0.75. That number is roughly what a
+    cat burns doing nothing at all.
+</p>
+
+<p>
+    A typical neutered, moderately active indoor adult needs somewhere
+    around 1.2 times that baseline. A kitten, a pregnant or nursing cat, or
+    a very active cat needs more; a cat who needs to lose weight needs less,
+    ideally worked out with a vet rather than guessed at.
+</p>
+
+<figure>
+    <x-img name="measuring-cat-food-portion"
+           alt="Hand pouring a measured cup of kibble into a cat's bowl"
+           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <figcaption>
+        A kitchen scale or a measuring cup used consistently matters more
+        than the exact formula you start from.
+    </figcaption>
+</figure>
+
+<p>At a glance, here is roughly what that works out to by weight, for a typical neutered adult cat:</p>
+
+<div class="my-7 overflow-hidden rounded-2xl border border-line">
+    <table class="w-full text-left text-sm">
+        <thead>
+            <tr class="border-b border-line bg-surface-section text-xs tracking-wider text-ink-muted uppercase">
+                <th scope="col" class="px-4 py-3 font-semibold">Body weight</th>
+                <th scope="col" class="px-4 py-3 font-semibold">Roughly per day</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+            <tr>
+                <td class="px-4 py-3 text-ink">6 lb (2.7 kg)</td>
+                <td class="px-4 py-3 text-ink-muted">About 175 kcal</td>
+            </tr>
+            <tr>
+                <td class="px-4 py-3 text-ink">8 lb (3.6 kg)</td>
+                <td class="px-4 py-3 text-ink-muted">About 220 kcal</td>
+            </tr>
+            <tr>
+                <td class="px-4 py-3 text-ink">10 lb (4.5 kg)</td>
+                <td class="px-4 py-3 text-ink-muted">About 260 kcal</td>
+            </tr>
+            <tr>
+                <td class="px-4 py-3 text-ink">12 lb (5.4 kg)</td>
+                <td class="px-4 py-3 text-ink-muted">About 300 kcal</td>
+            </tr>
+            <tr>
+                <td class="px-4 py-3 text-ink">15 lb (6.8 kg)</td>
+                <td class="px-4 py-3 text-ink-muted">About 355 kcal</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<p>
+    Treat this as a starting range, not a target. An indoor cat who sleeps
+    most of the day needs less than these figures; a young, active cat
+    needs more. Check the calorie content on your specific food's label to
+    convert this into an actual amount to serve.
+</p>
+
+<h2 id="wet-or-dry">Does it matter if I feed wet or dry food?</h2>
+
+<p>
+    Both can be nutritionally complete, and neither is automatically
+    better, but they are not interchangeable cup for cup. Dry food is
+    roughly 10 percent water; wet food is closer to 75 or 80 percent. The
+    same volume of each is nowhere near the same number of calories, which
+    is why measuring by weight or by the calorie count on the label matters
+    more than measuring by the cup.
+</p>
+
+<p>
+    Some owners feed a mix of both, which is fine as long as the calories
+    from each are added together rather than treated as two separate full
+    portions. Whichever you choose, a complete and balanced formula
+    appropriate to your cat's life stage is the part that actually matters.
+</p>
+
+<h2 id="meals-per-day">How many meals a day should my cat eat?</h2>
+
+<p>
+    Two measured meals a day is the most commonly recommended pattern, and
+    it tends to avoid the slow weight gain that comes with leaving dry food
+    out all day for a cat to graze on whenever they like. Cats are natural
+    grazers by instinct, so splitting the same daily total across three or
+    four smaller meals is also fine if it suits your schedule better. What
+    matters is the total across the day, not how it is divided.
+</p>
+
+<h2 id="kitten">Feeding a kitten</h2>
+
+<p>
+    Kittens need meaningfully more calories per pound than adults because
+    they are growing, along with a kitten-specific formula that carries
+    more protein and calories than an adult diet. Smaller, more frequent
+    meals suit them better than two large ones, since a kitten's stomach is
+    small and growing is demanding work.
+</p>
+
+<p>
+    Most cats can move onto adult food around twelve months old. If you
+    are not sure exactly where yours is in that stretch, our
+    <a href="{{ route('tools.cat-age-calculator') }}">cat age calculator</a>
+    converts an age into human years and the life stage that determines how
+    they should be eating.
+</p>
+
+<h2 id="senior">Feeding a senior cat</h2>
+
+<p>
+    Older cats often need fewer calories as they become less active, but
+    that is not universal: some senior cats lose weight and need more,
+    particularly if an underlying condition like kidney disease or an
+    overactive thyroid is involved. Weight change in either direction in a
+    senior cat is worth mentioning to a vet rather than adjusting food
+    alone, since the cause matters as much as the fix.
+</p>
+
+<figure>
+    <x-img name="senior-cat-eating-wet-food"
+           alt="Older gray tabby cat eating from a bowl of wet food"
+           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <figcaption>
+        Wet food is often easier for a senior cat with dental discomfort,
+        and it helps toward hydration too.
+    </figcaption>
+</figure>
+
+<h2 id="overweight">My cat is overweight. How do I feed them less safely?</h2>
+
+<p>
+    Gradually, and ideally with a vet setting the target. Cutting a cat's
+    food too fast is not just unkind, it carries a genuine medical risk: if
+    an overweight cat's calorie intake drops sharply and they do not eat
+    enough for even a few days, their body can develop a serious liver
+    condition called hepatic lipidosis. This is one of the few situations in
+    routine cat care where the cautious, slower approach is also the
+    medically correct one.
+</p>
+
+<p>
+    A safe rate of weight loss is usually around one to two percent of body
+    weight a week, worked out from a target weight a vet sets based on body
+    condition rather than a number you pick yourself.
+</p>
+
+<figure>
+    <x-img name="overweight-cat-resting"
+           alt="Overweight tabby cat resting calmly on a soft cushion"
+           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <figcaption>
+        Weight loss that happens too fast is the risk here, not the extra
+        weight itself. Slow and vet-guided is the safe version.
+    </figcaption>
+</figure>
+
+<h2 id="how-do-i-know">How do I know if I'm feeding the right amount?</h2>
+
+<p>
+    Body condition tells you more than the scale on its own. Run your hands
+    along your cat's sides: you should be able to feel their ribs under a
+    light layer of fat without pressing hard, and see a waist when you look
+    down at them from above. Weigh your cat every few weeks if you can.
+    Gradual, unexplained weight change in either direction, more than the
+    food amount alone, is the signal that something is worth adjusting or
+    mentioning to a vet.
+</p>
+
+<p>
+    Weight and appetite are also two of the more telling early signs
+    something is wrong more broadly; our
+    <a href="{{ route('blog.show', 'signs-your-cat-is-sick') }}">guide to the early signs a cat is sick</a>
+    covers how appetite and weight changes fit alongside the wider pattern.
+</p>
+
+<h2 id="treats">What about treats?</h2>
+
+<p>
+    Fine in moderation. The usual guidance is to keep treats under about
+    ten percent of daily calories, and to count them as part of the day's
+    total rather than adding them on top of a full meal plan. Treats are
+    one of the most common quiet causes of gradual, easy-to-miss weight
+    gain, precisely because each one feels too small to matter.
+</p>

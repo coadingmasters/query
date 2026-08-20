@@ -1,0 +1,129 @@
+{{-- Body copy for /blog/new-cat-owner-guide. --}}
+
+<p>
+    A new cat needs less gear and more patience than most first-time-owner
+    checklists suggest. Here is what actually matters, in the order it
+    tends to come up: before they arrive, the first days, and the first
+    couple of weeks.
+</p>
+
+<p>
+    This guide is written from published veterinary sources, named and
+    linked as they come up and listed again at the bottom.
+</p>
+
+<h2 id="before-they-arrive">What to buy before your cat arrives</h2>
+
+<p>
+    The essentials: a litter box and litter, food and water bowls, a
+    carrier, a scratching post, a bed, and a few toys. Everything else,
+    including a particular food brand or a second scratching post, can
+    wait until you know your cat's preferences rather than guessing them
+    in advance.
+</p>
+
+<figure>
+    <x-img name="new-cat-owner-guide-couple-kitten"
+           alt="Couple playing with a new kitten on a sofa"
+           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <figcaption>
+        The first days matter more than the gear. A quiet space to settle
+        into counts for more than a full shopping list.
+    </figcaption>
+</figure>
+
+<h2 id="cat-proofing">Cat-proofing the house</h2>
+
+<p>
+    Lilies are the single most important thing to know here: every part of
+    the plant, including the pollen and even the water in a vase, is
+    highly toxic to cats and can cause fatal kidney failure from a small
+    exposure. If there are any lilies in the house, they need to come out
+    before a cat moves in.
+</p>
+
+<p>
+    Beyond that, walk the house at cat height. Secure or hide dangling
+    cords, especially blind cords, which are a strangulation risk. Remove
+    small objects a cat could swallow, and keep cleaning products and
+    anything from
+    <a href="{{ route('home') }}#food-toxic-foods">the list of foods toxic to cats</a>
+    somewhere they cannot reach. Keep washing machines and dryers closed
+    between loads, since a cat climbing into one unnoticed is a genuine and
+    recurring cause of injury. Check window screens are secure too; cats
+    misjudge falls from height more often than owners expect.
+</p>
+
+<h2 id="first-24-48-hours">The first 24 to 48 hours</h2>
+
+<p>
+    Start with one quiet room rather than the whole house. Set up their
+    litter box, food, water and a hiding spot inside it, and let them come
+    out and explore on their own schedule rather than being carried around
+    or introduced to everyone at once. Most cats relax faster with less
+    handling in the first days, not more. Hiding, a reduced appetite and
+    low activity are normal in this window; if any of that continues much
+    past a week or two, or your cat stops eating entirely, it is worth a
+    call to the vet.
+</p>
+
+<h2 id="litter-box">Litter box basics</h2>
+
+<p>
+    The usual guidance is one litter box per cat, plus one extra, placed in
+    quiet, easily accessible spots away from food and water. For a single
+    new cat, that means two boxes is a safer starting point than one,
+    particularly while they are still learning the house. Avoid moving a
+    box once it is established somewhere; a cat that has to relearn where
+    to go is more likely to have accidents elsewhere.
+</p>
+
+<h2 id="feeding">Setting up a feeding routine</h2>
+
+<p>
+    A consistent feeding schedule, with a food matched to their life
+    stage, is one of the more settling things you can offer a new cat. Our
+    <a href="{{ route('blog.show', 'how-much-should-i-feed-my-cat') }}">feeding guide</a>
+    covers how much to feed by weight, and our
+    <a href="{{ route('tools.cat-age-calculator') }}">cat age calculator</a>
+    helps place a new cat's age against the life stage that determines
+    what kind of food they need.
+</p>
+
+<h2 id="first-vet-visit">The first vet visit</h2>
+
+<p>
+    Book one within the first week if you can, even if your cat seems
+    completely healthy. A first visit establishes a baseline, confirms
+    vaccinations and parasite prevention are current or gets them started,
+    and is the right time to raise microchipping and spay or neuter timing
+    if either has not already been done.
+</p>
+
+<h2 id="behavior">Understanding early behavior</h2>
+
+<p>
+    Scratching is a normal, necessary behavior, not something to punish;
+    redirecting a cat to a scratching post works far better than telling
+    them off. Kneading, sometimes called making biscuits, is a comfort
+    behavior many cats carry from kittenhood, and our
+    <a href="{{ route('blog.show', 'why-do-cats-knead') }}">guide to why cats knead</a>
+    covers what it means when they do it to you.
+</p>
+
+<p>
+    Learning to recognize when something is actually wrong, rather than
+    normal settling-in behavior, matters just as much early on. Our
+    <a href="{{ route('blog.show', 'signs-your-cat-is-sick') }}">guide to the early signs a cat is sick</a>
+    is worth reading before you need it.
+</p>
+
+<h2 id="other-pets">Introducing other pets</h2>
+
+<p>
+    Slowly, and only once the new cat is comfortable in their own space.
+    A gradual introduction through a closed door, then brief, supervised
+    visits over a week or more, goes better than a first meeting with no
+    barrier at all. Rushing this step is one of the more common causes of
+    lasting tension between cats in the same home.
+</p>

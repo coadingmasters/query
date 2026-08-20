@@ -29,6 +29,10 @@ class UsEnglishTest extends TestCase
             'sneezing article' => ['/blog/why-is-my-cat-sneezing'],
             'signs article' => ['/blog/signs-your-cat-is-sick'],
             'feeding article' => ['/blog/how-much-should-i-feed-my-cat'],
+            'broccoli article' => ['/blog/can-cats-eat-broccoli'],
+            'indoor food article' => ['/blog/best-food-for-indoor-cats'],
+            'chicken article' => ['/blog/can-cats-eat-chicken'],
+            'new owner article' => ['/blog/new-cat-owner-guide'],
             'age calculator' => ['/tools/cat-age-calculator'],
             'pregnancy calculator' => ['/tools/cat-pregnancy-calculator'],
         ];

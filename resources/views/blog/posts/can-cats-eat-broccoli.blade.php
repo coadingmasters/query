@@ -1,0 +1,85 @@
+{{-- Body copy for /blog/can-cats-eat-broccoli. --}}
+
+<p>
+    Broccoli is one of the small number of vegetables that is actually fine
+    for a cat to eat, which makes it worth a proper answer rather than a
+    reflexive no. The short version: plain, cooked, in small amounts, and
+    never a replacement for anything in a normal diet.
+</p>
+
+<p>
+    This guide is written from published veterinary sources, named and
+    linked as they come up and listed again at the bottom.
+</p>
+
+<h2 id="is-it-safe">Is broccoli safe for cats?</h2>
+
+<p>
+    Yes. Broccoli is not toxic to cats, and a small floret of plain, cooked
+    broccoli is a fine occasional extra for most cats. What it is not is
+    something a cat needs. Cats are obligate carnivores, meaning their
+    bodies are built to run on meat, and vegetables like broccoli offer them
+    little that a complete cat food does not already provide.
+</p>
+
+<p>
+    That is different from a vegetable that is actually dangerous. Onion,
+    garlic, chives and leeks are genuinely toxic to cats, even cooked and
+    even in fairly small amounts, and broccoli is nowhere near that
+    category. Our full breakdown of
+    <a href="{{ route('home') }}#food-toxic-foods">what foods are actually toxic to cats</a>
+    covers those by name.
+</p>
+
+<h2 id="how-to-serve">How to serve broccoli to a cat</h2>
+
+<p>
+    Plain and cooked is the rule. Steam or boil a small piece until soft,
+    with no oil, butter, salt, garlic or seasoning of any kind, and cut it
+    into small pieces before offering it. A floret or two, occasionally, is
+    plenty; there is no reason to offer more than that.
+</p>
+
+<p>
+    Raw broccoli is not toxic, but it is harder to digest and the stalk in
+    particular is tough and fibrous. A cat swallowing a large piece of raw
+    stalk risks a choking hazard, which is easy to avoid by cooking it
+    through and keeping pieces small.
+</p>
+
+<h2 id="how-much">How much broccoli can a cat have?</h2>
+
+<p>
+    A small cooked floret now and then is a sensible upper limit, not a
+    daily habit. Broccoli and other cruciferous vegetables contain compounds
+    that can cause gas or an upset stomach in cats fed too much of them, and
+    since broccoli adds no nutritional value a cat's diet is missing, there
+    is no reason to push past a small, occasional amount.
+</p>
+
+<p>
+    For a fuller picture of how treats and extras like this fit into a
+    cat's daily calories, our
+    <a href="{{ route('blog.show', 'how-much-should-i-feed-my-cat') }}">feeding guide</a>
+    covers portioning from body weight.
+</p>
+
+<h2 id="why-ignore">Why does my cat show no interest in it at all?</h2>
+
+<p>
+    That is normal, and it is not a fussiness problem to fix. Cats lack the
+    taste receptors that make sweetness and many plant flavors appealing to
+    other animals, so a cat sniffing broccoli once and walking away is
+    simply behaving like a cat. There is nothing to coax them into liking it
+    for.
+</p>
+
+<h2 id="other-vegetables">What about other vegetables?</h2>
+
+<p>
+    Broccoli sits alongside a small group of vegetables, including plain
+    cooked carrot and pumpkin, that are fine in small amounts for the same
+    reason: harmless, but not something a cat's diet requires. The
+    dangerous ones are a short, specific list, and knowing which is which
+    matters more than avoiding vegetables altogether.
+</p>

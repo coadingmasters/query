@@ -278,3 +278,10 @@
     do call, describe what changed and when, since a vet works from a
     comparison to your own cat's normal rather than a general checklist.
 </p>
+
+<p>
+    If you are still learning what is normal for a cat you have only just
+    brought home, our
+    <a href="{{ route('blog.show', 'new-cat-owner-guide') }}">complete guide for new cat owners</a>
+    covers the first vet visit and what to expect in those early weeks.
+</p>

@@ -280,3 +280,10 @@
     reassuring things a cat does, and the only version of it worth watching
     for is a sudden change from whatever is normal for yours.
 </p>
+
+<p>
+    If you have only just brought a cat home and are still learning what is
+    normal versus worth a call to the vet, our
+    <a href="{{ route('blog.show', 'new-cat-owner-guide') }}">complete guide for new cat owners</a>
+    covers the basics beyond behavior too.
+</p>

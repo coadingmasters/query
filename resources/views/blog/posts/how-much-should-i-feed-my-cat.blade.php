@@ -112,6 +112,13 @@
     appropriate to your cat's life stage is the part that actually matters.
 </p>
 
+<p>
+    If your cat spends all or most of their time indoors, our guide to
+    <a href="{{ route('blog.show', 'best-food-for-indoor-cats') }}">the best food for indoor cats</a>
+    goes into what actually differs about their needs versus what the
+    label promises.
+</p>
+
 <h2 id="meals-per-day">How many meals a day should my cat eat?</h2>
 
 <p>
@@ -216,5 +223,8 @@
     ten percent of daily calories, and to count them as part of the day's
     total rather than adding them on top of a full meal plan. Treats are
     one of the most common quiet causes of gradual, easy-to-miss weight
-    gain, precisely because each one feels too small to matter.
+    gain, precisely because each one feels too small to matter. Plain
+    cooked chicken is a common choice; our
+    <a href="{{ route('blog.show', 'can-cats-eat-chicken') }}">guide to feeding cats chicken</a>
+    covers how to do it safely.
 </p>

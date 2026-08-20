@@ -1,0 +1,95 @@
+{{-- Body copy for /blog/can-cats-eat-chicken. --}}
+
+<p>
+    Chicken is one of the safer, more useful foods you can offer a cat,
+    which is not a surprise: it is already a common ingredient in complete
+    cat food. The things worth getting right are all in the preparation,
+    not the chicken itself.
+</p>
+
+<p>
+    This guide is written from published veterinary sources, named and
+    linked as they come up and listed again at the bottom.
+</p>
+
+<h2 id="is-it-safe">Is chicken safe for cats?</h2>
+
+<p>
+    Yes. Plain, cooked, boneless chicken with no salt, oil or seasoning is
+    a lean, easily digested protein that suits a cat's diet well. A cat
+    eating plain cooked chicken is, in a real sense, eating something close
+    to what is already in a bag of complete cat food, since chicken is
+    among the most common named proteins on ingredient lists.
+</p>
+
+<h2 id="bones">Can cats eat chicken bones?</h2>
+
+<p>
+    No, never. Cooked bones become brittle and can splinter into sharp
+    fragments as a cat chews them, and those fragments can cause choking or
+    injure the throat, stomach or intestines on the way through. Every
+    bone should be removed before chicken is offered, and it is worth
+    checking the piece over rather than assuming you got them all.
+</p>
+
+<h2 id="skin">Can cats eat chicken skin?</h2>
+
+<p>
+    Best kept to a minimum. Chicken skin is high in fat, and cats fed a
+    lot of it, particularly seasoned or fried skin, are more likely to get
+    an upset stomach. Repeated fatty extras are also a recognized risk
+    factor for pancreatitis in cats. A small amount now and then is
+    unlikely to cause harm; making a habit of it is worth avoiding.
+</p>
+
+<figure>
+    <x-img name="can-cats-eat-chicken-cat-looking"
+           alt="Cat looking at cooked plain chicken on a white plate"
+           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <figcaption>
+        Plain, cooked, boneless chicken with no seasoning is the safe
+        default.
+    </figcaption>
+</figure>
+
+<h2 id="raw-chicken">Can cats eat raw chicken?</h2>
+
+<p>
+    The real concern with raw chicken is not the chicken itself, but
+    bacteria such as salmonella and campylobacter, which can make a cat
+    unwell and can spread to people handling the food and cleaning the
+    litter box afterward. Cooking it through removes that risk, which is
+    why cooked, plain chicken is the safer choice for a home-prepared
+    extra.
+</p>
+
+<h2 id="complete-diet">Is chicken enough on its own?</h2>
+
+<p>
+    No. Plain chicken is not a complete diet by itself. It is missing
+    taurine at the level a cat needs, calcium, and other nutrients that a
+    properly formulated cat food balances against each other. Chicken
+    works well as a topper or an occasional addition alongside a complete
+    diet, not as a replacement for one.
+</p>
+
+<h2 id="allergies">Can cats be allergic to chicken?</h2>
+
+<p>
+    Yes, and chicken is actually one of the more common food sensitivities
+    in cats, alongside fish and beef. Signs include itchy skin, recurring
+    ear infections, or digestive upset that shows up consistently after
+    eating it. If that pattern sounds familiar, a vet can help confirm a
+    food allergy rather than guessing from a single reaction.
+</p>
+
+<h2 id="how-much">How much chicken is safe?</h2>
+
+<p>
+    A few small, bite-sized pieces now and then is plenty for most cats.
+    Treats and extras, chicken included, are generally kept under about
+    ten percent of a cat's daily calories. Our
+    <a href="{{ route('blog.show', 'how-much-should-i-feed-my-cat') }}">feeding guide</a>
+    covers how to work out a cat's daily calorie total so extras like this
+    stay in proportion.
+</p>

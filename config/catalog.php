@@ -191,10 +191,13 @@ return [
         ],
         [
             'slug' => 'can-cats-eat-broccoli',
-            'title' => 'Can Cats Eat Broccoli?',
-            'excerpt' => 'Broccoli is one of the few vegetables that is genuinely safe for cats, but only plain, only cooked, and only in small amounts. Here is why, and how much is too much.',
+            'url' => '/blog/can-cats-eat-broccoli',
+            'title' => 'Can Cats Eat Broccoli? A Safe Feeding Guide',
+            'excerpt' => 'Broccoli is one of the few vegetables genuinely safe for '
+                .'cats, but only plain, cooked, and in small amounts. Here is why, '
+                .'and how much.',
             'category' => 'Food Safety',
-            'minutes' => 6,
+            'minutes' => 7,
             'image' => 'can-cats-eat-broccoli-cat-sniffing',
             'alt' => 'Fluffy cat sniffing fresh broccoli florets',
         ],
@@ -236,26 +239,35 @@ return [
         ],
         [
             'slug' => 'best-food-for-indoor-cats',
-            'title' => 'Best Food for Indoor Cats',
-            'excerpt' => 'Indoor cats burn fewer calories and need different protein and fiber ratios. What to look for on the label.',
+            'url' => '/blog/best-food-for-indoor-cats',
+            'title' => 'Best Food for Indoor Cats: What to Look For',
+            'excerpt' => 'Indoor cats burn fewer calories than outdoor ones, but '
+                .'life stage matters more than the word indoor on the bag. What '
+                .'to actually look for.',
             'category' => 'Feeding',
-            'minutes' => 7,
+            'minutes' => 9,
             'image' => 'best-indoor-cat-food-premium-ingredients',
-            'alt' => 'Salmon, chicken and fresh ingredients',
+            'alt' => 'Salmon, chicken and fresh ingredients beside a bowl of cat food',
         ],
         [
             'slug' => 'can-cats-eat-chicken',
-            'title' => 'Can Cats Eat Chicken?',
-            'excerpt' => 'Yes, and it is one of the best things you can offer. The rules are about preparation, bones and how much.',
+            'url' => '/blog/can-cats-eat-chicken',
+            'title' => 'Can Cats Eat Chicken? Yes, Here Is How',
+            'excerpt' => 'Chicken is one of the best things you can feed a cat. '
+                .'The rules are about preparation, bones, and portion, not '
+                .'whether it is safe.',
             'category' => 'Food Safety',
-            'minutes' => 5,
+            'minutes' => 8,
             'image' => 'can-cats-eat-chicken-cat-looking',
             'alt' => 'Cat looking at cooked plain chicken on a white plate',
         ],
         [
             'slug' => 'new-cat-owner-guide',
+            'url' => '/blog/new-cat-owner-guide',
             'title' => 'The Complete Guide for New Cat Owners',
-            'excerpt' => 'Everything for the first month: what to buy, how to settle a nervous cat, and the vet visits that matter early.',
+            'excerpt' => 'Everything for the first weeks: what to buy, how to '
+                .'settle a nervous cat, the vet visits that matter early, and '
+                .'what to cat-proof first.',
             'category' => 'Getting Started',
             'minutes' => 12,
             'image' => 'new-cat-owner-guide-couple-kitten',

@@ -210,7 +210,7 @@ return [
         [
             'slug' => 'why-is-my-cat-sneezing',
             'url' => '/blog/why-is-my-cat-sneezing',
-            'title' => 'Cat Sneezing: When It\'s Normal and When to Worry',
+            'title' => 'Why Is My Cat Sneezing? When It\'s Normal and When to Worry',
             'excerpt' => 'An occasional sneeze is nothing. Runny eyes, a stuffy nose or '
                 .'sneezing that will not stop points at an infection that is worth a '
                 .'vet visit.',

@@ -411,6 +411,26 @@
             }
         ]
     },
+    "cat-sneezing-runny-nose": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/cat-sneezing-runny-nose-600.3017c4fa.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/cat-sneezing-runny-nose-900.3017c4fa.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/cat-sneezing-runny-nose-1200.3017c4fa.webp"
+            }
+        ]
+    },
     "cat-vaccination-tracker-vet-examination": {
         "width": 400,
         "height": 250,
@@ -488,6 +508,26 @@
             {
                 "w": 1402,
                 "src": "/images/kitten-making-biscuits-1440.38c754bb.webp"
+            }
+        ]
+    },
+    "kitten-sneezing": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/kitten-sneezing-600.99defa5b.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/kitten-sneezing-900.99defa5b.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/kitten-sneezing-1200.99defa5b.webp"
             }
         ]
     },
@@ -831,6 +871,26 @@
             }
         ]
     },
+    "vet-examining-cat-sneezing": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": false,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/vet-examining-cat-sneezing-600.0f2f5d0b.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/vet-examining-cat-sneezing-900.0f2f5d0b.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/vet-examining-cat-sneezing-1200.0f2f5d0b.webp"
+            }
+        ]
+    },
     "why-do-cats-knead-hero": {
         "width": 600,
         "height": 400,
@@ -855,19 +915,19 @@
         "width": 600,
         "height": 400,
         "preset": "blog",
-        "placeholder": true,
+        "placeholder": false,
         "variants": [
             {
                 "w": 600,
-                "src": "/images/why-is-my-cat-sneezing-hero-600.a6b041f9.webp"
+                "src": "/images/why-is-my-cat-sneezing-hero-600.5a9eed86.webp"
             },
             {
                 "w": 900,
-                "src": "/images/why-is-my-cat-sneezing-hero-900.a6b041f9.webp"
+                "src": "/images/why-is-my-cat-sneezing-hero-900.5a9eed86.webp"
             },
             {
                 "w": 1200,
-                "src": "/images/why-is-my-cat-sneezing-hero-1200.a6b041f9.webp"
+                "src": "/images/why-is-my-cat-sneezing-hero-1200.5a9eed86.webp"
             }
         ]
     }

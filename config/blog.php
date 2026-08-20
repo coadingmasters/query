@@ -107,9 +107,9 @@ return [
     ],
     'why-is-my-cat-sneezing' => [
         'slug' => 'why-is-my-cat-sneezing',
-        'title' => 'Cat Sneezing: When It\'s Normal and When to Worry',
+        'title' => 'Why Is My Cat Sneezing? When It\'s Normal and When to Worry',
 
-        'meta_title' => 'Cat Sneezing: When It\'s Normal and When to Worry',
+        'meta_title' => 'Why Is My Cat Sneezing? When It\'s Normal and When to Worry',
 
         'excerpt' => 'An occasional sneeze is nothing. Runny eyes, a stuffy nose or '
             .'sneezing that will not stop points at an infection that is worth a '
@@ -144,7 +144,7 @@ return [
             ],
             [
                 'q' => 'What does it mean if my cat is sneezing and has a runny nose?',
-                'a' => 'Sneezing paired with nasal discharge is the clearest sign of an upper respiratory infection. Clear discharge is more consistent with a viral cause; thick yellow or green discharge suggests a secondary bacterial infection has set in, which usually needs antibiotics from a vet rather than time alone.',
+                'a' => 'Sneezing paired with nasal discharge is one of the clearest signs of an upper respiratory infection. Clear discharge tends to go with the early, viral stage; thick yellow or green discharge can mean a secondary bacterial infection has joined it. Color alone cannot confirm that on its own, and it is not something to diagnose from home: a vet examines the cat and decides whether antibiotics are actually needed.',
             ],
             [
                 'q' => 'Why is my kitten sneezing so much?',
@@ -173,7 +173,7 @@ return [
             [
                 'name' => 'ASPCA: cat health and wellness',
                 'url' => 'https://www.aspca.org/pet-care/cat-care',
-                'note' => 'General guidance on recognising illness in cats.',
+                'note' => 'General guidance on recognizing illness in cats.',
             ],
             [
                 'name' => 'VCA Animal Hospitals: sneezing in cats',

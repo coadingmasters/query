@@ -850,5 +850,25 @@
                 "src": "/images/why-do-cats-knead-hero-1200.6dfcf35f.webp"
             }
         ]
+    },
+    "why-is-my-cat-sneezing-hero": {
+        "width": 600,
+        "height": 400,
+        "preset": "blog",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 600,
+                "src": "/images/why-is-my-cat-sneezing-hero-600.a6b041f9.webp"
+            },
+            {
+                "w": 900,
+                "src": "/images/why-is-my-cat-sneezing-hero-900.a6b041f9.webp"
+            },
+            {
+                "w": 1200,
+                "src": "/images/why-is-my-cat-sneezing-hero-1200.a6b041f9.webp"
+            }
+        ]
     }
 }

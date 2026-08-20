@@ -105,4 +105,85 @@ return [
         'related_tools' => ['cat-age-calculator', 'cat-pregnancy-calculator'],
         'related_posts' => ['signs-your-cat-is-sick', 'new-cat-owner-guide'],
     ],
+    'why-is-my-cat-sneezing' => [
+        'slug' => 'why-is-my-cat-sneezing',
+        'title' => 'Cat Sneezing: When It\'s Normal and When to Worry',
+
+        'meta_title' => 'Cat Sneezing: When It\'s Normal and When to Worry',
+
+        'excerpt' => 'An occasional sneeze is nothing. Runny eyes, a stuffy nose or '
+            .'sneezing that will not stop points at an infection that is worth a '
+            .'vet visit.',
+
+        'category' => 'Health',
+        'minutes' => 9,
+        'published' => '2026-08-20',
+        'updated' => '2026-08-20',
+
+        'image' => 'why-is-my-cat-sneezing-hero',
+        'alt' => 'Tabby cat mid-sneeze on a soft blanket at home',
+
+        'answer' => 'A single sneeze is usually just dust or a tickle, the same as '
+            .'it is for a person. Sneezing that repeats, or comes with a runny '
+            .'nose, watery eyes or discharge, is more often an upper respiratory '
+            .'infection. It needs a vet if it lasts more than a couple of days, '
+            .'or your cat stops eating.',
+
+        'faq' => [
+            [
+                'q' => 'Is it normal for a cat to sneeze?',
+                'a' => 'Yes, occasionally. Dust, a strong smell or a change in the air can trigger a single sneeze, just as it does in a person, and it means nothing on its own. What is not normal is sneezing that repeats through the day, or that keeps happening over more than a day or two.',
+            ],
+            [
+                'q' => 'Why does my cat keep sneezing?',
+                'a' => 'Repeated sneezing over several hours or days is usually either an ongoing irritant, such as dusty litter, a scented candle or cleaning spray, or an upper respiratory infection. Cats carry feline herpesvirus and calicivirus at very high rates, and both cause cold-like symptoms that include sneezing.',
+            ],
+            [
+                'q' => 'Why is my cat sneezing but acting completely normal?',
+                'a' => 'A cat that is eating, drinking and playing normally alongside a mild sneeze is usually dealing with a minor irritant or the early days of a cold. Keep watching rather than worrying: it is the cats that stop eating, hide, or develop discharge that need a same-day vet visit.',
+            ],
+            [
+                'q' => 'What does it mean if my cat is sneezing and has a runny nose?',
+                'a' => 'Sneezing paired with nasal discharge is the clearest sign of an upper respiratory infection. Clear discharge is more consistent with a viral cause; thick yellow or green discharge suggests a secondary bacterial infection has set in, which usually needs antibiotics from a vet rather than time alone.',
+            ],
+            [
+                'q' => 'Why is my kitten sneezing so much?',
+                'a' => 'Kittens catch upper respiratory infections easily, especially if they came from a shelter or a large litter, and their symptoms tend to hit harder than an adult cat\'s. A kitten that stops eating is a more urgent case than an adult with the same symptoms, because kittens dehydrate and lose weight fast.',
+            ],
+            [
+                'q' => 'What causes a cat to sneeze?',
+                'a' => 'The common causes are, roughly in order of likelihood: viral upper respiratory infection, environmental irritants such as dust or fragrance, allergies, a foreign body caught in the nose, dental disease affecting the roots near the nasal passage, and, less commonly, nasal polyps or a fungal infection in older cats.',
+            ],
+            [
+                'q' => 'When should I take my sneezing cat to the vet?',
+                'a' => 'Book a visit if sneezing lasts more than two or three days, if there is any blood, if discharge turns yellow or green, if your cat stops eating or seems lethargic, or if only one nostril is affected, which can point at something physically stuck rather than an infection.',
+            ],
+            [
+                'q' => 'Can I give my cat anything at home for sneezing?',
+                'a' => 'A humidifier or a few minutes in a steamy bathroom can loosen congestion, and gently wiping discharge away keeps your cat more comfortable. There is no over-the-counter medication that is safe to give a cat without a vet\'s direction; several common human cold remedies are toxic to cats.',
+            ],
+        ],
+
+        'sources' => [
+            [
+                'name' => 'Cornell Feline Health Center: upper respiratory infections',
+                'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center',
+                'note' => 'Background on feline herpesvirus and calicivirus, the most common causes of sneezing.',
+            ],
+            [
+                'name' => 'ASPCA: cat health and wellness',
+                'url' => 'https://www.aspca.org/pet-care/cat-care',
+                'note' => 'General guidance on recognising illness in cats.',
+            ],
+            [
+                'name' => 'VCA Animal Hospitals: sneezing in cats',
+                'url' => 'https://vcahospitals.com/know-your-pet/sneezing-in-cats',
+                'note' => 'Clinical overview of causes and when sneezing needs veterinary attention.',
+            ],
+        ],
+
+        'related_tools' => ['cat-age-calculator'],
+        'related_posts' => ['why-do-cats-knead', 'signs-your-cat-is-sick'],
+    ],
+
 ];

@@ -27,6 +27,7 @@ class SitemapController extends Controller
             ['/tools/cat-pregnancy-calculator', 'views/tools/cat-pregnancy-calculator.blade.php', '0.9'],
             ['/blog', 'views/blog/index.blade.php', '0.8'],
             ['/blog/why-do-cats-knead', 'views/blog/posts/why-do-cats-knead.blade.php', '0.8'],
+            ['/blog/why-is-my-cat-sneezing', 'views/blog/posts/why-is-my-cat-sneezing.blade.php', '0.8'],
             ['/faq', 'views/faq.blade.php', '0.8'],
             ['/contact', 'views/contact.blade.php', '0.5'],
             ['/terms', 'views/terms.blade.php', '0.3'],

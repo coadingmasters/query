@@ -208,6 +208,18 @@ return [
             'alt' => 'Cat eating from a white ceramic bowl',
         ],
         [
+            'slug' => 'why-is-my-cat-sneezing',
+            'url' => '/blog/why-is-my-cat-sneezing',
+            'title' => 'Cat Sneezing: When It\'s Normal and When to Worry',
+            'excerpt' => 'An occasional sneeze is nothing. Runny eyes, a stuffy nose or '
+                .'sneezing that will not stop points at an infection that is worth a '
+                .'vet visit.',
+            'category' => 'Health',
+            'minutes' => 9,
+            'image' => 'why-is-my-cat-sneezing-hero',
+            'alt' => 'Tabby cat mid-sneeze on a soft blanket at home',
+        ],
+        [
             'slug' => 'signs-your-cat-is-sick',
             'title' => '12 Early Signs Your Cat Is Sick',
             'excerpt' => 'Cats hide illness well. These are the changes in grooming, appetite and posture that tend to show up first.',

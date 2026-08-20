@@ -125,6 +125,7 @@ return [
         'can-cats-eat-cat-treats-snacks' => 'food',
 
         'why-do-cats-knead-hero' => 'blog',
+        'why-is-my-cat-sneezing-hero' => 'blog',
         'cat-kneading-lap' => 'figure-tall',
         'kitten-making-biscuits' => 'figure-tall',
         'cat-kneading-claws-out' => 'figure-tall',
@@ -194,6 +195,11 @@ return [
         'cat-pregnancy-calculator-kitten' => 'cat-name-generator-cute-kitten',
         'how-much-feed-cat-eating-food-bowl' => 'cat-calorie-calculator-cat-food-bowl',
         'signs-cat-is-sick-vet-examination' => 'cat-vaccination-tracker-vet-examination',
+
+        // Real photography is prompted for below; this stands in until it
+        // arrives, the same way the knead article did before its own art
+        // was ready.
+        'why-is-my-cat-sneezing-hero' => 'cat-vaccination-tracker-vet-examination',
         'best-indoor-cat-food-premium-ingredients' => 'can-cats-eat-cat-treats-snacks',
         'can-cats-eat-chicken-cat-looking' => 'can-cats-eat-meat-seafood-chicken-fish',
         'new-cat-owner-guide-couple-kitten' => 'cat-name-generator-cute-kitten',

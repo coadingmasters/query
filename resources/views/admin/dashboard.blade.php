@@ -21,8 +21,9 @@
     {{-- Stat cards --}}
     <div class="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         @foreach ($stats as $i => $stat)
-            <div
-                class="animate-[result-pop_0.5s_cubic-bezier(0.16,1,0.3,1)_both] rounded-2xl border border-line bg-surface p-5 shadow-sm transition hover:shadow-md"
+            <{{ isset($stat['href']) ? 'a' : 'div' }}
+                @if (isset($stat['href'])) href="{{ $stat['href'] }}" @endif
+                class="animate-[result-pop_0.5s_cubic-bezier(0.16,1,0.3,1)_both] block rounded-2xl border border-line bg-surface p-5 shadow-sm transition hover:shadow-md"
                 style="animation-delay: {{ $i * 70 }}ms"
             >
                 <span class="flex size-10 items-center justify-center rounded-xl {{ $toneClasses[$stat['tone']] }}">
@@ -34,7 +35,7 @@
                 <p class="mt-1 font-heading text-3xl font-extrabold text-ink"
                    x-data="{ n: 0 }" x-init="let t = setInterval(() => { n < {{ $stat['value'] }} ? n++ : clearInterval(t) }, Math.max(600 / Math.max({{ $stat['value'] }}, 1), 12))"
                    x-text="n">0</p>
-            </div>
+            </{{ isset($stat['href']) ? 'a' : 'div' }}>
         @endforeach
     </div>
 
@@ -49,7 +50,12 @@
         </div>
 
         <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
-            <h3 class="font-heading text-base font-bold text-ink">Article feedback</h3>
+            <div class="flex items-center justify-between">
+                <h3 class="font-heading text-base font-bold text-ink">Article feedback</h3>
+                <a href="{{ route('admin.feedback.index') }}" class="text-sm font-semibold text-primary hover:text-primary-hover">
+                    By post &rarr;
+                </a>
+            </div>
             <p class="text-sm text-ink-muted">"Was this helpful?" votes, all articles.</p>
             <div class="mt-6">
                 <x-admin.donut-chart :feedback="$feedback"/>

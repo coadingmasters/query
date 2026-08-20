@@ -3,7 +3,9 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FeedbackController;
 use App\Http\Controllers\Admin\MessagesController;
+use App\Http\Controllers\Admin\SubscribersController;
 use App\Http\Controllers\ArticleFeedbackController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BlogController;
@@ -83,4 +85,12 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
     Route::post('/messages/{message}/handled', [MessagesController::class, 'markHandled'])
         ->middleware('auth')
         ->name('messages.handled');
+
+    Route::get('/subscribers', [SubscribersController::class, 'index'])
+        ->middleware('auth')
+        ->name('subscribers.index');
+
+    Route::get('/feedback', [FeedbackController::class, 'index'])
+        ->middleware('auth')
+        ->name('feedback.index');
 });

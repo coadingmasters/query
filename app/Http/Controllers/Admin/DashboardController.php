@@ -27,9 +27,9 @@ class DashboardController extends Controller
     {
         return [
             ['label' => 'Blog Posts', 'value' => count(config('blog')), 'icon' => 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z', 'tone' => 'primary'],
-            ['label' => 'Contact Messages', 'value' => ContactMessage::count(), 'icon' => 'm3 7 8.5 6L20 7M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z', 'tone' => 'accent'],
-            ['label' => 'Subscribers', 'value' => Subscriber::count(), 'icon' => 'M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M12.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z', 'tone' => 'info'],
-            ['label' => 'Article Reactions', 'value' => ArticleFeedback::count(), 'icon' => 'M12 21c-4.2-2.5-8-5.2-8-9.4A4.4 4.4 0 0 1 12 9a4.4 4.4 0 0 1 8 2.6c0 4.2-3.8 6.9-8 9.4Z', 'tone' => 'warning'],
+            ['label' => 'Contact Messages', 'value' => ContactMessage::count(), 'icon' => 'm3 7 8.5 6L20 7M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z', 'tone' => 'accent', 'href' => route('admin.messages.index')],
+            ['label' => 'Subscribers', 'value' => Subscriber::count(), 'icon' => 'M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M12.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z', 'tone' => 'info', 'href' => route('admin.subscribers.index')],
+            ['label' => 'Article Reactions', 'value' => ArticleFeedback::count(), 'icon' => 'M12 21c-4.2-2.5-8-5.2-8-9.4A4.4 4.4 0 0 1 12 9a4.4 4.4 0 0 1 8 2.6c0 4.2-3.8 6.9-8 9.4Z', 'tone' => 'warning', 'href' => route('admin.feedback.index')],
         ];
     }
 

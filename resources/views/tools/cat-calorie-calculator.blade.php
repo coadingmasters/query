@@ -255,14 +255,46 @@
 
             {{-- ── Result ──────────────────────────────────────────────── --}}
             <div data-cal-result aria-live="polite" class="lg:col-span-5 lg:sticky lg:top-24">
-                <div data-cal-placeholder class="flex h-full flex-col justify-center rounded-2xl border border-dashed border-line-strong bg-surface-section p-8 text-center">
+                <div data-cal-placeholder class="rounded-2xl border border-dashed border-line-strong bg-surface-section p-8 text-center">
                     <span class="mx-auto flex size-14 items-center justify-center rounded-full bg-primary-light">
                         <x-paw-print class="size-7 text-primary"/>
                     </span>
                     <p class="mt-4 font-heading text-lg font-bold text-ink">Your cat's daily calories appear here</p>
                     <p class="mt-2 text-sm leading-relaxed text-ink-muted">
-                        A daily target, a healthy range, and exactly how much food that means.
+                        Fill in the details on the left and calculate. Here's what you'll get:
                     </p>
+
+                    <ul class="mt-6 space-y-3 text-left">
+                        @foreach ([
+                            'A daily calorie target, plus a healthy range either side',
+                            'RER, the baseline your cat burns doing nothing at all',
+                            'Exact portions in cups, cans or grams for your food type',
+                            'A per-meal amount, split across your feeding schedule',
+                            'A body-condition check, color-coded to flag over or underweight',
+                        ] as $item)
+                            <li class="flex items-start gap-2.5 text-sm leading-relaxed text-ink-muted">
+                                <svg class="mt-0.5 size-4 shrink-0 text-accent-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 13l4 4L19 7"/>
+                                </svg>
+                                {{ $item }}
+                            </li>
+                        @endforeach
+                    </ul>
+
+                    <div class="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 border-t border-line pt-5 text-xs font-medium text-ink-muted">
+                        <span class="inline-flex items-center gap-1.5">
+                            <svg class="size-3.5 text-accent-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                            Free, no sign-up
+                        </span>
+                        <span class="inline-flex items-center gap-1.5">
+                            <svg class="size-3.5 text-accent-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                            Runs in your browser
+                        </span>
+                        <span class="inline-flex items-center gap-1.5">
+                            <svg class="size-3.5 text-accent-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                            NRC & AAFCO formula
+                        </span>
+                    </div>
                 </div>
 
                 <div data-cal-panel hidden class="overflow-hidden rounded-2xl border border-line bg-surface shadow-md">
@@ -315,9 +347,22 @@
 </section>
 
 {{-- ══ 3. SEO CONTENT ════════════════════════════════════════════════════ --}}
-<section class="bg-surface-section py-10 lg:py-14">
-    <div class="container-page max-w-3xl">
-        <div data-article class="article">
+<section class="bg-surface-section py-10 lg:py-12">
+    <div class="container-page grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-12">
+
+        {{-- Mobile contents, collapsed by default so it does not push the
+             first heading off screen on a phone. --}}
+        <details class="rounded-xl border border-line bg-surface px-5 lg:hidden">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-3.5 font-heading text-sm font-bold tracking-wider text-ink uppercase marker:content-['']">
+                On this page
+                <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary">
+                    <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                </span>
+            </summary>
+            <nav data-cal-toc-mobile aria-label="On this page" class="pb-4"></nav>
+        </details>
+
+        <div data-article class="article min-w-0 !max-w-none [&>*]:max-w-none">
 
             <h2 id="how-many-calories">How Many Calories Does a Cat Need Per Day?</h2>
             <p>
@@ -558,29 +603,69 @@
             </div>
 
         </div>
+
+        {{-- Sticky contents, desktop only. Built from the h2 ids already in
+             the article, so it cannot drift out of sync with the headings. --}}
+        <aside class="hidden lg:sticky lg:top-24 lg:block lg:self-start">
+            <nav aria-labelledby="cal-toc-heading" class="rounded-2xl border border-line bg-surface p-5">
+                <h2 id="cal-toc-heading" class="font-heading text-sm font-bold tracking-wider text-ink uppercase">On this page</h2>
+                <div data-cal-toc class="mt-3"></div>
+            </nav>
+
+            <div class="mt-5 rounded-2xl border border-line bg-surface p-5">
+                <p class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Quick reference</p>
+                <dl class="mt-3 space-y-2.5 text-sm">
+                    @foreach ([
+                        ['RER formula', '70 x kg^0.75'],
+                        ['Neutered adult', '1.6 x RER'],
+                        ['Intact adult', '1.8 x RER'],
+                        ['Dry food', '~350 kcal/cup'],
+                        ['Wet food', '~95 kcal/can'],
+                        ['Treats cap', 'Under 10% of daily'],
+                    ] as [$term, $value])
+                        <div class="flex items-baseline justify-between gap-3">
+                            <dt class="text-ink-muted">{{ $term }}</dt>
+                            <dd class="shrink-0 font-semibold text-ink tabular-nums">{{ $value }}</dd>
+                        </div>
+                    @endforeach
+                </dl>
+            </div>
+        </aside>
     </div>
 </section>
 
 {{-- ══ 4. RELATED TOOLS ══════════════════════════════════════════════════ --}}
-<section class="bg-surface py-10 lg:py-12">
+<section class="bg-surface pt-2 pb-8 lg:pb-10">
     <div class="container-page max-w-3xl">
         <h2 class="font-heading text-lg font-extrabold text-ink">Keep going</h2>
-        <div class="mt-4 grid gap-3 sm:grid-cols-3">
-            <a href="{{ route('tools.cat-age-calculator') }}" class="rounded-xl border border-line bg-surface-section p-4 text-sm font-semibold text-ink transition hover:border-primary hover:text-primary">
-                Cat Age Calculator &rarr;
-            </a>
-            <a href="{{ route('tools.cat-pregnancy-calculator') }}" class="rounded-xl border border-line bg-surface-section p-4 text-sm font-semibold text-ink transition hover:border-primary hover:text-primary">
-                Cat Pregnancy Calculator &rarr;
-            </a>
-            <a href="{{ route('blog.show', 'how-much-should-i-feed-my-cat') }}" class="rounded-xl border border-line bg-surface-section p-4 text-sm font-semibold text-ink transition hover:border-primary hover:text-primary">
-                Feeding Guide &rarr;
-            </a>
+        <div class="mt-4 grid gap-4 sm:grid-cols-3">
+            @foreach ([
+                ['href' => route('tools.cat-age-calculator'), 'image' => 'cat-age-calculator-senior-tabby-cat', 'alt' => 'Cats at five life stages from kitten to senior', 'title' => 'Cat Age Calculator', 'blurb' => 'Human years and the life stage behind them.'],
+                ['href' => route('tools.cat-pregnancy-calculator'), 'image' => 'cat-pregnancy-calculator-kitten', 'alt' => 'Newborn kitten curled up asleep', 'title' => 'Cat Pregnancy Calculator', 'blurb' => 'Due date and week-by-week milestones.'],
+                ['href' => route('blog.show', 'how-much-should-i-feed-my-cat'), 'image' => 'how-much-to-feed-cat-hero', 'alt' => 'Cat sitting beside a bowl being filled with a measured scoop of kibble', 'title' => 'Feeding Guide', 'blurb' => 'Wet vs dry, meals per day, treats and more.'],
+            ] as $item)
+                <a href="{{ $item['href'] }}" class="card group">
+                    <div class="card-media aspect-[4/3]">
+                        <x-img :name="$item['image']" :alt="$item['alt']" sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 30vw"/>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title text-base">{{ $item['title'] }}</h3>
+                        <p class="card-text flex-1 text-xs">{{ $item['blurb'] }}</p>
+                        <span class="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                            Open
+                            <svg class="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </span>
+                    </div>
+                </a>
+            @endforeach
         </div>
     </div>
 </section>
 
 {{-- ══ 5. SOURCES AND BYLINE ═════════════════════════════════════════════ --}}
-<section class="bg-surface-section py-10 lg:py-12">
+<section class="bg-surface-section py-8 lg:py-10">
     <div class="container-page max-w-3xl">
         <div class="rounded-2xl border border-line bg-surface p-6 sm:p-8">
             <h2 class="font-heading text-lg font-extrabold text-ink">Where this comes from</h2>
@@ -866,6 +951,45 @@
             });
 
             updateStageUI();
+        })();
+
+        /* Contents, built from the article's own h2 ids so the list and the
+           headings cannot drift apart. */
+        (() => {
+            const article = document.querySelector('[data-article]');
+            if (!article) return;
+
+            const entries = [...article.querySelectorAll('h2[id]')]
+                .map(h => ({ id: h.id, text: h.textContent.trim() }));
+            if (!entries.length) return;
+
+            const build = (target) => {
+                if (!target) return;
+
+                const ol = document.createElement('ol');
+                ol.className = 'space-y-0.5 text-sm';
+
+                entries.forEach((entry, i) => {
+                    const a = document.createElement('a');
+                    a.href = '#' + entry.id;
+                    a.className = 'flex gap-2 rounded-md py-1.5 leading-snug text-ink-muted transition-colors hover:text-primary';
+
+                    const number = document.createElement('span');
+                    number.className = 'shrink-0 tabular-nums text-primary';
+                    number.textContent = (i + 1) + '.';
+
+                    a.append(number, document.createTextNode(entry.text));
+
+                    const li = document.createElement('li');
+                    li.append(a);
+                    ol.append(li);
+                });
+
+                target.append(ol);
+            };
+
+            build(document.querySelector('[data-cal-toc]'));
+            build(document.querySelector('[data-cal-toc-mobile]'));
         })();
     </script>
 @endpush

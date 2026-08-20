@@ -6,117 +6,89 @@
     <div data-reading-progress class="h-full w-0 bg-primary-vivid transition-[width] duration-150 ease-out"></div>
 </div>
 
-{{-- ══ 1. HERO ═════════════════════════════════════════════════════════ --}}
+@php
+    $shareUrl = urlencode($canonical);
+    $shareText = urlencode($post['title']);
+    $author = config('author.founder');
+@endphp
+
 <article>
-    <header class="relative overflow-hidden bg-surface-soft">
-        <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-            <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
-            <div class="absolute -right-20 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.10] blur-3xl"></div>
-            <x-paw-print class="paw absolute bottom-[12%] left-[1.5%] hidden size-9 text-primary lg:block [animation-duration:23s]"/>
-            <x-paw-print class="paw absolute top-[10%] right-[1.5%] hidden size-6 text-accent-vivid lg:block [animation-delay:-7s] [animation-duration:26s]"/>
-        </div>
+    {{-- ══ 1. HERO ═══════════════════════════════════════════════════════ --}}
+    <div class="container-page max-w-6xl pt-6">
+        <nav aria-label="Breadcrumb" class="text-sm text-ink-muted">
+            <ol class="flex flex-wrap items-center gap-1.5">
+                <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
+                <li aria-hidden="true">/</li>
+                <li><a href="{{ route('blog.index') }}" class="transition-colors hover:text-primary">Blog</a></li>
+                <li aria-hidden="true">/</li>
+                <li><a href="{{ route('blog.index') }}?topic={{ urlencode($post['category']) }}" class="transition-colors hover:text-primary">{{ $post['category'] }}</a></li>
+                <li aria-hidden="true">/</li>
+                <li class="font-medium text-ink">{{ $post['title'] }}</li>
+            </ol>
+        </nav>
 
-        <div class="container-page relative grid items-center gap-8 pt-8 pb-14 lg:grid-cols-2 lg:gap-12 lg:pt-6 lg:pb-20">
+        {{-- One card rather than a full-width band. The page is a document,
+             and a document has edges. --}}
+        <header class="relative mt-5 grid overflow-hidden rounded-2xl bg-surface-soft lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
+            <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+                <x-paw-print class="paw absolute top-[14%] right-[42%] hidden size-8 text-primary-vivid/30 lg:block [animation-duration:23s]"/>
+                <x-paw-print class="paw absolute bottom-[18%] right-[38%] hidden size-6 text-primary-vivid/25 lg:block [animation-delay:-7s] [animation-duration:26s]"/>
+            </div>
 
-            <div class="min-w-0">
-                <nav aria-label="Breadcrumb" class="reveal text-sm text-ink-muted">
-                    <ol class="flex flex-wrap items-center gap-1.5">
-                        <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
-                        <li aria-hidden="true">/</li>
-                        <li><a href="{{ route('blog.index') }}" class="transition-colors hover:text-primary">Blog</a></li>
-                        <li aria-hidden="true">/</li>
-                        <li class="font-medium text-ink">{{ $post['category'] }}</li>
-                    </ol>
-                </nav>
+            <div class="relative z-10 p-6 sm:p-9">
+                <span class="rounded-full bg-primary-vivid px-3 py-1 text-xs font-bold text-ink">{{ $post['category'] }}</span>
 
-                <div class="reveal mt-5 flex flex-wrap items-center gap-2.5" style="--reveal-delay: 60ms">
-                    <span class="rounded-full bg-primary-vivid px-3 py-1 text-xs font-bold text-ink">{{ $post['category'] }}</span>
-                    <span class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-ink-muted shadow-sm">
-                        <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M12 6v6l4 2"/><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z"/>
-                        </svg>
-                        {{ $post['minutes'] }} min read
-                    </span>
-                    <span class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold text-ink-muted shadow-sm">
-                        Updated
-                        <time datetime="{{ $post['updated'] }}">
-                            {{ \Illuminate\Support\Carbon::parse($post['updated'])->format('M j, Y') }}
-                        </time>
-                    </span>
-                </div>
-
-                <h1 class="reveal mt-5 font-heading text-4xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-5xl"
-                    style="--reveal-delay: 120ms">
+                <h1 class="mt-4 font-heading text-3xl leading-[1.12] font-extrabold tracking-tight text-ink sm:text-4xl">
                     {{ $post['title'] }}
                 </h1>
 
-                <p class="reveal mt-5 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg"
-                   style="--reveal-delay: 180ms">
-                    {{ $post['excerpt'] }}
-                </p>
+                <p class="mt-4 max-w-lg text-base leading-relaxed text-ink-muted">{{ $post['excerpt'] }}</p>
 
-                <div class="reveal mt-7 flex flex-wrap items-center gap-4 border-t border-line pt-5"
-                     style="--reveal-delay: 240ms">
-                    <x-byline :reviewed="true"/>
+                <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ink-muted">
+                    <x-byline/>
+                    <span aria-hidden="true" class="hidden size-1 rounded-full bg-line-strong sm:block"></span>
+                    <time datetime="{{ $post['updated'] }}">
+                        {{ \Illuminate\Support\Carbon::parse($post['updated'])->format('F j, Y') }}
+                    </time>
+                    <span aria-hidden="true" class="size-1 rounded-full bg-line-strong"></span>
+                    <span>{{ $post['minutes'] }} min read</span>
                 </div>
             </div>
 
-            {{-- The image is not given a reveal: it is the largest thing on
-                 screen and therefore what Largest Contentful Paint measures,
-                 and fading it in delays the moment that metric records. --}}
+            {{-- Not animated: it is the largest thing on screen, so it is what
+                 Largest Contentful Paint measures, and fading it in delays the
+                 moment that metric records. --}}
             @if (\App\Support\Images::get($post['image']))
-                <div class="relative">
-                    <figure class="overflow-hidden rounded-[3.5rem_1.5rem_3.5rem_1.5rem] border-4 border-primary/15 bg-surface shadow-xl sm:rounded-[5rem_2rem_5rem_2rem]">
+                <div class="relative min-h-56 lg:min-h-0">
+                    <div class="absolute inset-0">
                         <x-img :name="$post['image']" :alt="$post['alt']"
-                               sizes="(min-width: 1024px) 46vw, 92vw" :priority="true"/>
-                    </figure>
-
-                    {{-- Repeats the read time above, so it is hidden from screen
-                         readers rather than announced twice. --}}
-                    <div aria-hidden="true"
-                         class="absolute -bottom-5 right-5 hidden items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 shadow-lg sm:flex">
-                        <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary-light text-primary">
-                            <x-paw-print class="size-5"/>
-                        </span>
-                        <span>
-                            <span class="block font-heading text-sm font-extrabold text-ink">{{ $post['minutes'] }} minute read</span>
-                            <span class="mt-0.5 block text-xs text-ink-muted">Sources named at the foot</span>
-                        </span>
+                               sizes="(min-width: 1024px) 42vw, 100vw" :priority="true"/>
                     </div>
                 </div>
             @endif
-        </div>
+        </header>
+    </div>
 
-        <svg class="absolute inset-x-0 bottom-0 h-8 w-full text-surface sm:h-12" viewBox="0 0 1440 120"
-             preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
-            <path d="M0 60c180-45 360-45 540-10s360 55 540 20 300-55 360-60v110H0Z"/>
-        </svg>
-    </header>
-
-    {{-- ══ 3. BODY ═══════════════════════════════════════════════════════ --}}
-    <div class="bg-surface py-10 lg:py-12">
-        <div class="container-page grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,1fr)_16rem] lg:gap-12">
+    {{-- ══ 2. BODY AND SIDEBAR ═══════════════════════════════════════════ --}}
+    <div class="py-8 lg:py-10">
+        <div class="container-page grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-10">
 
             <div class="min-w-0">
-                {{-- The answer, before anything else. It is what the reader came
-                     for and it is what Google lifts for a featured snippet;
-                     making them scroll past four paragraphs of preamble for it
-                     is how a page loses both. --}}
-                <div class="rounded-2xl border border-accent-light bg-accent-light p-5 sm:p-6">
+                {{-- The answer, before any preamble. It is what the reader came
+                     for and what Google lifts for a snippet. --}}
+                <div class="relative overflow-hidden rounded-2xl border border-accent-light bg-accent-light p-5 pr-24 sm:p-6 sm:pr-32">
                     <p class="flex items-center gap-2 text-xs font-bold tracking-wider text-accent-dark uppercase">
-                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19Z"/><path d="m8.4 12.2 2.4 2.4 4.8-4.8"/>
-                        </svg>
-                        The short answer
+                        <x-paw-print class="size-4"/>
+                        Quick answer
                     </p>
-                    <p class="mt-3 text-base leading-relaxed font-medium text-ink sm:text-lg">
-                        {{ $post['answer'] }}
-                    </p>
+                    <p class="mt-2.5 text-base leading-relaxed font-medium text-ink">{{ $post['answer'] }}</p>
+
+                    <div aria-hidden="true" class="pointer-events-none absolute -right-4 bottom-0 hidden h-24 w-28 sm:block">
+                        <x-img name="purrquery-cat-saying-hi" alt="" sizes="112px" fit="contain"/>
+                    </div>
                 </div>
 
-                {{-- Contents, inline on mobile where a sticky rail has nowhere
+                {{-- Contents inline on mobile, where a sticky rail has nowhere
                      to sit. --}}
                 <details class="mt-6 rounded-2xl border border-line bg-surface-section px-5 lg:hidden" open>
                     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-heading font-bold text-ink marker:content-['']">
@@ -133,24 +105,18 @@
 
                 {{-- ══ FAQ ═══════════════════════════════════════════════ --}}
                 <section id="faq" class="mt-12 scroll-mt-28">
-                    <h2 class="font-heading text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">
+                    <h2 class="font-heading text-2xl font-extrabold tracking-tight text-ink">
                         Frequently asked questions
                     </h2>
 
                     <div class="mt-5 space-y-3">
                         @foreach ($post['faq'] as $item)
-                            {{-- Open or shut, the answer stays in the markup,
-                                 which is what lets the FAQ structured data
-                                 describe it honestly. --}}
                             <details class="group rounded-xl border border-line bg-surface px-5 shadow-sm transition hover:border-line-strong open:shadow-md">
-                                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-heading font-bold text-ink marker:content-['']">
+                                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-heading text-sm font-bold text-ink marker:content-[''] sm:text-base">
                                     {{ $item['q'] }}
-                                    <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary transition-transform duration-200 group-open:rotate-45">
-                                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                             stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-                                            <path d="M12 5v14M5 12h14"/>
-                                        </svg>
-                                    </span>
+                                    <svg class="size-5 shrink-0 text-primary transition-transform duration-200 group-open:rotate-180"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                                         stroke-linecap="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
                                 </summary>
                                 <p class="pb-5 text-base leading-relaxed text-ink-muted">{{ $item['a'] }}</p>
                             </details>
@@ -186,36 +152,195 @@
                         </span>
                     </p>
                 </section>
+
+                {{-- ══ TOOL CTA ══════════════════════════════════════════ --}}
+                <section class="mt-8">
+                    <div class="grid overflow-hidden rounded-2xl bg-accent-light sm:grid-cols-[auto_minmax(0,1fr)]">
+                        <div aria-hidden="true" class="hidden w-40 self-end sm:block">
+                            <div class="aspect-[3/2]">
+                                <x-img name="purrquery-cat-waving-paw" alt="" sizes="160px" fit="contain"/>
+                            </div>
+                        </div>
+                        <div class="px-6 py-7 text-center sm:pl-2 sm:text-left">
+                            <h2 class="font-heading text-xl font-extrabold tracking-tight text-ink">
+                                Want an answer in seconds?
+                            </h2>
+                            <p class="mt-1.5 text-sm leading-relaxed text-ink-muted">
+                                The calculators handle age, due dates and portions without an account.
+                            </p>
+                            <div class="mt-4 flex flex-wrap justify-center gap-2.5 sm:justify-start">
+                                <a href="{{ route('tools.cat-age-calculator') }}" class="btn-primary rounded-full px-5 py-2.5 text-sm">Cat age calculator</a>
+                                <a href="/#tools" class="btn-outline rounded-full bg-surface px-5 py-2.5 text-sm">All free tools</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
 
-            {{-- ══ 4. SIDEBAR ════════════════════════════════════════════ --}}
-            <aside class="hidden lg:block">
-                <div class="sticky top-28 space-y-6">
-                    <nav aria-labelledby="toc-heading" class="rounded-2xl border border-line bg-surface-section p-5">
-                        <h2 id="toc-heading" class="font-heading text-sm font-bold tracking-wider text-ink uppercase">
-                            On this page
-                        </h2>
-                        <div data-toc class="mt-4"></div>
-                    </nav>
+            {{-- ══ 3. SIDEBAR ════════════════════════════════════════════ --}}
+            <aside class="space-y-5 lg:sticky lg:top-24 lg:self-start">
 
-                    @if ($tools->isNotEmpty())
-                        <div class="rounded-2xl border border-line bg-surface p-5 shadow-sm">
-                            <h2 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Try a tool</h2>
-                            <ul class="mt-3 space-y-2">
-                                @foreach ($tools as $tool)
-                                    <li>
-                                        <a href="{{ $tool['url'] ?? '/#tools' }}"
-                                           class="flex items-start gap-2.5 rounded-xl px-2.5 py-2 transition-colors hover:bg-surface-soft">
-                                            <span class="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary-light text-primary">
-                                                <x-paw-print class="size-3.5"/>
-                                            </span>
-                                            <span class="text-sm font-medium text-ink">{{ $tool['title'] }}</span>
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
+                {{-- Contents, desktop only. --}}
+                <nav aria-labelledby="toc-heading" class="hidden rounded-2xl border border-line bg-surface-section p-5 lg:block">
+                    <h2 id="toc-heading" class="font-heading text-sm font-bold tracking-wider text-ink uppercase">On this page</h2>
+                    <div data-toc class="mt-3"></div>
+                </nav>
+
+                @if ($author['name'])
+                    <div class="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                        <h2 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">About the author</h2>
+                        <div class="mt-4 flex items-start gap-3">
+                            @if ($author['image'])
+                                <span class="size-12 shrink-0 overflow-hidden rounded-xl bg-surface-soft">
+                                    <x-img :name="$author['image']" :alt="$author['name']" sizes="48px"/>
+                                </span>
+                            @else
+                                <span class="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary-light">
+                                    <x-paw-print class="size-6 text-primary"/>
+                                </span>
+                            @endif
+                            <div class="min-w-0">
+                                <p class="font-heading text-base font-bold text-ink">{{ $author['name'] }}</p>
+                                <p class="mt-1 text-sm leading-relaxed text-ink-muted">{{ $author['tagline'] }}</p>
+                            </div>
                         </div>
-                    @endif
+                        <a href="{{ route('author') }}" class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                            Read the full profile
+                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                 stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </a>
+                    </div>
+                @endif
+
+                {{-- Plain links, not embedded widgets. A share button that
+                     loads a third-party script would put a tracker on a page
+                     whose privacy policy says there are none. --}}
+                <div class="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                    <h2 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Share this guide</h2>
+                    <ul class="mt-3 flex gap-2">
+                        @foreach ([
+                            ['Facebook', 'https://www.facebook.com/sharer/sharer.php?u='.$shareUrl, 'M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6a22 22 0 0 0-2.4-.12c-2.4 0-4 1.46-4 4.14v2.3H7.6V13h2.7v8Z'],
+                            ['X', 'https://twitter.com/intent/tweet?url='.$shareUrl.'&text='.$shareText, 'M17.5 3h3l-6.6 7.5L21.7 21h-6l-4.7-6.1L5.6 21h-3l7-8L2.6 3h6.2l4.2 5.6Zm-1 16h1.7L8.1 4.7H6.3Z'],
+                            ['Pinterest', 'https://pinterest.com/pin/create/button/?url='.$shareUrl.'&description='.$shareText, 'M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.5 1.8-2.5.9 0 1.3.6 1.3 1.4 0 .9-.5 2.2-.8 3.4-.2 1 .5 1.8 1.5 1.8 1.8 0 3.2-1.9 3.2-4.7 0-2.4-1.7-4.1-4.2-4.1a4.4 4.4 0 0 0-4.6 4.4c0 .9.3 1.8.8 2.3l-.3 1.3c0 .2-.2.3-.4.2-1.2-.6-2-2.4-2-3.9 0-3.2 2.3-6.1 6.6-6.1 3.5 0 6.2 2.5 6.2 5.8 0 3.5-2.2 6.3-5.2 6.3-1 0-2-.5-2.3-1.2l-.6 2.4c-.2.9-.8 2-1.2 2.6A10 10 0 1 0 12 2Z'],
+                            ['Email', 'mailto:?subject='.$shareText.'&body='.$shareUrl, 'M3 7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5Zm.5.5 7.6 5a1.6 1.6 0 0 0 1.8 0l7.6-5'],
+                        ] as [$label, $href, $path])
+                            <li>
+                                <a href="{{ $href }}" rel="noopener nofollow" target="_blank"
+                                   class="flex size-10 items-center justify-center rounded-xl border border-line bg-surface text-ink-muted transition hover:border-primary hover:bg-primary-light hover:text-primary">
+                                    <span class="sr-only">Share on {{ $label }}</span>
+                                    <svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="{{ $path }}"/>
+                                    </svg>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                @if ($posts->isNotEmpty())
+                    <div class="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                        <h2 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Related guides</h2>
+                        <ul class="mt-3 divide-y divide-line">
+                            @foreach ($posts as $related)
+                                @php $relLive = isset($related['url']); @endphp
+                                <li>
+                                    <{{ $relLive ? 'a' : 'div' }}
+                                        @if ($relLive) href="{{ $related['url'] }}" @endif
+                                        @class(['group flex items-center gap-3 py-3', 'transition-colors' => $relLive])>
+                                        <span class="size-14 shrink-0 overflow-hidden rounded-lg bg-surface-section">
+                                            <x-img :name="$related['image']" :alt="$related['alt']" sizes="56px"/>
+                                        </span>
+                                        <span class="min-w-0">
+                                            <span @class([
+                                                'block text-sm leading-snug font-bold text-ink transition-colors',
+                                                'group-hover:text-primary' => $relLive,
+                                            ])>{{ $related['title'] }}</span>
+                                            <span class="mt-0.5 block text-xs text-ink-muted">
+                                                {{ $relLive ? $related['minutes'].' min read' : 'Being written' }}
+                                            </span>
+                                        </span>
+                                    </{{ $relLive ? 'a' : 'div' }}>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                {{-- The design offered "Join 10,000+ cat parents receiving
+                     weekly tips". There is no such list, so this says what is
+                     actually on offer. --}}
+                <div class="rounded-2xl border border-line bg-surface-soft p-5 text-center shadow-sm">
+                    <span class="mx-auto flex size-12 items-center justify-center rounded-2xl bg-surface shadow-sm">
+                        <svg class="size-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5Z"/>
+                            <path d="m3.5 8 7.6 5a1.6 1.6 0 0 0 1.8 0l7.6-5"/>
+                        </svg>
+                    </span>
+                    <h2 class="mt-3 font-heading text-lg font-extrabold text-ink">New guides by email</h2>
+                    <p class="mt-1.5 text-sm leading-relaxed text-ink-muted">
+                        One email a month. No selling your address, one click to leave.
+                    </p>
+
+                    <form method="POST" action="{{ route('subscribe') }}" class="mt-4 space-y-2.5">
+                        @csrf
+                        <label for="aside-email" class="sr-only">Email address</label>
+                        <input id="aside-email" name="email" type="email" required
+                               placeholder="Enter your email" autocomplete="email"
+                               class="w-full rounded-lg border border-line-strong bg-surface px-4 py-2.5 text-sm text-ink transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                        <div class="absolute left-[-9999px]" aria-hidden="true">
+                            <label for="aside-website">Leave this empty</label>
+                            <input id="aside-website" name="website" type="text" tabindex="-1" autocomplete="off">
+                        </div>
+                        <button type="submit" class="w-full rounded-lg bg-primary-vivid px-4 py-2.5 text-sm font-bold text-ink shadow-sm transition hover:brightness-95">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+
+                <div class="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                    <h2 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Browse topics</h2>
+                    <ul class="mt-3 flex flex-wrap gap-2">
+                        @foreach ($topics as $topic)
+                            <li>
+                                <a href="{{ route('blog.index') }}?topic={{ urlencode($topic) }}"
+                                   class="inline-block rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-ink-muted transition hover:border-primary hover:bg-primary-light hover:text-primary">
+                                    {{ $topic }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                {{-- Records a real vote. A widget that thanks you and stores
+                     nothing is worse than not asking. --}}
+                <div data-feedback data-slug="{{ $post['slug'] }}"
+                     class="rounded-2xl border border-line bg-surface-section p-5 text-center">
+                    <h2 class="font-heading text-base font-extrabold text-ink">Was this helpful?</h2>
+                    <p class="mt-1 text-sm text-ink-muted">It decides what gets written next.</p>
+
+                    <div data-feedback-buttons class="mt-4 flex justify-center gap-2.5">
+                        <button type="button" data-feedback-vote="1"
+                                class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink transition hover:border-accent hover:bg-accent-light">
+                            <svg class="size-4 text-accent-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M7 20.5V10l4.5-7 .8.5a2 2 0 0 1 .8 2.2L12.4 9h5.4a2 2 0 0 1 2 2.5l-1.7 7A2 2 0 0 1 16 20.5Z"/>
+                                <path d="M7 10H4.5v10.5H7"/>
+                            </svg>
+                            Yes
+                        </button>
+                        <button type="button" data-feedback-vote="0"
+                                class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink transition hover:border-primary hover:bg-primary-light">
+                            <svg class="size-4 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M17 3.5V14l-4.5 7-.8-.5a2 2 0 0 1-.8-2.2l1.5-3.3H6.2a2 2 0 0 1-2-2.5l1.7-7A2 2 0 0 1 8 3.5Z"/>
+                                <path d="M17 14h2.5V3.5H17"/>
+                            </svg>
+                            No
+                        </button>
+                    </div>
+
+                    <p data-feedback-thanks hidden role="status" class="mt-4 rounded-xl bg-accent-light px-4 py-3 text-sm font-medium text-ink"></p>
                 </div>
             </aside>
         </div>
@@ -293,6 +418,39 @@
 
             build(document.querySelector('[data-toc]'));
             build(document.querySelector('[data-toc-mobile]'));
+
+            /* ── Was this helpful ────────────────────────────────────── */
+            const feedback = document.querySelector('[data-feedback]');
+            if (feedback) {
+                const buttons = feedback.querySelector('[data-feedback-buttons]');
+                const thanks = feedback.querySelector('[data-feedback-thanks]');
+
+                buttons.addEventListener('click', async (event) => {
+                    const button = event.target.closest('[data-feedback-vote]');
+                    if (!button) return;
+
+                    const helpful = button.dataset.feedbackVote === '1';
+                    buttons.setAttribute('hidden', '');
+                    thanks.removeAttribute('hidden');
+                    thanks.textContent = helpful
+                        ? 'Thank you. Guides like this one get written first.'
+                        : 'Noted, and thank you. Tell us what was missing on the contact page.';
+
+                    try {
+                        await fetch('/blog/feedback', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': document.querySelector('meta[name=\'csrf-token\']')?.content ?? '',
+                            },
+                            body: JSON.stringify({ slug: feedback.dataset.slug, helpful }),
+                        });
+                    } catch {
+                        // The thank-you already showed. A failed write is not
+                        // worth telling the reader about; it is our problem.
+                    }
+                });
+            }
 
             /* ── Reading progress ─────────────────────────────────────── */
             const bar = document.querySelector('[data-reading-progress]');

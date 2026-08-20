@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 /**
@@ -11,6 +12,8 @@ use Tests\TestCase;
  */
 class BlogTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_the_index_lists_every_post(): void
     {
         $html = $this->get('/blog')->assertOk()->getContent();
@@ -101,5 +104,59 @@ class BlogTest extends TestCase
         foreach (['/', '/about', '/contact'] as $path) {
             $this->get($path)->assertSee('href="'.route('blog.index').'"', false);
         }
+    }
+
+    /**
+     * A "was this helpful" widget that thanks the reader and stores nothing is
+     * worse than not asking, so the vote is a real row.
+     */
+    public function test_a_vote_is_recorded(): void
+    {
+        $this->postJson('/blog/feedback', ['slug' => 'why-do-cats-knead', 'helpful' => true])
+            ->assertOk()
+            ->assertJson(['recorded' => true]);
+
+        $this->assertDatabaseHas('article_feedback', [
+            'slug' => 'why-do-cats-knead',
+            'helpful' => true,
+        ]);
+    }
+
+    /** Without this the endpoint is a table anyone can write anything into. */
+    public function test_a_vote_for_an_unknown_article_is_rejected(): void
+    {
+        $this->postJson('/blog/feedback', ['slug' => 'made-up', 'helpful' => true])
+            ->assertStatus(422);
+
+        $this->assertDatabaseCount('article_feedback', 0);
+    }
+
+    public function test_a_vote_needs_both_fields(): void
+    {
+        $this->postJson('/blog/feedback', ['slug' => 'why-do-cats-knead'])->assertStatus(422);
+        $this->postJson('/blog/feedback', ['helpful' => false])->assertStatus(422);
+
+        $this->assertDatabaseCount('article_feedback', 0);
+    }
+
+    /**
+     * The privacy policy says a vote is a vote. Storing an address or a user
+     * agent alongside it would make that untrue the moment it shipped.
+     */
+    public function test_a_vote_identifies_nobody(): void
+    {
+        $columns = \Illuminate\Support\Facades\Schema::getColumnListing('article_feedback');
+
+        $this->assertSame(
+            ['id', 'slug', 'helpful', 'created_at', 'updated_at'],
+            $columns,
+            'article_feedback gained a column'
+        );
+    }
+
+    /** The article links here with ?topic=, so those links must do something. */
+    public function test_the_index_accepts_a_topic_in_the_query(): void
+    {
+        $this->get('/blog?topic=Health')->assertOk();
     }
 }

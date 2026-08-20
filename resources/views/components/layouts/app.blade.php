@@ -20,6 +20,10 @@
     <meta name="description" content="{{ $description }}">
     <link rel="canonical" href="{{ $canonical }}">
 
+    {{-- Read by the one thing on the site that posts with fetch rather than
+         a form: the "was this helpful" vote under an article. --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     {{-- max-image-preview:large is the one that earns its place on a site
          built around photographs: without it Google is limited to a thumbnail
          in results. The snippet and video values lift the default caps too. --}}

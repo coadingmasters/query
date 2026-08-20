@@ -90,6 +90,7 @@ class BlogController extends Controller
 
         return view('blog.show', [
             'title' => $post['meta_title'],
+            'topics' => collect(config('catalog.posts'))->pluck('category')->unique()->values(),
             'description' => $post['excerpt'],
             'canonical' => $url.$path,
             'post' => $post,

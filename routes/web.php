@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticleFeedbackController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
@@ -27,6 +28,11 @@ Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 
 Route::get('/blog/{slug}', [BlogController::class, 'show'])
     ->name('blog.show');
+
+// Rate limited because it writes to the database from an unauthenticated page.
+Route::post('/blog/feedback', [ArticleFeedbackController::class, 'store'])
+    ->middleware('throttle:10,1')
+    ->name('blog.feedback');
 
 Route::get('/contact', [ContactController::class, 'show'])->name('contact');
 

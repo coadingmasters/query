@@ -356,7 +356,9 @@
             const search = document.querySelector('[data-blog-search]');
             const status = document.querySelector('[data-blog-status]');
 
-            let category = '';
+            // Arriving from a topic link elsewhere on the site.
+            const wanted = new URLSearchParams(location.search).get('topic') ?? '';
+            let category = buttons.some(b => b.dataset.filterCategory === wanted) ? wanted : '';
 
             const apply = () => {
                 const term = (search?.value ?? '').trim().toLowerCase();
@@ -392,6 +394,11 @@
             }));
 
             search?.addEventListener('input', apply);
+
+            if (category) {
+                buttons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filterCategory === category)));
+                apply();
+            }
         })();
     </script>
 @endpush

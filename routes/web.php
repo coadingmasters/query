@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ArticleFeedbackController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BlogController;
@@ -59,3 +61,18 @@ Route::get('/site.webmanifest', ManifestController::class)->name('manifest');
 Route::post('/subscribe', [SubscriberController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('subscribe');
+
+// Admin: no public link points here, and every route below carries noindex.
+Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function (): void {
+    Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AdminAuthController::class, 'login'])
+        ->middleware('throttle:5,1')
+        ->name('login.attempt');
+    Route::post('/logout', [AdminAuthController::class, 'logout'])
+        ->middleware('auth')
+        ->name('logout');
+
+    Route::get('/dashboard', DashboardController::class)
+        ->middleware('auth')
+        ->name('dashboard');
+});

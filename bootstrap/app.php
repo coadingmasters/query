@@ -13,6 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(\App\Http\Middleware\AddRobotsHeader::class);
+        $middleware->alias(['noindex' => \App\Http\Middleware\NoIndexAdmin::class]);
+        $middleware->redirectGuestsTo(fn () => route('admin.login'));
 
         // Behind a CDN or load balancer (Cloudflare, nginx, a managed host)
         // the real visitor scheme and host arrive in X-Forwarded-* headers.

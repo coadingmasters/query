@@ -1,72 +1,69 @@
 #!/usr/bin/env python3
-"""Render public/og-image.png, the social-share card for the launch page.
+"""Render public/og-image.png, the card every page shares to social and the
+image named in the Organization schema's logo field.
 
 Committed as a script rather than a one-off so the card can be regenerated
 whenever the brand copy or palette changes. Run: python3 scripts/make-og-image.py
+
+Rebuilt from a version that predated both the coral/teal palette and the real
+logo: it drew its own unrelated magnifier-and-paw glyph in the old purple, and
+still said "launching soon" on a site that has been live for weeks. Every
+social share and every crawler reading the Organization schema was showing
+that stale mark until this ran.
 """
-from PIL import Image, ImageDraw, ImageFilter, ImageFont
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 W, H = 1200, 630
-SURFACE = (255, 255, 255)
-SURFACE_SOFT = (248, 247, 255)
-PRIMARY = (83, 74, 183)
-ACCENT = (22, 119, 88)
-ACCENT_VIVID = (29, 158, 117)
-INK = (26, 26, 46)
-INK_SOFT = (99, 105, 118)
-LINE = (229, 227, 248)
+SURFACE_SOFT = (255, 241, 236)     # --color-surface-soft
+PRIMARY_VIVID = (244, 124, 107)    # --color-primary-vivid, coral
+ACCENT_LIGHT = (232, 240, 228)     # --color-accent-light, pale sage
+INK = (18, 56, 59)                 # --color-ink, deep teal
+INK_MUTED = (82, 101, 104)         # --color-ink-muted
 
 FONT_DIR = "/usr/share/fonts/truetype/lato"
-black = ImageFont.truetype(f"{FONT_DIR}/Lato-Black.ttf", 104)
-regular = ImageFont.truetype(f"{FONT_DIR}/Lato-Regular.ttf", 40)
-semibold = ImageFont.truetype(f"{FONT_DIR}/Lato-Semibold.ttf", 26)
+black = ImageFont.truetype(f"{FONT_DIR}/Lato-Black.ttf", 100)
+regular = ImageFont.truetype(f"{FONT_DIR}/Lato-Regular.ttf", 38)
 
 
 def centred(draw, y, text, font, fill):
-    """Draw `text` horizontally centred on the canvas, return its height."""
+    """Draw `text` horizontally centred on the canvas."""
     left, top, right, bottom = draw.textbbox((0, 0), text, font=font)
     draw.text(((W - (right - left)) / 2 - left, y - top), text, font=font, fill=fill)
-    return bottom - top
 
 
 # --- background: soft tint plus two blurred colour fields -------------------
 card = Image.new("RGB", (W, H), SURFACE_SOFT)
 blobs = Image.new("RGB", (W, H), SURFACE_SOFT)
 bd = ImageDraw.Draw(blobs)
-bd.ellipse((-220, -260, 380, 340), fill=(214, 210, 245))
-bd.ellipse((900, 380, 1460, 940), fill=(206, 236, 226))
-card = Image.blend(card, blobs.filter(ImageFilter.GaussianBlur(120)), 0.9)
+bd.ellipse((-240, -280, 360, 320), fill=PRIMARY_VIVID)
+bd.ellipse((900, 380, 1480, 960), fill=ACCENT_LIGHT)
+card = Image.blend(card, blobs.filter(ImageFilter.GaussianBlur(130)), 0.35)
 
 d = ImageDraw.Draw(card)
 
-# --- logo mark: magnifier lens holding a paw --------------------------------
-cx, cy, r = W // 2 - 8, 162, 56
-d.ellipse((cx - r, cy - r, cx + r, cy + r), outline=PRIMARY, width=12)
+# --- logo mark: the real icon, not a redrawn stand-in ------------------------
+# icon-512.png will not do here: it is flattened onto an opaque white square
+# by make-favicons.py, and pasting a square onto a tinted card draws a visible
+# box around the circle. Cropped fresh from the source logo instead, with
+# transparency preserved outside the coral disc the same way the favicon
+# script does it.
+CIRCLE_BOX = (300, 10, 668, 668)
+source_logo = Image.open("resources/images/purrquery.webp").convert("RGBA")
+icon = source_logo.crop((
+    CIRCLE_BOX[0], CIRCLE_BOX[1],
+    CIRCLE_BOX[0] + CIRCLE_BOX[2], CIRCLE_BOX[1] + CIRCLE_BOX[3],
+))
+ellipse = Image.new("L", icon.size, 0)
+ImageDraw.Draw(ellipse).ellipse((0, 0, icon.width - 1, icon.height - 1), fill=255)
+icon.putalpha(ImageChops.multiply(ellipse, icon.getchannel("A")))
 
-# Handle. Pillow has no round line caps, so the ends are capped with circles.
-hx1, hy1, hx2, hy2, hw = cx + 42, cy + 42, cx + 84, cy + 84, 16
-d.line((hx1, hy1, hx2, hy2), fill=ACCENT, width=hw)
-for ex, ey in ((hx1, hy1), (hx2, hy2)):
-    d.ellipse((ex - hw / 2, ey - hw / 2, ex + hw / 2, ey + hw / 2), fill=ACCENT)
+logo_size = 168
+icon = icon.resize((logo_size, logo_size), Image.LANCZOS)
+card.paste(icon, ((W - logo_size) // 2, 92), icon)
 
-d.ellipse((cx - 17, cy + 6, cx + 17, cy + 32), fill=PRIMARY)           # pad
-for tx, ty in ((-25, -14), (-10, -27), (10, -27), (25, -14)):          # toes
-    d.ellipse((cx + tx - 7, cy + ty - 7, cx + tx + 7, cy + ty + 7), fill=PRIMARY)
-
-# --- wordmark and copy ------------------------------------------------------
-centred(d, 288, "PurrQuery", black, INK)
-centred(d, 418, "Smart tools and clear answers for cat owners", regular, INK_SOFT)
-
-# --- "launching soon" pill --------------------------------------------------
-label = "FREE CAT CARE TOOLS"
-left, top, right, bottom = d.textbbox((0, 0), label, font=semibold)
-tw, th = right - left, bottom - top
-pw, ph = tw + 108, th + 40
-px, py = (W - pw) / 2, 500
-d.rounded_rectangle((px, py, px + pw, py + ph), radius=ph / 2, fill=SURFACE, outline=LINE, width=2)
-dot = py + ph / 2
-d.ellipse((px + 36, dot - 8, px + 52, dot + 8), fill=ACCENT_VIVID)
-d.text((px + 70 - left, py + 20 - top), label, font=semibold, fill=PRIMARY)
+# --- wordmark and copy -------------------------------------------------------
+centred(d, 296, "PurrQuery", black, INK)
+centred(d, 424, "Smart tools and clear answers for cat owners", regular, INK_MUTED)
 
 card.save("public/og-image.png", optimize=True)
 print(f"public/og-image.png written ({W}x{H})")

@@ -20,9 +20,9 @@ return [
     'offers' => [
         [
             'title' => 'Free Cat Care Tools',
-            'body' => 'Six free calculators and checkers: the Cat Age Calculator, '
-                .'Calorie Calculator, Weight Checker, Name Generator, Vaccination '
-                .'Tracker and Breed Quiz. Every one gives instant results with no '
+            'body' => 'The Cat Age Calculator and Cat Pregnancy Calculator are live '
+                .'now, with a calorie calculator, a weight checker and more on the '
+                .'way. Every one gives an instant result, in your browser, with no '
                 .'sign-up.',
             'tone' => 'primary',
             'paths' => [

@@ -192,6 +192,9 @@
 
         <p class="mt-5 text-center text-sm text-ink-muted">
             Counted from what is published today, not projected.
+            @if ($inProgress > 0)
+                {{ $inProgress }} more {{ Str::plural('tool', $inProgress) }} and guides are being built right now.
+            @endif
         </p>
     </div>
 </section>

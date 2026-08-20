@@ -21,7 +21,7 @@ class ManifestController extends Controller
             'description' => config('brand.description'),
             'start_url' => '/',
             'display' => 'standalone',
-            'background_color' => '#F8F7FF',
+            'background_color' => '#FFF1EC',
             'theme_color' => '#F47C6B',
             'icons' => [
                 ['src' => '/icon-192.png', 'sizes' => '192x192', 'type' => 'image/png'],

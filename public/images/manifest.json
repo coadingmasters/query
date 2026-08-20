@@ -831,7 +831,7 @@
             }
         ]
     },
-    "signs-cat-is-sick-vet-examination": {
+    "signs-cat-is-sick-hero": {
         "width": 600,
         "height": 400,
         "preset": "blog",
@@ -839,15 +839,15 @@
         "variants": [
             {
                 "w": 600,
-                "src": "/images/signs-cat-is-sick-vet-examination-600.a6b041f9.webp"
+                "src": "/images/signs-cat-is-sick-hero-600.a6b041f9.webp"
             },
             {
                 "w": 900,
-                "src": "/images/signs-cat-is-sick-vet-examination-900.a6b041f9.webp"
+                "src": "/images/signs-cat-is-sick-hero-900.a6b041f9.webp"
             },
             {
                 "w": 1200,
-                "src": "/images/signs-cat-is-sick-vet-examination-1200.a6b041f9.webp"
+                "src": "/images/signs-cat-is-sick-hero-1200.a6b041f9.webp"
             }
         ]
     },

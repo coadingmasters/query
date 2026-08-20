@@ -129,12 +129,12 @@ return [
         'cat-sneezing-runny-nose' => 'blog',
         'kitten-sneezing' => 'blog',
         'vet-examining-cat-sneezing' => 'blog',
+        'signs-cat-is-sick-hero' => 'blog',
         'cat-kneading-lap' => 'figure-tall',
         'kitten-making-biscuits' => 'figure-tall',
         'cat-kneading-claws-out' => 'figure-tall',
         'can-cats-eat-broccoli-cat-sniffing' => 'blog',
         'how-much-feed-cat-eating-food-bowl' => 'blog',
-        'signs-cat-is-sick-vet-examination' => 'blog',
         'best-indoor-cat-food-premium-ingredients' => 'blog',
         'can-cats-eat-chicken-cat-looking' => 'blog',
         'new-cat-owner-guide-couple-kitten' => 'blog',
@@ -192,12 +192,15 @@ return [
     ],
 
     'placeholders' => [
+        // Real photography is prompted for below; this stands in until it
+        // arrives.
+        'signs-cat-is-sick-hero' => 'cat-vaccination-tracker-vet-examination',
+
         // Same artwork, run at figure size for the body of the age calculator.
         'cat-age-life-stages' => 'cat-age-calculator-senior-tabby-cat',
 
         'cat-pregnancy-calculator-kitten' => 'cat-name-generator-cute-kitten',
         'how-much-feed-cat-eating-food-bowl' => 'cat-calorie-calculator-cat-food-bowl',
-        'signs-cat-is-sick-vet-examination' => 'cat-vaccination-tracker-vet-examination',
 
         'best-indoor-cat-food-premium-ingredients' => 'can-cats-eat-cat-treats-snacks',
         'can-cats-eat-chicken-cat-looking' => 'can-cats-eat-meat-seafood-chicken-fish',

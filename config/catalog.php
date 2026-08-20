@@ -221,12 +221,15 @@ return [
         ],
         [
             'slug' => 'signs-your-cat-is-sick',
-            'title' => '12 Early Signs Your Cat Is Sick',
-            'excerpt' => 'Cats hide illness well. These are the changes in grooming, appetite and posture that tend to show up first.',
+            'url' => '/blog/signs-your-cat-is-sick',
+            'title' => 'How to Tell If Your Cat Is Sick: 12 Signs to Watch For',
+            'excerpt' => 'Cats hide illness well. Appetite loss, hiding, low energy and '
+                .'litter box changes are usually the first signs, before anything '
+                .'looks seriously wrong.',
             'category' => 'Health',
-            'minutes' => 9,
-            'image' => 'signs-cat-is-sick-vet-examination',
-            'alt' => 'Veterinarian examining a cat on an examination table',
+            'minutes' => 10,
+            'image' => 'signs-cat-is-sick-hero',
+            'alt' => 'Tabby cat resting quietly, looking subdued',
         ],
         [
             'slug' => 'best-food-for-indoor-cats',

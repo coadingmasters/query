@@ -70,6 +70,14 @@
     specifically is worth calling ahead about rather than just booking in.
 </p>
 
+<p>
+    If sneezing is one of several things that seem off, rather than the
+    only thing, our
+    <a href="{{ route('blog.show', 'signs-your-cat-is-sick') }}">guide to the early signs a cat is sick</a>
+    covers the wider pattern of appetite, energy and behavior changes worth
+    watching alongside it.
+</p>
+
 <figure>
     <x-img name="vet-examining-cat-sneezing"
            alt="Veterinarian gently examining a calm cat's face during a checkup"

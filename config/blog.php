@@ -186,4 +186,90 @@ return [
         'related_posts' => ['why-do-cats-knead', 'signs-your-cat-is-sick'],
     ],
 
+    'signs-your-cat-is-sick' => [
+        'slug' => 'signs-your-cat-is-sick',
+        'title' => 'How to Tell If Your Cat Is Sick: 12 Signs to Watch For',
+
+        'meta_title' => 'How to Tell If Your Cat Is Sick: 12 Signs to Watch For',
+
+        'excerpt' => 'Cats hide illness well. Appetite loss, hiding, low energy and '
+            .'litter box changes are usually the first signs, before anything '
+            .'looks seriously wrong.',
+
+        'category' => 'Health',
+        'minutes' => 10,
+        'published' => '2026-08-20',
+        'updated' => '2026-08-20',
+
+        'image' => 'signs-cat-is-sick-hero',
+        'alt' => 'Tabby cat resting quietly, looking subdued',
+
+        'answer' => 'Cats hide illness as a survival instinct, so the first signs '
+            .'are usually subtle: eating less, hiding more, seeming low on '
+            .'energy, or a change in litter box habits. One sign on its own is '
+            .'often nothing. Two or more together, or anything that lasts more '
+            .'than a day, is worth a call to the vet.',
+
+        'faq' => [
+            [
+                'q' => 'How can I tell if my cat is sick if they seem fine otherwise?',
+                'a' => 'Watch behavior more than mood. A cat can still purr and greet you while eating less than usual or sleeping in a different spot than normal. The reliable signals are changes from your own cat\'s normal pattern: appetite, energy, litter box habits, and how they hold themselves.',
+            ],
+            [
+                'q' => 'Why do cats hide when they are sick?',
+                'a' => 'It is an instinct left over from being both predator and prey in the wild. A visibly weak animal is a target, so cats default to hiding discomfort rather than showing it. That is also why a cat who does let you see them struggling is often further along than a first-time sign.',
+            ],
+            [
+                'q' => 'What is the most common early sign of illness in cats?',
+                'a' => 'A change in appetite, either eating less or stopping altogether, is usually the first thing owners notice, followed by hiding more than usual. Neither one confirms anything specific on its own; they are what prompt a closer look at everything else.',
+            ],
+            [
+                'q' => 'How long should I wait before taking my cat to the vet?',
+                'a' => 'For a single mild sign in a cat who is otherwise acting normally, a day of closer watching is reasonable. For anything severe, such as repeated vomiting, labored breathing, or a cat who will not move, same-day care is the right call. Not eating for more than 24 hours is also a reason to call, especially in a cat who is already thin.',
+            ],
+            [
+                'q' => 'Can indoor cats get sick even if they never go outside?',
+                'a' => 'Yes. Indoor cats are protected from traffic, fights and many infectious diseases, but they still develop kidney disease, diabetes, dental disease, urinary blockages and cancer at similar rates to cats that go outdoors. Being indoors lowers risk, it does not remove it.',
+            ],
+            [
+                'q' => 'Is it normal for an older cat to slow down?',
+                'a' => 'Some slowing down is normal with age, but it should be gradual, not sudden. A senior cat who stops jumping onto a favorite spot within a week, rather than over months, is showing a change worth mentioning to a vet rather than aging alone.',
+            ],
+            [
+                'q' => 'What should I tell the vet when I call about a sick cat?',
+                'a' => 'What changed, and when. Vets work from a comparison to your cat\'s normal, so \'stopped eating yesterday morning\' or \'has been hiding under the bed for two days\' is more useful than \'acting sick\'. Mention every change you have noticed, even ones that seem unrelated.',
+            ],
+            [
+                'q' => 'When is a sick cat an emergency?',
+                'a' => 'Straining in the litter box with little or no urine, labored or open-mouthed breathing, collapse, repeated vomiting, or a cat who will not respond to you are all same-hour emergencies, not same-day. A blocked bladder in particular can become fatal within a day if untreated.',
+            ],
+        ],
+
+        'sources' => [
+            [
+                'name' => 'Cornell Feline Health Center',
+                'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center',
+                'note' => 'Background on recognizing illness and common feline diseases.',
+            ],
+            [
+                'name' => 'American Association of Feline Practitioners: feline life stage guidelines',
+                'url' => 'https://catvets.com/guidelines/practice-guidelines/life-stage-guidelines',
+                'note' => 'Guidance on the health checks and warning signs relevant to each life stage.',
+            ],
+            [
+                'name' => 'ASPCA: cat health and wellness',
+                'url' => 'https://www.aspca.org/pet-care/cat-care',
+                'note' => 'General guidance on recognizing illness in cats.',
+            ],
+            [
+                'name' => 'VCA Animal Hospitals: signs of illness in cats',
+                'url' => 'https://vcahospitals.com/know-your-pet/recognizing-signs-of-illness-in-cats',
+                'note' => 'Clinical overview of common warning signs and when they need attention.',
+            ],
+        ],
+
+        'related_tools' => ['cat-age-calculator'],
+        'related_posts' => ['why-is-my-cat-sneezing', 'why-do-cats-knead'],
+    ],
+
 ];

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MessagesController;
 use App\Http\Controllers\ArticleFeedbackController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BlogController;
@@ -75,4 +76,11 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
     Route::get('/dashboard', DashboardController::class)
         ->middleware('auth')
         ->name('dashboard');
+
+    Route::get('/messages', [MessagesController::class, 'index'])
+        ->middleware('auth')
+        ->name('messages.index');
+    Route::post('/messages/{message}/handled', [MessagesController::class, 'markHandled'])
+        ->middleware('auth')
+        ->name('messages.handled');
 });

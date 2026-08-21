@@ -67,19 +67,39 @@
 
     {{-- Live, client-side filtering: with 68 rows there is nothing to gain
          from a server round trip, and every keystroke updates the table and
-         the count immediately instead of waiting on a Filter click. --}}
+         the count immediately instead of waiting on a Filter click. Paging
+         is client-side for the same reason — all rows are already on the
+         page, so flipping pages is instant with no reload. --}}
     <div data-breed-filters
          x-data="{
              q: '', size: '', registry: '', status: '',
-             visible: {{ $breeds->count() }},
+             page: 1, perPage: 10, visible: {{ $breeds->count() }}, totalMatches: {{ $breeds->count() }},
              get active() { return this.q || this.size || this.registry || this.status; },
+             get pages() { return Math.max(1, Math.ceil(this.totalMatches / this.perPage)); },
              clear() { this.q = ''; this.size = ''; this.registry = ''; this.status = ''; },
+             apply() {
+                 const query = this.q.toLowerCase();
+                 const matches = [...this.$root.querySelectorAll('[data-breed-row]')].filter(row =>
+                     (!query || row.dataset.search.includes(query)) &&
+                     (!this.size || row.dataset.size === this.size) &&
+                     (!this.registry || row.dataset[this.registry] === '1') &&
+                     (!this.status || row.dataset.status === this.status)
+                 );
+                 this.totalMatches = matches.length;
+                 this.page = Math.min(this.page, this.pages);
+                 const start = (this.page - 1) * this.perPage;
+                 [...this.$root.querySelectorAll('[data-breed-row]')].forEach(row => { row.style.display = 'none'; });
+                 matches.slice(start, start + this.perPage).forEach(row => { row.style.display = ''; });
+                 this.visible = Math.min(this.perPage, Math.max(0, this.totalMatches - start));
+             },
          }"
-         x-effect="
-             void [q, size, registry, status];
-             $nextTick(() => {
-                 visible = [...$root.querySelectorAll('[data-breed-row]')].filter(row => row.style.display !== 'none').length;
-             });
+         x-init="
+             apply();
+             $watch('q', () => { page = 1; apply(); });
+             $watch('size', () => { page = 1; apply(); });
+             $watch('registry', () => { page = 1; apply(); });
+             $watch('status', () => { page = 1; apply(); });
+             $watch('page', () => apply());
          ">
 
         <div class="mt-6 flex flex-wrap items-center gap-3">
@@ -140,12 +160,12 @@
                 <tbody class="divide-y divide-line">
                     @forelse ($breeds as $breed)
                         <tr data-breed-row
-                            x-show="
-                                (!q || '{{ Str::lower($breed->name.' '.$breed->origin_country) }}'.includes(q.toLowerCase())) &&
-                                (!size || size === '{{ $breed->size_category }}') &&
-                                (!registry || (registry === 'tica' && {{ $breed->registry_tica ? 'true' : 'false' }}) || (registry === 'cfa' && {{ $breed->registry_cfa ? 'true' : 'false' }}) || (registry === 'fife' && {{ $breed->registry_fife ? 'true' : 'false' }})) &&
-                                (!status || (status === 'active' && {{ $breed->is_active ? 'true' : 'false' }}) || (status === 'hidden' && {{ $breed->is_active ? 'false' : 'true' }}))
-                            "
+                            data-search="{{ Str::lower($breed->name.' '.$breed->origin_country) }}"
+                            data-size="{{ $breed->size_category }}"
+                            data-tica="{{ $breed->registry_tica ? '1' : '0' }}"
+                            data-cfa="{{ $breed->registry_cfa ? '1' : '0' }}"
+                            data-fife="{{ $breed->registry_fife ? '1' : '0' }}"
+                            data-status="{{ $breed->is_active ? 'active' : 'hidden' }}"
                             class="transition-colors hover:bg-surface-section/60 {{ $breed->is_active ? '' : 'opacity-50' }}">
                             <td class="px-5 py-3.5 font-semibold text-ink">{{ $breed->name }}</td>
                             <td class="px-5 py-3.5">
@@ -242,9 +262,26 @@
         </div>
     </div>
 
-    <p class="mt-3 text-sm text-ink-muted">
-        Showing <span x-text="visible">{{ $breeds->count() }}</span> of {{ $breeds->count() }} breeds
-    </p>
+    <div class="mt-3 flex flex-wrap items-center justify-between gap-3">
+        <p class="text-sm text-ink-muted">
+            Showing <span x-text="visible ? (page - 1) * perPage + 1 : 0"></span>&ndash;<span x-text="(page - 1) * perPage + visible"></span>
+            of <span x-text="totalMatches">{{ $breeds->count() }}</span> breeds
+        </p>
+
+        <div class="flex items-center gap-2" x-show="pages > 1" x-cloak>
+            <button type="button" x-on:click="page--" x-bind:disabled="page <= 1"
+                    class="flex size-8 items-center justify-center rounded-lg border border-line-strong bg-surface text-ink-muted transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-line-strong disabled:hover:text-ink-muted">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+                <span class="sr-only">Previous page</span>
+            </button>
+            <span class="text-sm font-semibold text-ink">Page <span x-text="page"></span> of <span x-text="pages"></span></span>
+            <button type="button" x-on:click="page++" x-bind:disabled="page >= pages"
+                    class="flex size-8 items-center justify-center rounded-lg border border-line-strong bg-surface text-ink-muted transition hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-line-strong disabled:hover:text-ink-muted">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+                <span class="sr-only">Next page</span>
+            </button>
+        </div>
+    </div>
 
     </div>
 

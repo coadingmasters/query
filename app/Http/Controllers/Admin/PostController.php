@@ -44,7 +44,16 @@ class PostController extends Controller
             'counts' => $counts,
             'categories' => PostCategory::orderBy('name')->get(),
             'authors' => Author::orderBy('name')->get(),
-            'filters' => $request->only(['q', 'status', 'category', 'author', 'sort']),
+            // Explicit keys, not $request->only() — an empty PHP array
+            // encodes to a JSON array, not an object, and initialFilters.sort
+            // on a JS array silently resolves to Array.prototype.sort.
+            'filters' => [
+                'q' => $request->string('q')->toString(),
+                'status' => $request->string('status')->toString(),
+                'category' => $request->string('category')->toString(),
+                'author' => $request->string('author')->toString(),
+                'sort' => $request->string('sort')->toString(),
+            ],
         ]);
     }
 

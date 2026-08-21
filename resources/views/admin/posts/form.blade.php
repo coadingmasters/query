@@ -508,7 +508,7 @@ function postForm(initial) {
         async saveCategory() {
             if (!this.newCategoryName.trim()) return;
             try {
-                const res = await fetch('{{ route('admin.post-categories.store') }}', {
+                const res = await fetch('{{ route("admin.post-categories.store") }}', {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -535,7 +535,7 @@ function postForm(initial) {
         async saveAuthor() {
             if (!this.newAuthorName.trim()) return;
             try {
-                const res = await fetch('{{ route('admin.authors.store') }}', {
+                const res = await fetch('{{ route("admin.authors.store") }}', {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,

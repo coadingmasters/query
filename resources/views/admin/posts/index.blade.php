@@ -245,7 +245,7 @@ function postsAdmin(initialFilters) {
             if (this.author) params.set('author', this.author);
             if (this.sort !== 'newest') params.set('sort', this.sort);
             const qs = params.toString();
-            return '{{ route('admin.posts.index') }}' + (qs ? `?${qs}` : '');
+            return '{{ route("admin.posts.index") }}' + (qs ? `?${qs}` : '');
         },
 
         async fetchPosts(url = null) {

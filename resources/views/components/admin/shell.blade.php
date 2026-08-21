@@ -3,6 +3,7 @@
 @php
     $navItems = [
         ['key' => 'dashboard', 'label' => 'Dashboard', 'href' => route('admin.dashboard'), 'icon' => 'M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm10 0h6V11h-6v9Zm0-16v5h6V4h-6Z'],
+        ['key' => 'analytics', 'label' => 'Analytics', 'href' => route('admin.analytics'), 'icon' => 'M3 3v18h18M8 17V10M13 17V6M18 17v-4'],
         ['key' => 'messages', 'label' => 'Messages', 'href' => route('admin.messages.index'), 'icon' => 'm3 7 8.5 6L20 7M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z', 'badge' => \App\Models\ContactMessage::whereNull('handled_at')->count()],
         ['key' => 'posts', 'label' => 'Blog Posts', 'href' => route('admin.posts.index'), 'icon' => 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z'],
         ['key' => 'categories', 'label' => 'Categories', 'href' => route('admin.post-categories.index'), 'icon' => 'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Z'],

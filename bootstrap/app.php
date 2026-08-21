@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->append(\App\Http\Middleware\AddRobotsHeader::class);
+        $middleware->append(\App\Http\Middleware\TrackPageView::class);
         $middleware->alias(['noindex' => \App\Http\Middleware\NoIndexAdmin::class]);
         $middleware->redirectGuestsTo(fn () => route('admin.login'));
 

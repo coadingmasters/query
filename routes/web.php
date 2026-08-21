@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\AnalyticsController;
 use App\Http\Controllers\Admin\AuthorController as AdminAuthorController;
 use App\Http\Controllers\Admin\BreedsController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -92,6 +93,10 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
     Route::get('/dashboard', DashboardController::class)
         ->middleware('auth')
         ->name('dashboard');
+
+    Route::get('/analytics', [AnalyticsController::class, 'index'])
+        ->middleware('auth')
+        ->name('analytics');
 
     Route::get('/messages', [MessagesController::class, 'index'])
         ->middleware('auth')

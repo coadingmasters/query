@@ -334,6 +334,13 @@ summary {
     100% { opacity: 1; transform: none; }
 }
 
+/* Staggers result-pop across a list (e.g. admin stat cards) via a custom
+   property set inline, instead of an inline animation-delay — Blade's
+   {{ }} inside a plain style value reads as invalid CSS to editor tooling. */
+.stat-card-pop {
+    animation-delay: var(--pop-delay, 0ms);
+}
+
 @keyframes cat-bob {
     0%, 100% { transform: translate3d(0, 0, 0); }
     50%      { transform: translate3d(0, -6px, 0); }

@@ -63,7 +63,7 @@
 
 {{-- ══ 2. TRACKER ════════════════════════════════════════════════════════ --}}
 <section class="bg-surface pt-4 pb-10 lg:pb-14 print:hidden">
-    <div class="container-page grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-start lg:gap-10">
+    <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-[50px] grid gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-start lg:gap-10">
     <div>
 
         {{-- Progress bar --}}
@@ -283,9 +283,9 @@
 
 {{-- ══ 3. SEO CONTENT ════════════════════════════════════════════════════ --}}
 <section class="bg-surface-section py-10 lg:py-14 print:hidden">
-    <div class="container-page grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-10">
+    <div class="mx-auto w-full max-w-[75rem] px-4 sm:px-6 lg:px-[50px] grid gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-10">
     <div>
-        <div data-article class="article">
+        <div data-article class="article" style="--measure: 46rem;">
 
             <h2 id="schedule-guide">Cat Vaccination Schedule: Complete Guide</h2>
             <p>
@@ -583,7 +583,7 @@
 
 {{-- ══ 4. RELATED TOOLS ══════════════════════════════════════════════════ --}}
 <section class="bg-surface pt-2 pb-8 lg:pb-10 print:hidden">
-    <div class="container-page max-w-6xl">
+    <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-[50px]">
         <h2 class="font-heading text-lg font-extrabold text-ink">Keep going</h2>
         <div class="mt-4 grid gap-4 sm:grid-cols-3">
             @foreach ([
@@ -611,7 +611,7 @@
 
 {{-- ══ 5. SOURCES AND BYLINE ═════════════════════════════════════════════ --}}
 <section class="bg-surface-section py-8 lg:py-10 print:hidden">
-    <div class="container-page max-w-6xl">
+    <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-[50px]">
         <div class="rounded-2xl border border-line bg-surface p-6 sm:p-8">
             <h2 class="font-heading text-lg font-extrabold text-ink">Where this comes from</h2>
             <ul class="mt-4 space-y-3">

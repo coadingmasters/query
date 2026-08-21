@@ -212,7 +212,7 @@ class SeoTest extends TestCase
             ->assertHeader('Content-Type', 'application/xml')
             ->assertSee('<lastmod>', false);
 
-        $robots = file_get_contents(public_path('robots.txt'));
+        $robots = $this->get('/robots.txt')->assertOk()->getContent();
 
         $this->assertStringContainsString('Sitemap:', $robots);
         $this->assertStringNotContainsString('Disallow: /', $robots);

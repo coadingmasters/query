@@ -34,13 +34,13 @@
     <meta property="og:title" content="{{ $title }}">
     <meta property="og:description" content="{{ $description }}">
     <meta property="og:url" content="{{ $canonical }}">
-    <meta property="og:image" content="{{ rtrim(config('app.url'), '/') }}/og-image.png">
+    <meta property="og:image" content="{{ rtrim(config('app.url'), '/') }}{{ config('brand.og_image', '/og-image.png') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="{{ config('app.name') }}: {{ config('brand.tagline') }}">
     <meta property="og:locale" content="{{ config('brand.og_locale') }}">
 
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="{{ config('brand.twitter_card', 'summary_large_image') }}">
     <meta name="twitter:image:alt" content="{{ config('app.name') }}: {{ config('brand.tagline') }}">
 
     {{-- Small sizes carry the cat on its disc rather than the whole badge:

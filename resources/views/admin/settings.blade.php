@@ -27,7 +27,7 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('admin.settings.update') }}" class="mt-6 max-w-3xl space-y-8">
+    <form method="POST" action="{{ route('admin.settings.update') }}" enctype="multipart/form-data" class="mt-6 max-w-3xl space-y-8">
         @csrf
         @method('PUT')
 
@@ -50,6 +50,51 @@
                 <label for="brand_description" class="{{ $label }}">Site description</label>
                 <textarea id="brand_description" name="brand_description" rows="2" class="{{ $input }}">{{ old('brand_description', $settings->brand_description) }}</textarea>
                 <p class="{{ $hint }}">Used as the default meta description where a page doesn't set its own.</p>
+            </div>
+        </div>
+
+        {{-- ── Global SEO ───────────────────────────────────────────── --}}
+        <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
+            <h3 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Global SEO</h3>
+            <p class="mt-1 text-sm text-ink-muted">Defaults used wherever a page doesn't set its own — the site name in every title tag, and the image/card shown when a page is shared.</p>
+
+            <div class="mt-4">
+                <label for="seo_site_name" class="{{ $label }}">Site name</label>
+                <input id="seo_site_name" name="seo_site_name" type="text" value="{{ old('seo_site_name', $settings->seo_site_name) }}" placeholder="{{ config('app.name') }}" class="{{ $input }}">
+            </div>
+
+            <div class="mt-4" x-data="{ preview: {{ \Illuminate\Support\Js::from($settings->seo_og_image_url) }}, remove: false }">
+                <label class="{{ $label }}">Default social share image (og:image)</label>
+                <div class="mt-1.5 flex items-center gap-4">
+                    <div class="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-line-strong bg-surface-section">
+                        <template x-if="preview && !remove">
+                            <img :src="preview" class="size-full object-cover" alt="">
+                        </template>
+                        <template x-if="!preview || remove">
+                            <svg class="size-7 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+                        </template>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <button type="button" x-on:click="$refs.ogImageFile.click()" class="text-left text-sm font-semibold text-primary hover:text-primary-hover">Upload image</button>
+                        <button type="button" x-show="preview && !remove" x-cloak x-on:click="remove = true; preview = null" class="text-left text-sm font-semibold text-danger hover:text-danger/80">Remove</button>
+                    </div>
+                </div>
+                <input x-ref="ogImageFile" type="file" name="seo_og_image" accept="image/jpeg,image/png,image/webp" class="hidden"
+                       x-on:change="if ($event.target.files[0]) { remove = false; preview = URL.createObjectURL($event.target.files[0]); }">
+                <input type="hidden" name="remove_seo_og_image" x-bind:value="remove ? 1 : 0">
+                <p class="{{ $hint }}">1200×630 works best. Falls back to the site's committed default when unset.</p>
+            </div>
+
+            <div class="mt-4">
+                <p class="{{ $label }}">Twitter card type</p>
+                <div class="mt-1.5 flex gap-2">
+                    @foreach (['summary_large_image' => 'Large image', 'summary' => 'Summary (square)'] as $value => $cardLabel)
+                        <label class="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-xl border border-line-strong px-3 py-2.5 text-sm font-semibold text-ink has-checked:border-primary has-checked:bg-primary-light/40">
+                            <input type="radio" name="seo_twitter_card" value="{{ $value }}" @checked(old('seo_twitter_card', $settings->seo_twitter_card ?: 'summary_large_image') === $value) class="size-4 text-primary focus:ring-primary/30">
+                            {{ $cardLabel }}
+                        </label>
+                    @endforeach
+                </div>
             </div>
         </div>
 
@@ -134,6 +179,57 @@
             </div>
         </div>
 
+        {{-- ── Schema / Organization ────────────────────────────────── --}}
+        <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
+            <h3 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Schema (Organization)</h3>
+            <p class="mt-1 text-sm text-ink-muted">
+                The structured-data block search engines read to identify the business itself — separate from the
+                founder above. Update it here once; it applies to the JSON-LD on every page.
+            </p>
+
+            <div class="mt-4" x-data="{ preview: {{ \Illuminate\Support\Js::from($settings->schema_org_logo_url) }}, remove: false }">
+                <label class="{{ $label }}">Organization logo</label>
+                <div class="mt-1.5 flex items-center gap-4">
+                    <div class="flex size-20 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-line-strong bg-surface-section">
+                        <template x-if="preview && !remove">
+                            <img :src="preview" class="size-full object-cover" alt="">
+                        </template>
+                        <template x-if="!preview || remove">
+                            <svg class="size-7 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg>
+                        </template>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <button type="button" x-on:click="$refs.orgLogoFile.click()" class="text-left text-sm font-semibold text-primary hover:text-primary-hover">Upload logo</button>
+                        <button type="button" x-show="preview && !remove" x-cloak x-on:click="remove = true; preview = null" class="text-left text-sm font-semibold text-danger hover:text-danger/80">Remove</button>
+                    </div>
+                </div>
+                <input x-ref="orgLogoFile" type="file" name="schema_org_logo" accept="image/jpeg,image/png,image/webp" class="hidden"
+                       x-on:change="if ($event.target.files[0]) { remove = false; preview = URL.createObjectURL($event.target.files[0]); }">
+                <input type="hidden" name="remove_schema_org_logo" x-bind:value="remove ? 1 : 0">
+                <p class="{{ $hint }}">Falls back to the default social share image above when unset.</p>
+            </div>
+
+            <div class="mt-4 grid gap-4 sm:grid-cols-2">
+                <div>
+                    <label for="schema_facebook_url" class="{{ $label }}">Facebook</label>
+                    <input id="schema_facebook_url" name="schema_facebook_url" type="url" value="{{ old('schema_facebook_url', $settings->schema_facebook_url) }}" placeholder="https://" class="{{ $input }}">
+                </div>
+                <div>
+                    <label for="schema_instagram_url" class="{{ $label }}">Instagram</label>
+                    <input id="schema_instagram_url" name="schema_instagram_url" type="url" value="{{ old('schema_instagram_url', $settings->schema_instagram_url) }}" placeholder="https://" class="{{ $input }}">
+                </div>
+                <div>
+                    <label for="schema_twitter_url" class="{{ $label }}">X / Twitter</label>
+                    <input id="schema_twitter_url" name="schema_twitter_url" type="url" value="{{ old('schema_twitter_url', $settings->schema_twitter_url) }}" placeholder="https://" class="{{ $input }}">
+                </div>
+                <div>
+                    <label for="schema_youtube_url" class="{{ $label }}">YouTube</label>
+                    <input id="schema_youtube_url" name="schema_youtube_url" type="url" value="{{ old('schema_youtube_url', $settings->schema_youtube_url) }}" placeholder="https://" class="{{ $input }}">
+                </div>
+            </div>
+            <p class="{{ $hint }} mt-2">Empty ones are left out — an unverifiable social link is worse than no link.</p>
+        </div>
+
         {{-- ── Legal ─────────────────────────────────────────────────── --}}
         <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
             <h3 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Legal</h3>
@@ -144,11 +240,48 @@
             </div>
         </div>
 
+        {{-- ── Sitemap ───────────────────────────────────────────────── --}}
+        <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
+            <h3 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Sitemap</h3>
+            <p class="mt-1 text-sm text-ink-muted">
+                Built automatically from the site's real pages and published posts — cached for a day, so
+                "regenerate" just clears that cache rather than editing anything by hand.
+            </p>
+
+            <p class="mt-3 text-sm text-ink">
+                Last generated:
+                <span class="font-semibold">{{ $sitemapLastGenerated?->diffForHumans() ?? 'not yet — it builds on first request' }}</span>
+            </p>
+
+            <div class="mt-4">
+                <label for="sitemap_excluded_paths" class="{{ $label }}">Exclude paths</label>
+                <textarea id="sitemap_excluded_paths" name="sitemap_excluded_paths" rows="3" placeholder="/faq&#10;/blog/some-old-post" class="{{ $input }}">{{ old('sitemap_excluded_paths', $settings->sitemap_excluded_paths) }}</textarea>
+                <p class="{{ $hint }}">One path per line. Applies on the next regenerate.</p>
+            </div>
+        </div>
+
+        {{-- ── Robots.txt ────────────────────────────────────────────── --}}
+        <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
+            <h3 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">robots.txt</h3>
+            <p class="mt-1 text-sm text-ink-muted">Served exactly as written here. Leave blank to use the default (allow everything, point at the sitemap).</p>
+            <div class="mt-4">
+                <textarea id="robots_txt" name="robots_txt" rows="6" placeholder="User-agent: *&#10;Allow: /&#10;&#10;Sitemap: {{ rtrim(config('app.url'), '/') }}/sitemap.xml" class="{{ $input }} font-mono">{{ old('robots_txt', $settings->robots_txt) }}</textarea>
+            </div>
+        </div>
+
         <div class="flex justify-end">
             <button type="submit" class="rounded-full bg-primary-vivid px-6 py-2.5 text-sm font-bold text-ink shadow-sm transition hover:brightness-95">
                 Save settings
             </button>
         </div>
+    </form>
+
+    <form method="POST" action="{{ route('admin.settings.regenerate-sitemap') }}" class="mt-4 flex justify-end">
+        @csrf
+        <button type="submit" class="flex items-center gap-2 rounded-full border border-line-strong bg-surface px-5 py-2.5 text-sm font-semibold text-ink-muted transition hover:border-primary hover:text-primary">
+            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v5h-5"/></svg>
+            Regenerate sitemap now
+        </button>
     </form>
 
 </x-admin.shell>

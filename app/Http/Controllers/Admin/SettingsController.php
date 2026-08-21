@@ -3,17 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\SitemapController;
 use App\Models\Author;
 use App\Models\Setting;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class SettingsController extends Controller
 {
     public function index(): View
     {
-        return view('admin.settings', ['settings' => Setting::current()]);
+        return view('admin.settings', [
+            'settings' => Setting::current(),
+            'sitemapLastGenerated' => Cache::get(SitemapController::LAST_GENERATED_KEY),
+        ]);
     }
 
     public function update(Request $request): RedirectResponse
@@ -35,13 +42,54 @@ class SettingsController extends Controller
             'reviewer_reviewed_on' => ['nullable', 'date'],
             'reviewer_profile_url' => ['nullable', 'url', 'max:255'],
             'legal_jurisdiction' => ['nullable', 'string', 'max:190'],
+            'seo_site_name' => ['nullable', 'string', 'max:60'],
+            'seo_og_image' => ['nullable', 'image', 'max:2048'],
+            'remove_seo_og_image' => ['nullable', 'boolean'],
+            'seo_twitter_card' => ['nullable', Rule::in(['summary', 'summary_large_image'])],
+            'schema_org_logo' => ['nullable', 'image', 'max:2048'],
+            'remove_schema_org_logo' => ['nullable', 'boolean'],
+            'schema_facebook_url' => ['nullable', 'url', 'max:255'],
+            'schema_instagram_url' => ['nullable', 'url', 'max:255'],
+            'schema_twitter_url' => ['nullable', 'url', 'max:255'],
+            'schema_youtube_url' => ['nullable', 'url', 'max:255'],
+            'robots_txt' => ['nullable', 'string', 'max:2000'],
+            'sitemap_excluded_paths' => ['nullable', 'string', 'max:2000'],
         ]);
 
-        Setting::current()->update($data);
+        $settings = Setting::current();
+
+        $this->handleImage($request, $data, $settings, 'seo_og_image', 'remove_seo_og_image');
+        $this->handleImage($request, $data, $settings, 'schema_org_logo', 'remove_schema_org_logo');
+        unset($data['remove_seo_og_image'], $data['remove_schema_org_logo']);
+
+        $settings->update($data);
 
         $this->syncFounderAuthor($data);
 
         return redirect()->route('admin.settings.index')->with('status', 'Settings updated.');
+    }
+
+    public function regenerateSitemap(): RedirectResponse
+    {
+        Cache::forget(SitemapController::CACHE_KEY);
+
+        return redirect()->route('admin.settings.index')->with('status', 'Sitemap will regenerate on its next request.');
+    }
+
+    private function handleImage(Request $request, array &$data, Setting $settings, string $field, string $removeField): void
+    {
+        if ($request->hasFile($field)) {
+            if ($settings->{$field}) {
+                Storage::disk('public')->delete($settings->{$field});
+            }
+
+            $data[$field] = $request->file($field)->store('settings', 'public');
+        } elseif ($request->boolean($removeField) && $settings->{$field}) {
+            Storage::disk('public')->delete($settings->{$field});
+            $data[$field] = null;
+        } else {
+            unset($data[$field]);
+        }
     }
 
     /**

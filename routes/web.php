@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\MessagesController;
 use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PostTagController;
+use App\Http\Controllers\Admin\RedirectController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SubscribersController;
 use App\Http\Controllers\ArticleFeedbackController;
@@ -22,6 +23,7 @@ use App\Http\Controllers\TermsController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManifestController;
+use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Tools\CatAgeCalculatorController;
 use App\Http\Controllers\Tools\CatCalorieCalculatorController;
@@ -73,6 +75,7 @@ Route::get('/terms', TermsController::class)->name('terms');
 Route::get('/privacy', PrivacyController::class)->name('privacy');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+Route::get('/robots.txt', RobotsController::class)->name('robots');
 Route::get('/site.webmanifest', ManifestController::class)->name('manifest');
 
 // Rate limited because it writes to the database from an unauthenticated form.
@@ -116,6 +119,7 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
     Route::middleware('auth')->prefix('settings')->name('settings.')->group(function (): void {
         Route::get('/', [SettingsController::class, 'index'])->name('index');
         Route::put('/', [SettingsController::class, 'update'])->name('update');
+        Route::post('/regenerate-sitemap', [SettingsController::class, 'regenerateSitemap'])->name('regenerate-sitemap');
     });
 
     Route::middleware('auth')->prefix('breeds')->name('breeds.')->group(function (): void {
@@ -138,5 +142,6 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
         Route::apiResource('post-tags', PostTagController::class);
         Route::get('post-tags-search', [PostTagController::class, 'search'])->name('post-tags.search');
         Route::apiResource('authors', AdminAuthorController::class);
+        Route::apiResource('redirects', RedirectController::class)->except(['show']);
     });
 });

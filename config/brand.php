@@ -44,4 +44,23 @@ return [
 
     // Shown under the hero as short proof points.
     'promises' => ['100% free', 'PDF reports', 'No sign-up', 'Research-backed'],
+
+    // og:image on every page that doesn't set its own. A path relative to
+    // the site root (not a full URL) so it works the same whether it's this
+    // committed default or an admin-uploaded storage file.
+    'og_image' => '/og-image.png',
+
+    // twitter:card. "summary_large_image" needs a wide image (the default
+    // above is), "summary" suits a square logo instead.
+    'twitter_card' => 'summary_large_image',
+
+    // Organization JSON-LD logo. Null falls back to og_image in Schema.php
+    // rather than being duplicated here.
+    'schema_logo' => null,
+
+    // Organization JSON-LD sameAs — the business's own social accounts, not
+    // the founder's (see author.founder.profiles for that). Empty entries
+    // are dropped, same reasoning as the founder profiles: unverifiable
+    // sameAs claims are worse than none.
+    'social' => [],
 ];

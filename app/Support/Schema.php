@@ -32,12 +32,14 @@ class Schema
             'logo' => [
                 '@type' => 'ImageObject',
                 '@id' => self::url('/#logo'),
-                'url' => self::url('/og-image.png'),
+                'url' => self::url(config('brand.schema_logo') ?: config('brand.og_image', '/og-image.png')),
                 'width' => 1200,
                 'height' => 630,
             ],
         ] + (config('author.founder.name') ? [
             'founder' => ['@id' => self::url('/#founder')],
+        ] : []) + (config('brand.social') ? [
+            'sameAs' => config('brand.social'),
         ] : []);
     }
 

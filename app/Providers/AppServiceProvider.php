@@ -108,6 +108,10 @@ class AppServiceProvider extends ServiceProvider
             'author.reviewer.reviewed_on' => $settings->reviewer_reviewed_on?->toDateString(),
             'author.reviewer.profile' => $settings->reviewer_profile_url,
             'legal.jurisdiction' => $settings->legal_jurisdiction,
+            'app.name' => $settings->seo_site_name,
+            'brand.og_image' => $settings->seo_og_image_url,
+            'brand.twitter_card' => $settings->seo_twitter_card,
+            'brand.schema_logo' => $settings->schema_org_logo_url,
         ];
 
         foreach (array_filter($map, fn ($value) => filled($value)) as $key => $value) {
@@ -127,6 +131,17 @@ class AppServiceProvider extends ServiceProvider
 
         if ($profiles) {
             config(['author.founder.profiles' => $profiles]);
+        }
+
+        $orgProfiles = array_values(array_filter([
+            $settings->schema_facebook_url,
+            $settings->schema_instagram_url,
+            $settings->schema_twitter_url,
+            $settings->schema_youtube_url,
+        ]));
+
+        if ($orgProfiles) {
+            config(['brand.social' => $orgProfiles]);
         }
     }
 }

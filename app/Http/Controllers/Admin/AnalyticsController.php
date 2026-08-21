@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PageView;
 use App\Models\Subscriber;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class AnalyticsController extends Controller
@@ -19,8 +20,6 @@ class AnalyticsController extends Controller
 
     public function index(): View
     {
-        $range = now()->subDays(30);
-
         $counts = [
             'today' => PageView::today()->count(),
             'week' => PageView::thisWeek()->count(),
@@ -61,30 +60,20 @@ class AnalyticsController extends Controller
             'percent' => (int) round(($sourceCounts[$source] ?? 0) / $sourceMax * 100),
         ])->values();
 
-        $topPages = PageView::thisMonth()
-            ->select('path', DB::raw('count(*) as views'))
-            ->groupBy('path')
-            ->orderByDesc('views')
-            ->limit(10)
-            ->get()
-            ->map(fn ($row) => ['path' => $row->path, 'label' => $this->labelFor($row->path), 'views' => $row->views]);
+        $topPages = $this->toChartData(
+            PageView::thisMonth()->select('path', DB::raw('count(*) as views'))->groupBy('path')->orderByDesc('views')->limit(10)->get(),
+            fn ($row) => $this->labelFor($row->path)
+        );
 
-        $toolUsage = PageView::thisMonth()
-            ->where('path', 'like', '/tools/%')
-            ->select('path', DB::raw('count(*) as views'))
-            ->groupBy('path')
-            ->orderByDesc('views')
-            ->get()
-            ->map(fn ($row) => ['path' => $row->path, 'label' => self::TOOL_LABELS[$row->path] ?? $row->path, 'views' => $row->views]);
+        $toolUsage = $this->toChartData(
+            PageView::thisMonth()->where('path', 'like', '/tools/%')->select('path', DB::raw('count(*) as views'))->groupBy('path')->orderByDesc('views')->get(),
+            fn ($row) => self::TOOL_LABELS[$row->path] ?? $row->path
+        );
 
-        $topPosts = PageView::thisMonth()
-            ->where('path', 'like', '/blog/%')
-            ->select('path', DB::raw('count(*) as views'))
-            ->groupBy('path')
-            ->orderByDesc('views')
-            ->limit(8)
-            ->get()
-            ->map(fn ($row) => ['path' => $row->path, 'label' => $this->labelFor($row->path), 'views' => $row->views]);
+        $topPosts = $this->toChartData(
+            PageView::thisMonth()->where('path', 'like', '/blog/%')->select('path', DB::raw('count(*) as views'))->groupBy('path')->orderByDesc('views')->limit(8)->get(),
+            fn ($row) => $this->labelFor($row->path)
+        );
 
         return view('admin.analytics', [
             'counts' => $counts,
@@ -98,6 +87,18 @@ class AnalyticsController extends Controller
             'topPosts' => $topPosts,
             'hasData' => PageView::query()->exists(),
         ]);
+    }
+
+    /** Shapes a ranked ["path","views"] result set into x-admin.wave-chart's ["label","count","percent"] format. */
+    private function toChartData($rows, callable $label): Collection
+    {
+        $max = max($rows->max('views'), 1);
+
+        return $rows->map(fn ($row) => [
+            'label' => $label($row),
+            'count' => $row->views,
+            'percent' => (int) round($row->views / $max * 100),
+        ])->values();
     }
 
     private function labelFor(string $path): string

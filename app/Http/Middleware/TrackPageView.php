@@ -49,6 +49,13 @@ class TrackPageView
             return false;
         }
 
+        // A 404 is Laravel's own error view, served as text/html — without
+        // this, every scanner probing for /wp-admin/install.php or similar
+        // shows up as a real, and rank-worthy, page view.
+        if ($response->getStatusCode() !== 200) {
+            return false;
+        }
+
         if (! str_starts_with((string) $response->headers->get('Content-Type'), 'text/html')) {
             return false;
         }

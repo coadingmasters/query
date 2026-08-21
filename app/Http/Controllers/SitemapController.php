@@ -2,23 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\Setting;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 class SitemapController extends Controller
 {
+    public const CACHE_KEY = 'sitemap.xml';
+
+    public const LAST_GENERATED_KEY = 'sitemap.last_generated';
+
     /**
      * The XML sitemap.
      *
      * Generated rather than kept as a static file so the URLs always follow
-     * APP_URL and new pages can be added here as the site grows.
+     * APP_URL and new pages can be added here as the site grows. Cached for
+     * a day (rebuilding it is cheap, but there's no reason to redo it on
+     * every crawler hit) — see admin.settings for the "regenerate now" and
+     * "excluded paths" controls that invalidate/filter this.
      */
     public function __invoke(): Response
     {
-        // lastmod tells a crawler whether a re-fetch is worth it. It is taken
-        // from each page's own view file rather than "now", because claiming a
-        // page changed today when it did not trains crawlers to ignore it.
+        $xml = Cache::remember(self::CACHE_KEY, now()->addDay(), function () {
+            Cache::forever(self::LAST_GENERATED_KEY, now());
+
+            return view('sitemap', ['urls' => $this->urls()])->render();
+        });
+
+        return response($xml, 200, ['Content-Type' => 'application/xml']);
+    }
+
+    private function urls(): array
+    {
         $base = rtrim(config('app.url'), '/');
 
+        // lastmod tells a crawler whether a re-fetch is worth it. It is taken
+        // from each page's own view file rather than "now", because claiming
+        // a page changed today when it did not trains crawlers to ignore it.
         $pages = [
             ['', 'views/home.blade.php', '1.0'],
             ['/about', 'views/about.blade.php', '0.7'],
@@ -28,33 +49,50 @@ class SitemapController extends Controller
             ['/tools/cat-calorie-calculator', 'views/tools/cat-calorie-calculator.blade.php', '0.9'],
             ['/tools/cat-vaccination-tracker', 'views/tools/cat-vaccination-tracker.blade.php', '0.9'],
             ['/blog', 'views/blog/index.blade.php', '0.8'],
-            ['/blog/why-do-cats-knead', 'views/blog/posts/why-do-cats-knead.blade.php', '0.8'],
-            ['/blog/why-is-my-cat-sneezing', 'views/blog/posts/why-is-my-cat-sneezing.blade.php', '0.8'],
-            ['/blog/signs-your-cat-is-sick', 'views/blog/posts/signs-your-cat-is-sick.blade.php', '0.8'],
-            ['/blog/how-much-should-i-feed-my-cat', 'views/blog/posts/how-much-should-i-feed-my-cat.blade.php', '0.8'],
-            ['/blog/can-cats-eat-broccoli', 'views/blog/posts/can-cats-eat-broccoli.blade.php', '0.8'],
-            ['/blog/best-food-for-indoor-cats', 'views/blog/posts/best-food-for-indoor-cats.blade.php', '0.8'],
-            ['/blog/can-cats-eat-chicken', 'views/blog/posts/can-cats-eat-chicken.blade.php', '0.8'],
-            ['/blog/new-cat-owner-guide', 'views/blog/posts/new-cat-owner-guide.blade.php', '0.8'],
             ['/faq', 'views/faq.blade.php', '0.8'],
             ['/contact', 'views/contact.blade.php', '0.5'],
             ['/terms', 'views/terms.blade.php', '0.3'],
             ['/privacy', 'views/privacy.blade.php', '0.3'],
         ];
 
-        $urls = collect($pages)->map(function (array $page) use ($base): array {
-            [$path, $view, $priority] = $page;
-            $file = resource_path($view);
+        $excluded = $this->excludedPaths();
 
-            return [
-                'loc' => $base.($path ?: '/'),
-                'lastmod' => date('Y-m-d', is_file($file) ? filemtime($file) : time()),
-                'priority' => $priority,
-            ];
-        })->all();
+        $staticUrls = collect($pages)
+            ->reject(fn (array $page) => in_array($page[0] ?: '/', $excluded, true))
+            ->map(function (array $page) use ($base): array {
+                [$path, $view, $priority] = $page;
+                $file = resource_path($view);
 
-        return response()
-            ->view('sitemap', ['urls' => $urls])
-            ->header('Content-Type', 'application/xml');
+                return [
+                    'loc' => $base.($path ?: '/'),
+                    'lastmod' => date('Y-m-d', is_file($file) ? filemtime($file) : time()),
+                    'priority' => $priority,
+                ];
+            });
+
+        $postUrls = Post::published()
+            ->get(['slug', 'updated_at'])
+            ->reject(fn ($post) => in_array('/blog/'.$post->slug, $excluded, true))
+            ->map(fn ($post) => [
+                'loc' => $base.'/blog/'.$post->slug,
+                'lastmod' => $post->updated_at->format('Y-m-d'),
+                'priority' => '0.8',
+            ]);
+
+        return $staticUrls->concat($postUrls)->all();
+    }
+
+    private function excludedPaths(): array
+    {
+        $raw = Setting::current()->sitemap_excluded_paths;
+
+        if (! $raw) {
+            return [];
+        }
+
+        return collect(preg_split('/\r?\n/', $raw))
+            ->map(fn (string $path) => '/'.ltrim(trim($path), '/'))
+            ->filter()
+            ->all();
     }
 }

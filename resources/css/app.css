@@ -405,6 +405,12 @@ summary {
     animation-delay: var(--stagger-delay, 0ms);
 }
 
+/* Same reasoning: a raw background: {{ }} inside style="" reads as invalid
+   CSS to editor tooling, since the property name is a real CSS keyword. */
+.dot-color {
+    background: var(--dot-color);
+}
+
 @keyframes admin-bar-fill {
     from { width: 0%; }
     to   { width: var(--admin-bar-percent); }
@@ -453,8 +459,59 @@ summary {
     animation: admin-wave-fill 0.7s ease-out both;
 }
 
+@keyframes post-card-pop {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.post-card-pop {
+    animation: post-card-pop 0.4s ease-out both;
+}
+
+@keyframes post-card-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.5; }
+}
+
+.post-card-pulse {
+    animation: post-card-pulse 2s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+    from { background-position: -200% 0; }
+    to   { background-position: 200% 0; }
+}
+
+.skeleton {
+    background: linear-gradient(90deg, var(--color-surface-soft) 25%, var(--color-line) 50%, var(--color-surface-soft) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes toast-slide-in {
+    from { opacity: 0; transform: translateX(24px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toast-progress-drain {
+    from { width: 100%; }
+    to   { width: 0%; }
+}
+
+.toast-slide-in {
+    animation: toast-slide-in 0.3s ease-out both;
+}
+
+.toast-slide-out {
+    animation: toast-slide-in 0.25s ease-in reverse both;
+}
+
+.toast-progress {
+    animation: toast-progress-drain 4s linear both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .admin-bar, .admin-line-draw, .admin-dot, .admin-donut, .admin-wave-fill {
+    .admin-bar, .admin-line-draw, .admin-dot, .admin-donut, .admin-wave-fill, .post-card-pop, .post-card-pulse, .skeleton, .toast-slide-in, .toast-slide-out, .toast-progress {
         animation: none;
     }
 

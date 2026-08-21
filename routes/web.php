@@ -2,10 +2,14 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\AuthorController as AdminAuthorController;
 use App\Http\Controllers\Admin\BreedsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeedbackController;
 use App\Http\Controllers\Admin\MessagesController;
+use App\Http\Controllers\Admin\PostCategoryController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\PostTagController;
 use App\Http\Controllers\Admin\SubscribersController;
 use App\Http\Controllers\ArticleFeedbackController;
 use App\Http\Controllers\AuthorController;
@@ -110,5 +114,17 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
         Route::get('/{breed}/edit', [BreedsController::class, 'edit'])->name('edit');
         Route::put('/{breed}', [BreedsController::class, 'update'])->name('update');
         Route::delete('/{breed}', [BreedsController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::middleware('auth')->group(function (): void {
+        Route::resource('posts', PostController::class);
+        Route::post('posts/{post}/toggle-featured', [PostController::class, 'toggleFeatured'])->name('posts.toggle-featured');
+        Route::post('posts/{post}/status', [PostController::class, 'updateStatus'])->name('posts.update-status');
+        Route::post('posts/{post}/duplicate', [PostController::class, 'duplicate'])->name('posts.duplicate');
+
+        Route::apiResource('post-categories', PostCategoryController::class);
+        Route::apiResource('post-tags', PostTagController::class);
+        Route::get('post-tags-search', [PostTagController::class, 'search'])->name('post-tags.search');
+        Route::apiResource('authors', AdminAuthorController::class);
     });
 });

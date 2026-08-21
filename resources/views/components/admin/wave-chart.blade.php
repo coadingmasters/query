@@ -72,7 +72,7 @@
     <div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold text-ink-muted">
         @foreach ($points as $i => $p)
             <span class="flex items-center gap-1.5">
-                <span class="size-2.5 rounded-full" style="background:{{ $palette[$i % count($palette)] }}"></span>
+                <span class="dot-color size-2.5 rounded-full" style="--dot-color:{{ $palette[$i % count($palette)] }}"></span>
                 {{ $p['label'] }} <span class="text-ink">{{ $p['count'] }}</span>
             </span>
         @endforeach

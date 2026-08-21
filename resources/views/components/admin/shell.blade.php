@@ -4,7 +4,7 @@
     $navItems = [
         ['key' => 'dashboard', 'label' => 'Dashboard', 'href' => route('admin.dashboard'), 'icon' => 'M4 13h6V4H4v9Zm0 7h6v-5H4v5Zm10 0h6V11h-6v9Zm0-16v5h6V4h-6Z'],
         ['key' => 'messages', 'label' => 'Messages', 'href' => route('admin.messages.index'), 'icon' => 'm3 7 8.5 6L20 7M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z', 'badge' => \App\Models\ContactMessage::whereNull('handled_at')->count()],
-        ['key' => 'blog', 'label' => 'Blog Posts', 'soon' => true, 'icon' => 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z'],
+        ['key' => 'posts', 'label' => 'Blog Posts', 'href' => route('admin.posts.index'), 'icon' => 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z'],
         ['key' => 'breeds', 'label' => 'Breeds', 'href' => route('admin.breeds.index'), 'icon' => 'M12 21c-4.2-2.5-8-5.2-8-9.4A4.4 4.4 0 0 1 12 9a4.4 4.4 0 0 1 8 2.6c0 4.2-3.8 6.9-8 9.4Z M9 7.5c0-1.4-1.1-2.5-2.5-2.5S4 6.1 4 7.5 5.1 10 6.5 10 9 8.9 9 7.5Z M20 7.5c0-1.4-1.1-2.5-2.5-2.5S15 6.1 15 7.5 16.1 10 17.5 10 20 8.9 20 7.5Z'],
         ['key' => 'feedback', 'label' => 'Article Feedback', 'href' => route('admin.feedback.index'), 'icon' => 'M12 21c-4.2-2.5-8-5.2-8-9.4A4.4 4.4 0 0 1 12 9a4.4 4.4 0 0 1 8 2.6c0 4.2-3.8 6.9-8 9.4Z'],
         ['key' => 'subscribers', 'label' => 'Subscribers', 'href' => route('admin.subscribers.index'), 'icon' => 'M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M12.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z'],
@@ -16,6 +16,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }} — {{ config('app.name') }} Admin</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
@@ -132,6 +133,8 @@
             &copy; {{ date('Y') }} {{ config('app.name') }}. Admin dashboard.
         </footer>
     </div>
+
+    <div id="toast-stack" class="fixed top-20 right-4 z-[60] flex flex-col gap-2"></div>
 
     @stack('scripts')
 

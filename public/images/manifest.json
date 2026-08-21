@@ -491,6 +491,26 @@
             }
         ]
     },
+    "cat-vaccination-tracker-hero": {
+        "width": 780,
+        "height": 624,
+        "preset": "hero",
+        "placeholder": true,
+        "variants": [
+            {
+                "w": 780,
+                "src": "/images/cat-vaccination-tracker-hero-780.8020e818.webp"
+            },
+            {
+                "w": 1170,
+                "src": "/images/cat-vaccination-tracker-hero-1170.8020e818.webp"
+            },
+            {
+                "w": 1402,
+                "src": "/images/cat-vaccination-tracker-hero-1560.8020e818.webp"
+            }
+        ]
+    },
     "cat-vaccination-tracker-vet-examination": {
         "width": 400,
         "height": 250,

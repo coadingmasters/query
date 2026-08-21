@@ -48,7 +48,8 @@ return [
         ],
         [
             'slug' => 'vaccination-tracker',
-            'title' => 'Vaccination Tracker',
+            'url' => '/tools/cat-vaccination-tracker',
+            'title' => 'Cat Vaccination Tracker',
             'blurb' => 'Build a shot schedule from your cat’s birth date and keep every booster on time.',
             'image' => 'cat-vaccination-tracker-vet-examination',
             'alt' => 'Veterinarian examining a calm tabby cat',

@@ -19,6 +19,7 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Tools\CatAgeCalculatorController;
 use App\Http\Controllers\Tools\CatCalorieCalculatorController;
 use App\Http\Controllers\Tools\CatPregnancyCalculatorController;
+use App\Http\Controllers\Tools\VaccinationTrackerController;
 use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Route;
 
@@ -55,6 +56,9 @@ Route::get('/tools/cat-pregnancy-calculator', CatPregnancyCalculatorController::
 
 Route::get('/tools/cat-calorie-calculator', CatCalorieCalculatorController::class)
     ->name('tools.cat-calorie-calculator');
+
+Route::get('/tools/cat-vaccination-tracker', VaccinationTrackerController::class)
+    ->name('tools.cat-vaccination-tracker');
 
 Route::get('/faq', FaqController::class)->name('faq');
 

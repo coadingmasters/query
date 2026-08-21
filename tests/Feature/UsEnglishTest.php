@@ -36,6 +36,7 @@ class UsEnglishTest extends TestCase
             'age calculator' => ['/tools/cat-age-calculator'],
             'pregnancy calculator' => ['/tools/cat-pregnancy-calculator'],
             'calorie calculator' => ['/tools/cat-calorie-calculator'],
+            'vaccination tracker' => ['/tools/cat-vaccination-tracker'],
         ];
     }
 

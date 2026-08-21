@@ -283,5 +283,8 @@
     If you are still learning what is normal for a cat you have only just
     brought home, our
     <a href="{{ route('blog.show', 'new-cat-owner-guide') }}">complete guide for new cat owners</a>
-    covers the first vet visit and what to expect in those early weeks.
+    covers the first vet visit and what to expect in those early weeks. Our
+    <a href="{{ route('tools.cat-vaccination-tracker') }}">vaccination tracker</a>
+    is worth checking too, since a missed booster is a common, overlooked
+    reason a cat falls behind on care.
 </p>

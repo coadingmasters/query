@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="mt-3 flex h-2 w-full overflow-hidden rounded-full bg-surface-soft">
-                            <div class="admin-bar h-full bg-accent-vivid" style="--admin-bar-percent: {{ $article['helpful_percent'] }}%; animation-delay: {{ min($i, 8) * 90 }}ms"></div>
+                            <div class="admin-bar stagger-delay h-full bg-accent-vivid" style="--admin-bar-percent: {{ $article['helpful_percent'] }}%; --stagger-delay: {{ min($i, 8) * 90 }}ms"></div>
                         </div>
 
                         <div class="mt-3 flex items-center gap-3 text-xs text-ink-muted">

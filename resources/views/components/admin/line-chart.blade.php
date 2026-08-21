@@ -43,10 +43,10 @@
               class="admin-line-draw" style="stroke-dasharray:{{ $pathLength($messagePoints) ?: 1 }};stroke-dashoffset:{{ $pathLength($messagePoints) ?: 1 }}"/>
 
         @foreach ($messagePoints as $p)
-            <circle cx="{{ $p['x'] }}" cy="{{ $p['y'] }}" r="2.5" fill="var(--color-primary-vivid)" class="admin-dot" style="animation-delay:{{ 500 + $loop->index * 20 }}ms"/>
+            <circle cx="{{ $p['x'] }}" cy="{{ $p['y'] }}" r="2.5" fill="var(--color-primary-vivid)" class="admin-dot stagger-delay" style="--stagger-delay:{{ 500 + $loop->index * 20 }}ms"/>
         @endforeach
         @foreach ($subscriberPoints as $p)
-            <circle cx="{{ $p['x'] }}" cy="{{ $p['y'] }}" r="2.5" fill="var(--color-accent-vivid)" class="admin-dot" style="animation-delay:{{ 620 + $loop->index * 20 }}ms"/>
+            <circle cx="{{ $p['x'] }}" cy="{{ $p['y'] }}" r="2.5" fill="var(--color-accent-vivid)" class="admin-dot stagger-delay" style="--stagger-delay:{{ 620 + $loop->index * 20 }}ms"/>
         @endforeach
     </svg>
 

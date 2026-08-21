@@ -398,6 +398,13 @@ summary {
    than it saves. Every animation is decorative and switched off below for
    reduced-motion visitors.
    ========================================================================== */
+/* Set via a --stagger-delay custom property in style="", never a raw
+   animation-delay: {{ }}ms — the latter reads as invalid CSS to editor
+   tooling that lints style="" attributes. */
+.stagger-delay {
+    animation-delay: var(--stagger-delay, 0ms);
+}
+
 @keyframes admin-bar-fill {
     from { width: 0%; }
     to   { width: var(--admin-bar-percent); }

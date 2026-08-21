@@ -23,8 +23,8 @@
         @foreach ($stats as $i => $stat)
             <{{ isset($stat['href']) ? 'a' : 'div' }}
                 @if (isset($stat['href'])) href="{{ $stat['href'] }}" @endif
-                class="animate-[result-pop_0.5s_cubic-bezier(0.16,1,0.3,1)_both] block rounded-2xl border border-line bg-surface p-5 shadow-sm transition hover:shadow-md"
-                style="animation-delay: {{ $i * 70 }}ms"
+                class="stagger-delay animate-[result-pop_0.5s_cubic-bezier(0.16,1,0.3,1)_both] block rounded-2xl border border-line bg-surface p-5 shadow-sm transition hover:shadow-md"
+                style="--stagger-delay: {{ $i * 70 }}ms"
             >
                 <span class="flex size-10 items-center justify-center rounded-xl {{ $toneClasses[$stat['tone']] }}">
                     <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

@@ -8,8 +8,8 @@
                 <span class="text-ink-muted">{{ $row['count'] }}</span>
             </div>
             <div class="h-2.5 w-full overflow-hidden rounded-full bg-surface-soft">
-                <div class="admin-bar h-full rounded-full bg-primary-vivid"
-                     style="--admin-bar-percent: {{ $row['percent'] }}%; animation-delay: {{ $i * 90 }}ms"></div>
+                <div class="admin-bar stagger-delay h-full rounded-full bg-primary-vivid"
+                     style="--admin-bar-percent: {{ $row['percent'] }}%; --stagger-delay: {{ $i * 90 }}ms"></div>
             </div>
         </div>
     @empty

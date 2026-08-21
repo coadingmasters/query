@@ -65,7 +65,7 @@
 
         @foreach ($points as $i => $p)
             <circle cx="{{ $p['x'] }}" cy="{{ $p['y'] }}" r="5.5" fill="{{ $palette[$i % count($palette)] }}" stroke="var(--color-surface)" stroke-width="2.5"
-                    class="admin-dot" style="animation-delay:{{ 550 + $i * 90 }}ms"/>
+                    class="admin-dot stagger-delay" style="--stagger-delay:{{ 550 + $i * 90 }}ms"/>
         @endforeach
     </svg>
 

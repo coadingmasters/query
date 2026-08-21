@@ -1,10 +1,3 @@
-{{-- Body copy for /blog/how-much-should-i-feed-my-cat.
-
-     The reference table gives real numbers, calculated from the RER formula
-     named in the text (70 x weight_kg^0.75, x1.2 for a typical neutered
-     adult) rather than invented figures. It is a starting range, and the
-     text says so twice: once above the table and once below it. --}}
-
 <p>
     The feeding guide on the back of the bag is written for an average cat,
     at an average activity level, eating that exact food. Your cat is not
@@ -44,16 +37,23 @@
 
 <p>
     Rather than doing that arithmetic by hand, our
-    <a href="{{ route('tools.cat-calorie-calculator') }}">cat calorie calculator</a>
+    <a href="/tools/cat-calorie-calculator">cat calorie calculator</a>
     runs the full formula for you, factoring in life stage, activity, indoor
     or outdoor living and body condition, then converts the result into
     cups, cans or grams for the food you actually feed.
 </p>
 
 <figure>
-    <x-img name="measuring-cat-food-portion"
-           alt="Hand pouring a measured cup of kibble into a cat's bowl"
-           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <img
+        src="/images/measuring-cat-food-portion-600.74ad5220.webp"
+        srcset="/images/measuring-cat-food-portion-600.74ad5220.webp 600w, /images/measuring-cat-food-portion-900.74ad5220.webp 900w, /images/measuring-cat-food-portion-1200.74ad5220.webp 1200w"
+        sizes="(min-width: 1024px) 42rem, 92vw"
+        width="600"
+        height="400"
+        alt="Hand pouring a measured cup of kibble into a cat&#039;s bowl"
+        class="h-full w-full object-cover "
+                    loading="lazy" decoding="async"
+            >
     <figcaption>
         A kitchen scale or a measuring cup used consistently matters more
         than the exact formula you start from.
@@ -122,7 +122,7 @@
 
 <p>
     If your cat spends all or most of their time indoors, our guide to
-    <a href="{{ route('blog.show', 'best-food-for-indoor-cats') }}">the best food for indoor cats</a>
+    <a href="/blog/best-food-for-indoor-cats">the best food for indoor cats</a>
     goes into what actually differs about their needs versus what the
     label promises.
 </p>
@@ -151,7 +151,7 @@
 <p>
     Most cats can move onto adult food around twelve months old. If you
     are not sure exactly where yours is in that stretch, our
-    <a href="{{ route('tools.cat-age-calculator') }}">cat age calculator</a>
+    <a href="/tools/cat-age-calculator">cat age calculator</a>
     converts an age into human years and the life stage that determines how
     they should be eating.
 </p>
@@ -168,9 +168,16 @@
 </p>
 
 <figure>
-    <x-img name="senior-cat-eating-wet-food"
-           alt="Older gray tabby cat eating from a bowl of wet food"
-           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <img
+        src="/images/senior-cat-eating-wet-food-600.bbca3330.webp"
+        srcset="/images/senior-cat-eating-wet-food-600.bbca3330.webp 600w, /images/senior-cat-eating-wet-food-900.bbca3330.webp 900w, /images/senior-cat-eating-wet-food-1200.bbca3330.webp 1200w"
+        sizes="(min-width: 1024px) 42rem, 92vw"
+        width="600"
+        height="400"
+        alt="Older gray tabby cat eating from a bowl of wet food"
+        class="h-full w-full object-cover "
+                    loading="lazy" decoding="async"
+            >
     <figcaption>
         Wet food is often easier for a senior cat with dental discomfort,
         and it helps toward hydration too.
@@ -196,9 +203,16 @@
 </p>
 
 <figure>
-    <x-img name="overweight-cat-resting"
-           alt="Overweight tabby cat resting calmly on a soft cushion"
-           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <img
+        src="/images/overweight-cat-resting-600.fcd6580b.webp"
+        srcset="/images/overweight-cat-resting-600.fcd6580b.webp 600w, /images/overweight-cat-resting-900.fcd6580b.webp 900w, /images/overweight-cat-resting-1200.fcd6580b.webp 1200w"
+        sizes="(min-width: 1024px) 42rem, 92vw"
+        width="600"
+        height="400"
+        alt="Overweight tabby cat resting calmly on a soft cushion"
+        class="h-full w-full object-cover "
+                    loading="lazy" decoding="async"
+            >
     <figcaption>
         Weight loss that happens too fast is the risk here, not the extra
         weight itself. Slow and vet-guided is the safe version.
@@ -220,7 +234,7 @@
 <p>
     Weight and appetite are also two of the more telling early signs
     something is wrong more broadly; our
-    <a href="{{ route('blog.show', 'signs-your-cat-is-sick') }}">guide to the early signs a cat is sick</a>
+    <a href="/blog/signs-your-cat-is-sick">guide to the early signs a cat is sick</a>
     covers how appetite and weight changes fit alongside the wider pattern.
 </p>
 
@@ -233,6 +247,6 @@
     one of the most common quiet causes of gradual, easy-to-miss weight
     gain, precisely because each one feels too small to matter. Plain
     cooked chicken is a common choice; our
-    <a href="{{ route('blog.show', 'can-cats-eat-chicken') }}">guide to feeding cats chicken</a>
+    <a href="/blog/can-cats-eat-chicken">guide to feeding cats chicken</a>
     covers how to do it safely.
 </p>

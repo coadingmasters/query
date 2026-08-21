@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Post extends Model
@@ -16,7 +17,8 @@ class Post extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'title', 'slug', 'excerpt', 'content', 'featured_image', 'featured_image_alt',
+        'title', 'slug', 'excerpt', 'quick_answer', 'content', 'sources',
+        'featured_image', 'featured_image_alt', 'featured_image_width', 'featured_image_height',
         'author_id', 'category_id', 'status', 'is_featured',
         'meta_title', 'meta_description', 'canonical_url', 'published_at',
         'reading_time', 'views_count',
@@ -25,6 +27,7 @@ class Post extends Model
     protected $casts = [
         'is_featured' => 'boolean',
         'published_at' => 'datetime',
+        'sources' => 'array',
     ];
 
     protected static function booted(): void
@@ -35,7 +38,27 @@ class Post extends Model
             }
 
             $post->reading_time = max(1, (int) ceil(str_word_count(strip_tags((string) $post->content)) / 200));
+
+            // Read once, from whichever file actually ends up on disk, rather
+            // than trusted to whoever uploaded it. Every template that prints
+            // the featured image can then emit width/height for free, which
+            // is what keeps Cumulative Layout Shift at zero without a
+            // filesystem read on every page view.
+            if ($post->isDirty('featured_image')) {
+                $size = $post->featured_image
+                    ? @getimagesize(Storage::disk('public')->path($post->featured_image))
+                    : false;
+
+                $post->featured_image_width = $size ? $size[0] : null;
+                $post->featured_image_height = $size ? $size[1] : null;
+            }
         });
+    }
+
+    /** Null once there is no file, rather than a broken src on the page. */
+    public function getFeaturedImageUrlAttribute(): ?string
+    {
+        return $this->featured_image ? Storage::url($this->featured_image) : null;
     }
 
     public function author(): BelongsTo

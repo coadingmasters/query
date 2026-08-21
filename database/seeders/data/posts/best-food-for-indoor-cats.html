@@ -1,5 +1,3 @@
-{{-- Body copy for /blog/best-food-for-indoor-cats. --}}
-
 <p>
     "Indoor formula" on a bag of cat food describes a general approach, not
     a regulated nutritional standard. What actually matters for an indoor
@@ -38,9 +36,16 @@
 </p>
 
 <figure>
-    <x-img name="best-indoor-cat-food-premium-ingredients"
-           alt="Salmon, chicken and fresh ingredients beside a bowl of cat food"
-           sizes="(min-width: 1024px) 42rem, 92vw"/>
+    <img
+        src="/images/best-indoor-cat-food-premium-ingredients-600.bbb75024.webp"
+        srcset="/images/best-indoor-cat-food-premium-ingredients-600.bbb75024.webp 600w, /images/best-indoor-cat-food-premium-ingredients-900.bbb75024.webp 900w, /images/best-indoor-cat-food-premium-ingredients-1200.bbb75024.webp 1200w"
+        sizes="(min-width: 1024px) 42rem, 92vw"
+        width="600"
+        height="400"
+        alt="Salmon, chicken and fresh ingredients beside a bowl of cat food"
+        class="h-full w-full object-cover "
+                    loading="lazy" decoding="async"
+            >
     <figcaption>
         A named protein first on the ingredient list matters more than the
         word "indoor" on the front of the bag.
@@ -55,7 +60,7 @@
     among indoor cats as a result. Rather than relying on a bag's general
     "indoor" positioning, working out your specific cat's daily calorie
     needs from their weight gives a far more accurate portion. Our
-    <a href="{{ route('blog.show', 'how-much-should-i-feed-my-cat') }}">feeding guide</a>
+    <a href="/blog/how-much-should-i-feed-my-cat">feeding guide</a>
     has the formula vets use and a reference table by weight.
 </p>
 
@@ -89,7 +94,7 @@
     A kitten, an adult and a senior cat have meaningfully different
     nutritional needs, and that difference matters more than whether a cat
     goes outside. If you are not sure where your cat sits, our
-    <a href="{{ route('tools.cat-age-calculator') }}">cat age calculator</a>
+    <a href="/tools/cat-age-calculator">cat age calculator</a>
     converts their age into the life stage that should be driving the food
     choice.
 </p>

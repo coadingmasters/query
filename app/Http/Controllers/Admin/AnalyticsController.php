@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PageView;
+use App\Models\Post;
 use App\Models\Subscriber;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
@@ -109,7 +110,7 @@ class AnalyticsController extends Controller
         if (str_starts_with($path, '/blog/')) {
             $slug = trim(substr($path, strlen('/blog/')), '/');
 
-            return config("blog.{$slug}.title", $slug);
+            return Post::where('slug', $slug)->value('title') ?? $slug;
         }
 
         return match ($path) {

@@ -31,7 +31,7 @@
         <div>
             <p class="eyebrow">
                 <span class="size-1.5 rounded-full bg-accent-vivid"></span>
-                {{ count(config('catalog.tools')) + count(config('catalog.foods')) + count(config('catalog.posts')) }} free tools and guides
+                {{ count(config('catalog.tools')) + count(config('catalog.foods')) + $posts->count() }} free tools and guides
             </p>
 
             <h1 class="mt-5 font-heading text-4xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-5xl">
@@ -414,121 +414,88 @@
 </section>
 
 {{-- ══ 7. Blog ═══════════════════════════════════════════════════════════ --}}
-<section id="blog" class="section scroll-mt-20 bg-surface-soft">
-    <div class="container-page">
-        <div class="text-center">
-            <p class="eyebrow">From the blog</p>
-            <h2 class="section-title">Guides worth the read</h2>
-            <p class="section-intro">
-                Longer answers for the questions a calculator cannot settle.
-            </p>
-        </div>
+@if ($posts->isNotEmpty())
+    <section id="blog" class="section scroll-mt-20 bg-surface-soft">
+        <div class="container-page">
+            <div class="text-center">
+                <p class="eyebrow">From the blog</p>
+                <h2 class="section-title">Guides worth the read</h2>
+                <p class="section-intro">
+                    Longer answers for the questions a calculator cannot settle.
+                </p>
+            </div>
 
-        {{-- Magazine layout: two lead stories at full card size, then the
-             rest as a compact list beside them. The earlier featured layout
-             stretched one photo down the whole column and cropped most of it
-             away; here no image is asked to fill a shape it was not cut for.
-             Every photo sits at its own 3:2, and the thumbnails are square
-             crops of the same files rather than separate artwork. --}}
-        @php
-            // Published posts first, so a written article never gets bumped
-            // out of the two lead slots by an unwritten one that happens to
-            // sit earlier in the catalogue.
-            $posts = collect(config('catalog.posts'))
-                ->sortByDesc(fn (array $p): int => isset($p['url']) ? 1 : 0)
-                ->values();
-            $leads = $posts->take(2);
-            $rest = $posts->slice(2);
-        @endphp
+            {{-- Magazine layout: two lead stories at full card size, then the
+                 rest as a compact list beside them. The earlier featured layout
+                 stretched one photo down the whole column and cropped most of it
+                 away; here no image is asked to fill a shape it was not cut for.
+                 Every photo sits at its own 3:2, and the thumbnails are square
+                 crops of the same files rather than separate artwork. --}}
+            @php
+                $leads = $posts->take(2);
+                $rest = $posts->slice(2);
+            @endphp
 
-        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-12">
+            <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-12">
 
-            @foreach ($leads as $post)
-                @php $isLive = isset($post['url']); @endphp
-                <{{ $isLive ? 'a' : 'article' }}
-                    @if ($isLive) href="{{ $post['url'] }}" @endif
-                    class="card reveal lg:col-span-4" data-filter
-                    data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}"
-                    style="--reveal-delay: {{ $loop->index * 80 }}ms">
-                    <div class="card-media relative">
-                        <x-img :name="$post['image']" :alt="$post['alt']"
-                               sizes="(max-width: 1023px) 92vw, 32vw"/>
-                        @unless ($isLive)
-                            <span class="absolute top-3 right-3 rounded-full bg-surface/90 px-3 py-1 text-xs font-bold text-ink-muted shadow-sm">
-                                Coming soon
-                            </span>
-                        @endunless
-                    </div>
-
-                    <div class="card-body">
-                        <div class="flex items-center gap-3 text-xs font-semibold">
-                            <span class="rounded-full bg-primary-light px-2.5 py-1 text-primary-dark">{{ $post['category'] }}</span>
-                            <span class="text-ink-muted">{{ $post['minutes'] }} min read</span>
+                @foreach ($leads as $post)
+                    <a href="{{ route('blog.show', $post->slug) }}"
+                        class="card reveal lg:col-span-4" data-filter
+                        data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}"
+                        style="--reveal-delay: {{ $loop->index * 80 }}ms">
+                        <div class="card-media relative">
+                            <x-post-image :post="$post"/>
                         </div>
 
-                        <h3 class="mt-3 font-heading text-lg leading-snug font-bold text-ink">{{ $post['title'] }}</h3>
-                        <p class="card-text flex-1">{{ $post['excerpt'] }}</p>
-
-                        <span @class([
-                            'mt-4 inline-flex items-center gap-1.5 text-sm font-semibold',
-                            'text-primary' => $isLive,
-                            'text-ink-muted' => ! $isLive,
-                        ])>
-                            {{ $isLive ? 'Read the guide' : 'Being written' }}
-                            @if ($isLive)
-                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                                     stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-                            @endif
-                        </span>
-                    </div>
-                </{{ $isLive ? 'a' : 'article' }}>
-            @endforeach
-
-            {{-- The remaining guides, headline first. A reader scanning this
-                 column wants the titles, not four more photographs. --}}
-            <div class="grid gap-3 sm:col-span-2 sm:grid-cols-2 lg:col-span-4 lg:grid-cols-1 lg:content-between">
-                @foreach ($rest as $post)
-                    @php $isLive = isset($post['url']); @endphp
-                    <{{ $isLive ? 'a' : 'article' }}
-                        @if ($isLive) href="{{ $post['url'] }}" @endif
-                        @class([
-                            'reveal group flex items-center gap-4 rounded-xl border border-line bg-surface p-3 shadow-sm transition',
-                            'hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md' => $isLive,
-                        ])
-                        data-filter
-                        data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}"
-                        style="--reveal-delay: {{ 160 + $loop->index * 70 }}ms">
-                        <div class="relative size-20 shrink-0 overflow-hidden rounded-lg bg-surface-section">
-                            <x-img :name="$post['image']" :alt="$post['alt']" sizes="80px"/>
-                            @unless ($isLive)
-                                <span aria-hidden="true" class="absolute inset-0 bg-surface/45"></span>
-                            @endunless
-                        </div>
-
-                        <div class="min-w-0">
-                            <div class="flex items-center gap-2 text-xs font-semibold">
-                                <span class="text-primary">{{ $post['category'] }}</span>
-                                <span aria-hidden="true" class="size-1 rounded-full bg-line-strong"></span>
-                                <span class="text-ink-muted">{{ $post['minutes'] }} min</span>
+                        <div class="card-body">
+                            <div class="flex items-center gap-3 text-xs font-semibold">
+                                <span class="rounded-full bg-primary-light px-2.5 py-1 text-primary-dark">{{ $post->category?->name }}</span>
+                                <span class="text-ink-muted">{{ $post->reading_time }} min read</span>
                             </div>
 
-                            <h3 @class([
-                                'mt-1 font-heading text-sm leading-snug font-bold text-ink transition-colors',
-                                'group-hover:text-primary' => $isLive,
-                            ])>
-                                {{ $post['title'] }}
-                            </h3>
+                            <h3 class="mt-3 font-heading text-lg leading-snug font-bold text-ink">{{ $post->title }}</h3>
+                            <p class="card-text flex-1">{{ $post->excerpt }}</p>
 
-                            @unless ($isLive)
-                                <span class="mt-0.5 inline-block text-xs font-bold text-ink-muted">Being written</span>
-                            @endunless
+                            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                                Read the guide
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                     stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                            </span>
                         </div>
-                    </{{ $isLive ? 'a' : 'article' }}>
+                    </a>
                 @endforeach
+
+                {{-- The remaining guides, headline first. A reader scanning this
+                     column wants the titles, not four more photographs. --}}
+                <div class="grid gap-3 sm:col-span-2 sm:grid-cols-2 lg:col-span-4 lg:grid-cols-1 lg:content-between">
+                    @foreach ($rest as $post)
+                        <a href="{{ route('blog.show', $post->slug) }}"
+                            class="reveal group flex items-center gap-4 rounded-xl border border-line bg-surface p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md"
+                            data-filter
+                            data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}"
+                            style="--reveal-delay: {{ 160 + $loop->index * 70 }}ms">
+                            <div class="relative size-20 shrink-0 overflow-hidden rounded-lg bg-surface-section">
+                                <x-post-image :post="$post"/>
+                            </div>
+
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 text-xs font-semibold">
+                                    <span class="text-primary">{{ $post->category?->name }}</span>
+                                    <span aria-hidden="true" class="size-1 rounded-full bg-line-strong"></span>
+                                    <span class="text-ink-muted">{{ $post->reading_time }} min</span>
+                                </div>
+
+                                <h3 class="mt-1 font-heading text-sm leading-snug font-bold text-ink transition-colors group-hover:text-primary">
+                                    {{ $post->title }}
+                                </h3>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+@endif
 
 {{-- ══ 8. CTA banner ═════════════════════════════════════════════════════ --}}
 <section class="section bg-surface">

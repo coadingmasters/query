@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Support\Schema;
 use Illuminate\Contracts\View\View;
 
@@ -14,10 +15,15 @@ class HomeController extends Controller
         $description = config('brand.description');
         $title = config('brand.home_title').' | '.$name;
 
+        // Published posts first, most recent first, so a written article
+        // never gets bumped by an older one that happens to sort earlier.
+        $posts = Post::published()->with('category')->latest('published_at')->get();
+
         return view('home', [
             'title' => $title,
             'description' => $description,
             'canonical' => $url.'/',
+            'posts' => $posts,
             'schema' => Schema::graph([
                 [
                     '@type' => 'WebPage',

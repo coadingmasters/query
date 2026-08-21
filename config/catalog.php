@@ -4,9 +4,14 @@
 |--------------------------------------------------------------------------
 | Catalogue
 |--------------------------------------------------------------------------
-| The tools, food guides and articles shown on the home page. Keeping them
-| here means the markup is a loop rather than twenty near-identical blocks,
-| and adding a tool is one array entry.
+| The tools and food guides shown on the home page. Keeping them here means
+| the markup is a loop rather than twenty near-identical blocks, and adding
+| a tool is one array entry.
+|
+| Blog articles used to live here too, as a `posts` entry. They moved into
+| the `posts` database table, alongside the rest of the blog CMS, so the
+| admin can author them and the public site reads real data rather than a
+| second, hand-maintained copy of it. See App\Models\Post.
 |
 | This moves into the database once entries are edited rather than authored.
 | The shape below is deliberately the shape those tables will have.
@@ -175,105 +180,6 @@ return [
             'note' => 'Under 10% of daily calories',
             'image' => 'can-cats-eat-cat-treats-snacks',
             'alt' => 'Cat treats in a white bowl beside a cat',
-        ],
-    ],
-
-    'posts' => [
-        [
-            'slug' => 'why-do-cats-knead',
-            'url' => '/blog/why-do-cats-knead',
-            'title' => 'Why Do Cats Knead? Making Biscuits Explained',
-            'excerpt' => 'Kneading, or making biscuits, is a comfort behavior cats keep '
-                .'from kittenhood. What it means when they do it to you, to a blanket, '
-                .'at night, and with claws out.',
-            'category' => 'Behavior',
-            'minutes' => 8,
-            'image' => 'why-do-cats-knead-hero',
-            'alt' => 'Tabby cat kneading a soft cream blanket with both front paws',
-        ],
-        [
-            'slug' => 'can-cats-eat-broccoli',
-            'url' => '/blog/can-cats-eat-broccoli',
-            'title' => 'Can Cats Eat Broccoli? A Safe Feeding Guide',
-            'excerpt' => 'Broccoli is one of the few vegetables genuinely safe for '
-                .'cats, but only plain, cooked, and in small amounts. Here is why, '
-                .'and how much.',
-            'category' => 'Food Safety',
-            'minutes' => 7,
-            'image' => 'can-cats-eat-broccoli-cat-sniffing',
-            'alt' => 'Fluffy cat sniffing fresh broccoli florets',
-        ],
-        [
-            'slug' => 'how-much-should-i-feed-my-cat',
-            'url' => '/blog/how-much-should-i-feed-my-cat',
-            'title' => 'How Much Should I Feed My Cat? A Feeding Guide',
-            'excerpt' => 'Portion guidance on the bag is written for an average cat '
-                .'that does not exist. Work out how much to feed yours from '
-                .'weight, food type and life stage.',
-            'category' => 'Feeding',
-            'minutes' => 10,
-            'image' => 'how-much-to-feed-cat-hero',
-            'alt' => 'Cat sitting beside a bowl being filled with a measured scoop of kibble',
-        ],
-        [
-            'slug' => 'why-is-my-cat-sneezing',
-            'url' => '/blog/why-is-my-cat-sneezing',
-            'title' => 'Why Is My Cat Sneezing? When It\'s Normal and When to Worry',
-            'excerpt' => 'An occasional sneeze is nothing. Runny eyes, a stuffy nose or '
-                .'sneezing that will not stop points at an infection that is worth a '
-                .'vet visit.',
-            'category' => 'Health',
-            'minutes' => 9,
-            'image' => 'why-is-my-cat-sneezing-hero',
-            'alt' => 'Tabby cat mid-sneeze on a soft blanket at home',
-        ],
-        [
-            'slug' => 'signs-your-cat-is-sick',
-            'url' => '/blog/signs-your-cat-is-sick',
-            'title' => 'How to Tell If Your Cat Is Sick: 12 Signs to Watch For',
-            'excerpt' => 'Cats hide illness well. Appetite loss, hiding, low energy and '
-                .'litter box changes are usually the first signs, before anything '
-                .'looks seriously wrong.',
-            'category' => 'Health',
-            'minutes' => 10,
-            'image' => 'signs-cat-is-sick-hero',
-            'alt' => 'Tabby cat resting quietly, looking subdued',
-        ],
-        [
-            'slug' => 'best-food-for-indoor-cats',
-            'url' => '/blog/best-food-for-indoor-cats',
-            'title' => 'Best Food for Indoor Cats: What to Look For',
-            'excerpt' => 'Indoor cats burn fewer calories than outdoor ones, but '
-                .'life stage matters more than the word indoor on the bag. What '
-                .'to actually look for.',
-            'category' => 'Feeding',
-            'minutes' => 9,
-            'image' => 'best-indoor-cat-food-premium-ingredients',
-            'alt' => 'Salmon, chicken and fresh ingredients beside a bowl of cat food',
-        ],
-        [
-            'slug' => 'can-cats-eat-chicken',
-            'url' => '/blog/can-cats-eat-chicken',
-            'title' => 'Can Cats Eat Chicken? Yes, Here Is How',
-            'excerpt' => 'Chicken is one of the best things you can feed a cat. '
-                .'The rules are about preparation, bones, and portion, not '
-                .'whether it is safe.',
-            'category' => 'Food Safety',
-            'minutes' => 8,
-            'image' => 'can-cats-eat-chicken-cat-looking',
-            'alt' => 'Cat looking at cooked plain chicken on a white plate',
-        ],
-        [
-            'slug' => 'new-cat-owner-guide',
-            'url' => '/blog/new-cat-owner-guide',
-            'title' => 'The Complete Guide for New Cat Owners',
-            'excerpt' => 'Everything for the first weeks: what to buy, how to '
-                .'settle a nervous cat, the vet visits that matter early, and '
-                .'what to cat-proof first.',
-            'category' => 'Getting Started',
-            'minutes' => 12,
-            'image' => 'new-cat-owner-guide-couple-kitten',
-            'alt' => 'Couple playing with a new kitten on a sofa',
         ],
     ],
 ];

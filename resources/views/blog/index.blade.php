@@ -1,9 +1,5 @@
 <x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema">
 
-@php
-    $featured = $live->first() ?? $posts->first();
-@endphp
-
 {{-- ══ 1. HERO ═══════════════════════════════════════════════════════════ --}}
 <section class="relative overflow-hidden bg-surface-soft">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0">
@@ -141,14 +137,12 @@
 
                 {{-- The lead. Text sits on the photograph, so it carries a
                      gradient heavy enough to hold white type at any crop. --}}
-                <article class="lg:h-full" data-post data-category="{{ $featured['category'] }}"
-                         data-terms="{{ Str::lower($featured['title'].' '.$featured['excerpt']) }}">
-                    <{{ isset($featured['url']) ? 'a' : 'div' }}
-                        @isset($featured['url']) href="{{ $featured['url'] }}" @endisset
+                <article class="lg:h-full" data-post data-category="{{ $featured->category?->name }}"
+                         data-terms="{{ Str::lower($featured->title.' '.$featured->excerpt) }}">
+                    <a href="{{ route('blog.show', $featured->slug) }}"
                         class="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-2xl shadow-lg sm:aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[28rem]">
                         <div class="absolute inset-0">
-                            <x-img :name="$featured['image']" :alt="$featured['alt']"
-                                   sizes="(min-width: 1024px) 55vw, 92vw"
+                            <x-post-image :post="$featured"
                                    class="transition-transform duration-500 group-hover:scale-105"/>
                         </div>
 
@@ -160,66 +154,50 @@
 
                         <div class="relative p-6 sm:p-8">
                             <div class="flex flex-wrap items-center gap-2.5 text-xs font-semibold">
-                                <span class="rounded-full bg-surface/95 px-2.5 py-1 text-ink">{{ $featured['category'] }}</span>
-                                <span class="text-ink-inverse">{{ $featured['minutes'] }} min read</span>
+                                <span class="rounded-full bg-surface/95 px-2.5 py-1 text-ink">{{ $featured->category?->name }}</span>
+                                <span class="text-ink-inverse">{{ $featured->reading_time }} min read</span>
                             </div>
 
                             <h3 class="mt-3 font-heading text-2xl leading-snug font-extrabold tracking-tight text-ink-inverse sm:text-3xl">
-                                {{ $featured['title'] }}
+                                {{ $featured->title }}
                             </h3>
 
                             <p class="mt-2.5 max-w-lg text-sm leading-relaxed text-ink-inverse/85">
-                                {{ $featured['excerpt'] }}
+                                {{ $featured->excerpt }}
                             </p>
 
-                            @isset($featured['url'])
-                                <span class="mt-5 inline-flex items-center gap-2 rounded-full bg-surface px-5 py-2.5 text-sm font-bold text-ink shadow-md transition group-hover:gap-3">
-                                    Read the guide
-                                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                         stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-                                </span>
-                            @endisset
+                            <span class="mt-5 inline-flex items-center gap-2 rounded-full bg-surface px-5 py-2.5 text-sm font-bold text-ink shadow-md transition group-hover:gap-3">
+                                Read the guide
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                            </span>
                         </div>
-                    </{{ isset($featured['url']) ? 'a' : 'div' }}>
+                    </a>
                 </article>
 
                 {{-- The rest of the week, headline first. --}}
                 <ul class="divide-y divide-line">
                     @foreach ($side as $post)
-                        @php $isLive = isset($post['url']); @endphp
-                        <li data-post data-category="{{ $post['category'] }}"
-                            data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}">
-                            <{{ $isLive ? 'a' : 'div' }}
-                                @if ($isLive) href="{{ $post['url'] }}" @endif
-                                @class([
-                                    'group flex items-start gap-4 rounded-xl py-4 transition',
-                                    'hover:bg-surface-soft' => $isLive,
-                                ])>
+                        <li data-post data-category="{{ $post->category?->name }}"
+                            data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}">
+                            <a href="{{ route('blog.show', $post->slug) }}"
+                                class="group flex items-start gap-4 rounded-xl py-4 transition hover:bg-surface-soft">
                                 <div class="relative size-24 shrink-0 overflow-hidden rounded-xl bg-surface-section sm:size-28">
-                                    <x-img :name="$post['image']" :alt="$post['alt']" sizes="112px"/>
-                                    @unless ($isLive)
-                                        <span aria-hidden="true" class="absolute inset-0 bg-surface/45"></span>
-                                    @endunless
+                                    <x-post-image :post="$post"/>
                                 </div>
 
                                 <div class="min-w-0 flex-1">
                                     <div class="flex flex-wrap items-center gap-2 text-xs font-semibold">
-                                        <span class="rounded-full bg-primary-light px-2.5 py-0.5 text-primary-dark">{{ $post['category'] }}</span>
-                                        <span class="text-ink-muted">{{ $post['minutes'] }} min read</span>
+                                        <span class="rounded-full bg-primary-light px-2.5 py-0.5 text-primary-dark">{{ $post->category?->name }}</span>
+                                        <span class="text-ink-muted">{{ $post->reading_time }} min read</span>
                                     </div>
 
-                                    <h3 @class([
-                                        'mt-1.5 font-heading text-base leading-snug font-bold text-ink transition-colors',
-                                        'group-hover:text-primary' => $isLive,
-                                    ])>{{ $post['title'] }}</h3>
+                                    <h3 class="mt-1.5 font-heading text-base leading-snug font-bold text-ink transition-colors group-hover:text-primary">
+                                        {{ $post->title }}</h3>
 
-                                    <p class="mt-1 line-clamp-2 text-sm leading-relaxed text-ink-muted">{{ $post['excerpt'] }}</p>
-
-                                    @unless ($isLive)
-                                        <span class="mt-1 inline-block text-xs font-bold text-ink-muted">Being written</span>
-                                    @endunless
+                                    <p class="mt-1 line-clamp-2 text-sm leading-relaxed text-ink-muted">{{ $post->excerpt }}</p>
                                 </div>
-                            </{{ $isLive ? 'a' : 'div' }}>
+                            </a>
                         </li>
                     @endforeach
                 </ul>
@@ -236,60 +214,40 @@
                 All guides
             </h2>
             <span class="text-sm text-ink-muted">
-                {{ $live->count() }} published, {{ $posts->count() - $live->count() }} in progress
+                {{ $posts->count() }} {{ Str::plural('guide', $posts->count()) }}
             </span>
         </div>
 
         <ul class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             @foreach ($posts as $post)
-                @php $isLive = isset($post['url']); @endphp
-                <li data-post data-category="{{ $post['category'] }}"
-                    data-terms="{{ Str::lower($post['title'].' '.$post['excerpt']) }}">
-                    <{{ $isLive ? 'a' : 'div' }}
-                        @if ($isLive) href="{{ $post['url'] }}" @endif
-                        @class([
-                            'group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition',
-                            'hover:-translate-y-1 hover:border-line-strong hover:shadow-lg' => $isLive,
-                        ])>
+                <li data-post data-category="{{ $post->category?->name }}"
+                    data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}">
+                    <a href="{{ route('blog.show', $post->slug) }}"
+                        class="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition hover:-translate-y-1 hover:border-line-strong hover:shadow-lg">
                         <div class="relative overflow-hidden bg-surface-section">
-                            <x-img :name="$post['image']" :alt="$post['alt']"
-                                   sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 23vw"
-                                   class="transition-transform duration-500 {{ $isLive ? 'group-hover:scale-105' : '' }}"/>
-
-                            @unless ($isLive)
-                                <span class="absolute top-3 right-3 rounded-full bg-surface/90 px-3 py-1 text-xs font-bold text-ink-muted shadow-sm">
-                                    Coming soon
-                                </span>
-                            @endunless
+                            <x-post-image :post="$post"
+                                   class="transition-transform duration-500 group-hover:scale-105"/>
                         </div>
 
                         <div class="flex flex-1 flex-col p-5">
                             <div class="flex flex-wrap items-center gap-2 text-xs font-semibold">
-                                <span class="rounded-full bg-primary-light px-2.5 py-0.5 text-primary-dark">{{ $post['category'] }}</span>
-                                <span class="text-ink-muted">{{ $post['minutes'] }} min read</span>
+                                <span class="rounded-full bg-primary-light px-2.5 py-0.5 text-primary-dark">{{ $post->category?->name }}</span>
+                                <span class="text-ink-muted">{{ $post->reading_time }} min read</span>
                             </div>
 
-                            <h3 @class([
-                                'mt-2.5 font-heading text-base leading-snug font-bold text-ink transition-colors',
-                                'group-hover:text-primary' => $isLive,
-                            ])>{{ $post['title'] }}</h3>
+                            <h3 class="mt-2.5 font-heading text-base leading-snug font-bold text-ink transition-colors group-hover:text-primary">
+                                {{ $post->title }}</h3>
 
-                            <p class="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-ink-muted">{{ $post['excerpt'] }}</p>
+                            <p class="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-ink-muted">{{ $post->excerpt }}</p>
 
-                            <span @class([
-                                'mt-4 inline-flex items-center gap-1.5 text-sm font-semibold',
-                                'text-primary' => $isLive,
-                                'text-ink-muted' => ! $isLive,
-                            ])>
-                                {{ $isLive ? 'Read the guide' : 'Being written' }}
-                                @if ($isLive)
-                                    <svg class="size-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                                         aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-                                @endif
+                            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                                Read the guide
+                                <svg class="size-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24"
+                                     fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                     aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
                             </span>
                         </div>
-                    </{{ $isLive ? 'a' : 'div' }}>
+                    </a>
                 </li>
             @endforeach
         </ul>

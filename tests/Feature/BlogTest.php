@@ -2,7 +2,8 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Post;
+use App\Models\PostCategory;
 use Tests\TestCase;
 
 /**
@@ -12,43 +13,35 @@ use Tests\TestCase;
  */
 class BlogTest extends TestCase
 {
-    use RefreshDatabase;
-
     public function test_the_index_lists_every_post(): void
     {
         $html = $this->get('/blog')->assertOk()->getContent();
 
-        foreach (config('catalog.posts') as $post) {
-            $this->assertStringContainsString($post['title'], $html, "the index is missing {$post['slug']}");
+        foreach (Post::published()->get() as $post) {
+            $this->assertStringContainsString($post->title, $html, "the index is missing {$post->slug}");
         }
     }
 
-    /** Written ones are links. The rest say so rather than leading nowhere. */
-    public function test_only_published_posts_are_linked(): void
+    /** Every published post is a real link to its own page. */
+    public function test_every_post_is_linked(): void
     {
         $html = $this->get('/blog')->getContent();
 
-        foreach (config('catalog.posts') as $post) {
-            if (isset($post['url'])) {
-                $this->assertStringContainsString('href="'.$post['url'].'"', $html);
-            }
-        }
-
-        $unwritten = collect(config('catalog.posts'))->reject(fn (array $p): bool => isset($p['url']));
-
-        if ($unwritten->isNotEmpty()) {
-            $this->assertStringContainsString('Coming soon', $html);
+        foreach (Post::published()->get() as $post) {
+            $this->assertStringContainsString('href="'.route('blog.show', $post->slug).'"', $html);
         }
     }
 
     /**
-     * The list describes what exists. Including the unwritten ones would
-     * advertise a library that is not there.
+     * The list describes what exists. A draft should never show up on the
+     * public index, which is what "published" is for.
      */
     public function test_structured_data_counts_only_published_posts(): void
     {
+        Post::factory()->create(['status' => 'draft']);
+
         $html = $this->get('/blog')->getContent();
-        $published = collect(config('catalog.posts'))->filter(fn (array $p): bool => isset($p['url']))->count();
+        $published = Post::published()->count();
 
         $this->assertStringContainsString('"numberOfItems":'.$published, $html);
     }
@@ -67,24 +60,22 @@ class BlogTest extends TestCase
         $this->get('/blog/not-a-real-post')->assertNotFound();
     }
 
-    /**
-     * A slug in config with no view behind it would render an empty article
-     * shell rather than failing, which is worse than a 404.
-     */
-    public function test_a_post_without_a_body_is_a_404(): void
+    /** A draft post is not reachable from its public URL. */
+    public function test_a_draft_post_is_a_404(): void
     {
-        config(['blog.ghost-post' => ['slug' => 'ghost-post']]);
+        $post = Post::factory()->create(['status' => 'draft']);
 
-        $this->get('/blog/ghost-post')->assertNotFound();
+        $this->get('/blog/'.$post->slug)->assertNotFound();
     }
 
     public function test_the_article_faq_markup_matches_what_is_on_the_page(): void
     {
         $html = $this->get('/blog/why-do-cats-knead')->getContent();
+        $post = Post::where('slug', 'why-do-cats-knead')->firstOrFail();
 
-        foreach (config('blog.why-do-cats-knead.faq') as $item) {
-            $this->assertStringContainsString(e($item['q']), $html);
-            $this->assertStringContainsString(e($item['a']), $html);
+        foreach ($post->faqs as $item) {
+            $this->assertStringContainsString(e($item->question), $html);
+            $this->assertStringContainsString(e($item->answer), $html);
         }
     }
 
@@ -131,6 +122,17 @@ class BlogTest extends TestCase
         $this->assertDatabaseCount('article_feedback', 0);
     }
 
+    /** A vote for a real but unpublished post is rejected the same way. */
+    public function test_a_vote_for_a_draft_article_is_rejected(): void
+    {
+        $post = Post::factory()->create(['status' => 'draft']);
+
+        $this->postJson('/blog/feedback', ['slug' => $post->slug, 'helpful' => true])
+            ->assertStatus(422);
+
+        $this->assertDatabaseCount('article_feedback', 0);
+    }
+
     public function test_a_vote_needs_both_fields(): void
     {
         $this->postJson('/blog/feedback', ['slug' => 'why-do-cats-knead'])->assertStatus(422);
@@ -158,5 +160,13 @@ class BlogTest extends TestCase
     public function test_the_index_accepts_a_topic_in_the_query(): void
     {
         $this->get('/blog?topic=Health')->assertOk();
+    }
+
+    /** Categories with no published posts do not appear as filters. */
+    public function test_the_topic_filters_come_from_published_posts(): void
+    {
+        PostCategory::factory()->create(['name' => 'Empty Topic']);
+
+        $this->get('/blog')->assertDontSee('Empty Topic');
     }
 }

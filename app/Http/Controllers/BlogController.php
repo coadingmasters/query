@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Support\Schema;
 use Illuminate\Contracts\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -13,14 +14,13 @@ class BlogController extends Controller
         $name = config('app.name');
         $url = rtrim(config('app.url'), '/');
 
-        // Written ones first. A grid that opens with four "coming soon" cards
-        // tells a reader the blog is empty before they have read a word.
-        $posts = collect(config('catalog.posts'))
-            ->sortByDesc(fn (array $p): int => isset($p['url']) ? 1 : 0)
-            ->values();
+        $posts = Post::published()
+            ->with('category')
+            ->orderByDesc('published_at')
+            ->get();
 
-        $live = $posts->filter(fn (array $p): bool => isset($p['url']));
-        $featuredSlug = $live->first()['slug'] ?? $posts->first()['slug'] ?? null;
+        $featured = $posts->firstWhere('is_featured', true) ?? $posts->first();
+        $rest = $featured ? $posts->reject(fn (Post $p): bool => $p->is($featured))->values() : $posts;
 
         $description = 'Cat care guides from '.$name.'. Behavior, feeding, health '
             .'and life stages, researched from published veterinary sources with '
@@ -38,14 +38,13 @@ class BlogController extends Controller
 
         return view('blog.index', [
             'icons' => $icons,
-            'side' => $posts->reject(fn (array $p): bool => $featuredSlug === $p['slug'])->take(4),
-            'latest' => $posts->reject(fn (array $p): bool => $featuredSlug === $p['slug'])->take(4),
+            'featured' => $featured,
+            'side' => $rest->take(4),
             'title' => 'Cat Care Blog | Guides From '.$name,
             'description' => $description,
             'canonical' => $url.'/blog',
             'posts' => $posts,
-            'live' => $live,
-            'categories' => $posts->pluck('category')->unique()->values(),
+            'categories' => $this->categoryNames($posts),
             'schema' => Schema::graph([
                 [
                     '@type' => 'CollectionPage',
@@ -58,9 +57,9 @@ class BlogController extends Controller
                 // Only the articles that exist. Listing the unwritten ones
                 // would describe a library that is not there.
                 Schema::itemList($url.'/blog#articles', 'Cat care articles',
-                    $live->map(fn (array $p): array => [
-                        'name' => $p['title'],
-                        'description' => $p['excerpt'],
+                    $posts->map(fn (Post $p): array => [
+                        'name' => $p->title,
+                        'description' => $p->excerpt,
                     ])->all()),
                 Schema::breadcrumbs('/blog', ['Home' => '/', 'Blog' => null]),
             ]),
@@ -69,42 +68,46 @@ class BlogController extends Controller
 
     public function show(string $slug): View
     {
-        $post = config("blog.$slug");
+        $post = Post::published()
+            ->where('slug', $slug)
+            ->with(['category', 'author', 'faqs' => fn ($q) => $q->ordered()])
+            ->first();
 
-        if (! $post || ! view()->exists("blog.posts.$slug")) {
+        if (! $post) {
             throw new NotFoundHttpException;
         }
 
         $url = rtrim(config('app.url'), '/');
-        $path = '/blog/'.$post['slug'];
+        $path = '/blog/'.$post->slug;
+        $description = $post->meta_description ?: $post->excerpt;
 
-        // The tools and neighbouring articles this one points at, resolved
-        // here so the view is not digging through two catalogues.
-        $tools = collect(config('catalog.tools'))
-            ->whereIn('slug', $post['related_tools'])
-            ->values();
-
-        $posts = collect(config('catalog.posts'))
-            ->whereIn('slug', $post['related_posts'])
-            ->values();
+        // Neighbouring articles this one points readers to next: other
+        // published guides in the same topic, not a hand-picked list, so the
+        // section never dangles on a slug that gets renamed or unpublished.
+        $posts = Post::published()
+            ->with('category')
+            ->where('id', '!=', $post->id)
+            ->where('category_id', $post->category_id)
+            ->orderByDesc('published_at')
+            ->take(4)
+            ->get();
 
         return view('blog.show', [
-            'title' => $post['meta_title'],
-            'topics' => collect(config('catalog.posts'))->pluck('category')->unique()->values(),
-            'description' => $post['excerpt'],
+            'title' => $post->meta_title ?: $post->title,
+            'topics' => $this->categoryNames(Post::published()->with('category')->get()),
+            'description' => $description,
             'canonical' => $url.$path,
             'post' => $post,
-            'tools' => $tools,
             'posts' => $posts,
             'schema' => Schema::graph([
                 [
                     '@type' => 'Article',
                     '@id' => $url.$path.'#article',
-                    'headline' => $post['title'],
-                    'description' => $post['excerpt'],
-                    'articleSection' => $post['category'],
-                    'datePublished' => $post['published'],
-                    'dateModified' => $post['updated'],
+                    'headline' => $post->title,
+                    'description' => $post->excerpt,
+                    'articleSection' => $post->category?->name,
+                    'datePublished' => $post->published_at?->toAtomString(),
+                    'dateModified' => $post->updated_at?->toAtomString(),
                     'inLanguage' => 'en-US',
                     'isPartOf' => ['@id' => $url.'/#website'],
                     'publisher' => ['@id' => $url.'/#organization'],
@@ -116,17 +119,23 @@ class BlogController extends Controller
                     '@type' => 'WebPage',
                     '@id' => $url.$path.'#page',
                     'url' => $url.$path,
-                    'name' => $post['meta_title'],
+                    'name' => $post->meta_title ?: $post->title,
                     'isPartOf' => ['@id' => $url.'/#website'],
                 ],
-                Schema::faq($url.$path.'#faq', collect($post['faq'])
-                    ->map(fn (array $i): array => ['q' => $i['q'], 'a' => $i['a']])->all()),
+                Schema::faq($url.$path.'#faq', $post->faqs
+                    ->map(fn ($faq): array => ['q' => $faq->question, 'a' => $faq->answer])->all()),
                 Schema::breadcrumbs($path, [
                     'Home' => '/',
                     'Blog' => '/#blog',
-                    $post['title'] => null,
+                    $post->title => null,
                 ]),
             ]),
         ]);
+    }
+
+    /** @param  \Illuminate\Support\Collection<int, Post>  $posts */
+    private function categoryNames($posts)
+    {
+        return $posts->pluck('category.name')->filter()->unique()->values();
     }
 }

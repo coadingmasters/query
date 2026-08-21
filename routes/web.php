@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\BreedsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeedbackController;
 use App\Http\Controllers\Admin\MessagesController;
@@ -101,4 +102,13 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
     Route::get('/feedback', [FeedbackController::class, 'index'])
         ->middleware('auth')
         ->name('feedback.index');
+
+    Route::middleware('auth')->prefix('breeds')->name('breeds.')->group(function (): void {
+        Route::get('/', [BreedsController::class, 'index'])->name('index');
+        Route::get('/create', [BreedsController::class, 'create'])->name('create');
+        Route::post('/', [BreedsController::class, 'store'])->name('store');
+        Route::get('/{breed}/edit', [BreedsController::class, 'edit'])->name('edit');
+        Route::put('/{breed}', [BreedsController::class, 'update'])->name('update');
+        Route::delete('/{breed}', [BreedsController::class, 'destroy'])->name('destroy');
+    });
 });

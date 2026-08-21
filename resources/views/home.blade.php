@@ -236,7 +236,10 @@
             </p>
         </div>
 
-        <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {{-- A horizontal, snap-scrolling row on a phone; the same grid as
+             always from sm: up. One scroll axis on mobile is what keeps a
+             six-card section from costing six card-heights of scrolling. --}}
+        <div class="mt-8 -mx-3 flex snap-x snap-mandatory gap-4 overflow-x-auto px-3 pb-2 sm:mx-0 sm:mt-12 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">
             @foreach (config('catalog.tools') as $tool)
                 {{-- A tool with a page behind it becomes a link; the rest stay
                      as plain cards until theirs exist, rather than pointing at
@@ -244,7 +247,7 @@
                 @php $isLive = isset($tool['url']); @endphp
                 <{{ $isLive ? 'a' : 'article' }}
                     @if ($isLive) href="{{ $tool['url'] }}" @endif
-                    class="card group" data-filter data-terms="{{ Str::lower($tool['title'].' '.$tool['blurb']) }}">
+                    class="card group w-[78vw] shrink-0 snap-center sm:w-auto sm:shrink" data-filter data-terms="{{ Str::lower($tool['title'].' '.$tool['blurb']) }}">
                     <div class="card-media">
                         <x-img :name="$tool['image']" :alt="$tool['alt']"
                                sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 30vw"/>
@@ -295,14 +298,14 @@
                 ['Enter the details', 'Weight, age, breed, whatever that tool needs. It stays on your device.'],
                 ['Get your answer', 'A clear result you can act on, and save as a PDF report.'],
             ] as $i => [$title, $text])
-                <li class="relative">
-                    <span class="flex size-12 items-center justify-center rounded-xl bg-white/15 font-heading text-xl font-extrabold text-white">
+                <li class="relative text-center sm:text-left">
+                    <span class="mx-auto flex size-12 items-center justify-center rounded-xl bg-white/15 font-heading text-xl font-extrabold text-white sm:mx-0">
                         {{ $i + 1 }}
                     </span>
                     <h3 class="mt-5 font-heading text-xl font-bold text-white">{{ $title }}</h3>
                     {{-- White-on-primary-dark is 10.3:1, so this stays well
                          clear of AA even at this reduced opacity. --}}
-                    <p class="mt-2 leading-relaxed text-white/80">{{ $text }}</p>
+                    <p class="mt-2 text-sm leading-relaxed text-white/80 sm:text-base">{{ $text }}</p>
                 </li>
             @endforeach
         </ol>
@@ -321,12 +324,12 @@
             </p>
         </div>
 
-        <div class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4">
+        <div class="mt-8 -mx-3 flex snap-x snap-mandatory gap-4 overflow-x-auto px-3 pb-2 sm:mx-0 sm:mt-12 sm:grid sm:snap-none sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3 xl:grid-cols-4">
             @php
                 $verdictLabel = ['safe' => 'Safe', 'caution' => 'In moderation', 'unsafe' => 'Never'];
             @endphp
             @foreach (config('catalog.foods') as $food)
-                <article id="food-{{ $food['slug'] }}" class="card scroll-mt-24" data-filter
+                <article id="food-{{ $food['slug'] }}" class="card w-[78vw] shrink-0 snap-center scroll-mt-24 sm:w-auto sm:shrink" data-filter
                          data-terms="{{ Str::lower($food['question'].' '.$food['answer'].' '.$food['title']) }}">
                     <div class="card-media">
                         <x-img :name="$food['image']" :alt="$food['alt']"
@@ -401,8 +404,8 @@
                 ['0', 'Sign-ups needed'],
                 ['100%', 'Free to use'],
             ] as [$figure, $label])
-                <div class="rounded-2xl border border-line bg-surface p-8 text-center shadow-md transition duration-200 hover:-translate-y-1 hover:shadow-lg">
-                    <p class="font-heading text-5xl font-extrabold tracking-tight text-primary">{{ $figure }}</p>
+                <div class="rounded-2xl border border-line bg-surface p-5 text-center shadow-md transition duration-200 hover:-translate-y-1 hover:shadow-lg sm:p-8">
+                    <p class="font-heading text-3xl font-extrabold tracking-tight text-primary sm:text-5xl">{{ $figure }}</p>
                     <p class="mt-2 text-sm font-medium text-ink-muted">{{ $label }}</p>
                 </div>
             @endforeach

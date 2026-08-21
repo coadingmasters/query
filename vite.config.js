@@ -13,6 +13,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/js/cat-calorie-pdf.js',
+                'resources/js/cat-vaccination-pdf.js',
             ],
             refresh: true,
             // Fonts are downloaded at build time and served from our own

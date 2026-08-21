@@ -279,8 +279,6 @@
 </section>
 
 {{-- ══ 2.5 PRINT-ONLY RECORD (populated by JS, visible only when printing) ══ --}}
-<div data-vax-print-card class="hidden print:block"></div>
-
 {{-- ══ 3. SEO CONTENT ════════════════════════════════════════════════════ --}}
 <section class="bg-surface-section py-10 lg:py-14 print:hidden">
     <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-[50px] grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,46rem)_1fr_19rem] lg:gap-10">
@@ -660,6 +658,10 @@
             const STORAGE_KEY = 'purrquery_vax_tracker';
 
             const STEP_NAMES = { 1: "Your cat's profile", 2: 'Vaccination history', 3: 'Vaccination record' };
+
+            // The last built record, kept so the PDF report reflects exactly
+            // what the results panel shows rather than recomputing it.
+            let lastVaxResult = null;
 
             /* ── State ───────────────────────────────────────────────────
                doses: { [doseId]: { status: 'done'|'due'|'na', date: 'YYYY-MM-DD'|null } } */
@@ -1080,11 +1082,19 @@
                         </p>
                     </div>
 
-                    <div class="mt-6 flex flex-wrap gap-2">
-                        <button type="button" data-vax-print class="btn-primary rounded-full px-6">
-                            Print vaccination record
+                    <div class="mt-6 space-y-2.5">
+                        <button type="button" data-vax-pdf
+                                data-logo="{{ \App\Support\Images::largest('purrquerylogo') }}"
+                                data-module="{{ Vite::asset('resources/js/cat-vaccination-pdf.js') }}"
+                                class="flex w-full items-center justify-center gap-2 rounded-full bg-primary-vivid px-5 py-3 text-sm font-bold text-ink shadow-md transition duration-200 hover:brightness-95 hover:shadow-lg active:scale-[0.99] disabled:cursor-default disabled:opacity-70">
+                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5"/>
+                                <path d="M4 17v2.5A1.5 1.5 0 0 0 5.5 21h13a1.5 1.5 0 0 0 1.5-1.5V17"/>
+                            </svg>
+                            <span data-vax-pdf-label>Download PDF report</span>
                         </button>
-                        <button type="button" data-vax-copy class="btn-outline rounded-full px-6">
+                        <button type="button" data-vax-copy
+                                class="flex w-full items-center justify-center gap-2 rounded-full border border-line-strong bg-surface px-5 py-3 text-sm font-semibold text-ink-muted transition duration-200 hover:border-primary hover:text-primary">
                             <span data-vax-copy-label>Copy summary to clipboard</span>
                         </button>
                     </div>
@@ -1103,67 +1113,47 @@
                     </div>
                 `;
 
-                buildPrintCard(rows, catLabel, dob);
+                lastVaxResult = {
+                    catLabel,
+                    dobLabel: dob ? `Born ${formatDate(dob)}` : 'Date of birth not given',
+                    upToDate, dueSoon, overdue,
+                    injectionSites: MODEL.injectionSites,
+                    rows: rows.filter(r => r.status !== 'na').map(r => ({
+                        dose: r.dose,
+                        tone: r.tone,
+                        statusLabel: r.statusLabel,
+                        given: r.dateGiven ? formatDate(r.dateGiven) : 'Not given',
+                        due: r.status === 'done' ? 'Given' : (r.dueDate ? formatDate(r.dueDate) : 'Unknown'),
+                        days: r.status !== 'done' && r.daysUntil !== null ? String(r.daysUntil) : 'N/A',
+                    })),
+                };
+
                 wireResultButtons(rows, catLabel);
             };
 
-            /* ── Print card ──────────────────────────────────────────── */
-            const buildPrintCard = (rows, catLabel, dob) => {
-                const card = $('[data-vax-print-card]');
-                card.innerHTML = `
-                    <div style="padding:32px;font-family:sans-serif;color:#12383B;">
-                        <div style="display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid #F47C6B;padding-bottom:12px;">
-                            <p style="margin:0;font-size:22px;font-weight:700;">${escapeHtml('{{ config('app.name') }}')}: Vaccination Record</p>
-                            <span style="font-size:12px;color:#526568;">Printed ${formatDate(startOfToday())}</span>
-                        </div>
-                        <table style="width:100%;margin-top:16px;font-size:13px;">
-                            <tr>
-                                <td style="padding:4px 0;"><strong>Cat's name:</strong> ${escapeHtml(catLabel)}</td>
-                                <td style="padding:4px 0;"><strong>Date of birth:</strong> ${dob ? formatDate(dob) : '____________'}</td>
-                                <td style="padding:4px 0;"><strong>Breed:</strong> ____________</td>
-                            </tr>
-                        </table>
-                        <table style="width:100%;margin-top:16px;border-collapse:collapse;font-size:12px;">
-                            <thead>
-                                <tr style="background:#FFF1EC;text-align:left;">
-                                    <th style="border:1px solid #EDE7E1;padding:6px;">Vaccine</th>
-                                    <th style="border:1px solid #EDE7E1;padding:6px;">Date given</th>
-                                    <th style="border:1px solid #EDE7E1;padding:6px;">Lot #</th>
-                                    <th style="border:1px solid #EDE7E1;padding:6px;">Vet</th>
-                                    <th style="border:1px solid #EDE7E1;padding:6px;">Next due</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${rows.filter(r => r.status !== 'na').map(r => `
-                                    <tr>
-                                        <td style="border:1px solid #EDE7E1;padding:6px;">${escapeHtml(r.dose)}</td>
-                                        <td style="border:1px solid #EDE7E1;padding:6px;">${r.dateGiven ? formatDate(r.dateGiven) : ''}</td>
-                                        <td style="border:1px solid #EDE7E1;padding:6px;"></td>
-                                        <td style="border:1px solid #EDE7E1;padding:6px;"></td>
-                                        <td style="border:1px solid #EDE7E1;padding:6px;">${r.status === 'done' ? '' : (r.dueDate ? formatDate(r.dueDate) : '')}</td>
-                                    </tr>
-                                `).join('')}
-                                ${Array.from({ length: 4 }).map(() => `
-                                    <tr>
-                                        <td style="border:1px solid #EDE7E1;padding:6px;height:22px;"></td>
-                                        <td style="border:1px solid #EDE7E1;padding:6px;"></td>
-                                        <td style="border:1px solid #EDE7E1;padding:6px;"></td>
-                                        <td style="border:1px solid #EDE7E1;padding:6px;"></td>
-                                        <td style="border:1px solid #EDE7E1;padding:6px;"></td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                        <p style="margin-top:16px;font-size:11px;color:#526568;">
-                            This schedule is for reference only. Always confirm with your veterinarian; local laws (especially rabies) vary by state and country.
-                            {{ config('app.url') }}/tools/cat-vaccination-tracker
-                        </p>
-                    </div>
-                `;
-            };
-
             const wireResultButtons = (rows, catLabel) => {
-                $('[data-vax-print]')?.addEventListener('click', () => window.print());
+                const pdfButton = $('[data-vax-pdf]');
+                const pdfLabel = $('[data-vax-pdf-label]');
+
+                pdfButton?.addEventListener('click', async () => {
+                    if (!lastVaxResult) return;
+                    const original = pdfLabel.textContent;
+                    pdfButton.disabled = true;
+                    pdfLabel.textContent = 'Preparing report...';
+
+                    try {
+                        const { downloadVaccinationReport } = await import(pdfButton.dataset.module);
+                        await downloadVaccinationReport(lastVaxResult, pdfButton.dataset.logo);
+                        pdfLabel.textContent = 'Report downloaded';
+                    } catch {
+                        pdfLabel.textContent = 'Could not build the PDF';
+                    }
+
+                    setTimeout(() => {
+                        pdfLabel.textContent = original;
+                        pdfButton.disabled = false;
+                    }, 2200);
+                });
 
                 const copyBtn = $('[data-vax-copy]');
                 copyBtn?.addEventListener('click', async () => {

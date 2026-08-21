@@ -124,6 +124,7 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
 
     Route::middleware('auth')->group(function (): void {
         Route::resource('posts', PostController::class);
+        Route::post('posts/upload-image', [PostController::class, 'uploadImage'])->name('posts.upload-image');
         Route::post('posts/{post}/toggle-featured', [PostController::class, 'toggleFeatured'])->name('posts.toggle-featured');
         Route::post('posts/{post}/status', [PostController::class, 'updateStatus'])->name('posts.update-status');
         Route::post('posts/{post}/duplicate', [PostController::class, 'duplicate'])->name('posts.duplicate');

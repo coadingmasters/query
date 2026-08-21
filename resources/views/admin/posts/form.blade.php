@@ -95,7 +95,7 @@
 
                     {{-- Rich text editor --}}
                     <div class="rounded-2xl border border-line bg-surface p-4 shadow-sm">
-                        <div id="editor" class="prose-editor"></div>
+                        <div id="editor"></div>
                     </div>
 
                     {{-- Excerpt --}}
@@ -373,7 +373,7 @@
     </div>
 
     @push('scripts')
-<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
+    @vite(['resources/js/post-editor.js'])
 <script>
 function postForm(initial) {
     // Kept outside the reactive data object on purpose: Alpine wraps every
@@ -407,11 +407,24 @@ function postForm(initial) {
                 }
             });
 
-            ClassicEditor.create(document.getElementById('editor'), {
-                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote', 'insertTable', '|', 'undo', 'redo'],
+            this.initEditor();
+        },
+
+        initEditor() {
+            // post-editor.js is a separate Vite entry loaded later in the
+            // document than app.js (which starts Alpine), so it may not have
+            // run yet when this fires — wait for its ready signal if needed.
+            if (typeof window.createPostEditor !== 'function') {
+                window.addEventListener('post-editor:ready', () => this.initEditor(), { once: true });
+                return;
+            }
+
+            window.createPostEditor(document.getElementById('editor'), {
+                uploadUrl: '{{ route("admin.posts.upload-image") }}',
+                csrfToken: document.querySelector('meta[name="csrf-token"]').content,
+                initialData: this.content || '',
             }).then((editor) => {
                 editorInstance = editor;
-                editor.setData(this.content || '');
                 this.wordCount = this.countWords(editor.getData());
                 editor.model.document.on('change:data', () => {
                     this.wordCount = this.countWords(editor.getData());

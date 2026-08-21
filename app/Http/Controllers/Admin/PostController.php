@@ -112,6 +112,21 @@ class PostController extends Controller
         return redirect()->route('admin.posts.index')->with('status', 'Post deleted.');
     }
 
+    /**
+     * CKEditor's SimpleUploadAdapter posts here and expects { "url": "..." }
+     * back — nothing more, no envelope.
+     */
+    public function uploadImage(Request $request): JsonResponse
+    {
+        $request->validate([
+            'upload' => ['required', 'image', 'max:4096'],
+        ]);
+
+        $path = $request->file('upload')->store('blog/content', 'public');
+
+        return response()->json(['url' => Storage::url($path)]);
+    }
+
     public function toggleFeatured(Post $post): JsonResponse
     {
         $post->update(['is_featured' => ! $post->is_featured]);

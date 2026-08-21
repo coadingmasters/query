@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/cat-calorie-pdf.js',
                 'resources/js/cat-vaccination-pdf.js',
+                'resources/js/post-editor.js',
             ],
             refresh: true,
             // Fonts are downloaded at build time and served from our own

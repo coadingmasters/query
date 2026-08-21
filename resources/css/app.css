@@ -391,6 +391,43 @@ summary {
 }
 
 /* ==========================================================================
+   Admin post editor (CKEditor)
+   --------------------------------------------------------------------------
+   The build ships its own base styles; this just brings the chrome (border,
+   radius, focus ring) in line with the rest of the admin's form fields and
+   gives the writing area real room instead of the ~300px default.
+   ========================================================================== */
+/* Scoped to .ck-editor rather than a wrapper class: CKEditor replaces its
+   target element outright rather than nesting inside it, so a class placed
+   on that target doesn't survive in the rendered tree. Safe as global
+   selectors since only one page in the app ever mounts an editor. */
+.ck.ck-editor__main > .ck-content {
+    min-height: 520px;
+}
+
+.ck.ck-editor__top .ck-sticky-panel__content {
+    border-top-left-radius: 0.75rem;
+    border-top-right-radius: 0.75rem;
+    border-color: var(--color-line-strong);
+}
+
+.ck.ck-editor__main > .ck-content,
+.ck.ck-toolbar {
+    border-color: var(--color-line-strong);
+}
+
+.ck.ck-editor__main > .ck-content {
+    border-bottom-left-radius: 0.75rem;
+    border-bottom-right-radius: 0.75rem;
+    font-size: 0.9375rem;
+}
+
+.ck.ck-editor__editable.ck-focused {
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 20%, transparent);
+    border-color: var(--color-primary);
+}
+
+/* ==========================================================================
    Admin charts
    --------------------------------------------------------------------------
    Plain SVG and CSS rather than a charting library: the datasets are tiny

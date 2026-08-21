@@ -53,14 +53,14 @@
             <h3 class="font-heading text-base font-bold text-ink">Breeds by size</h3>
             <p class="text-sm text-ink-muted">How the {{ $counts['total'] }} seeded breeds split across small, medium and large.</p>
             <div class="mt-6">
-                <x-admin.bar-chart :data="$sizeChart"/>
+                <x-admin.wave-chart :data="$sizeChart" id="size"/>
             </div>
         </div>
         <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
             <h3 class="font-heading text-base font-bold text-ink">Registry recognition</h3>
             <p class="text-sm text-ink-muted">Breeds in this list recognized by each major registry.</p>
             <div class="mt-6">
-                <x-admin.bar-chart :data="$registryChart"/>
+                <x-admin.wave-chart :data="$registryChart" id="registry"/>
             </div>
         </div>
     </div>
@@ -82,8 +82,8 @@
              });
          ">
 
-        <div class="mt-6 grid gap-3 sm:grid-cols-[1fr_auto_auto_auto_auto]">
-            <div class="relative">
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+            <div class="relative min-w-[220px] flex-1">
                 <svg class="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
                 </svg>

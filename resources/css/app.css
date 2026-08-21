@@ -429,8 +429,18 @@ summary {
     animation: admin-donut-fill 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
 }
 
+@keyframes admin-wave-fill {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.admin-wave-fill {
+    opacity: 0;
+    animation: admin-wave-fill 0.7s ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .admin-bar, .admin-line-draw, .admin-dot, .admin-donut {
+    .admin-bar, .admin-line-draw, .admin-dot, .admin-donut, .admin-wave-fill {
         animation: none;
     }
 
@@ -438,6 +448,7 @@ summary {
     .admin-line-draw { stroke-dashoffset: 0; }
     .admin-dot { opacity: 1; transform: none; }
     .admin-donut { stroke-dashoffset: var(--admin-donut-offset); }
+    .admin-wave-fill { opacity: 1; }
 }
 
 @keyframes paw-drift {

@@ -24,9 +24,7 @@
         {{ $editing ? 'Edit '.$breed->name : 'Add a breed' }}
     </h2>
 
-    @if (session('status'))
-        <p class="mt-5 rounded-xl bg-accent-light px-4 py-3 text-sm font-semibold text-accent-dark">{{ session('status') }}</p>
-    @endif
+    <x-admin.toast :message="session('status')"/>
 
     @if ($errors->any())
         <div class="mt-5 rounded-xl border border-danger/30 bg-danger-light px-4 py-3 text-sm text-danger">
@@ -185,13 +183,46 @@
             </div>
         </div>
 
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between" @if ($editing) x-data="{ deleteOpen: false }" @endif>
             <div>
                 @if ($editing)
-                    <button type="button" data-confirm-delete
-                            class="text-sm font-semibold text-danger hover:text-danger/80">
+                    <button type="button" x-on:click="deleteOpen = true"
+                            class="flex items-center gap-1.5 text-sm font-semibold text-danger hover:text-danger/80">
+                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M4 7h16M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7m2 0v13a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 7 20V7h10Z"/>
+                        </svg>
                         Delete this breed
                     </button>
+
+                    {{-- A styled confirmation dialog rather than a native
+                         confirm() popup. --}}
+                    <div x-cloak x-show="deleteOpen" x-transition.opacity
+                         class="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-4"
+                         x-on:keydown.escape.window="deleteOpen = false">
+                        <div x-show="deleteOpen" x-transition:enter="transition duration-200 ease-out" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+                             x-on:click.outside="deleteOpen = false"
+                             class="w-full max-w-sm rounded-2xl bg-surface p-6 shadow-xl">
+                            <span class="flex size-11 items-center justify-center rounded-full bg-danger-light text-danger">
+                                <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M10.3 3.9 2.5 17.5A2 2 0 0 0 4.2 20.5h15.6a2 2 0 0 0 1.7-3l-7.8-13.6a2 2 0 0 0-3.4 0Z"/><path d="M12 9.5v4M12 17h.01"/>
+                                </svg>
+                            </span>
+                            <h3 class="mt-4 font-heading text-lg font-extrabold text-ink">Delete this breed?</h3>
+                            <p class="mt-1.5 text-sm leading-relaxed text-ink-muted">
+                                You're about to remove <strong class="text-ink">{{ $breed->name }}</strong> from the database. This cannot be undone.
+                            </p>
+                            <div class="mt-6 flex gap-3">
+                                <button type="button" x-on:click="deleteOpen = false"
+                                        class="flex-1 rounded-full border border-line-strong bg-surface px-4 py-2.5 text-sm font-semibold text-ink-muted transition hover:border-primary hover:text-primary">
+                                    Cancel
+                                </button>
+                                <button type="button" x-on:click="document.getElementById('delete-breed-form').submit()"
+                                        class="flex-1 rounded-full bg-danger px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:brightness-110">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 @endif
             </div>
             <div class="flex gap-3">
@@ -206,20 +237,10 @@
     </form>
 
     @if ($editing)
-        <form data-delete-form method="POST" action="{{ route('admin.breeds.destroy', $breed) }}" class="hidden">
+        <form id="delete-breed-form" method="POST" action="{{ route('admin.breeds.destroy', $breed) }}" class="hidden">
             @csrf
             @method('DELETE')
         </form>
-
-        @push('scripts')
-            <script>
-                document.querySelector('[data-confirm-delete]')?.addEventListener('click', () => {
-                    if (confirm('Delete {{ addslashes($breed->name) }}? This cannot be undone.')) {
-                        document.querySelector('[data-delete-form]').submit();
-                    }
-                });
-            </script>
-        @endpush
     @endif
 
 </x-admin.shell>

@@ -12,24 +12,51 @@ use Illuminate\Validation\Rule;
 
 class BreedsController extends Controller
 {
-    public function index(Request $request): View
+    public function index(): View
     {
-        $breeds = Breed::query()
-            ->when($request->filled('q'), fn ($q) => $q->where('name', 'like', '%'.$request->string('q').'%'))
-            ->when($request->filled('size'), fn ($q) => $q->where('size_category', $request->string('size')))
-            ->orderBy('popularity_rank')
-            ->paginate(20)
-            ->withQueryString();
+        // Filtering happens live in the browser (68 rows is nothing to send
+        // down and filter client-side), so the query here is unconditional;
+        // it exists to give the page something real to search rather than
+        // to do the searching itself.
+        $breeds = Breed::query()->orderBy('popularity_rank')->get();
+
+        $counts = [
+            'total' => Breed::count(),
+            'small' => Breed::where('size_category', 'small')->count(),
+            'medium' => Breed::where('size_category', 'medium')->count(),
+            'large' => Breed::where('size_category', 'large')->count(),
+        ];
+
+        $sizeMax = max($counts['small'], $counts['medium'], $counts['large'], 1);
 
         return view('admin.breeds.index', [
             'breeds' => $breeds,
-            'counts' => [
-                'total' => Breed::count(),
-                'small' => Breed::where('size_category', 'small')->count(),
-                'medium' => Breed::where('size_category', 'medium')->count(),
-                'large' => Breed::where('size_category', 'large')->count(),
+            'counts' => $counts,
+            'sizeChart' => [
+                ['label' => 'Small', 'count' => $counts['small'], 'percent' => (int) round($counts['small'] / $sizeMax * 100)],
+                ['label' => 'Medium', 'count' => $counts['medium'], 'percent' => (int) round($counts['medium'] / $sizeMax * 100)],
+                ['label' => 'Large', 'count' => $counts['large'], 'percent' => (int) round($counts['large'] / $sizeMax * 100)],
             ],
+            'registryChart' => $this->registryChart(),
         ]);
+    }
+
+    /** How many breeds each major registry recognizes, out of what is seeded here. */
+    private function registryChart(): array
+    {
+        $rows = [
+            'TICA' => Breed::where('registry_tica', true)->count(),
+            'CFA' => Breed::where('registry_cfa', true)->count(),
+            'FIFe' => Breed::where('registry_fife', true)->count(),
+        ];
+
+        $max = max(max($rows), 1);
+
+        return collect($rows)->map(fn ($count, $label) => [
+            'label' => $label,
+            'count' => $count,
+            'percent' => (int) round($count / $max * 100),
+        ])->values()->all();
     }
 
     public function create(): View

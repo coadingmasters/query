@@ -4,17 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PostTag;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class PostTagController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): View|JsonResponse
     {
-        return response()->json(
-            PostTag::withCount('posts')->orderBy('name')->get()
-        );
+        $tags = PostTag::withCount('posts')->orderBy('name')->get();
+
+        if ($request->wantsJson()) {
+            return response()->json($tags);
+        }
+
+        return view('admin.posts.tags', ['tags' => $tags]);
     }
 
     public function search(Request $request): JsonResponse

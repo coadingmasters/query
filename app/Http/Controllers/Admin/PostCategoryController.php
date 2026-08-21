@@ -4,17 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PostCategory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class PostCategoryController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): View|JsonResponse
     {
-        return response()->json(
-            PostCategory::withCount('posts')->orderBy('sort_order')->get()
-        );
+        $categories = PostCategory::withCount('posts')->orderBy('sort_order')->get();
+
+        if ($request->wantsJson()) {
+            return response()->json($categories);
+        }
+
+        return view('admin.posts.categories', ['categories' => $categories]);
     }
 
     public function store(Request $request): JsonResponse

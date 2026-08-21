@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Author;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -11,11 +12,15 @@ use Illuminate\Validation\Rule;
 
 class AuthorController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): View|JsonResponse
     {
-        return response()->json(
-            Author::withCount('posts')->orderBy('name')->get()
-        );
+        $authors = Author::withCount('posts')->orderBy('name')->get();
+
+        if ($request->wantsJson()) {
+            return response()->json($authors);
+        }
+
+        return view('admin.posts.authors', ['authors' => $authors]);
     }
 
     public function store(Request $request): JsonResponse

@@ -63,7 +63,7 @@
 
 {{-- ══ 2. TRACKER ════════════════════════════════════════════════════════ --}}
 <section class="bg-surface pt-4 pb-10 lg:pb-14 print:hidden">
-    <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-[50px] grid gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-start lg:gap-10">
+    <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-[50px] grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-start lg:gap-10">
     <div>
 
         {{-- Progress bar --}}
@@ -283,7 +283,7 @@
 
 {{-- ══ 3. SEO CONTENT ════════════════════════════════════════════════════ --}}
 <section class="bg-surface-section py-10 lg:py-14 print:hidden">
-    <div class="mx-auto w-full max-w-[75rem] px-4 sm:px-6 lg:px-[50px] grid gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-10">
+    <div class="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-[50px] grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,46rem)_1fr_19rem] lg:gap-10">
     <div>
         <div data-article class="article" style="--measure: 46rem;">
 
@@ -541,7 +541,7 @@
     </div>
 
     {{-- ── Sidebar: contents, quick reference, related ─────────────────── --}}
-    <aside class="space-y-5 lg:sticky lg:top-24 lg:self-start">
+    <aside class="space-y-5 lg:sticky lg:top-24 lg:col-start-3 lg:self-start">
         <nav aria-labelledby="vax-toc-heading" class="hidden rounded-2xl border border-line bg-surface p-5 lg:block">
             <h2 id="vax-toc-heading" class="font-heading text-sm font-bold tracking-wider text-ink uppercase">On this page</h2>
             <div data-vax-toc class="mt-3"></div>

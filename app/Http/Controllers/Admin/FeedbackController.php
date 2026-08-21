@@ -29,10 +29,20 @@ class FeedbackController extends Controller
             ->sortByDesc('total')
             ->values();
 
+        $totalHelpful = (int) $bySlug->sum('helpful');
+        $totalNotHelpful = (int) $bySlug->sum('not_helpful');
+        $totalVotes = $totalHelpful + $totalNotHelpful;
+
         return view('admin.feedback', [
             'articles' => $bySlug,
-            'totalHelpful' => (int) $bySlug->sum('helpful'),
-            'totalNotHelpful' => (int) $bySlug->sum('not_helpful'),
+            'totalHelpful' => $totalHelpful,
+            'totalNotHelpful' => $totalNotHelpful,
+            'overall' => [
+                'total' => $totalVotes,
+                'helpful' => $totalHelpful,
+                'not_helpful' => $totalNotHelpful,
+                'helpful_percent' => $totalVotes > 0 ? (int) round($totalHelpful / $totalVotes * 100) : 0,
+            ],
         ]);
     }
 }

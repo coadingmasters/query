@@ -5,14 +5,41 @@
         <p class="mt-1 text-sm text-ink-muted">Everyone who signed up, newest first.</p>
     </div>
 
-    <div class="mt-7 grid gap-4 sm:grid-cols-2 sm:max-w-md">
-        <div class="rounded-2xl border border-line bg-surface p-5 shadow-sm">
-            <p class="text-xs font-semibold tracking-wide text-ink-muted uppercase">Active</p>
-            <p class="mt-1 font-heading text-2xl font-extrabold text-ink">{{ $activeCount }}</p>
-        </div>
-        <div class="rounded-2xl border border-line bg-surface p-5 shadow-sm">
-            <p class="text-xs font-semibold tracking-wide text-ink-muted uppercase">Unsubscribed</p>
-            <p class="mt-1 font-heading text-2xl font-extrabold text-ink">{{ $unsubscribedCount }}</p>
+    @php
+        $statCards = [
+            ['label' => 'Total subscribers', 'value' => $counts['total'], 'tone' => 'primary', 'icon' => 'M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75M12.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z'],
+            ['label' => 'Active', 'value' => $counts['active'], 'tone' => 'accent', 'icon' => 'M5 13l4 4L19 7'],
+            ['label' => 'Unsubscribed', 'value' => $counts['unsubscribed'], 'tone' => 'warning', 'icon' => 'm6 6 12 12M18 6 6 18'],
+        ];
+        $toneClasses = [
+            'primary' => 'bg-primary-light text-primary',
+            'accent' => 'bg-accent-light text-accent-dark',
+            'warning' => 'bg-warning-light text-warning',
+        ];
+    @endphp
+
+    <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        @foreach ($statCards as $i => $stat)
+            <div class="stat-card-pop animate-[result-pop_0.5s_cubic-bezier(0.16,1,0.3,1)_both] rounded-2xl border border-line bg-surface p-5 shadow-sm transition hover:shadow-md"
+                 style="--pop-delay: {{ $i * 70 }}ms">
+                <span class="flex size-10 items-center justify-center rounded-xl {{ $toneClasses[$stat['tone']] }}">
+                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="{{ $stat['icon'] }}"/>
+                    </svg>
+                </span>
+                <p class="mt-4 text-xs font-semibold tracking-wide text-ink-muted uppercase">{{ $stat['label'] }}</p>
+                <p class="mt-1 font-heading text-3xl font-extrabold text-ink"
+                   x-data="{ n: 0 }" x-init="let t = setInterval(() => { n < {{ $stat['value'] }} ? n++ : clearInterval(t) }, Math.max(600 / Math.max({{ $stat['value'] }}, 1), 12))"
+                   x-text="n">0</p>
+            </div>
+        @endforeach
+    </div>
+
+    <div class="mt-6 rounded-2xl border border-line bg-surface p-6 shadow-sm">
+        <h3 class="font-heading text-base font-bold text-ink">Active vs. unsubscribed</h3>
+        <p class="text-sm text-ink-muted">How the {{ $counts['total'] }} subscribers on file are split right now.</p>
+        <div class="mt-6 max-w-lg">
+            <x-admin.wave-chart :data="$statusChart" id="subscribers-status"/>
         </div>
     </div>
 

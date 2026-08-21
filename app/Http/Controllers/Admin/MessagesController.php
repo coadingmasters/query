@@ -11,8 +11,19 @@ class MessagesController extends Controller
 {
     public function index(): View
     {
+        $messages = ContactMessage::latest()->paginate(15);
+
+        $total = ContactMessage::count();
+        $unhandled = ContactMessage::whereNull('handled_at')->count();
+        $handled = $total - $unhandled;
+
         return view('admin.messages', [
-            'messages' => ContactMessage::latest()->paginate(15),
+            'messages' => $messages,
+            'counts' => ['total' => $total, 'new' => $unhandled, 'handled' => $handled],
+            'statusChart' => [
+                ['label' => 'New', 'count' => $unhandled, 'percent' => $total ? (int) round($unhandled / $total * 100) : 0],
+                ['label' => 'Handled', 'count' => $handled, 'percent' => $total ? (int) round($handled / $total * 100) : 0],
+            ],
         ]);
     }
 

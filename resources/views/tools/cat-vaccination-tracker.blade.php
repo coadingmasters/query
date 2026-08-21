@@ -63,7 +63,8 @@
 
 {{-- ══ 2. TRACKER ════════════════════════════════════════════════════════ --}}
 <section class="bg-surface pt-4 pb-10 lg:pb-14 print:hidden">
-    <div class="container-page max-w-4xl">
+    <div class="container-page grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:items-start lg:gap-10">
+    <div>
 
         {{-- Progress bar --}}
         <div data-vax-progress class="mb-6">
@@ -226,6 +227,54 @@
             </div>
 
         </div>
+
+    </div>
+
+    {{-- ── Sidebar: what to expect, why it matters, trust ─────────────── --}}
+    <aside class="space-y-5 lg:sticky lg:top-24 lg:self-start">
+        <div class="rounded-2xl border border-line bg-surface-section p-5">
+            <h2 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">How this works</h2>
+            <ol class="mt-3.5 space-y-4">
+                @foreach ([
+                    ['1', 'Your cat\'s profile', 'Age, living situation and household, so we know which vaccines actually apply.'],
+                    ['2', 'Vaccination history', 'Mark what has already been given. Not sure about one? Leave it as due.'],
+                    ['3', 'Full record', 'A color-coded schedule, suggested visits, and a card you can print or save.'],
+                ] as [$n, $title, $body])
+                    <li class="flex gap-3">
+                        <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-light text-xs font-bold text-primary">{{ $n }}</span>
+                        <div>
+                            <p class="text-sm font-bold text-ink">{{ $title }}</p>
+                            <p class="mt-0.5 text-xs leading-relaxed text-ink-muted">{{ $body }}</p>
+                        </div>
+                    </li>
+                @endforeach
+            </ol>
+        </div>
+
+        <div class="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <h2 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Why FeLV and Bordetella appear or don't</h2>
+            <p class="mt-2 text-xs leading-relaxed text-ink-muted">
+                FVRCP and rabies show for every cat: they are core vaccines under
+                AAFP guidance. FeLV, Bordetella and Chlamydophila only show up
+                when they apply to your cat, based on age, whether they go
+                outside, and the household you described in step 1.
+            </p>
+        </div>
+
+        <div class="rounded-2xl border border-line bg-surface-soft p-5 text-center shadow-sm">
+            <span class="mx-auto flex size-11 items-center justify-center rounded-2xl bg-surface shadow-sm">
+                <svg class="size-5 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M9 12.5 11 15l4.5-5.5M5 19V6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5V19l-3.5-2-3.5 2-3.5-2L5 19Z"/>
+                </svg>
+            </span>
+            <p class="mt-3 text-sm font-bold text-ink">AAFP 2020 &amp; WSAVA 2024</p>
+            <p class="mt-1 text-xs leading-relaxed text-ink-muted">
+                Every schedule and interval on this page traces back to a
+                named source, listed in full below the tool.
+            </p>
+        </div>
+    </aside>
+
     </div>
 </section>
 
@@ -234,7 +283,8 @@
 
 {{-- ══ 3. SEO CONTENT ════════════════════════════════════════════════════ --}}
 <section class="bg-surface-section py-10 lg:py-14 print:hidden">
-    <div class="container-page max-w-3xl">
+    <div class="container-page grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-10">
+    <div>
         <div data-article class="article">
 
             <h2 id="schedule-guide">Cat Vaccination Schedule: Complete Guide</h2>
@@ -488,6 +538,46 @@
             </div>
 
         </div>
+    </div>
+
+    {{-- ── Sidebar: contents, quick reference, related ─────────────────── --}}
+    <aside class="space-y-5 lg:sticky lg:top-24 lg:self-start">
+        <nav aria-labelledby="vax-toc-heading" class="hidden rounded-2xl border border-line bg-surface p-5 lg:block">
+            <h2 id="vax-toc-heading" class="font-heading text-sm font-bold tracking-wider text-ink uppercase">On this page</h2>
+            <div data-vax-toc class="mt-3"></div>
+        </nav>
+
+        <div class="rounded-2xl border border-primary-light bg-primary-light p-5">
+            <h2 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Injection sites at a glance</h2>
+            <ul class="mt-3 space-y-2 text-sm text-ink">
+                @foreach ($injectionSites as $site)
+                    <li><strong>{{ $site['vaccine'] }}</strong>: {{ $site['site'] }}</li>
+                @endforeach
+            </ul>
+            <p class="mt-3 text-xs leading-relaxed text-ink">
+                A lump present after 3 months, 2cm or larger, or still growing at 3 months: call your vet.
+            </p>
+        </div>
+
+        <div class="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+            <h2 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">Related reading</h2>
+            <ul class="mt-3 divide-y divide-line">
+                @foreach ([
+                    ['href' => route('tools.cat-age-calculator'), 'label' => 'Cat Age Calculator'],
+                    ['href' => route('tools.cat-pregnancy-calculator'), 'label' => 'Cat Pregnancy Calculator'],
+                    ['href' => route('blog.show', 'signs-your-cat-is-sick'), 'label' => 'Signs Your Cat Is Sick'],
+                ] as $link)
+                    <li>
+                        <a href="{{ $link['href'] }}" class="flex items-center justify-between gap-2 py-2.5 text-sm font-semibold text-ink transition-colors hover:text-primary">
+                            {{ $link['label'] }}
+                            <svg class="size-4 shrink-0 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </aside>
+
     </div>
 </section>
 
@@ -1142,6 +1232,41 @@
             loadState();
             applyStateToStep1();
             showStep(1);
+        })();
+    </script>
+
+    <script>
+        (() => {
+            /* Contents sidebar, built from the headings actually in the
+               article, same pattern as the blog post template. */
+            const article = document.querySelector('[data-article]');
+            const toc = document.querySelector('[data-vax-toc]');
+            if (!article || !toc) return;
+
+            const entries = [...article.querySelectorAll('h2[id]')]
+                .map(h => ({ id: h.id, text: h.textContent.trim() }));
+            if (!entries.length) return;
+
+            const ol = document.createElement('ol');
+            ol.className = 'space-y-0.5 text-sm';
+
+            entries.forEach((entry, i) => {
+                const a = document.createElement('a');
+                a.href = '#' + entry.id;
+                a.className = 'flex gap-2 rounded-md py-1.5 leading-snug text-ink-muted transition-colors hover:text-primary';
+
+                const number = document.createElement('span');
+                number.className = 'shrink-0 tabular-nums text-primary';
+                number.textContent = (i + 1) + '.';
+
+                a.append(number, document.createTextNode(entry.text));
+
+                const li = document.createElement('li');
+                li.append(a);
+                ol.append(li);
+            });
+
+            toc.append(ol);
         })();
     </script>
 @endpush

@@ -32,18 +32,37 @@
                         <span class="shrink-0 rounded-full px-2 py-0.5 text-[11px] font-bold uppercase" x-bind:class="author.is_active ? 'bg-accent-light text-accent-dark' : 'bg-surface-soft text-ink-muted'" x-text="author.is_active ? 'Active' : 'Hidden'"></span>
                     </div>
                     <p class="mt-3 line-clamp-2 text-sm text-ink-muted" x-text="author.bio || ''"></p>
-                    <div class="mt-4 flex items-center gap-1 border-t border-line pt-3">
-                        <button type="button" x-on:click="openEdit(author)" class="flex size-8 items-center justify-center rounded-lg text-ink-muted transition hover:bg-primary-light hover:text-primary">
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.5 4.5a2.1 2.1 0 0 1 3 3L7.5 19.5 3 21l1.5-4.5Z"/></svg>
-                        </button>
-                        <a x-bind:href="`/admin/posts?author=${author.id}`" title="View posts" class="flex size-8 items-center justify-center rounded-lg text-ink-muted transition hover:bg-info-light hover:text-info">
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z"/></svg>
-                        </a>
-                        <button type="button" x-on:click="deleteOpen = true; deleteId = author.id; deleteName = author.name"
-                                class="flex size-8 items-center justify-center rounded-lg text-ink-muted transition hover:bg-danger-light hover:text-danger">
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7m2 0v13a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 7 20V7h10Z"/></svg>
-                        </button>
-                    </div>
+
+                    <template x-if="author.is_founder">
+                        <div class="mt-4 flex items-center justify-between gap-2 border-t border-line pt-3">
+                            <span class="flex items-center gap-1.5 text-xs font-semibold text-ink-muted">
+                                <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/></svg>
+                                Site founder — edited from Settings
+                            </span>
+                            <div class="flex items-center gap-1">
+                                <a href="{{ route('admin.settings.index') }}" title="Edit in Settings" class="flex size-8 items-center justify-center rounded-lg text-ink-muted transition hover:bg-primary-light hover:text-primary">
+                                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.5 4.5a2.1 2.1 0 0 1 3 3L7.5 19.5 3 21l1.5-4.5Z"/></svg>
+                                </a>
+                                <a x-bind:href="`/admin/posts?author=${author.id}`" title="View posts" class="flex size-8 items-center justify-center rounded-lg text-ink-muted transition hover:bg-info-light hover:text-info">
+                                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </template>
+                    <template x-if="!author.is_founder">
+                        <div class="mt-4 flex items-center gap-1 border-t border-line pt-3">
+                            <button type="button" x-on:click="openEdit(author)" class="flex size-8 items-center justify-center rounded-lg text-ink-muted transition hover:bg-primary-light hover:text-primary">
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16.5 4.5a2.1 2.1 0 0 1 3 3L7.5 19.5 3 21l1.5-4.5Z"/></svg>
+                            </button>
+                            <a x-bind:href="`/admin/posts?author=${author.id}`" title="View posts" class="flex size-8 items-center justify-center rounded-lg text-ink-muted transition hover:bg-info-light hover:text-info">
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z"/></svg>
+                            </a>
+                            <button type="button" x-on:click="deleteOpen = true; deleteId = author.id; deleteName = author.name"
+                                    class="flex size-8 items-center justify-center rounded-lg text-ink-muted transition hover:bg-danger-light hover:text-danger">
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7m2 0v13a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 7 20V7h10Z"/></svg>
+                            </button>
+                        </div>
+                    </template>
                 </div>
             </template>
 

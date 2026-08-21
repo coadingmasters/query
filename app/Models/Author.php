@@ -14,11 +14,12 @@ class Author extends Model
 
     protected $fillable = [
         'name', 'slug', 'email', 'bio', 'photo', 'credentials',
-        'twitter_url', 'linkedin_url', 'website_url', 'is_active',
+        'twitter_url', 'linkedin_url', 'website_url', 'is_active', 'is_founder',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'is_founder' => 'boolean',
     ];
 
     protected $appends = ['photo_url'];

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Author;
 use App\Models\Setting;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -38,6 +39,37 @@ class SettingsController extends Controller
 
         Setting::current()->update($data);
 
+        $this->syncFounderAuthor($data);
+
         return redirect()->route('admin.settings.index')->with('status', 'Settings updated.');
+    }
+
+    /**
+     * Keeps a matching Author row in sync so the founder can be picked as a
+     * post's byline without re-entering their bio and socials — editing
+     * still happens here, not on the Authors admin page.
+     */
+    private function syncFounderAuthor(array $data): void
+    {
+        $founder = Author::where('is_founder', true)->first();
+
+        if (blank($data['author_name'] ?? null)) {
+            $founder?->update(['is_active' => false]);
+
+            return;
+        }
+
+        Author::updateOrCreate(
+            ['is_founder' => true],
+            [
+                'name' => $data['author_name'],
+                'credentials' => $data['author_role'] ?? null,
+                'bio' => $data['author_bio'] ?? null,
+                'twitter_url' => $data['author_twitter_url'] ?? null,
+                'linkedin_url' => $data['author_linkedin_url'] ?? null,
+                'website_url' => $data['author_website_url'] ?? null,
+                'is_active' => true,
+            ]
+        );
     }
 }

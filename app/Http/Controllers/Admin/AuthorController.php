@@ -32,6 +32,10 @@ class AuthorController extends Controller
 
     public function update(Request $request, Author $author): JsonResponse
     {
+        if ($author->is_founder) {
+            return response()->json(['message' => 'This author is managed from Settings, not here.'], 422);
+        }
+
         $author->update($this->validated($request, $author));
 
         return response()->json($author);
@@ -39,6 +43,10 @@ class AuthorController extends Controller
 
     public function destroy(Author $author): JsonResponse
     {
+        if ($author->is_founder) {
+            return response()->json(['message' => 'This author is managed from Settings — turn it off there instead of deleting it here.'], 422);
+        }
+
         if ($author->posts()->exists()) {
             return response()->json(['message' => 'This author still has posts assigned to them.'], 422);
         }

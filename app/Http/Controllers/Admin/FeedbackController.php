@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ArticleFeedback;
+use App\Models\Post;
 use Illuminate\Contracts\View\View;
 
 class FeedbackController extends Controller
@@ -19,7 +20,7 @@ class FeedbackController extends Controller
 
                 return [
                     'slug' => $row->slug,
-                    'title' => config("blog.{$row->slug}.title", $row->slug),
+                    'title' => Post::where('slug', $row->slug)->first()?->title ?? $row->slug,
                     'helpful' => (int) $row->helpful,
                     'not_helpful' => (int) $row->not_helpful,
                     'total' => $total,

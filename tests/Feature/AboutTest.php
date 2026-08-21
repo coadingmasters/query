@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Post;
 use Tests\TestCase;
 
 class AboutTest extends TestCase
@@ -53,7 +54,7 @@ class AboutTest extends TestCase
 
         $tools = count(config('catalog.tools'));
         $foods = count(config('catalog.foods'));
-        $guides = $foods + count(config('catalog.posts'));
+        $guides = $foods + Post::published()->count();
 
         $response->assertSee((string) $tools)
             ->assertSee((string) $foods)

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Post;
 use Tests\TestCase;
 
 class HomeTest extends TestCase
@@ -26,8 +27,8 @@ class HomeTest extends TestCase
             $response->assertSee($food['question']);
         }
 
-        foreach (config('catalog.posts') as $post) {
-            $response->assertSee($post['title']);
+        foreach (Post::published()->get() as $post) {
+            $response->assertSee($post->title);
         }
     }
 

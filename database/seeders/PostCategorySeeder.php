@@ -6,9 +6,8 @@ use App\Models\PostCategory;
 use Illuminate\Database\Seeder;
 
 /**
- * The five categories the blog already writes under (see config/blog.php),
- * carried over so existing content has somewhere to land once it moves
- * into the database.
+ * The five categories the blog already writes under. PostSeeder assigns
+ * each migrated article to one of these by name.
  */
 class PostCategorySeeder extends Seeder
 {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use App\Support\Schema;
 use Illuminate\Contracts\View\View;
 
@@ -31,7 +32,7 @@ class FaqController extends Controller
             'stats' => [
                 [$count, 'Questions answered'],
                 [count(config('catalog.tools')), 'Free cat care tools'],
-                [count(config('catalog.foods')) + count(config('catalog.posts')), 'Guides and articles'],
+                [count(config('catalog.foods')) + Post::published()->count(), 'Guides and articles'],
                 ['$0', 'Cost to use, always'],
             ],
             'schema' => Schema::graph([

@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Setting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
         $this->configureUrls();
         $this->configureModels();
         $this->configureCommands();
+        $this->configureSettingsOverride();
     }
 
     /**
@@ -63,5 +66,67 @@ class AppServiceProvider extends ServiceProvider
     protected function configureCommands(): void
     {
         DB::prohibitDestructiveCommands($this->app->isProduction());
+    }
+
+    /**
+     * Let admin-edited settings override the config/env values everywhere
+     * they're already read (Schema.php, the footer, meta tags, the contact
+     * form, the about/author pages), without touching any of those call
+     * sites. A null column leaves the original config() value untouched —
+     * the same "graceful when unset" fallback config/author.php already
+     * documents, just with an admin-editable layer in front of it.
+     *
+     * Skipped in console: artisan commands (including the very first
+     * `migrate` that creates this table) don't need it, and running it
+     * there would query a table that may not exist yet.
+     */
+    protected function configureSettingsOverride(): void
+    {
+        if ($this->app->runningInConsole()) {
+            return;
+        }
+
+        if (! Schema::hasTable('settings')) {
+            return;
+        }
+
+        $settings = Setting::query()->first();
+
+        if (! $settings) {
+            return;
+        }
+
+        $map = [
+            'brand.email' => $settings->brand_email,
+            'brand.tagline' => $settings->brand_tagline,
+            'brand.description' => $settings->brand_description,
+            'author.founder.name' => $settings->author_name,
+            'author.founder.role' => $settings->author_role,
+            'author.founder.tagline' => $settings->author_tagline,
+            'author.reviewer.name' => $settings->reviewer_name,
+            'author.reviewer.credentials' => $settings->reviewer_credentials,
+            'author.reviewer.reviewed_on' => $settings->reviewer_reviewed_on?->toDateString(),
+            'author.reviewer.profile' => $settings->reviewer_profile_url,
+            'legal.jurisdiction' => $settings->legal_jurisdiction,
+        ];
+
+        foreach (array_filter($map, fn ($value) => filled($value)) as $key => $value) {
+            config([$key => $value]);
+        }
+
+        if (filled($settings->author_bio)) {
+            config(['author.founder.bio' => preg_split('/\n{2,}/', trim($settings->author_bio))]);
+        }
+
+        $profiles = array_values(array_filter([
+            $settings->author_linkedin_url,
+            $settings->author_twitter_url,
+            $settings->author_github_url,
+            $settings->author_website_url,
+        ]));
+
+        if ($profiles) {
+            config(['author.founder.profiles' => $profiles]);
+        }
     }
 }

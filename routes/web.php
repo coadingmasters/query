@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MessagesController;
 use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PostTagController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SubscribersController;
 use App\Http\Controllers\ArticleFeedbackController;
 use App\Http\Controllers\AuthorController;
@@ -106,6 +107,11 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
     Route::get('/feedback', [FeedbackController::class, 'index'])
         ->middleware('auth')
         ->name('feedback.index');
+
+    Route::middleware('auth')->prefix('settings')->name('settings.')->group(function (): void {
+        Route::get('/', [SettingsController::class, 'index'])->name('index');
+        Route::put('/', [SettingsController::class, 'update'])->name('update');
+    });
 
     Route::middleware('auth')->prefix('breeds')->name('breeds.')->group(function (): void {
         Route::get('/', [BreedsController::class, 'index'])->name('index');

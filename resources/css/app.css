@@ -448,6 +448,12 @@ summary {
     background: var(--dot-color);
 }
 
+/* Same reasoning again: a raw height: {{ }}% inside style="" reads as
+   invalid CSS to editor tooling, since "height" is a real CSS keyword. */
+.column-height {
+    height: var(--column-percent);
+}
+
 @keyframes admin-bar-fill {
     from { width: 0%; }
     to   { width: var(--admin-bar-percent); }
@@ -494,6 +500,29 @@ summary {
 .admin-wave-fill {
     opacity: 0;
     animation: admin-wave-fill 0.7s ease-out both;
+}
+
+/* Each pie segment already carries its final stroke-dashoffset (its position
+   around the ring); only the dash length itself grows in, from 0 up to the
+   segment's share of the circumference. */
+@keyframes admin-pie-grow {
+    from { stroke-dasharray: 0 var(--pie-circumference); }
+    to   { stroke-dasharray: var(--pie-length) var(--pie-circumference); }
+}
+
+.admin-pie-segment {
+    animation: admin-pie-grow 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes admin-column-grow {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
+}
+
+.admin-column {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: admin-column-grow 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes post-card-pop {
@@ -548,7 +577,7 @@ summary {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .admin-bar, .admin-line-draw, .admin-dot, .admin-donut, .admin-wave-fill, .post-card-pop, .post-card-pulse, .skeleton, .toast-slide-in, .toast-slide-out, .toast-progress {
+    .admin-bar, .admin-line-draw, .admin-dot, .admin-donut, .admin-wave-fill, .admin-pie-segment, .admin-column, .post-card-pop, .post-card-pulse, .skeleton, .toast-slide-in, .toast-slide-out, .toast-progress {
         animation: none;
     }
 
@@ -557,6 +586,8 @@ summary {
     .admin-dot { opacity: 1; transform: none; }
     .admin-donut { stroke-dashoffset: var(--admin-donut-offset); }
     .admin-wave-fill { opacity: 1; }
+    .admin-pie-segment { stroke-dasharray: var(--pie-length) var(--pie-circumference); }
+    .admin-column { transform: none; }
 }
 
 @keyframes paw-drift {
@@ -599,7 +630,13 @@ summary {
        leftover. Sections that need a narrower reading column still add
        their own max-w-4xl/6xl alongside this class, which is unaffected. */
     .container-page { @apply mx-auto w-full max-w-[2400px] px-3 sm:px-6 lg:px-[100px]; }
-    .section        { @apply py-16 sm:py-20 lg:py-24; }
+
+    /* Trimmed from py-16/20/24: that read as noticeably more top-and-bottom
+       air than the container's own left-and-right padding, which is what
+       made a page of these feel like more scrolling than its content
+       actually needed. Still a full step above .section-tight, so the two
+       stay distinct. */
+    .section        { @apply py-12 sm:py-14 lg:py-16; }
 
     /* Content pages sit closer together — the home page uses the space to
        separate browsing blocks, but here it just becomes scrolling. */

@@ -67,58 +67,68 @@
             @endforeach
         </div>
 
-        {{-- Traffic sources + top pages --}}
+        {{-- Chart cards: a colour wash and an icon chip per card, like the
+             stat cards above, rather than a plain white box — and each chart
+             type now actually fits its data. Traffic sources is four shares
+             of a whole, which is what a pie chart is for; the three ranked
+             lists become columns, which fill their card at every count
+             instead of leaving a short list floating in empty space. --}}
+        @php
+            $chartCards = [
+                ['key' => 'sources', 'title' => 'Traffic sources', 'sub' => 'Direct, organic search, social, or a referral link — last 30 days.', 'tone' => 'primary', 'icon' => 'M21 12a9 9 0 1 1-9-9M21 12h-9V3'],
+                ['key' => 'pages', 'title' => 'Top pages', 'sub' => 'Every page, ranked by views — last 30 days.', 'tone' => 'warning', 'icon' => 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z'],
+                ['key' => 'tools', 'title' => 'Tool usage', 'sub' => 'Visits to each calculator/tracker page — last 30 days.', 'tone' => 'accent', 'icon' => 'M14.5 3.5a3.5 3.5 0 0 0-4.9 4.9L3 15l3 3 6.6-6.6a3.5 3.5 0 0 0 4.9-4.9L14.5 9.5 11.5 6.5l3-3Z'],
+                ['key' => 'posts', 'title' => 'Top blog posts', 'sub' => 'Ranked by views — last 30 days.', 'tone' => 'info', 'icon' => 'M12 7.5v13M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z'],
+            ];
+            $washClasses = [
+                'primary' => 'bg-primary-light',
+                'warning' => 'bg-warning-light',
+                'accent' => 'bg-accent-light',
+                'info' => 'bg-info-light',
+            ];
+        @endphp
+
         <div class="mt-6 grid gap-6 lg:grid-cols-2">
-            <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
-                <h3 class="font-heading text-base font-bold text-ink">Traffic sources</h3>
-                <p class="text-sm text-ink-muted">Direct, organic search, social, or a referral link — last 30 days.</p>
-                <div class="mt-6">
-                    <x-admin.wave-chart :data="$sourceChart" id="traffic-sources"/>
-                </div>
-            </div>
+            @foreach ($chartCards as $i => $card)
+                <div class="stat-card-pop relative overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                     style="--pop-delay: {{ (7 + $i) * 70 }}ms">
+                    <span aria-hidden="true" @class([
+                        'pointer-events-none absolute -top-14 -right-14 size-36 rounded-full blur-2xl opacity-60',
+                        $washClasses[$card['tone']],
+                    ])></span>
 
-            <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
-                <h3 class="font-heading text-base font-bold text-ink">Top pages</h3>
-                <p class="text-sm text-ink-muted">Every page, ranked by views — last 30 days.</p>
-                <div class="mt-6">
-                    @if ($topPages->isNotEmpty())
-                        <x-admin.wave-chart :data="$topPages" id="top-pages"/>
-                    @else
-                        <p class="text-sm text-ink-muted">No page views yet.</p>
+                    <div class="relative flex items-start gap-3">
+                        <span class="flex size-10 shrink-0 items-center justify-center rounded-xl {{ $toneClasses[$card['tone']] }}">
+                            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="{{ $card['icon'] }}"/>
+                            </svg>
+                        </span>
+                        <div>
+                            <h3 class="font-heading text-base font-bold text-ink">{{ $card['title'] }}</h3>
+                            <p class="text-sm text-ink-muted">{{ $card['sub'] }}</p>
+                        </div>
+                    </div>
+
+                    <div class="relative mt-6">
+                        @if ($card['key'] === 'sources')
+                            <x-admin.pie-chart :data="$sourceChart"/>
+                        @elseif ($card['key'] === 'pages')
+                            <x-admin.column-chart :data="$topPages"/>
+                        @elseif ($card['key'] === 'tools')
+                            <x-admin.column-chart :data="$toolUsage"/>
+                        @else
+                            <x-admin.column-chart :data="$topPosts"/>
+                        @endif
+                    </div>
+
+                    @if ($card['key'] === 'tools')
+                        <p class="relative mt-5 text-xs text-ink-muted">
+                            Completion rate and most-common-input stats aren't tracked yet — each tool's own JS would need
+                            to report a "finished" event, which is a separate change from page-view tracking.
+                        </p>
                     @endif
                 </div>
-            </div>
-        </div>
-
-        {{-- Tool usage + top posts --}}
-        <div class="mt-6 grid gap-6 lg:grid-cols-2">
-            <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
-                <h3 class="font-heading text-base font-bold text-ink">Tool usage</h3>
-                <p class="text-sm text-ink-muted">Visits to each calculator/tracker page — last 30 days.</p>
-                <div class="mt-6">
-                    @if ($toolUsage->isNotEmpty())
-                        <x-admin.wave-chart :data="$toolUsage" id="tool-usage"/>
-                    @else
-                        <p class="text-sm text-ink-muted">No tool visits yet.</p>
-                    @endif
-                </div>
-                <p class="mt-5 text-xs text-ink-muted">
-                    Completion rate and most-common-input stats aren't tracked yet — each tool's own JS would need to
-                    report a "finished" event, which is a separate change from page-view tracking.
-                </p>
-            </div>
-
-            <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
-                <h3 class="font-heading text-base font-bold text-ink">Top blog posts</h3>
-                <p class="text-sm text-ink-muted">Ranked by views — last 30 days.</p>
-                <div class="mt-6">
-                    @if ($topPosts->isNotEmpty())
-                        <x-admin.wave-chart :data="$topPosts" id="top-posts"/>
-                    @else
-                        <p class="text-sm text-ink-muted">No post views yet.</p>
-                    @endif
-                </div>
-            </div>
+            @endforeach
         </div>
     @endunless
 

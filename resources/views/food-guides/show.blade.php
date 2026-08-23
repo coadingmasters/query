@@ -37,7 +37,15 @@
         </div>
 
         <div class="mt-8 max-w-2xl">
-            <p class="text-lg leading-relaxed text-ink">{{ $food['answer'] }}</p>
+            {{-- The answer, before anything else. It is what the reader came
+                 for and what Google lifts for a snippet. --}}
+            <div class="relative overflow-hidden rounded-2xl border border-accent-light bg-accent-light p-5 sm:p-6">
+                <p class="flex items-center gap-2 text-xs font-bold tracking-wider text-accent-dark uppercase">
+                    <x-paw-print class="size-4"/>
+                    Quick answer
+                </p>
+                <p class="mt-2.5 text-base leading-relaxed font-medium text-ink">{{ $food['answer'] }}</p>
+            </div>
 
             @if (! empty($food['note']))
                 <div @class(['mt-5 flex items-start gap-3 rounded-xl border px-4 py-3.5', 'border-line bg-surface-soft'])>
@@ -53,6 +61,54 @@
                     <p class="text-sm font-semibold text-ink">{{ $food['note'] }}</p>
                 </div>
             @endif
+
+            @if (! empty($food['why']))
+                <h2 class="mt-10 font-heading text-xl font-extrabold tracking-tight text-ink">Why</h2>
+                <p class="mt-3 text-base leading-relaxed text-ink-muted">{{ $food['why'] }}</p>
+            @endif
+
+            @if (! empty($food['guidance']))
+                <h2 class="mt-8 font-heading text-xl font-extrabold tracking-tight text-ink">
+                    {{ $food['verdict'] === 'unsafe' ? 'What to do if your cat ate this' : 'How much is actually safe' }}
+                </h2>
+                <p class="mt-3 text-base leading-relaxed text-ink-muted">{{ $food['guidance'] }}</p>
+            @endif
+
+            @if (! empty($food['watch_for']))
+                <h2 class="mt-8 font-heading text-xl font-extrabold tracking-tight text-ink">Signs to watch for</h2>
+                <ul class="mt-3 space-y-2.5">
+                    @foreach ($food['watch_for'] as $sign)
+                        <li class="flex items-start gap-2.5 text-base leading-relaxed text-ink-muted">
+                            <span aria-hidden="true" class="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary-vivid"></span>
+                            {{ $sign }}
+                        </li>
+                    @endforeach
+                </ul>
+                <p class="mt-4 text-sm leading-relaxed text-ink-muted">
+                    Any of these, or anything that seems off beyond what is listed here, is worth a call to
+                    your vet. Our guide to
+                    <a href="{{ route('blog.show', 'signs-your-cat-is-sick') }}" class="font-semibold text-primary underline decoration-line-strong underline-offset-4">the early signs a cat is sick</a>
+                    covers the wider list of what to watch for at any time, not just after eating something new.
+                </p>
+            @endif
+        </div>
+    </div>
+
+    {{-- ══ Sources ═══════════════════════════════════════════════════════ --}}
+    <div class="container-page max-w-2xl mt-10">
+        <div class="rounded-2xl border border-line bg-surface-soft p-6">
+            <h2 class="font-heading text-base font-extrabold text-ink">Where this comes from</h2>
+            <ul class="mt-3 space-y-2">
+                @foreach ($sources as $source)
+                    <li class="text-sm leading-relaxed text-ink-muted">
+                        <a href="{{ $source['url'] }}" rel="noopener" target="_blank" class="font-semibold text-primary underline decoration-line-strong underline-offset-4">{{ $source['name'] }}</a>
+                        <span class="block">{{ $source['note'] }}</span>
+                    </li>
+                @endforeach
+            </ul>
+            <div class="mt-5 border-t border-line pt-5">
+                <x-byline :reviewed="true"/>
+            </div>
         </div>
     </div>
 

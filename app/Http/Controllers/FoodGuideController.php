@@ -14,6 +14,12 @@ class FoodGuideController extends Controller
         'unsafe' => 'Never feed this.',
     ];
 
+    private const SOURCES = [
+        ['name' => 'ASPCA Animal Poison Control Center', 'url' => 'https://www.aspca.org/pet-care/animal-poison-control/people-foods-avoid-feeding-your-pets', 'note' => 'The reference list behind which human foods are genuinely toxic to cats.'],
+        ['name' => 'Cornell Feline Health Center', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center', 'note' => 'Background on feline nutrition and why cats need a meat-based diet.'],
+        ['name' => 'WSAVA Global Nutrition Guidelines', 'url' => 'https://wsava.org/global-guidelines/global-nutrition-guidelines/', 'note' => 'The nutritional framework behind why extras cannot replace a complete diet.'],
+    ];
+
     public function index(): View
     {
         $url = rtrim(config('app.url'), '/');
@@ -70,6 +76,7 @@ class FoodGuideController extends Controller
             'canonical' => $url.$path,
             'food' => $food,
             'related' => $related,
+            'sources' => self::SOURCES,
             'schema' => Schema::graph([
                 [
                     '@type' => 'WebPage',

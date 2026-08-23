@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AuthorController as AdminAuthorController;
 use App\Http\Controllers\Admin\BreedsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\FeedbackController;
+use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\MessagesController;
 use App\Http\Controllers\Admin\PostCategoryController;
 use App\Http\Controllers\Admin\PostController;
@@ -126,6 +127,13 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
     Route::get('/feedback', [FeedbackController::class, 'index'])
         ->middleware('auth')
         ->name('feedback.index');
+
+    Route::middleware('auth')->prefix('media')->name('media.')->group(function (): void {
+        Route::get('/', [MediaController::class, 'index'])->name('index');
+        Route::post('/', [MediaController::class, 'store'])->name('store');
+        Route::put('/{media}', [MediaController::class, 'update'])->name('update');
+        Route::delete('/{media}', [MediaController::class, 'destroy'])->name('destroy');
+    });
 
     Route::middleware('auth')->prefix('settings')->name('settings.')->group(function (): void {
         Route::get('/', [SettingsController::class, 'index'])->name('index');

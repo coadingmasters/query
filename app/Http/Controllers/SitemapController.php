@@ -49,6 +49,7 @@ class SitemapController extends Controller
             ['/tools/cat-pregnancy-calculator', 'views/tools/cat-pregnancy-calculator.blade.php', '0.9'],
             ['/tools/cat-calorie-calculator', 'views/tools/cat-calorie-calculator.blade.php', '0.9'],
             ['/tools/cat-vaccination-tracker', 'views/tools/cat-vaccination-tracker.blade.php', '0.9'],
+            ['/tools/cat-weight-checker', 'views/tools/cat-weight-checker.blade.php', '0.9'],
             ['/food-guides', 'views/food-guides/index.blade.php', '0.8'],
             ['/blog', 'views/blog/index.blade.php', '0.8'],
             ['/faq', 'views/faq.blade.php', '0.8'],

@@ -42,6 +42,7 @@ class SeoTest extends TestCase
             'pregnancy calculator' => ['/tools/cat-pregnancy-calculator'],
             'calorie calculator' => ['/tools/cat-calorie-calculator'],
             'vaccination tracker' => ['/tools/cat-vaccination-tracker'],
+            'weight checker' => ['/tools/cat-weight-checker'],
             'tools index' => ['/tools'],
             'food guides index' => ['/food-guides'],
             'fruits food guide' => ['/food-guides/fruits'],
@@ -67,6 +68,7 @@ class SeoTest extends TestCase
             'pregnancy calculator' => ['/tools/cat-pregnancy-calculator'],
             'calorie calculator' => ['/tools/cat-calorie-calculator'],
             'vaccination tracker' => ['/tools/cat-vaccination-tracker'],
+            'weight checker' => ['/tools/cat-weight-checker'],
             'fruits food guide' => ['/food-guides/fruits'],
             'toxic foods food guide' => ['/food-guides/toxic-foods'],
         ];

@@ -6,40 +6,40 @@ use App\Http\Controllers\Controller;
 use App\Support\Schema;
 use Illuminate\Contracts\View\View;
 
-class VaccinationTrackerController extends Controller
+class CatWeightCheckerController extends Controller
 {
     public function __invoke(): View
     {
         $url = rtrim(config('app.url'), '/');
-        $path = '/tools/cat-vaccination-tracker';
+        $path = '/tools/cat-weight-checker';
 
-        // 58 characters, inside what Google will show.
-        $title = 'Cat Vaccination Tracker: Schedule & Record | PurrQuery';
+        $title = 'Cat Weight Checker: BCS, Ideal Weight & Food Adjustment';
 
-        $description = 'Free cat vaccination tracker. Enter a birth date and get a full '
-            .'FVRCP, rabies and FeLV schedule with next due dates, plus a printable '
-            .'vaccination record.';
+        $description = 'Free cat weight checker: score body condition, see an ideal '
+            .'weight estimate, and get a safe food adjustment. Log weight with a '
+            .'chart, no sign-up.';
 
-        $vaccines = config('vaccination.vaccines');
-        $faq = config('vaccination-faq');
+        $bcs = config('cat-weight.bcs');
+        $faq = config('cat-weight-faq');
 
-        return view('tools.cat-vaccination-tracker', [
+        return view('tools.cat-weight-checker', [
             'title' => $title,
             'description' => $description,
             'canonical' => $url.$path,
-            'vaccines' => $vaccines,
-            'injectionSites' => config('vaccination.injection_sites'),
-            'sources' => config('vaccination.sources'),
+            'bcs' => $bcs,
+            'weighMethods' => config('cat-weight.weigh_methods'),
+            'sources' => config('cat-weight.sources'),
             'faq' => $faq,
             'model' => [
-                'vaccines' => $vaccines,
-                'injectionSites' => config('vaccination.injection_sites'),
+                'bcs' => $bcs,
+                'seniorAge' => config('cat-weight.senior_age_years'),
+                'maxSafeLossPercentPerWeek' => config('cat-weight.max_safe_loss_percent_per_week'),
             ],
             'schema' => Schema::graph([
                 [
                     '@type' => 'WebApplication',
                     '@id' => $url.$path.'#app',
-                    'name' => 'Cat Vaccination Tracker',
+                    'name' => 'Cat Weight Checker',
                     'url' => $url.$path,
                     'applicationCategory' => 'HealthApplication',
                     'operatingSystem' => 'Any',
@@ -64,7 +64,7 @@ class VaccinationTrackerController extends Controller
                 Schema::breadcrumbs($path, [
                     'Home' => '/',
                     'Tools' => '/tools',
-                    'Cat Vaccination Tracker' => null,
+                    'Cat Weight Checker' => null,
                 ]),
             ]),
         ]);

@@ -71,7 +71,7 @@ class CatAgeCalculatorController extends Controller
                     ->map(fn (array $i): array => ['q' => $i['q'], 'a' => $i['a']])->all()),
                 Schema::breadcrumbs($path, [
                     'Home' => '/',
-                    'Tools' => '/#tools',
+                    'Tools' => '/tools',
                     'Cat Age Calculator' => null,
                 ]),
             ]),

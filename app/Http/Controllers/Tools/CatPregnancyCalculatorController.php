@@ -102,7 +102,7 @@ class CatPregnancyCalculatorController extends Controller
                     ->all()),
                 Schema::breadcrumbs($path, [
                     'Home' => '/',
-                    'Tools' => '/#tools',
+                    'Tools' => '/tools',
                     'Cat Pregnancy Calculator' => null,
                 ]),
             ]),

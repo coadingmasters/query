@@ -40,7 +40,7 @@ class ToolsIndexTest extends TestCase
     {
         $html = $this->get('/tools')->getContent();
 
-        $this->assertStringContainsString('Weight Checker', $html);
+        $this->assertStringContainsString('Breed Quiz', $html);
         $this->assertStringContainsString('Coming soon', $html);
     }
 

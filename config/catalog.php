@@ -46,8 +46,9 @@ return [
         ],
         [
             'slug' => 'cat-weight-checker',
+            'url' => '/tools/cat-weight-checker',
             'title' => 'Weight Checker',
-            'blurb' => 'Find out whether your cat is underweight, ideal or carrying too much.',
+            'blurb' => 'Score body condition, see an ideal weight range, and log weight over time.',
             'image' => 'cat-weight-checker-cat-on-scale',
             'alt' => 'Fluffy cat sitting on a digital pet scale',
         ],

@@ -52,7 +52,7 @@
     "src": "_plus-jakarta-sans-800-normal-CusIZhrK.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-Aenu5yyh.css",
+    "file": "assets/app-Bu_reGUz.css",
     "name": "app",
     "names": [
       "app.css"
@@ -76,6 +76,12 @@
     "file": "assets/cat-vaccination-pdf-C-Wr8VMI.js",
     "name": "cat-vaccination-pdf",
     "src": "resources/js/cat-vaccination-pdf.js",
+    "isEntry": true
+  },
+  "resources/js/cat-weight-pdf.js": {
+    "file": "assets/cat-weight-pdf-BiL8xVUL.js",
+    "name": "cat-weight-pdf",
+    "src": "resources/js/cat-weight-pdf.js",
     "isEntry": true
   },
   "resources/js/post-editor.js": {

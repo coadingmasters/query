@@ -60,14 +60,14 @@ class SearchTest extends TestCase
 
     public function test_a_tool_with_no_page_yet_is_not_a_result(): void
     {
-        // "Weight Checker" has no `url` in config('catalog.tools') — it
-        // cannot be a search result with nowhere for the link to go. Checked
+        // "Breed Quiz" has no `url` in config('catalog.tools') — it cannot
+        // be a search result with nowhere for the link to go. Checked
         // against the JSON endpoint since the page itself also carries a
         // "coming soon" tools widget that legitimately names it.
-        $titles = collect($this->getJson('/search/suggest?q=weight+checker')->json('results'))
+        $titles = collect($this->getJson('/search/suggest?q=breed+quiz')->json('results'))
             ->pluck('title');
 
-        $this->assertNotContains('Weight Checker', $titles);
+        $this->assertNotContains('Breed Quiz', $titles);
     }
 
     public function test_no_matches_shows_the_empty_state(): void

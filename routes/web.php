@@ -31,6 +31,7 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Tools\CatAgeCalculatorController;
 use App\Http\Controllers\Tools\CatCalorieCalculatorController;
 use App\Http\Controllers\Tools\CatPregnancyCalculatorController;
+use App\Http\Controllers\Tools\CatWeightCheckerController;
 use App\Http\Controllers\Tools\VaccinationTrackerController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\SubscriberController;
@@ -77,6 +78,9 @@ Route::get('/tools/cat-calorie-calculator', CatCalorieCalculatorController::clas
 
 Route::get('/tools/cat-vaccination-tracker', VaccinationTrackerController::class)
     ->name('tools.cat-vaccination-tracker');
+
+Route::get('/tools/cat-weight-checker', CatWeightCheckerController::class)
+    ->name('tools.cat-weight-checker');
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('search.suggest');

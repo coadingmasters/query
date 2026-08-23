@@ -433,7 +433,7 @@
 
         <div class="grid grid-cols-2 gap-5">
             @foreach ([
-                ['6', 'Free tools'],
+                [(string) count(config('catalog.tools')), 'Free tools'],
                 ['10', 'Food guides'],
                 ['0', 'Sign-ups needed'],
                 ['100%', 'Free to use'],

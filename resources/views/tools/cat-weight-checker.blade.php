@@ -344,18 +344,27 @@
     </div>
 </section>
 
-{{-- ══ 7. SOURCES ════════════════════════════════════════════════════════ --}}
-<section class="section-tight bg-surface-soft">
-    <div class="container-page max-w-3xl">
-        <h2 class="font-heading text-lg font-extrabold text-ink">Sources</h2>
-        <ul class="mt-4 space-y-2.5">
-            @foreach ($sources as $source)
-                <li class="text-sm text-ink-muted">
-                    <a href="{{ $source['url'] }}" rel="noopener" target="_blank" class="font-semibold text-primary underline decoration-line-strong underline-offset-4">{{ $source['name'] }}</a>
-                    &mdash; {{ $source['note'] }}
-                </li>
-            @endforeach
-        </ul>
+{{-- ══ 7. SOURCES AND BYLINE ═════════════════════════════════════════════ --}}
+<section class="bg-surface-section py-8 lg:py-10">
+    <div class="container-page max-w-6xl">
+        <div class="rounded-2xl border border-line bg-surface p-6 sm:p-8">
+            <h2 class="font-heading text-lg font-extrabold text-ink">Where this comes from</h2>
+            <ul class="mt-4 space-y-3">
+                @foreach ($sources as $source)
+                    <li class="text-sm leading-relaxed text-ink-muted">
+                        <a href="{{ $source['url'] }}" rel="noopener" target="_blank"
+                           class="font-semibold text-primary underline decoration-line-strong underline-offset-4 transition-colors hover:text-primary-hover">
+                            {{ $source['name'] }}
+                        </a>
+                        <span class="block">{{ $source['note'] }}</span>
+                    </li>
+                @endforeach
+            </ul>
+
+            <div class="mt-6 border-t border-line pt-5">
+                <x-byline :reviewed="true"/>
+            </div>
+        </div>
     </div>
 </section>
 

@@ -218,21 +218,18 @@ class CatPregnancyCalculatorTest extends TestCase
     }
 
     /**
-     * The other six tools have no pages yet. Their cards must not pretend
-     * otherwise — a card that looks clickable and goes nowhere is worse than
-     * one that says it is not ready.
+     * catalog.tools is the list every nav item, grid and count on the site
+     * reads from — a tool with no page yet belongs in catalog.tools_upcoming
+     * instead, precisely so a card that looks clickable and goes nowhere can
+     * never appear here.
      */
-    public function test_tools_without_pages_are_not_links(): void
+    public function test_every_catalogued_tool_has_a_real_page(): void
     {
-        $html = $this->get('/')->getContent();
-
         foreach (config('catalog.tools') as $tool) {
-            if (! isset($tool['url'])) {
-                $this->assertStringNotContainsString('href="/tools/'.$tool['slug'].'"', $html);
-            }
+            $this->assertArrayHasKey('url', $tool, "{$tool['slug']} is in catalog.tools without a url");
         }
 
-        $this->assertStringContainsString('Coming soon', $html);
+        $this->assertStringNotContainsString('Coming soon', $this->get('/')->getContent());
     }
 
     public function test_the_faq_renders_every_question_and_answer(): void

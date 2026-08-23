@@ -60,6 +60,16 @@ return [
             'image' => 'cat-vaccination-tracker-vet-examination',
             'alt' => 'Veterinarian examining a calm tabby cat',
         ],
+    ],
+
+    /*
+     | Tools with no page built yet. Deliberately not part of 'tools' above:
+     | every nav item, count and "X free tools" stat on the site reads from
+     | 'tools' alone, so a not-yet-built tool never shows up as a dead link
+     | or a "coming soon" card anywhere. Move an entry back up once its page
+     | exists, adding a 'url' the same way the live ones have one.
+     */
+    'tools_upcoming' => [
         [
             'slug' => 'cat-breed-quiz',
             'title' => 'Breed Quiz',

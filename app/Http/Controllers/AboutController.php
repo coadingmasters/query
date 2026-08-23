@@ -15,19 +15,21 @@ class AboutController extends Controller
 
         // Counted from the catalogue and the posts table rather than typed
         // in, so the page cannot drift out of step with the site as tools
-        // and guides are added.
+        // and guides are added. catalog.tools only ever holds tools with a
+        // real page — see config/catalog.php — so every one of these is
+        // already live; nothing here needs filtering by hand.
         //
         // Published only. A visitor who clicks through from a number
         // expecting a working page and finds "coming soon" learns not to
         // trust the next number on the page, which is the opposite of what
         // this section is for.
-        $liveTools = collect(config('catalog.tools'))->filter(fn (array $t): bool => isset($t['url']))->count();
+        $liveTools = count(config('catalog.tools'));
         $livePosts = Post::published()->count();
         $foods = count(config('catalog.foods'));
 
         // Tools still waiting to be built, plus posts still being written
         // (draft or scheduled), rather than published yet.
-        $inProgress = (count(config('catalog.tools')) - $liveTools)
+        $inProgress = count(config('catalog.tools_upcoming'))
             + Post::query()->whereIn('status', ['draft', 'scheduled'])->count();
 
         $title = 'About '.$name.' | Trusted Cat Care Tools & Guides';

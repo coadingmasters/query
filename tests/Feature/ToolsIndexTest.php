@@ -36,12 +36,15 @@ class ToolsIndexTest extends TestCase
         }
     }
 
-    public function test_a_tool_with_no_page_yet_is_marked_coming_soon_and_not_linked(): void
+    /** Breed Quiz and Name Generator have no page yet — catalog.tools_upcoming keeps them out of every listing until they do. */
+    public function test_a_tool_with_no_page_yet_is_not_shown_anywhere(): void
     {
-        $html = $this->get('/tools')->getContent();
+        foreach (['Breed Quiz', 'Name Generator'] as $upcoming) {
+            $this->get('/tools')->assertDontSee($upcoming);
+            $this->get('/')->assertDontSee($upcoming);
+        }
 
-        $this->assertStringContainsString('Breed Quiz', $html);
-        $this->assertStringContainsString('Coming soon', $html);
+        $this->assertStringNotContainsString('Coming soon', $this->get('/tools')->getContent());
     }
 
     /** The header nav's CTA buttons and category card should point at the real index, not a same-page anchor. */

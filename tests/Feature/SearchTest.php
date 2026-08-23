@@ -60,10 +60,10 @@ class SearchTest extends TestCase
 
     public function test_a_tool_with_no_page_yet_is_not_a_result(): void
     {
-        // "Breed Quiz" has no `url` in config('catalog.tools') — it cannot
-        // be a search result with nowhere for the link to go. Checked
-        // against the JSON endpoint since the page itself also carries a
-        // "coming soon" tools widget that legitimately names it.
+        // "Breed Quiz" lives in config('catalog.tools_upcoming'), not
+        // catalog.tools, since it has no page yet — search only reads the
+        // latter, so it cannot turn up as a result with nowhere to send
+        // someone.
         $titles = collect($this->getJson('/search/suggest?q=breed+quiz')->json('results'))
             ->pluck('title');
 

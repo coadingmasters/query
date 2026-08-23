@@ -14,7 +14,7 @@
         <x-paw-print class="paw absolute bottom-[12%] left-[6%] hidden size-7 text-accent-vivid lg:block [animation-delay:-5s] [animation-duration:25s]"/>
     </div>
 
-    <div class="container-page relative py-8 lg:py-6">
+    <div class="container-page relative pt-8 pb-16 lg:pt-6 lg:pb-20">
         <nav aria-label="Breadcrumb" class="text-sm text-ink-muted">
             <ol class="flex flex-wrap items-center gap-1.5">
                 <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>

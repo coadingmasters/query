@@ -240,7 +240,7 @@
 </section>
 
 {{-- ══ 4. WEIGHT LOG ═════════════════════════════════════════════════════ --}}
-<section class="section-tight bg-surface">
+<section id="weight-log" class="section-tight scroll-mt-24 bg-surface">
     <div class="container-page">
         <div class="flex flex-wrap items-end justify-between gap-4">
             <div>
@@ -322,6 +322,85 @@
             look at feeding amounts once you know where your cat stands, our
             <a href="{{ route('tools.cat-calorie-calculator') }}" class="font-semibold text-primary underline decoration-line-strong underline-offset-4">cat calorie calculator</a>
             works out a full daily target.
+        </p>
+    </div>
+</section>
+
+{{-- ══ HOW TO USE ════════════════════════════════════════════════════════ --}}
+<section id="how-to-use" class="section-tight scroll-mt-20 bg-surface">
+    <div class="container-page max-w-3xl">
+        <h2 class="font-heading text-2xl font-extrabold tracking-tight text-ink">
+            How to use the cat weight checker
+        </h2>
+        <p class="mt-3 text-base leading-relaxed text-ink-muted">
+            The tool itself takes under a minute. Getting a result worth trusting depends on
+            two things going in: a real weight, and an honest look at your cat's body
+            condition. Here is how to get both right.
+        </p>
+
+        <h3 class="mt-8 font-heading text-lg font-bold text-ink">1. Get a real weight first</h3>
+        <p class="mt-2 text-base leading-relaxed text-ink-muted">
+            Guessing defeats the point. If you do not already know your cat's current weight,
+            use one of the three methods at the top of this page before you start: the
+            hold-and-subtract method on a bathroom scale, the carrier-on-a-kitchen-scale
+            method for a more precise number, or a free weigh-in at your vet's office. A
+            number that is off by a pound changes the ideal weight range this tool gives you,
+            so it is worth the extra two minutes.
+        </p>
+
+        <h3 class="mt-6 font-heading text-lg font-bold text-ink">2. Score body condition by feel, not by eye alone</h3>
+        <p class="mt-2 text-base leading-relaxed text-ink-muted">
+            A cat's coat can hide real weight underneath, especially long-haired breeds, which
+            is why vets score body condition with their hands, not just a glance. Run your
+            palm flat along your cat's ribs, the way you would along the back of your own
+            hand: in an ideal-condition cat, you feel the ribs easily under a slight layer of
+            fat, without seeing them. Then look down at your cat from directly above while
+            they are standing: a visible waist behind the ribs is the other half of the
+            picture. Do this while your cat is calm and standing normally, not curled up or
+            mid-stretch, since a curled posture can make a lean cat look rounder than they are.
+        </p>
+
+        <h3 class="mt-6 font-heading text-lg font-bold text-ink">3. Read the result as a range, not a verdict</h3>
+        <p class="mt-2 text-base leading-relaxed text-ink-muted">
+            The estimated ideal weight this tool gives you is a range, deliberately, because
+            frame size varies between cats the same way it does between people. If your cat's
+            current weight already sits inside that range, the food adjustment section will
+            say so. If it does not, the suggested adjustment is a starting point, not a fixed
+            prescription: re-weigh every few weeks and adjust from there rather than expecting
+            one number to hold for months. Our
+            <a href="{{ route('blog.show', 'how-much-should-i-feed-my-cat') }}" class="font-semibold text-primary underline decoration-line-strong underline-offset-4">feeding guide</a>
+            covers portioning in more depth if you want the full picture beyond weight alone.
+        </p>
+
+        <h3 class="mt-6 font-heading text-lg font-bold text-ink">4. Log weight monthly, not daily</h3>
+        <p class="mt-2 text-base leading-relaxed text-ink-muted">
+            A cat's weight can shift by a few ounces day to day from food and water intake
+            alone, which makes daily logging noisy and, honestly, a little discouraging.
+            Weighing and logging roughly once a month is enough to see a real trend on the
+            chart without chasing noise. Each entry is saved only in this browser, so the log
+            and the chart will be here the next time you visit this page on the same device,
+            with nothing to sign in to and nothing sent anywhere.
+        </p>
+
+        <h3 class="mt-6 font-heading text-lg font-bold text-ink">5. Use the PDF for a vet visit, not instead of one</h3>
+        <p class="mt-2 text-base leading-relaxed text-ink-muted">
+            The "Download PDF" button turns your current result, and your logged weight
+            history if you have one, into a one-page report: current weight, body condition
+            score, estimated ideal range, and the food adjustment if there is one. It is built
+            to hand to a vet as a starting point for the conversation, not to replace the exam
+            they will still want to do. If your cat is a senior, our
+            <a href="{{ route('blog.show', 'senior-cat-care') }}" class="font-semibold text-primary underline decoration-line-strong underline-offset-4">senior cat care guide</a>
+            covers why weight changes get extra scrutiny after age ten, and what else is worth
+            asking about at that same visit.
+        </p>
+
+        <p class="mt-6 text-base leading-relaxed text-ink-muted">
+            Weight is one part of a bigger picture. If something about your cat feels off
+            beyond the number on the scale, our guide to
+            <a href="{{ route('blog.show', 'signs-your-cat-is-sick') }}" class="font-semibold text-primary underline decoration-line-strong underline-offset-4">early signs of illness in cats</a>
+            covers what else is worth watching for, and our
+            <a href="{{ route('tools.cat-age-calculator') }}" class="font-semibold text-primary underline decoration-line-strong underline-offset-4">cat age calculator</a>
+            can help put your cat's age into context alongside their weight.
         </p>
     </div>
 </section>
@@ -647,6 +726,12 @@
     $('[data-weight-log-btn]').addEventListener('click', () => {
         if (!lastResult) return;
         addEntry(new Date().toISOString().slice(0, 10), lastResult.weightLb);
+
+        // Takes the visitor straight to the log so the entry they just made
+        // is actually visible, without touching the URL: a location.hash
+        // jump would leave #weight-log sitting in the address bar for a
+        // link that only makes sense mid-session.
+        document.getElementById('weight-log')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     renderList();

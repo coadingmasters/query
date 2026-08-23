@@ -24,24 +24,25 @@ class AboutTest extends TestCase
     }
 
     /**
-     * Fragment links have to be rooted at "/". A bare "#tools" in the header
-     * does nothing on /about, which would leave the whole nav dead on every
-     * page except the home page.
+     * A same-page fragment like "#tools" does nothing on /about, which would
+     * leave the whole nav dead on every page except the home page — so
+     * every nav item needs a real page of its own.
      */
     public function test_navigation_works_away_from_the_home_page(): void
     {
         $html = $this->get('/about')->getContent();
 
-        // Tools, food guides and blog each have a page of their own, so the
-        // nav points there rather than at a section of the home page. Only
-        // "How it works" stays a same-page anchor: it has no page of its own.
-        foreach ([route('tools.index'), route('food-guides.index'), route('blog.index'), '/#how-it-works'] as $href) {
+        // Tools, food guides, blog and how-it-works each have a page of their
+        // own, so the nav points there rather than at a section of the home
+        // page.
+        foreach ([route('tools.index'), route('food-guides.index'), route('blog.index'), route('how-it-works')] as $href) {
             $this->assertStringContainsString('href="'.$href.'"', $html, "nav is missing $href");
         }
 
         // A bare fragment would be a link that silently goes nowhere here.
         $this->assertStringNotContainsString('href="#tools"', $html);
         $this->assertStringNotContainsString('href="/#tools"', $html);
+        $this->assertStringNotContainsString('href="/#how-it-works"', $html);
         $this->assertStringNotContainsString('href="/#food-guides"', $html);
     }
 

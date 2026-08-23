@@ -24,6 +24,7 @@ use App\Http\Controllers\TermsController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FoodGuideController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HowItWorksController;
 use App\Http\Controllers\ManifestController;
 use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\SearchController;
@@ -84,6 +85,8 @@ Route::get('/tools/cat-weight-checker', CatWeightCheckerController::class)
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('search.suggest');
+
+Route::get('/how-it-works', HowItWorksController::class)->name('how-it-works');
 
 Route::get('/faq', FaqController::class)->name('faq');
 

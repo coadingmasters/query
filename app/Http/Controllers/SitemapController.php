@@ -43,6 +43,7 @@ class SitemapController extends Controller
         $pages = [
             ['', 'views/home.blade.php', '1.0'],
             ['/about', 'views/about.blade.php', '0.7'],
+            ['/how-it-works', 'views/how-it-works.blade.php', '0.6'],
             ['/author', 'views/author.blade.php', '0.6'],
             ['/tools', 'views/tools/index.blade.php', '0.8'],
             ['/tools/cat-age-calculator', 'views/tools/cat-age-calculator.blade.php', '0.9'],

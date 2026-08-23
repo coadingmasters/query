@@ -11,7 +11,7 @@
                 ['All tools', route('tools.index')],
                 ['Food guides', route('food-guides.index')],
                 ['Blog', route('blog.index')],
-                ['How it works', '/#how-it-works'],
+                ['How it works', route('how-it-works')],
                 ['About Us', route('about')],
                 ['Contact Us', route('contact')],
             ],

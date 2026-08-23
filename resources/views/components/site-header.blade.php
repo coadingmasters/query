@@ -252,7 +252,7 @@
 
         <div class="mt-4 border-t border-line pt-3">
             <p class="px-3 pb-1 text-xs font-bold tracking-wider text-ink-muted uppercase">More</p>
-            @foreach ([[route('faq'), 'FAQ'], [route('home').'#how-it-works', 'How it works']] as [$href, $label])
+            @foreach ([[route('faq'), 'FAQ'], [route('how-it-works'), 'How it works']] as [$href, $label])
                 <a href="{{ $href }}" class="block rounded-lg px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-surface-soft hover:text-primary">
                     {{ $label }}
                 </a>

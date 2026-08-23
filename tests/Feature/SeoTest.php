@@ -24,6 +24,7 @@ class SeoTest extends TestCase
         return [
             'home' => ['/'],
             'about' => ['/about'],
+            'how it works' => ['/how-it-works'],
             'author' => ['/author'],
             'contact' => ['/contact'],
             'faq' => ['/faq'],

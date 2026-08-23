@@ -374,6 +374,203 @@ class PostSeeder extends Seeder
                     ['name' => 'WSAVA Global Nutrition Guidelines', 'url' => 'https://wsava.org/global-guidelines/global-nutrition-guidelines/', 'note' => 'The feeding framework referenced when setting up a new cat\'s diet.'],
                 ],
             ],
+            [
+                'slug' => 'why-do-cats-purr',
+                'title' => 'Why Do Cats Purr? (And When Purring Means Something\'s Wrong)',
+                'meta_title' => 'Why Do Cats Purr? What It Means, Good and Bad',
+                'excerpt' => 'Purring usually means contentment, but cats also purr when '
+                    .'hurt, scared or giving birth. How to tell a happy purr from a '
+                    .'self-soothing one.',
+                'category' => 'Health',
+                'published' => '2026-08-24',
+                'updated' => '2026-08-24',
+                'image' => 'purrquery-cat-lover-cuddling-cat',
+                'alt' => 'Person cuddling a relaxed, contentedly purring cat',
+                'answer' => 'Cats purr by vibrating muscles in the larynx as they '
+                    .'breathe in and out, most often as a sign of contentment. But '
+                    .'cats also purr when frightened, in pain, or giving birth, likely '
+                    .'as a way to self-soothe, so a purring cat is not always a calm '
+                    .'one. Body language and context tell the two apart, not the sound '
+                    .'itself.',
+                'faq' => [
+                    ['q' => 'Why do cats purr when they are happy?', 'a' => 'Purring while relaxed, being stroked or settling in for a nap is a straightforward comfort signal. It usually comes with other relaxed cues at the same time: slow blinking, a loose tail, and a body that has stopped watching the room.'],
+                    ['q' => 'Why do cats purr when they are in pain or scared?', 'a' => 'The leading explanation is that purring is self-soothing rather than only a happiness signal. Some researchers have also proposed that the low frequency cats purr at may support healing, which is one theory for why cats recover from injuries as well as they do.'],
+                    ['q' => 'How can I tell if my cat\'s purring is a good sign or a bad one?', 'a' => 'Look past the sound to the body language and setting around it. Relaxed posture and soft eyes point to contentment; a crouched body, flattened ears, or purring that starts right after something painful or frightening points to self-soothing instead.'],
+                    ['q' => 'Do kittens purr?', 'a' => 'Yes, often within two or three days of birth, well before their eyes open. A nursing kitten\'s purr is thought to help it stay in contact with its mother, who purrs back while nursing.'],
+                    ['q' => 'Why does my cat purr at the vet?', 'a' => 'Purring at the vet, in a carrier, or during any stressful situation is a common self-soothing response, not a sign your cat is fine with what is happening. It is one of the clearest examples of purring meaning stress rather than contentment.'],
+                    ['q' => 'Can all cats purr?', 'a' => 'Nearly all domestic cats purr, though volume and frequency vary a lot between individuals. Big cats such as lions and tigers cannot purr the way a house cat does, due to differences in the structure of the larynx.'],
+                    ['q' => 'When should I worry about a purring cat?', 'a' => 'The purring itself is not the warning sign. Worry if it comes alongside hiding, eating less, a hunched posture, labored breathing, or reluctance to move, since those point at pain or illness regardless of whether the cat is also purring.'],
+                ],
+                'sources' => [
+                    ['name' => 'Cornell Feline Health Center', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center', 'note' => 'Background on normal feline vocalizations and behavior.'],
+                    ['name' => 'International Cat Care', 'url' => 'https://icatcare.org/articles/', 'note' => 'Reference material on purring and feline communication.'],
+                    ['name' => 'ASPCA: cat behavior', 'url' => 'https://www.aspca.org/pet-care/cat-care/common-cat-behavior-issues', 'note' => 'Guidance on reading feline body language alongside vocal signals.'],
+                ],
+            ],
+            [
+                'slug' => 'hairballs-in-cats',
+                'title' => 'Hairballs in Cats: Why They Happen and When to Worry',
+                'meta_title' => 'Hairballs in Cats: Causes, Prevention and Warning Signs',
+                'excerpt' => 'An occasional hairball is normal grooming. Frequent ones, '
+                    .'or retching with nothing produced, point at something else. What '
+                    .'actually helps.',
+                'category' => 'Health',
+                'published' => '2026-08-24',
+                'updated' => '2026-08-24',
+                'image' => 'cat-hiding',
+                'alt' => 'Cat sitting quietly, looking a little subdued',
+                'answer' => 'Hairballs form when swallowed loose fur clumps together '
+                    .'in the stomach instead of passing through, and a cat brings it up '
+                    .'as a result. An occasional one, especially in long-haired or '
+                    .'heavy-shedding cats, is normal. Weekly hairballs, or repeated '
+                    .'retching with nothing produced, are worth a vet visit rather than '
+                    .'waiting out.',
+                'faq' => [
+                    ['q' => 'How often should a cat get hairballs?', 'a' => 'For most short-haired, healthy adult cats, every few weeks or less is unremarkable. Long-haired breeds may reasonably produce one every couple of weeks during heavy shedding. A short-haired cat bringing one up weekly or more is grooming more than expected, which is worth a closer look.'],
+                    ['q' => 'What causes frequent hairballs?', 'a' => 'A sharp increase usually means more grooming, not more shedding. Common causes include stress or anxiety, skin irritation or allergies causing itchiness, and pain in one area that leads to repeated licking of the same spot.'],
+                    ['q' => 'How can I stop my cat from getting hairballs?', 'a' => 'Regular brushing to remove loose fur before it is swallowed is the single most effective step. A hairball-control diet with added fiber, good hydration, and an occasional vet-approved lubricant paste all help fur move through rather than accumulate.'],
+                    ['q' => 'Can a hairball be an emergency?', 'a' => 'Yes, though it is uncommon. Repeated retching with nothing produced, vomiting that continues over more than a day, loss of appetite, lethargy or a swollen abdomen can mean an intestinal blockage, which sometimes needs surgery and is not something to wait out.'],
+                    ['q' => 'Do hairball remedies actually work?', 'a' => 'Petroleum- or oil-based lubricant pastes made for cats can help fur pass through the digestive tract rather than clump. They work best as an occasional aid alongside regular brushing, not as a replacement for it, and are worth checking with a vet before using regularly.'],
+                    ['q' => 'Are hairballs more common in certain breeds?', 'a' => 'Yes. Long-haired breeds such as Persians, Maine Coons and Ragdolls tend to produce them more often simply because there is more loose fur in circulation, especially during seasonal shedding.'],
+                ],
+                'sources' => [
+                    ['name' => 'Cornell Feline Health Center', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center', 'note' => 'Background on feline grooming behavior and digestive health.'],
+                    ['name' => 'VCA Animal Hospitals: hairballs in cats', 'url' => 'https://vcahospitals.com/know-your-pet/hairballs-in-cats', 'note' => 'Clinical overview of hairball formation, prevention and when they become an obstruction.'],
+                    ['name' => 'ASPCA: cat health and wellness', 'url' => 'https://www.aspca.org/pet-care/cat-care', 'note' => 'General guidance on grooming and recognizing digestive symptoms worth a vet visit.'],
+                ],
+            ],
+            [
+                'slug' => 'cat-uti-symptoms',
+                'title' => 'Cat UTI Symptoms: What to Watch For and When to See a Vet',
+                'meta_title' => 'Cat UTI Symptoms: Signs, Causes and When It Is an Emergency',
+                'excerpt' => 'Straining, blood in urine or crying in the litter box can '
+                    .'be a UTI, or something more urgent in male cats. What the '
+                    .'symptoms actually mean.',
+                'category' => 'Health',
+                'published' => '2026-08-24',
+                'updated' => '2026-08-24',
+                'image' => 'vet-checking-cat',
+                'alt' => 'Veterinarian examining a cat during a checkup',
+                'answer' => 'True bacterial UTIs are less common in cats than the '
+                    .'symptoms suggest; feline idiopathic cystitis, bladder '
+                    .'inflammation without infection, is the more frequent cause in '
+                    .'younger cats. Both look the same at home: straining, frequent '
+                    .'trips to the litter box, or blood in the urine. In male cats, '
+                    .'straining with little or no urine can mean a complete blockage, '
+                    .'which is a same-day emergency.',
+                'faq' => [
+                    ['q' => 'What are the signs of a UTI in cats?', 'a' => 'Straining to urinate, frequent trips to the litter box with little produced each time, blood in the urine, urinating outside the box, crying out while urinating, and excessive licking of the genital area are the main signs, whether the cause is infection or inflammation.'],
+                    ['q' => 'Is a cat UTI an emergency?', 'a' => 'It can be, particularly in male cats. A male cat straining repeatedly with little or no urine coming out may have a complete urethral blockage, which can become life-threatening within one to two days and needs immediate veterinary care.'],
+                    ['q' => 'Why are male cats more at risk with urinary symptoms?', 'a' => 'Male cats have a narrower urethra than females, which makes them far more prone to a complete blockage from crystals or a mucus plug. The same symptoms in a female cat are less likely to mean a blockage, but still need a vet visit to diagnose.'],
+                    ['q' => 'What causes UTIs and urinary problems in cats?', 'a' => 'Stress is the strongest known trigger for feline idiopathic cystitis, the most common cause in younger cats. True bacterial infections are more common in older cats or those with diabetes or kidney disease. Being overweight and low water intake both raise the overall risk.'],
+                    ['q' => 'How can I prevent urinary problems in my cat?', 'a' => 'Add wet food or a water fountain to increase water intake, keep litter boxes clean with one per cat plus one extra, reduce household stress where possible, and keep an eye on weight over time rather than reacting once a cat is already overweight.'],
+                    ['q' => 'When should I take my cat to the vet for urinary symptoms?', 'a' => 'Any urinary symptom is worth a same-day or next-day visit, since a urinalysis is the only reliable way to tell infection, inflammation, crystals or a blockage apart. Treat repeated straining with no urine, especially in a male cat, as an emergency.'],
+                ],
+                'sources' => [
+                    ['name' => 'Cornell Feline Health Center', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center', 'note' => 'Background on feline lower urinary tract disease and idiopathic cystitis.'],
+                    ['name' => 'American Association of Feline Practitioners: feline life stage guidelines', 'url' => 'https://catvets.com/guidelines/practice-guidelines/life-stage-guidelines', 'note' => 'Clinical guidance on urinary health screening across life stages.'],
+                    ['name' => 'VCA Animal Hospitals: urinary blockage in cats', 'url' => 'https://vcahospitals.com/know-your-pet/urinary-obstruction-in-cats', 'note' => 'Clinical overview of urethral blockage, its risk in male cats, and emergency signs.'],
+                ],
+            ],
+            [
+                'slug' => 'fleas-and-ticks-on-cats',
+                'title' => 'Fleas and Ticks on Cats: Prevention and Treatment',
+                'meta_title' => 'Fleas and Ticks on Cats: Signs, Prevention and Treatment',
+                'excerpt' => 'Indoor cats get fleas too. Signs to look for, why they '
+                    .'matter beyond itching, and the one dog product that is '
+                    .'dangerous for cats.',
+                'category' => 'Health',
+                'published' => '2026-08-24',
+                'updated' => '2026-08-24',
+                'image' => 'purrquery-cat-cozy-blanket',
+                'alt' => 'Cat resting on a cozy blanket at home',
+                'answer' => 'Fleas reach indoor-only cats too, carried in on shoes, '
+                    .'other pets, or through window screens. Look for scratching, '
+                    .'small black flea dirt in the coat, and hair loss. Beyond '
+                    .'itching, fleas can cause allergic skin reactions and tapeworms, '
+                    .'and ticks, while less common on cats, can carry serious disease. '
+                    .'A vet-recommended, cat-specific preventive is the most reliable '
+                    .'protection.',
+                'faq' => [
+                    ['q' => 'Can indoor cats get fleas?', 'a' => 'Yes. Fleas travel in on shoes, clothing, other pets, and through window screens, so an indoor-only cat can pick up an infestation without ever going outside.'],
+                    ['q' => 'What are the signs my cat has fleas?', 'a' => 'Scratching or biting at the skin more than usual, small black specks in the fur (flea dirt) that turn reddish-brown when wiped on a wet paper towel, visible fast-moving fleas at the base of the tail, and hair loss from over-grooming are the main signs.'],
+                    ['q' => 'Can fleas make my cat sick?', 'a' => 'Yes. Beyond the itching, some cats develop flea allergy dermatitis, an intense reaction to flea saliva. Cats can also swallow infected fleas while grooming, which is the most common way they pick up tapeworms, and heavy infestations can cause anemia, especially in kittens.'],
+                    ['q' => 'Are ticks dangerous for cats?', 'a' => 'Ticks are less common on cats than dogs but do occur, especially with outdoor access. Cytauxzoonosis, spread by the Lone Star tick and most reported in the south-central and southeastern United States, is a serious and often fatal tick-borne infection in cats.'],
+                    ['q' => 'Can I use dog flea treatment on my cat?', 'a' => 'No. Many dog flea and tick products contain permethrin, which is highly toxic to cats and can cause severe, sometimes fatal, reactions even in small amounts. Always use a product explicitly labeled safe for cats.'],
+                    ['q' => 'How do I get rid of fleas on my cat and in my home?', 'a' => 'Use a vet-recommended, cat-specific preventive on every pet in the household, not just the one with visible symptoms, and wash bedding and vacuum regularly, since flea eggs and larvae live in the environment, not only on the cat.'],
+                ],
+                'sources' => [
+                    ['name' => 'Cornell Feline Health Center', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center', 'note' => 'Background on external parasites and preventive care in cats.'],
+                    ['name' => 'VCA Animal Hospitals: fleas and cats', 'url' => 'https://vcahospitals.com/know-your-pet/fleas-and-cats', 'note' => 'Clinical overview of flea biology, health risks and treatment.'],
+                    ['name' => 'ASPCA: cat health and wellness', 'url' => 'https://www.aspca.org/pet-care/cat-care', 'note' => 'General guidance on parasite prevention and product safety for cats.'],
+                ],
+            ],
+            [
+                'slug' => 'cat-dental-care',
+                'title' => 'Cat Dental Care: Why It Matters and How to Start',
+                'meta_title' => 'Cat Dental Care: Why It Matters and How to Start',
+                'excerpt' => 'Most cats over three have some dental disease, and most '
+                    .'owners never notice. Signs to watch for and how to start '
+                    .'brushing your cat\'s teeth.',
+                'category' => 'Health',
+                'published' => '2026-08-24',
+                'updated' => '2026-08-24',
+                'image' => 'vet-examining-cat-sneezing',
+                'alt' => 'Veterinarian examining a cat\'s face and mouth',
+                'answer' => 'Most cats over three years old have some degree of dental '
+                    .'disease, and because cats eat around pain rather than stopping, '
+                    .'it is easy to miss. Watch for bad breath, drooling, dropped '
+                    .'food, or red gums. Daily brushing with cat-specific toothpaste, '
+                    .'started gradually, plus regular professional cleanings, are the '
+                    .'most effective prevention.',
+                'faq' => [
+                    ['q' => 'How common is dental disease in cats?', 'a' => 'Very. By some estimates, the majority of cats over the age of three have some degree of dental disease, most commonly periodontal disease from plaque and tartar buildup along the gumline.'],
+                    ['q' => 'What are the signs of dental problems in cats?', 'a' => 'Bad breath that is noticeably worse than usual, drooling, pawing at the mouth, dropping food while eating, a preference for wet food over dry, and red, swollen or bleeding gums are the main signs to watch for.'],
+                    ['q' => 'How do I start brushing my cat\'s teeth?', 'a' => 'Introduce it gradually: let your cat lick cat-specific toothpaste off a finger for a few days, then move to gentle rubbing along the gumline, then a soft cat toothbrush. Keep sessions short and end on a positive note every time.'],
+                    ['q' => 'Can I use human toothpaste on my cat?', 'a' => 'No. Human toothpaste often contains fluoride and sometimes xylitol, both unsafe for cats. Only use toothpaste made specifically for pets.'],
+                    ['q' => 'What is tooth resorption in cats?', 'a' => 'Tooth resorption is a common, painful condition largely specific to cats, where the tooth\'s own structure breaks down starting at the root, often below the gumline where it cannot be seen. In most cases, extraction is the only fix once it has progressed.'],
+                    ['q' => 'Do dental treats actually help?', 'a' => 'Treats and diets carrying the Veterinary Oral Health Council (VOHC) seal have been tested to show a real reduction in plaque or tartar. Most general "dental" marketing claims without that seal have not been independently verified.'],
+                    ['q' => 'How often does a cat need a professional dental cleaning?', 'a' => 'It varies by cat, but a vet should check the mouth at every routine visit and recommend a professional cleaning, done under anesthesia, when tartar, gum disease or resorption is found. Cleanings performed under anesthesia are the only way to properly assess and treat below the gumline.'],
+                ],
+                'sources' => [
+                    ['name' => 'Cornell Feline Health Center', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center', 'note' => 'Background on feline dental disease and tooth resorption.'],
+                    ['name' => 'American Association of Feline Practitioners: dental care guidelines', 'url' => 'https://catvets.com/guidelines/practice-guidelines', 'note' => 'Clinical guidance on feline dental health and home care.'],
+                    ['name' => 'VCA Animal Hospitals: dental disease in cats', 'url' => 'https://vcahospitals.com/know-your-pet/dental-disease-in-cats', 'note' => 'Clinical overview of periodontal disease, signs and treatment.'],
+                ],
+            ],
+            [
+                'slug' => 'senior-cat-care',
+                'title' => 'Senior Cat Care: What Changes After Age 10',
+                'meta_title' => 'Senior Cat Care: What Changes After Age 10',
+                'excerpt' => 'Arthritis, kidney disease and cognitive decline are '
+                    .'common after ten, and easy to miss. What actually changes, and '
+                    .'the checkups that catch it early.',
+                'category' => 'Health',
+                'published' => '2026-08-24',
+                'updated' => '2026-08-24',
+                'image' => 'senior-cat-eating-wet-food',
+                'alt' => 'Senior cat eating from a bowl of wet food',
+                'answer' => 'After around age ten, cats commonly develop arthritis, '
+                    .'kidney disease, an overactive thyroid, or cognitive decline, '
+                    .'often with subtle signs like reduced jumping, weight changes, or '
+                    .'increased nighttime vocalizing. Twice-yearly vet checkups with '
+                    .'bloodwork catch most of these early, well before symptoms are '
+                    .'obvious at home.',
+                'faq' => [
+                    ['q' => 'At what age is a cat considered a senior?', 'a' => 'Most veterinary guidelines place the start of the senior life stage around age ten, with cats over roughly fifteen sometimes described as geriatric. The change in care needs is usually gradual rather than tied to a single birthday.'],
+                    ['q' => 'What are the first signs of aging in cats?', 'a' => 'A senior cat rarely announces a problem outright. Common early signs include no longer jumping onto favorite high spots, sleeping more, a duller or more matted coat from reduced grooming, and changes in weight in either direction.'],
+                    ['q' => 'How often should a senior cat see the vet?', 'a' => 'Twice a year is the general recommendation, typically including bloodwork and a urinalysis rather than a physical exam alone, since lab work often catches developing conditions months before they become obvious at home.'],
+                    ['q' => 'What health problems are common in older cats?', 'a' => 'Chronic kidney disease, hyperthyroidism, diabetes, high blood pressure, osteoarthritis and cognitive dysfunction are all significantly more common in senior cats, and most are far easier to manage when caught early.'],
+                    ['q' => 'What is cognitive dysfunction in cats?', 'a' => 'It is a real, recognized age-related decline in brain function, sometimes described as feline dementia. Signs include increased nighttime vocalizing, disorientation, changes to the sleep-wake cycle, and house soiling in a cat with previously reliable litter box habits.'],
+                    ['q' => 'How can I make home life easier for a senior cat?', 'a' => 'Lower-sided litter boxes on every level of the home, ramps or steps to favorite spots, soft bedding in warm and easy-to-reach places, and keeping food and water within easy reach all help a cat with reduced mobility.'],
+                    ['q' => 'Should I change my senior cat\'s diet?', 'a' => 'Activity and metabolism both change with age, so it is worth rechecking portions rather than assuming an old routine still fits. A vet can also advise on diet changes if kidney disease, diabetes or another condition is diagnosed.'],
+                ],
+                'sources' => [
+                    ['name' => 'American Association of Feline Practitioners: senior care guidelines', 'url' => 'https://catvets.com/guidelines/practice-guidelines/senior-care-guidelines', 'note' => 'Clinical guidelines on senior cat checkup frequency and screening.'],
+                    ['name' => 'Cornell Feline Health Center', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center', 'note' => 'Background on age-related feline diseases including kidney disease and hyperthyroidism.'],
+                    ['name' => 'VCA Animal Hospitals: senior cat care', 'url' => 'https://vcahospitals.com/know-your-pet/senior-cat-care', 'note' => 'Clinical overview of common conditions and home care for older cats.'],
+                ],
+            ],
         ];
     }
 }

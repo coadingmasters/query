@@ -191,7 +191,7 @@
                 </p>
                 <div class="mt-6 flex flex-wrap justify-center gap-3 sm:justify-start">
                     <a href="{{ route('contact') }}" class="btn-primary rounded-full px-7">Contact us</a>
-                    <a href="/#tools" class="btn-outline rounded-full bg-surface px-7">Explore tools</a>
+                    <a href="{{ route('tools.index') }}" class="btn-outline rounded-full bg-surface px-7">Explore tools</a>
                 </div>
             </div>
 

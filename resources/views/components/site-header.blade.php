@@ -1,20 +1,22 @@
 @php
-    // Rooted at "/" rather than bare fragments: a bare "#tools" only scrolls
-    // on the home page, and does nothing from /about.
+    // Every item links to its own real page, not a same-page anchor: a
+    // fragment like "#tools" is invisible to Google and does nothing at all
+    // from a page that is not "/". A tool with no page of its own yet points
+    // at the tools index, where it is honestly listed as "coming soon".
     //
     // The bar carries five things. Blog, How It Works and the FAQ moved to the
     // footer: a navigation that lists everything ranks nothing, and these are
     // the five a cat owner arrives wanting.
     $tools = collect(config('catalog.tools'))->map(fn (array $t): array => [
         'label' => $t['title'],
-        'href' => $t['url'] ?? '/#tools',
+        'href' => $t['url'] ?? route('tools.index'),
         'live' => isset($t['url']),
         'blurb' => $t['blurb'],
     ]);
 
     $foods = collect(config('catalog.foods'))->map(fn (array $f): array => [
         'label' => $f['title'],
-        'href' => '/#food-'.$f['slug'],
+        'href' => route('food-guides.show', $f['slug']),
         'verdict' => $f['verdict'],
         'note' => $f['note'] ?? null,
     ]);
@@ -75,7 +77,7 @@
                             </li>
                         @endforeach
                     </ul>
-                    <a href="/#food-guides" class="mt-1 flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-surface-soft">
+                    <a href="{{ route('food-guides.index') }}" class="mt-1 flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-surface-soft">
                         All food guides
                         <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                              stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
@@ -116,6 +118,11 @@
                             </li>
                         @endforeach
                     </ul>
+                    <a href="{{ route('tools.index') }}" class="mt-1 flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-surface-soft">
+                        All tools
+                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                             stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                    </a>
                 </div>
             </div>
 
@@ -131,7 +138,7 @@
         </nav>
 
         <div class="flex items-center gap-2">
-            <a href="/#tools"
+            <a href="{{ route('tools.index') }}"
                class="hidden rounded-lg bg-primary-vivid px-4 py-2.5 text-sm font-semibold text-ink shadow-sm transition hover:brightness-95 sm:inline-flex">
                 Try Free Tools
             </a>
@@ -245,7 +252,7 @@
 
         <div class="mt-4 border-t border-line pt-3">
             <p class="px-3 pb-1 text-xs font-bold tracking-wider text-ink-muted uppercase">More</p>
-            @foreach ([[route('faq'), 'FAQ'], ['/#how-it-works', 'How it works']] as [$href, $label])
+            @foreach ([[route('faq'), 'FAQ'], [route('home').'#how-it-works', 'How it works']] as [$href, $label])
                 <a href="{{ $href }}" class="block rounded-lg px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-surface-soft hover:text-primary">
                     {{ $label }}
                 </a>
@@ -254,7 +261,7 @@
     </nav>
 
     <div class="border-t border-line p-4">
-        <a href="/#tools" class="block rounded-xl bg-primary-vivid px-4 py-3 text-center text-base font-bold text-ink shadow-md transition hover:brightness-95">
+        <a href="{{ route('tools.index') }}" class="block rounded-xl bg-primary-vivid px-4 py-3 text-center text-base font-bold text-ink shadow-md transition hover:brightness-95">
             Try Free Tools
         </a>
     </div>

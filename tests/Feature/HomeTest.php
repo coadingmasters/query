@@ -26,9 +26,27 @@ class HomeTest extends TestCase
         foreach (config('catalog.foods') as $food) {
             $response->assertSee($food['question']);
         }
+    }
 
-        foreach (Post::published()->get() as $post) {
+    /**
+     * The blog teaser is a fixed 2x2 grid, not every post — a "view all"
+     * link covers the rest, so an empty card is never the trade-off for
+     * fitting one more post in.
+     */
+    public function test_the_blog_teaser_shows_the_four_latest_posts(): void
+    {
+        $response = $this->get('/');
+
+        $latest = Post::published()->latest('published_at')->take(4)->get();
+
+        foreach ($latest as $post) {
             $response->assertSee($post->title);
+        }
+
+        $total = Post::published()->count();
+
+        if ($total > 4) {
+            $response->assertSee("View all {$total} guides");
         }
     }
 

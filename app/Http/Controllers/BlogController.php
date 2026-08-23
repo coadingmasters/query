@@ -126,7 +126,7 @@ class BlogController extends Controller
                     ->map(fn ($faq): array => ['q' => $faq->question, 'a' => $faq->answer])->all()),
                 Schema::breadcrumbs($path, [
                     'Home' => '/',
-                    'Blog' => '/#blog',
+                    'Blog' => '/blog',
                     $post->title => null,
                 ]),
             ]),

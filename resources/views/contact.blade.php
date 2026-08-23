@@ -360,8 +360,8 @@
                     answer it immediately.
                 </p>
                 <div class="mt-6 flex flex-wrap justify-center gap-3">
-                    <a href="/#tools" class="btn-primary rounded-full px-7">Try free tools</a>
-                    <a href="/#food-guides" class="btn-outline rounded-full bg-surface px-7">Browse food guides</a>
+                    <a href="{{ route('tools.index') }}" class="btn-primary rounded-full px-7">Try free tools</a>
+                    <a href="{{ route('food-guides.index') }}" class="btn-outline rounded-full bg-surface px-7">Browse food guides</a>
                 </div>
             </div>
         </div>

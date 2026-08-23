@@ -21,14 +21,17 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\TermsController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\FoodGuideController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManifestController;
 use App\Http\Controllers\RobotsController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Tools\CatAgeCalculatorController;
 use App\Http\Controllers\Tools\CatCalorieCalculatorController;
 use App\Http\Controllers\Tools\CatPregnancyCalculatorController;
 use App\Http\Controllers\Tools\VaccinationTrackerController;
+use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +60,11 @@ Route::post('/contact', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');
 
+Route::get('/tools', [ToolsController::class, 'index'])->name('tools.index');
+
+Route::get('/food-guides', [FoodGuideController::class, 'index'])->name('food-guides.index');
+Route::get('/food-guides/{slug}', [FoodGuideController::class, 'show'])->name('food-guides.show');
+
 Route::get('/tools/cat-age-calculator', CatAgeCalculatorController::class)
     ->name('tools.cat-age-calculator');
 
@@ -68,6 +76,9 @@ Route::get('/tools/cat-calorie-calculator', CatCalorieCalculatorController::clas
 
 Route::get('/tools/cat-vaccination-tracker', VaccinationTrackerController::class)
     ->name('tools.cat-vaccination-tracker');
+
+Route::get('/search', [SearchController::class, 'index'])->name('search');
+Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('search.suggest');
 
 Route::get('/faq', FaqController::class)->name('faq');
 

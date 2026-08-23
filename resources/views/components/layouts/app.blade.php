@@ -8,6 +8,12 @@
     // it, so it reads as that section dipping into the footer. Pages that do
     // not end on white say so here.
     'footerWave' => 'text-surface',
+
+    // A search-results page is different for every query, so it is thin,
+    // duplicate content from Google's perspective — indexable pages should
+    // be ones a link can point at reliably. `follow` stays on so PageRank
+    // still reaches whatever the results link to.
+    'noindex' => false,
 ])
 <!DOCTYPE html>
 <html lang="{{ config('brand.lang') }}">
@@ -27,7 +33,7 @@
     {{-- max-image-preview:large is the one that earns its place on a site
          built around photographs: without it Google is limited to a thumbnail
          in results. The snippet and video values lift the default caps too. --}}
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="robots" content="{{ $noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' }}">
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{ config('app.name') }}">

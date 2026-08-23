@@ -8,8 +8,8 @@
             'heading' => 'Explore',
             'span' => 'lg:col-span-2',
             'items' => [
-                ['All tools', '/#tools'],
-                ['Food guides', '/#food-guides'],
+                ['All tools', route('tools.index')],
+                ['Food guides', route('food-guides.index')],
                 ['Blog', route('blog.index')],
                 ['How it works', '/#how-it-works'],
                 ['About Us', route('about')],
@@ -19,8 +19,11 @@
         [
             'heading' => 'Popular tools',
             'span' => 'lg:col-span-2',
+            // Each tool links to its own page — a tool with no page yet
+            // links to the index, where it is honestly listed as coming soon,
+            // rather than to a generic anchor every item would otherwise share.
             'items' => collect(config('catalog.tools'))->take(6)
-                ->map(fn ($t) => [$t['title'], '/#tools'])->all(),
+                ->map(fn ($t) => [$t['title'], $t['url'] ?? route('tools.index')])->all(),
         ],
         [
             // Short labels here, not the full questions: a footer column is
@@ -30,7 +33,7 @@
             'heading' => 'Resources',
             'span' => 'hidden sm:block lg:col-span-2',
             'items' => collect(config('catalog.foods'))->take(5)
-                ->map(fn ($f) => [$f['title'], '/#food-guides'])
+                ->map(fn ($f) => [$f['title'], route('food-guides.show', $f['slug'])])
                 ->prepend(['FAQ', route('faq')])->all(),
         ],
     ];

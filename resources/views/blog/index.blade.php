@@ -224,7 +224,7 @@
                     data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}">
                     <a href="{{ route('blog.show', $post->slug) }}"
                         class="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition hover:-translate-y-1 hover:border-line-strong hover:shadow-lg">
-                        <div class="relative overflow-hidden bg-surface-section">
+                        <div class="relative aspect-[3/2] overflow-hidden bg-surface-section">
                             <x-post-image :post="$post"
                                    class="transition-transform duration-500 group-hover:scale-105"/>
                         </div>
@@ -240,7 +240,7 @@
 
                             <p class="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-ink-muted">{{ $post->excerpt }}</p>
 
-                            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                            <span class="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-primary">
                                 Read the guide
                                 <svg class="size-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24"
                                      fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"

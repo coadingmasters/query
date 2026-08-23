@@ -32,16 +32,17 @@ class AboutTest extends TestCase
     {
         $html = $this->get('/about')->getContent();
 
-        // Blog is no longer among them: it has a page of its own now, so the
-        // nav points at /blog rather than at a section of the home page.
-        foreach (['/#tools', '/#food-guides', '/#how-it-works'] as $href) {
+        // Tools, food guides and blog each have a page of their own, so the
+        // nav points there rather than at a section of the home page. Only
+        // "How it works" stays a same-page anchor: it has no page of its own.
+        foreach ([route('tools.index'), route('food-guides.index'), route('blog.index'), '/#how-it-works'] as $href) {
             $this->assertStringContainsString('href="'.$href.'"', $html, "nav is missing $href");
         }
 
-        $this->assertStringContainsString('href="'.route('blog.index').'"', $html, 'nav is missing the blog');
-
         // A bare fragment would be a link that silently goes nowhere here.
         $this->assertStringNotContainsString('href="#tools"', $html);
+        $this->assertStringNotContainsString('href="/#tools"', $html);
+        $this->assertStringNotContainsString('href="/#food-guides"', $html);
     }
 
     /**

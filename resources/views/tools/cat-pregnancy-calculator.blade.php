@@ -25,7 +25,7 @@
             <ol class="flex items-center gap-2 text-sm">
                 <li><a href="/" class="font-medium text-primary transition-colors hover:text-primary-hover">Home</a></li>
                 <li aria-hidden="true" class="text-ink-muted">/</li>
-                <li><a href="/#tools" class="font-medium text-primary transition-colors hover:text-primary-hover">Tools</a></li>
+                <li><a href="{{ route('tools.index') }}" class="font-medium text-primary transition-colors hover:text-primary-hover">Tools</a></li>
                 <li aria-hidden="true" class="text-ink-muted">/</li>
                 <li><span aria-current="page" class="font-medium text-ink">Pregnancy Calculator</span></li>
             </ol>

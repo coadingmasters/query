@@ -44,10 +44,12 @@ class SitemapController extends Controller
             ['', 'views/home.blade.php', '1.0'],
             ['/about', 'views/about.blade.php', '0.7'],
             ['/author', 'views/author.blade.php', '0.6'],
+            ['/tools', 'views/tools/index.blade.php', '0.8'],
             ['/tools/cat-age-calculator', 'views/tools/cat-age-calculator.blade.php', '0.9'],
             ['/tools/cat-pregnancy-calculator', 'views/tools/cat-pregnancy-calculator.blade.php', '0.9'],
             ['/tools/cat-calorie-calculator', 'views/tools/cat-calorie-calculator.blade.php', '0.9'],
             ['/tools/cat-vaccination-tracker', 'views/tools/cat-vaccination-tracker.blade.php', '0.9'],
+            ['/food-guides', 'views/food-guides/index.blade.php', '0.8'],
             ['/blog', 'views/blog/index.blade.php', '0.8'],
             ['/faq', 'views/faq.blade.php', '0.8'],
             ['/contact', 'views/contact.blade.php', '0.5'],
@@ -79,7 +81,18 @@ class SitemapController extends Controller
                 'priority' => '0.8',
             ]);
 
-        return $staticUrls->concat($postUrls)->all();
+        // Foods live in a config file rather than a table, so there is no
+        // per-row updated_at — the file's own mtime stands in for all of them.
+        $foodsLastmod = date('Y-m-d', filemtime(config_path('catalog.php')));
+        $foodUrls = collect(config('catalog.foods'))
+            ->reject(fn (array $food) => in_array('/food-guides/'.$food['slug'], $excluded, true))
+            ->map(fn (array $food) => [
+                'loc' => $base.'/food-guides/'.$food['slug'],
+                'lastmod' => $foodsLastmod,
+                'priority' => '0.6',
+            ]);
+
+        return $staticUrls->concat($postUrls)->concat($foodUrls)->all();
     }
 
     private function excludedPaths(): array

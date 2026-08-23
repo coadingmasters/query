@@ -13,7 +13,7 @@
                 <ol class="flex flex-wrap items-center gap-1.5">
                     <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
                     <li aria-hidden="true">/</li>
-                    <li><a href="/#tools" class="transition-colors hover:text-primary">Tools</a></li>
+                    <li><a href="{{ route('tools.index') }}" class="transition-colors hover:text-primary">Tools</a></li>
                     <li aria-hidden="true">/</li>
                     <li class="font-medium text-ink">Cat Vaccination Tracker</li>
                 </ol>

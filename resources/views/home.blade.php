@@ -45,25 +45,59 @@
                 with no account and nothing to install.
             </p>
 
-            <form class="mt-6 max-w-lg" role="search" onsubmit="return false">
+            {{-- A real search: suggestions as you type, Enter (or the button)
+                 goes to a results page. Plain GET means it works with no JS
+                 at all — the dropdown is a progressive enhancement on top. --}}
+            <form method="GET" action="{{ route('search') }}" class="relative mt-6 max-w-lg" role="search"
+                  x-data="heroSearch()" @click.outside="open = false">
                 <label for="site-search" class="sr-only">Search cat care tools and guides</label>
                 <div class="relative">
                     <svg class="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-ink-muted"
                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                         <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/>
                     </svg>
-                    <input id="site-search" type="search" data-search
+                    <input id="site-search" name="q" type="search"
+                           x-model="query"
+                           @input.debounce.250ms="fetchSuggestions()"
+                           @focus="if (query.trim()) open = true"
+                           @keydown.down.prevent="move(1)"
+                           @keydown.up.prevent="move(-1)"
+                           @keydown.enter="onEnter($event)"
                            placeholder="Search cat care tools, guides & more…"
-                           autocomplete="off"
+                           autocomplete="off" role="combobox" aria-expanded="open" aria-controls="site-search-results"
                            class="w-full rounded-full border border-line bg-surface py-4 pr-16 pl-12 text-base text-ink shadow-sm transition placeholder:text-ink-muted focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                    <span aria-hidden="true"
-                          class="absolute top-1/2 right-2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-primary-vivid text-ink">
+                    <button type="submit" aria-label="Search"
+                            class="absolute top-1/2 right-2 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-primary-vivid text-ink transition hover:brightness-95">
                         <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
                             <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/>
                         </svg>
-                    </span>
+                    </button>
                 </div>
-                <p data-search-status class="sr-only" role="status" aria-live="polite"></p>
+
+                <div id="site-search-results" x-show="open" x-cloak x-transition.opacity.duration.150ms
+                     class="absolute inset-x-0 top-full z-20 mt-2 overflow-hidden rounded-2xl border border-line bg-surface shadow-lg">
+                    <template x-if="loading">
+                        <p class="px-4 py-3 text-sm text-ink-muted">Searching…</p>
+                    </template>
+                    <template x-if="!loading && items.length === 0">
+                        <p class="px-4 py-3 text-sm text-ink-muted">No matches yet, press Enter to search anyway.</p>
+                    </template>
+                    <template x-for="(item, i) in items" :key="item.url">
+                        <a :href="item.url"
+                           class="flex items-center gap-3 border-b border-line px-4 py-3 text-left transition last:border-b-0"
+                           :class="i === active ? 'bg-primary-light' : 'hover:bg-surface-soft'"
+                           @mouseenter="active = i">
+                            <span class="shrink-0 rounded-full bg-primary-light px-2 py-0.5 text-[11px] font-bold text-primary-dark" x-text="item.type"></span>
+                            <span class="truncate text-sm font-semibold text-ink" x-text="item.title"></span>
+                        </a>
+                    </template>
+                    <a :href="'{{ route('search') }}?q=' + encodeURIComponent(query)"
+                       class="block border-t border-line bg-surface-soft px-4 py-2.5 text-center text-sm font-semibold text-primary hover:bg-primary-light">
+                        View all results for &ldquo;<span x-text="query"></span>&rdquo;
+                    </a>
+                </div>
+
+                <p data-search-status class="sr-only" role="status" aria-live="polite" x-text="statusText"></p>
             </form>
 
             <div class="mt-5 flex flex-wrap gap-3">
@@ -162,9 +196,9 @@
     // claim; these take you somewhere, which is what the page needs at this
     // point. Each tint and its text color are asserted in PaletteContrastTest.
     $categories = [
-        ['Smart Tools', 'Instant calculators, checkers and trackers for your cat.', 'Try tools', '#tools',
+        ['Smart Tools', 'Instant calculators, checkers and trackers for your cat.', 'Try tools', route('tools.index'),
          'primary', ['M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0H5a2 2 0 0 1-2-2v-4m6 6h10a2 2 0 0 0 2-2v-4M3 9h18M3 15h18']],
-        ['Food Guides', 'What is safe, what needs care, and what to never feed.', 'View guides', '#food-guides',
+        ['Food Guides', 'What is safe, what needs care, and what to never feed.', 'View guides', route('food-guides.index'),
          'accent', ['M8 3v6a4 4 0 0 1-4 4 4 4 0 0 0 4 4v4', 'M16 3c-1.5 3-2 5-2 7a3 3 0 0 0 3 3h1v8']],
         ['How It Works', 'Three steps from a question to an answer you can act on.', 'See how', '#how-it-works',
          'warning', ['M12 6v6l4 2', 'M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z']],
@@ -247,7 +281,7 @@
                 @php $isLive = isset($tool['url']); @endphp
                 <{{ $isLive ? 'a' : 'article' }}
                     @if ($isLive) href="{{ $tool['url'] }}" @endif
-                    class="card group w-[78vw] shrink-0 snap-center sm:w-auto sm:shrink" data-filter data-terms="{{ Str::lower($tool['title'].' '.$tool['blurb']) }}">
+                    class="card group w-[78vw] shrink-0 snap-center sm:w-auto sm:shrink">
                     <div class="card-media">
                         <x-img :name="$tool['image']" :alt="$tool['alt']"
                                sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 30vw"/>
@@ -329,8 +363,8 @@
                 $verdictLabel = ['safe' => 'Safe', 'caution' => 'In moderation', 'unsafe' => 'Never'];
             @endphp
             @foreach (config('catalog.foods') as $food)
-                <article id="food-{{ $food['slug'] }}" class="card w-[78vw] shrink-0 snap-center scroll-mt-24 sm:w-auto sm:shrink" data-filter
-                         data-terms="{{ Str::lower($food['question'].' '.$food['answer'].' '.$food['title']) }}">
+                <a href="{{ route('food-guides.show', $food['slug']) }}" id="food-{{ $food['slug'] }}"
+                   class="card w-[78vw] shrink-0 snap-center scroll-mt-24 sm:w-auto sm:shrink">
                     <div class="card-media">
                         <x-img :name="$food['image']" :alt="$food['alt']"
                                sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, (max-width: 1279px) 30vw, 23vw"/>
@@ -359,7 +393,7 @@
                         </h3>
                         <p class="mt-2 text-sm leading-relaxed text-ink-muted">{{ $food['answer'] }}</p>
                     </div>
-                </article>
+                </a>
             @endforeach
         </div>
     </div>
@@ -425,74 +459,61 @@
                 </p>
             </div>
 
-            {{-- Magazine layout: two lead stories at full card size, then the
-                 rest as a compact list beside them. The earlier featured layout
-                 stretched one photo down the whole column and cropped most of it
-                 away; here no image is asked to fill a shape it was not cut for.
-                 Every photo sits at its own 3:2, and the thumbnails are square
-                 crops of the same files rather than separate artwork. --}}
+            {{-- An editorial card, not a generic grid tile: the category and
+                 read time ride on the photo the way the food guides' verdict
+                 badge does, and the CTA is pinned to the card's bottom with
+                 mt-auto rather than sitting wherever the excerpt happens to
+                 end — so a short excerpt reads as generous spacing, not as a
+                 gap. Two per row at every width, always a full 2x2. --}}
             @php
-                $leads = $posts->take(2);
-                $rest = $posts->slice(2);
+                $latestPosts = $posts->take(4);
             @endphp
 
-            <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-12">
-
-                @foreach ($leads as $post)
+            <div class="mt-12 grid grid-cols-2 gap-4 sm:gap-6">
+                @foreach ($latestPosts as $post)
                     <a href="{{ route('blog.show', $post->slug) }}"
-                        class="card reveal lg:col-span-4" data-filter
-                        data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}"
-                        style="--reveal-delay: {{ $loop->index * 80 }}ms">
-                        <div class="card-media relative">
-                            <x-post-image :post="$post"/>
+                        class="card reveal group" style="--reveal-delay: {{ $loop->index * 80 }}ms">
+                        <div class="card-media aspect-[3/2]">
+                            <x-post-image :post="$post" class="transition-transform duration-500 group-hover:scale-105"/>
+
+                            <span aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent"></span>
+
+                            <span class="absolute top-3 left-3 rounded-full bg-primary-vivid px-2.5 py-1 text-[11px] font-bold text-ink shadow-sm">
+                                {{ $post->category?->name }}
+                            </span>
+
+                            <span class="absolute right-3 bottom-3 left-3 flex items-center gap-1.5 text-[11px] font-semibold text-ink-inverse">
+                                <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M12 8v4l3 3M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/>
+                                </svg>
+                                {{ $post->reading_time }} min read
+                            </span>
                         </div>
 
                         <div class="card-body">
-                            <div class="flex items-center gap-3 text-xs font-semibold">
-                                <span class="rounded-full bg-primary-light px-2.5 py-1 text-primary-dark">{{ $post->category?->name }}</span>
-                                <span class="text-ink-muted">{{ $post->reading_time }} min read</span>
-                            </div>
+                            <h3 class="line-clamp-2 font-heading text-base leading-snug font-bold text-ink transition-colors group-hover:text-primary sm:text-lg">
+                                {{ $post->title }}
+                            </h3>
+                            <p class="card-text line-clamp-2 flex-1">{{ $post->excerpt }}</p>
 
-                            <h3 class="mt-3 font-heading text-lg leading-snug font-bold text-ink">{{ $post->title }}</h3>
-                            <p class="card-text flex-1">{{ $post->excerpt }}</p>
-
-                            <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                            <span class="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-primary">
                                 Read the guide
-                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                <svg class="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
                                      stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
                             </span>
                         </div>
                     </a>
                 @endforeach
-
-                {{-- The remaining guides, headline first. A reader scanning this
-                     column wants the titles, not four more photographs. --}}
-                <div class="grid gap-3 sm:col-span-2 sm:grid-cols-2 lg:col-span-4 lg:grid-cols-1 lg:content-between">
-                    @foreach ($rest as $post)
-                        <a href="{{ route('blog.show', $post->slug) }}"
-                            class="reveal group flex items-center gap-4 rounded-xl border border-line bg-surface p-3 shadow-sm transition hover:-translate-y-0.5 hover:border-line-strong hover:shadow-md"
-                            data-filter
-                            data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}"
-                            style="--reveal-delay: {{ 160 + $loop->index * 70 }}ms">
-                            <div class="relative size-20 shrink-0 overflow-hidden rounded-lg bg-surface-section">
-                                <x-post-image :post="$post"/>
-                            </div>
-
-                            <div class="min-w-0">
-                                <div class="flex items-center gap-2 text-xs font-semibold">
-                                    <span class="text-primary">{{ $post->category?->name }}</span>
-                                    <span aria-hidden="true" class="size-1 rounded-full bg-line-strong"></span>
-                                    <span class="text-ink-muted">{{ $post->reading_time }} min</span>
-                                </div>
-
-                                <h3 class="mt-1 font-heading text-sm leading-snug font-bold text-ink transition-colors group-hover:text-primary">
-                                    {{ $post->title }}
-                                </h3>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
             </div>
+
+            @if ($posts->count() > 4)
+                <div class="mt-10 text-center">
+                    <a href="{{ route('blog.index') }}" class="btn-outline rounded-full px-7">
+                        View all {{ $posts->count() }} guides
+                    </a>
+                </div>
+            @endif
         </div>
     </section>
 @endif
@@ -551,30 +572,58 @@
 
 @push('scripts')
     <script>
-        // Filters the cards already on the page. Everything it searches is in
-        // the markup, so there is no request and no empty-state surprise.
-        (() => {
-            const input = document.querySelector('[data-search]');
-            const status = document.querySelector('[data-search-status]');
-            const cards = [...document.querySelectorAll('[data-filter]')];
+        // Drives the hero search box's live dropdown. The form itself is a
+        // plain GET to /search, so it works with no JS; this only adds the
+        // suggestions on top once Alpine is up.
+        function heroSearch() {
+            return {
+                query: '',
+                items: [],
+                open: false,
+                loading: false,
+                active: -1,
+                statusText: '',
 
-            const apply = () => {
-                const q = input.value.trim().toLowerCase();
-                let shown = 0;
+                async fetchSuggestions() {
+                    const q = this.query.trim();
 
-                cards.forEach(card => {
-                    const hit = !q || card.dataset.terms.includes(q);
-                    card.hidden = !hit;
-                    if (hit) shown++;
-                });
+                    if (!q) {
+                        this.items = [];
+                        this.open = false;
+                        return;
+                    }
 
-                status.textContent = q
-                    ? `${shown} result${shown === 1 ? '' : 's'} for “${input.value.trim()}”`
-                    : '';
+                    this.open = true;
+                    this.loading = true;
+
+                    try {
+                        const response = await fetch(`{{ route('search.suggest') }}?q=${encodeURIComponent(q)}`);
+                        const data = await response.json();
+                        this.items = data.results;
+                        this.active = -1;
+                        this.statusText = `${this.items.length} suggestion${this.items.length === 1 ? '' : 's'}`;
+                    } catch (e) {
+                        this.items = [];
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                move(delta) {
+                    if (!this.items.length) return;
+                    this.open = true;
+                    this.active = (this.active + delta + this.items.length) % this.items.length;
+                },
+
+                onEnter(event) {
+                    if (this.active >= 0 && this.items[this.active]) {
+                        event.preventDefault();
+                        window.location.href = this.items[this.active].url;
+                    }
+                    // Otherwise the form submits as normal, straight to /search.
+                },
             };
-
-            input.addEventListener('input', apply);
-        })();
+        }
     </script>
 @endpush
 

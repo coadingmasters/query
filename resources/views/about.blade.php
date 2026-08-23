@@ -24,8 +24,8 @@
             </p>
 
             <div class="mt-8 flex flex-wrap gap-3">
-                <a href="/#tools" class="btn-primary rounded-full px-7">Try our free tools</a>
-                <a href="/#food-guides" class="btn-outline rounded-full bg-surface px-7">Explore care guides</a>
+                <a href="{{ route('tools.index') }}" class="btn-primary rounded-full px-7">Try our free tools</a>
+                <a href="{{ route('food-guides.index') }}" class="btn-outline rounded-full bg-surface px-7">Explore care guides</a>
             </div>
         </div>
 
@@ -274,7 +274,7 @@
                 <p class="mt-3 max-w-md text-base leading-relaxed text-ink-muted">
                     Start with small steps today, for a healthier, happier tomorrow.
                 </p>
-                <a href="/#tools" class="btn-primary mt-6 rounded-full px-7">Explore our tools</a>
+                <a href="{{ route('tools.index') }}" class="btn-primary mt-6 rounded-full px-7">Explore our tools</a>
             </div>
 
             {{-- The file carries its own headline across the top, which would

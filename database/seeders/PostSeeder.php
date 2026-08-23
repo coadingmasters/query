@@ -30,26 +30,34 @@ class PostSeeder extends Seeder
         $founderId = Author::where('is_founder', true)->value('id');
 
         foreach ($this->posts() as $data) {
+            // Once a post exists, it belongs to the admin CMS from here on.
+            // This seeder gets re-run whenever a newer entry is appended to
+            // posts() below to add it — updateOrCreate() would, on every one
+            // of those runs, silently overwrite title, content, dates and
+            // everything else on all the OLDER posts too, discarding any
+            // edit made through the admin since they were first seeded.
+            if (Post::withTrashed()->where('slug', $data['slug'])->exists()) {
+                continue;
+            }
+
             $categoryId = PostCategory::where('name', $data['category'])->value('id');
 
-            $post = Post::updateOrCreate(
-                ['slug' => $data['slug']],
-                [
-                    'title' => $data['title'],
-                    'meta_title' => $data['meta_title'],
-                    'meta_description' => $data['excerpt'],
-                    'excerpt' => $data['excerpt'],
-                    'quick_answer' => $data['answer'],
-                    'content' => file_get_contents(database_path('seeders/data/posts/'.$data['slug'].'.html')),
-                    'sources' => $data['sources'],
-                    'featured_image_alt' => $data['alt'],
-                    'author_id' => $founderId,
-                    'category_id' => $categoryId,
-                    'status' => 'published',
-                    'is_featured' => $data['slug'] === 'why-do-cats-knead',
-                    'published_at' => $data['published'],
-                ]
-            );
+            $post = Post::create([
+                'slug' => $data['slug'],
+                'title' => $data['title'],
+                'meta_title' => $data['meta_title'],
+                'meta_description' => $data['excerpt'],
+                'excerpt' => $data['excerpt'],
+                'quick_answer' => $data['answer'],
+                'content' => file_get_contents(database_path('seeders/data/posts/'.$data['slug'].'.html')),
+                'sources' => $data['sources'],
+                'featured_image_alt' => $data['alt'],
+                'author_id' => $founderId,
+                'category_id' => $categoryId,
+                'status' => 'published',
+                'is_featured' => $data['slug'] === 'why-do-cats-knead',
+                'published_at' => $data['published'],
+            ]);
 
             $this->attachImage($post, $data['image']);
             $this->syncFaqs($post, $data['faq']);
@@ -57,7 +65,8 @@ class PostSeeder extends Seeder
             // Timestamps that mean something: the article's own publish and
             // update dates, not the moment this seeder happened to run. Set
             // last, after every other save above has had its turn to touch
-            // updated_at.
+            // updated_at. Safe here specifically because this only ever
+            // runs once per post, on the run that creates it.
             $post->newQueryWithoutScopes()->where('id', $post->id)->update([
                 'created_at' => $data['published'],
                 'updated_at' => $data['updated'],

@@ -21,12 +21,19 @@ class AddRobotsHeader
     {
         $response = $next($request);
 
-        if (! $response->headers->has('X-Robots-Tag')) {
-            $response->headers->set(
-                'X-Robots-Tag',
-                'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-            );
+        if ($response->headers->has('X-Robots-Tag')) {
+            return $response;
         }
+
+        // A 404, 419 or 500 has nothing worth ranking, whichever URL it
+        // happened to be served from — this covers every one of them without
+        // depending on each error view to declare it for itself.
+        $response->headers->set(
+            'X-Robots-Tag',
+            $response->getStatusCode() >= 400
+                ? 'noindex, nofollow'
+                : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+        );
 
         return $response;
     }

@@ -7,6 +7,7 @@ use App\Models\ArticleFeedback;
 use App\Models\ContactMessage;
 use App\Models\Post;
 use App\Models\Subscriber;
+use App\Models\Visitor;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Carbon;
 
@@ -20,6 +21,10 @@ class DashboardController extends Controller
             'activitySeries' => $this->activitySeries(),
             'feedback' => $this->feedback(),
             'recentMessages' => ContactMessage::latest()->take(5)->get(),
+            'visitorTrend' => $this->visitorTrend(),
+            'visitorTotals' => $this->visitorTotals(),
+            'deviceChart' => $this->deviceChart(),
+            'recentVisitors' => Visitor::latest('last_seen_at')->take(5)->get(),
         ]);
     }
 
@@ -78,6 +83,49 @@ class DashboardController extends Controller
             'label' => $day->format('M j'),
             'messages' => $messagesByDay->get($day->toDateString(), 0),
             'subscribers' => $subscribersByDay->get($day->toDateString(), 0),
+        ])->values()->all();
+    }
+
+    /** New visitors per day, last 7 days — shaped for x-admin.wave-chart. */
+    private function visitorTrend(): array
+    {
+        $days = collect(range(6, 0))->map(fn ($i) => Carbon::today()->subDays($i));
+
+        $byDay = Visitor::query()
+            ->where('first_seen_at', '>=', Carbon::today()->subDays(6))
+            ->get()
+            ->groupBy(fn (Visitor $v) => $v->first_seen_at->toDateString())
+            ->map->count();
+
+        $max = max(1, $byDay->max() ?? 0);
+
+        return $days->map(fn (Carbon $day) => [
+            'label' => $day->format('D'),
+            'count' => $byDay->get($day->toDateString(), 0),
+            'percent' => (int) round($byDay->get($day->toDateString(), 0) / $max * 100),
+        ])->values()->all();
+    }
+
+    private function visitorTotals(): array
+    {
+        return [
+            'total' => Visitor::count(),
+            'today' => Visitor::whereDate('first_seen_at', now()->toDateString())->count(),
+            'week' => Visitor::where('first_seen_at', '>=', now()->subDays(7))->count(),
+        ];
+    }
+
+    /** Desktop/mobile/tablet split across every visitor on file — shaped for x-admin.pie-chart. */
+    private function deviceChart(): array
+    {
+        $counts = Visitor::query()
+            ->selectRaw('device_type, count(*) as total')
+            ->groupBy('device_type')
+            ->pluck('total', 'device_type');
+
+        return $counts->map(fn ($count, $type) => [
+            'label' => ucfirst($type ?: 'Unknown'),
+            'count' => (int) $count,
         ])->values()->all();
     }
 

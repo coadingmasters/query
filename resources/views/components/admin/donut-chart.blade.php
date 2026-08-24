@@ -8,7 +8,10 @@
     $helpfulLength = $feedback['total'] > 0 ? $circumference * ($feedback['helpful'] / $feedback['total']) : 0;
 @endphp
 
-<div class="flex items-center gap-6">
+{{-- Stacked, not side-by-side, for the same reason as x-admin.pie-chart: a
+     viewport breakpoint can't sense how narrow the card around this
+     component actually is. --}}
+<div class="flex flex-col items-center gap-6">
     <div class="relative shrink-0" style="width:{{ $size }}px;height:{{ $size }}px">
         <svg viewBox="0 0 {{ $size }} {{ $size }}" width="{{ $size }}" height="{{ $size }}" class="-rotate-90">
             <circle cx="{{ $size / 2 }}" cy="{{ $size / 2 }}" r="{{ $radius }}" fill="none"

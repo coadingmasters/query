@@ -30,7 +30,15 @@
     });
 @endphp
 
-<div class="flex flex-col items-center gap-6 sm:flex-row">
+{{--
+    Deliberately always stacked (chart above legend), not side-by-side.
+    A viewport breakpoint can't tell how wide THIS card is — a pie-chart
+    sitting in a narrow third-of-a-row card would force the legend into a
+    sliver too tight for its own numbers, and they'd get clipped by the
+    card's overflow-hidden (used to clip the decorative blur behind it).
+    Stacked always fits, at any card width.
+--}}
+<div class="flex flex-col items-center gap-6">
     <div class="relative size-44 shrink-0">
         <svg viewBox="0 0 {{ $size }} {{ $size }}" width="{{ $size }}" height="{{ $size }}" class="-rotate-90" aria-hidden="true">
             <circle cx="{{ $size / 2 }}" cy="{{ $size / 2 }}" r="{{ $radius }}" fill="none"

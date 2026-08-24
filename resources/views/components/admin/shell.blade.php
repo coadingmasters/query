@@ -103,19 +103,19 @@
     {{-- ═══ Main column ═══════════════════════════════════════════════ --}}
     <div class="flex min-h-screen flex-col lg:pl-64">
 
-        <header class="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-line bg-surface-soft/95 px-4 py-3.5 backdrop-blur sm:px-6">
+        <header class="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-white/10 bg-primary-dark/95 px-4 py-3.5 backdrop-blur sm:px-6">
             <div class="flex items-center gap-3">
                 <button type="button" x-on:click="sidebarOpen = true" aria-label="Open menu"
-                        class="-ml-1 flex size-9 items-center justify-center rounded-lg text-ink-muted hover:bg-surface lg:hidden">
+                        class="-ml-1 flex size-9 items-center justify-center rounded-lg text-white/60 transition hover:bg-white/5 hover:text-white lg:hidden">
                     <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
-                <h1 class="hidden font-heading text-lg font-bold text-ink sm:block">{{ $title }}</h1>
+                <h1 class="hidden font-heading text-lg font-bold text-white sm:block">{{ $title }}</h1>
             </div>
 
             <div class="flex items-center gap-3">
                 <div class="hidden text-right sm:block">
-                    <p class="text-sm font-semibold text-ink">{{ auth()->user()->name }}</p>
-                    <p class="text-xs text-ink-muted">{{ auth()->user()->email }}</p>
+                    <p class="text-sm font-semibold text-white">{{ auth()->user()->name }}</p>
+                    <p class="text-xs text-white/50">{{ auth()->user()->email }}</p>
                 </div>
                 <span class="flex size-9 items-center justify-center rounded-full bg-primary-vivid text-sm font-bold text-ink">
                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
@@ -125,7 +125,7 @@
                     @csrf
                     <button type="submit"
                             title="Log out"
-                            class="flex size-9 items-center justify-center rounded-lg text-ink-muted transition hover:bg-danger-light hover:text-danger">
+                            class="flex size-9 items-center justify-center rounded-lg text-white/60 transition hover:bg-danger-light hover:text-danger">
                         <svg class="size-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
                     </button>
                 </form>
@@ -136,7 +136,7 @@
             {{ $slot }}
         </main>
 
-        <footer class="border-t border-line bg-surface-soft px-4 py-5 text-center text-xs text-ink-muted sm:px-6">
+        <footer class="border-t border-white/10 bg-primary-dark px-4 py-5 text-center text-xs text-white/50 sm:px-6">
             &copy; {{ date('Y') }} {{ config('app.name') }}. Admin dashboard.
         </footer>
     </div>

@@ -19,6 +19,11 @@ class Media extends Model
         'size_bytes' => 'integer',
     ];
 
+    // Without this, url is a PHP-only accessor: it works as $media->url but
+    // silently drops out of toArray()/toJson() — which is exactly what the
+    // admin media grid consumes, so every card's <img> would lose its src.
+    protected $appends = ['url'];
+
     protected static function booted(): void
     {
         // The row is the easy part to lose track of; the file left behind on

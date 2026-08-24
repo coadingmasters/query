@@ -49,6 +49,39 @@ class MediaTest extends TestCase
         Storage::disk('public')->assertExists($media->path);
     }
 
+    /**
+     * The admin grid renders <img :src="item.url"> straight from this JSON.
+     * url is a PHP-only accessor unless it is appended, so this is the one
+     * test standing between "works in tinker" and "every card is broken".
+     */
+    public function test_the_upload_response_carries_a_working_url(): void
+    {
+        $file = UploadedFile::fake()->image('cat-photo.png', 800, 600);
+
+        $response = $this->post('/admin/media', [
+            'images' => [$file],
+            'name' => 'maine-coon-hero',
+            'category' => 'breeds',
+        ]);
+
+        $media = Media::first();
+        $response->assertJson(['media' => [['url' => $media->url]]]);
+    }
+
+    public function test_the_index_page_carries_a_working_url_for_existing_media(): void
+    {
+        $media = Media::create([
+            'name' => 'existing', 'path' => 'media/existing-abc123.webp', 'original_filename' => 'x.png',
+            'mime_type' => 'image/webp', 'width' => 100, 'height' => 100, 'size_bytes' => 1000, 'category' => 'general',
+        ]);
+
+        // path alone would also contain the filename, so this checks for the
+        // url accessor specifically: its "/storage/" prefix that path lacks.
+        // Js::from() escapes slashes, so check for the pieces either side.
+        $html = $this->get('/admin/media')->getContent();
+        $this->assertMatchesRegularExpression('#storage.*existing-abc123\.webp#', $html);
+    }
+
     public function test_a_non_image_file_is_rejected(): void
     {
         $file = UploadedFile::fake()->create('not-an-image.pdf', 100);

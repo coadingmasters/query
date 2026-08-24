@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\PostTagController;
 use App\Http\Controllers\Admin\RedirectController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SubscribersController;
+use App\Http\Controllers\Admin\VisitorsController;
 use App\Http\Controllers\ArticleFeedbackController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BlogController;
@@ -36,6 +37,7 @@ use App\Http\Controllers\Tools\CatWeightCheckerController;
 use App\Http\Controllers\Tools\VaccinationTrackerController;
 use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\VisitClickController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -102,6 +104,12 @@ Route::post('/subscribe', [SubscriberController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('subscribe');
 
+// Fire-and-forget beacon from the public click-tracking script — rate
+// limited generously since a normal page visit can fire this many times.
+Route::post('/visit/click', [VisitClickController::class, 'store'])
+    ->middleware('throttle:120,1')
+    ->name('visit.click');
+
 // Admin: no public link points here, and every route below carries noindex.
 Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function (): void {
     Route::get('/login', [AdminAuthController::class, 'showLogin'])->name('login');
@@ -130,6 +138,13 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
     Route::get('/subscribers', [SubscribersController::class, 'index'])
         ->middleware('auth')
         ->name('subscribers.index');
+
+    Route::get('/visitors', [VisitorsController::class, 'index'])
+        ->middleware('auth')
+        ->name('visitors.index');
+    Route::get('/visitors/{visitor}', [VisitorsController::class, 'show'])
+        ->middleware('auth')
+        ->name('visitors.show');
 
     Route::get('/feedback', [FeedbackController::class, 'index'])
         ->middleware('auth')

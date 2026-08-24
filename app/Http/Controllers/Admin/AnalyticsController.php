@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PageView;
 use App\Models\Post;
 use App\Models\Subscriber;
+use App\Models\Visitor;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -76,8 +77,11 @@ class AnalyticsController extends Controller
             fn ($row) => $this->labelFor($row->path)
         );
 
+        $recentVisitors = Visitor::latest('last_seen_at')->limit(5)->get();
+
         return view('admin.analytics', [
             'counts' => $counts,
+            'recentVisitors' => $recentVisitors,
             'topPageLabel' => $topPage ? $this->labelFor($topPage->path) : null,
             'topToolLabel' => $topTool ? (self::TOOL_LABELS[$topTool->path] ?? $topTool->path) : null,
             'topPostLabel' => $topPost ? $this->labelFor($topPost->path) : null,

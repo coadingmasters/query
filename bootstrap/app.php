@@ -18,6 +18,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias(['noindex' => \App\Http\Middleware\NoIndexAdmin::class]);
         $middleware->redirectGuestsTo(fn () => route('admin.login'));
 
+        // A self-generated, non-sensitive UUID — nothing is gained by
+        // encrypting it, and an APP_KEY rotation would otherwise silently
+        // turn every returning visitor into a "new" one.
+        $middleware->encryptCookies(except: [\App\Support\VisitorIdentity::COOKIE]);
+
         // Behind a CDN or load balancer (Cloudflare, nginx, a managed host)
         // the real visitor scheme and host arrive in X-Forwarded-* headers.
         // Without trusting them Laravel sees plain http and generates

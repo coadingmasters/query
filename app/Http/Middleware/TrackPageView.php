@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\PageView;
+use App\Support\VisitorIdentity;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +30,14 @@ class TrackPageView
 
     public function handle(Request $request, Closure $next): Response
     {
+        // The cookie has to be queued here, before the response is sent —
+        // terminate() runs after fastcgi_finish_request, too late for headers.
+        // Cheap and side-effect-free otherwise, so it's fine to do this even
+        // for requests that won't end up counted as a page view below.
+        if ($request->isMethod('get') && ! $request->is('admin*', 'build/*', 'storage/*')) {
+            $request->attributes->set('visitor_token', app(VisitorIdentity::class)->tokenFor($request));
+        }
+
         return $next($request);
     }
 
@@ -77,7 +86,11 @@ class TrackPageView
         $referrerHost = $referrer ? parse_url($referrer, PHP_URL_HOST) : null;
         $ownHost = $request->getHost();
 
+        $token = $request->attributes->get('visitor_token');
+        $visitor = $token ? app(VisitorIdentity::class)->resolve($request, $token) : null;
+
         PageView::create([
+            'visitor_id' => $visitor?->id,
             'path' => '/'.ltrim($request->path(), '/'),
             'source' => $this->classify($referrerHost, $ownHost),
             'referrer_host' => $referrerHost && $referrerHost !== $ownHost ? $referrerHost : null,

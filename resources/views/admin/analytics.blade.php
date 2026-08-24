@@ -130,6 +130,32 @@
                 </div>
             @endforeach
         </div>
+
+        <div class="stat-card-pop mt-6 rounded-2xl border border-line bg-surface p-6 shadow-sm" style="--pop-delay: 770ms">
+            <div class="flex items-center justify-between gap-4">
+                <div>
+                    <h3 class="font-heading text-base font-bold text-ink">Recent visitors</h3>
+                    <p class="text-sm text-ink-muted">Who's actually been here — device, country and IP, with a full click-by-click timeline.</p>
+                </div>
+                <a href="{{ route('admin.visitors.index') }}" class="shrink-0 text-sm font-semibold text-primary transition hover:text-primary-hover">View all &rarr;</a>
+            </div>
+
+            @if ($recentVisitors->isEmpty())
+                <p class="mt-6 text-sm text-ink-muted">No visitors identified yet.</p>
+            @else
+                <div class="mt-4 divide-y divide-line">
+                    @foreach ($recentVisitors as $visitor)
+                        <a href="{{ route('admin.visitors.show', $visitor) }}" class="flex items-center justify-between gap-4 py-3 transition hover:bg-surface-soft">
+                            <div class="min-w-0">
+                                <p class="truncate text-sm font-semibold text-ink">{{ $visitor->browser ?: 'Unknown browser' }} &middot; {{ ucfirst($visitor->device_type ?: 'unknown') }}</p>
+                                <p class="truncate text-xs text-ink-muted">{{ $visitor->country_name ?: 'Unknown' }} &middot; {{ $visitor->ip_address }}</p>
+                            </div>
+                            <span class="shrink-0 text-xs text-ink-muted">{{ $visitor->last_seen_at?->diffForHumans() }}</span>
+                        </a>
+                    @endforeach
+                </div>
+            @endif
+        </div>
     @endunless
 
 </x-admin.shell>

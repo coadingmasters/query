@@ -57,7 +57,7 @@
     <link rel="manifest" href="/site.webmanifest">
 
     @fonts
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- Pages push their above-the-fold image preload here. Telling the
          browser about it in the head means it starts downloading alongside

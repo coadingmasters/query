@@ -103,26 +103,26 @@
     {{-- ═══ Main column ═══════════════════════════════════════════════ --}}
     <div class="flex min-h-screen flex-col lg:pl-64">
 
-        <header class="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-white/10 bg-admin-dark/95 px-4 py-3.5 backdrop-blur sm:px-6">
+        <header class="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-line bg-surface-soft/95 px-4 py-3.5 backdrop-blur sm:px-6">
             <div class="flex items-center gap-3">
                 <button type="button" x-on:click="sidebarOpen = true" aria-label="Open menu"
-                        class="-ml-1 flex size-9 items-center justify-center rounded-lg text-white/60 transition hover:bg-white/5 hover:text-white lg:hidden">
+                        class="-ml-1 flex size-9 items-center justify-center rounded-lg text-ink-muted transition hover:bg-surface lg:hidden">
                     <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
-                <h1 class="hidden font-heading text-lg font-bold text-white sm:block">{{ $title }}</h1>
+                <h1 class="hidden font-heading text-lg font-bold text-ink sm:block">{{ $title }}</h1>
             </div>
 
             <div class="relative" x-data="{ open: false }">
                 <button type="button" x-on:click="open = !open" x-bind:aria-expanded="open" aria-haspopup="true"
-                        class="flex items-center gap-2.5 rounded-xl py-1.5 pr-1 pl-2.5 transition hover:bg-white/5">
+                        class="flex items-center gap-2.5 rounded-xl py-1.5 pr-1 pl-2.5 transition hover:bg-surface">
                     <span class="hidden text-right sm:block">
-                        <span class="block text-sm font-semibold text-white">{{ auth()->user()->name }}</span>
-                        <span class="block text-xs text-white/50">{{ auth()->user()->email }}</span>
+                        <span class="block text-sm font-semibold text-ink">{{ auth()->user()->name }}</span>
+                        <span class="block text-xs text-ink-muted">{{ auth()->user()->email }}</span>
                     </span>
                     <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary-vivid text-sm font-bold text-ink">
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                     </span>
-                    <svg class="hidden size-4 shrink-0 text-white/50 transition sm:block" x-bind:class="open && 'rotate-180'"
+                    <svg class="hidden size-4 shrink-0 text-ink-muted transition sm:block" x-bind:class="open && 'rotate-180'"
                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="m6 9 6 6 6-6"/>
                     </svg>
@@ -156,7 +156,7 @@
             {{ $slot }}
         </main>
 
-        <footer class="border-t border-white/10 bg-admin-dark px-4 py-5 text-center text-xs text-white/50 sm:px-6">
+        <footer class="border-t border-line bg-surface-soft px-4 py-5 text-center text-xs text-ink-muted sm:px-6">
             &copy; {{ date('Y') }} {{ config('app.name') }}. Admin dashboard.
         </footer>
     </div>

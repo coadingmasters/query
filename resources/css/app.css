@@ -29,6 +29,12 @@
     --color-primary-dark:    #123F42;  /* deep teal — footer, dark bands */
     --color-primary-light:   #FCE3DD;  /* pale coral — icon tiles, badges */
 
+    /* Admin-only: a noticeably deeper teal than primary-dark, reserved for
+       the admin shell (sidebar/header/footer) so it reads as a richer,
+       more premium frame than the public site's dark bands — kept separate
+       from primary-dark so this never bleeds into public-facing pages. */
+    --color-admin-dark:      #081D1F;
+
     /* ── Accent: sage ─────────────────────────────────────────────────────
        Same split. #A9C3A0 is 1.64:1 on white — a fill, never a word. */
     --color-accent:          #4F6C49;  /* 4.80:1 worst case */

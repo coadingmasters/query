@@ -47,7 +47,7 @@
 </section>
 
 <section class="section-tight bg-surface">
-    <div class="container-page max-w-3xl">
+    <div class="container-page max-w-5xl">
 
         {{-- ══ 2. INPUT ══════════════════════════════════════════════════════
              Cat name, breed, mating date, an unknown-date toggle that reveals a

@@ -22,6 +22,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#F47C6B">
 
+    {{-- Pinterest business account: domain claim verification. --}}
+    <meta name="p:domain_verify" content="d9c7d9cd6282aa26dbf6d50c67bd382f">
+
     <title>{{ $title }}</title>
     <meta name="description" content="{{ $description }}">
     <link rel="canonical" href="{{ $canonical }}">

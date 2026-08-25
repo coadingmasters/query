@@ -40,7 +40,7 @@ class BlogController extends Controller
             'icons' => $icons,
             'featured' => $featured,
             'side' => $rest->take(4),
-            'title' => 'Cat Care Blog | Guides From '.$name,
+            'title' => 'Cat Care Guides: Behavior, Feeding & Health | '.$name,
             'description' => $description,
             'canonical' => $url.'/blog',
             'posts' => $posts,

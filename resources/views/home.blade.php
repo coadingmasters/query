@@ -240,20 +240,30 @@
     // point. Each tint and its text color are asserted in PaletteContrastTest.
     $categories = [
         ['Smart Tools', 'Instant calculators, checkers and trackers for your cat.', 'Try tools', route('tools.index'),
-         'primary', ['M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0H5a2 2 0 0 1-2-2v-4m6 6h10a2 2 0 0 0 2-2v-4M3 9h18M3 15h18']],
+         'primary', ['M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0H5a2 2 0 0 1-2-2v-4m6 6h10a2 2 0 0 0 2-2v-4M3 9h18M3 15h18'],
+         'home-smart-tools-icon'],
         ['Food Guides', 'What is safe, what needs care, and what to never feed.', 'View guides', route('food-guides.index'),
-         'accent', ['M8 3v6a4 4 0 0 1-4 4 4 4 0 0 0 4 4v4', 'M16 3c-1.5 3-2 5-2 7a3 3 0 0 0 3 3h1v8']],
+         'accent', ['M8 3v6a4 4 0 0 1-4 4 4 4 0 0 0 4 4v4', 'M16 3c-1.5 3-2 5-2 7a3 3 0 0 0 3 3h1v8'],
+         'home-food-guides-icon'],
         ['How It Works', 'Three steps from a question to an answer you can act on.', 'See how', route('how-it-works'),
-         'warning', ['M12 6v6l4 2', 'M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z']],
+         'warning', ['M12 6v6l4 2', 'M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z'],
+         'home-how-it-works-icon'],
         ['Cat Care Blog', 'Longer reads for the questions a calculator cannot settle.', 'Read blog', route('blog.index'),
-         'info', ['M12 7.5v13', 'M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z']],
+         'info', ['M12 7.5v13', 'M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z'],
+         'home-cat-care-blog-icon'],
     ];
+
+    // Keyed by the same name each card looks up below, so one query covers
+    // all four instead of one per card.
+    $categoryMedia = \App\Models\Media::whereIn('name', collect($categories)->pluck(6))
+        ->latest()->get()->keyBy('name');
 @endphp
 <section class="bg-surface pb-4">
     <div class="container-page grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        @foreach ($categories as [$title, $text, $cta, $href, $tone, $paths])
+        @foreach ($categories as [$title, $text, $cta, $href, $tone, $paths, $iconName])
+            @php $iconMedia = $categoryMedia->get($iconName); @endphp
             <a href="{{ $href }}"
-               class="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-sm transition duration-200 hover:-translate-y-1 hover:border-line-strong hover:shadow-lg">
+               class="group relative flex flex-col items-center overflow-hidden rounded-2xl border border-line bg-surface p-6 text-center shadow-sm transition duration-200 hover:-translate-y-1 hover:border-line-strong hover:shadow-lg">
 
                 {{-- A wash of the card's colour bled in from the corner, so the
                      four stay distinguishable without becoming four flat
@@ -266,20 +276,39 @@
                     'bg-info-light' => $tone === 'info',
                 ])></span>
 
-                <span @class([
-                    'relative flex size-12 items-center justify-center rounded-xl shadow-sm',
-                    'bg-primary-light text-primary' => $tone === 'primary',
-                    'bg-accent-light text-accent' => $tone === 'accent',
-                    'bg-warning-light text-warning' => $tone === 'warning',
-                    'bg-info-light text-info' => $tone === 'info',
-                ])>
-                    <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        @foreach ($paths as $d)
-                            <path d="{{ $d }}"/>
-                        @endforeach
-                    </svg>
-                </span>
+                @if ($iconMedia)
+                    {{-- A real, relevant photo once one is uploaded for this
+                         card (admin Media, category "general", name matching
+                         $iconName above) — cropped into an avatar circle
+                         rather than boxed like a generic icon. --}}
+                    <span @class([
+                        'relative size-20 overflow-hidden rounded-full ring-4 shadow-sm',
+                        'ring-primary-light' => $tone === 'primary',
+                        'ring-accent-light' => $tone === 'accent',
+                        'ring-warning-light' => $tone === 'warning',
+                        'ring-info-light' => $tone === 'info',
+                    ])>
+                        <img src="{{ $iconMedia->url }}" alt=""
+                             width="{{ $iconMedia->width }}" height="{{ $iconMedia->height }}"
+                             loading="lazy" decoding="async"
+                             class="h-full w-full object-cover">
+                    </span>
+                @else
+                    <span @class([
+                        'relative flex size-20 items-center justify-center rounded-full shadow-sm',
+                        'bg-primary-light text-primary' => $tone === 'primary',
+                        'bg-accent-light text-accent' => $tone === 'accent',
+                        'bg-warning-light text-warning' => $tone === 'warning',
+                        'bg-info-light text-info' => $tone === 'info',
+                    ])>
+                        <svg class="size-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            @foreach ($paths as $d)
+                                <path d="{{ $d }}"/>
+                            @endforeach
+                        </svg>
+                    </span>
+                @endif
 
                 <h2 class="relative mt-5 font-heading text-lg font-bold text-ink">{{ $title }}</h2>
                 <p class="relative mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{{ $text }}</p>

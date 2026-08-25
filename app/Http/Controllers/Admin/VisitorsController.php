@@ -30,16 +30,14 @@ class VisitorsController extends Controller
 
         $countryCounts = Visitor::query()
             ->whereNotNull('country_name')
-            ->selectRaw('country_name, count(*) as total')
-            ->groupBy('country_name')
+            ->selectRaw('country_name, country_code, count(*) as total')
+            ->groupBy('country_name', 'country_code')
             ->orderByDesc('total')
             ->limit(6)
-            ->pluck('total', 'country_name');
-        $countryMax = max($countryCounts->max(), 1);
-        $countryChart = $countryCounts->map(fn ($count, $name) => [
-            'label' => $name,
-            'count' => (int) $count,
-            'percent' => (int) round($count / $countryMax * 100),
+            ->get();
+        $countryChart = $countryCounts->map(fn ($row) => [
+            'label' => trim((new Visitor(['country_code' => $row->country_code]))->country_flag.' '.$row->country_name),
+            'count' => (int) $row->total,
         ])->values();
 
         return view('admin.visitors.index', [

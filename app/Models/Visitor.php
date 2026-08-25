@@ -30,4 +30,21 @@ class Visitor extends Model
     {
         return $this->hasMany(ClickEvent::class);
     }
+
+    /**
+     * A country's flag emoji is just its two-letter code re-encoded: each
+     * letter maps to a "regional indicator" codepoint, and the pair of
+     * them is what every OS renders as that country's flag. No image, no
+     * lookup table, and it stays correct for any code we might store.
+     */
+    public function getCountryFlagAttribute(): string
+    {
+        $code = strtoupper((string) $this->country_code);
+
+        if (! preg_match('/^[A-Z]{2}$/', $code)) {
+            return '';
+        }
+
+        return mb_chr(0x1F1E6 + ord($code[0]) - 65).mb_chr(0x1F1E6 + ord($code[1]) - 65);
+    }
 }

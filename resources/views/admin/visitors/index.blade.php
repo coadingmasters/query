@@ -37,27 +37,47 @@
     </div>
 
     <div class="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
-        <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
-            <h3 class="font-heading text-base font-bold text-ink">Device split</h3>
-            <p class="text-sm text-ink-muted">Desktop, mobile and tablet, across every visitor on file.</p>
+        <div class="relative overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-sm">
+            <span aria-hidden="true" class="pointer-events-none absolute -top-14 -right-14 size-36 rounded-full bg-info-light opacity-60 blur-2xl"></span>
+            <div class="relative flex items-start gap-3">
+                <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-info-light text-info">
+                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 5h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z M8 21h8M12 17v4"/>
+                    </svg>
+                </span>
+                <div>
+                    <h3 class="font-heading text-base font-bold text-ink">Device split</h3>
+                    <p class="text-sm text-ink-muted">Desktop, mobile and tablet, across every visitor on file.</p>
+                </div>
+            </div>
             @if ($deviceChart->isNotEmpty())
-                <div class="mt-6">
-                    <x-admin.wave-chart :data="$deviceChart" id="visitors-device"/>
+                <div class="relative mt-6">
+                    <x-admin.pie-chart :data="$deviceChart"/>
                 </div>
             @else
-                <p class="mt-6 text-sm text-ink-muted">No visitors yet.</p>
+                <p class="relative mt-6 text-sm text-ink-muted">No visitors yet.</p>
             @endif
         </div>
 
-        <div class="rounded-2xl border border-line bg-surface p-6 shadow-sm">
-            <h3 class="font-heading text-base font-bold text-ink">Top countries</h3>
-            <p class="text-sm text-ink-muted">Where visitors are coming from, by IP.</p>
+        <div class="relative overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-sm">
+            <span aria-hidden="true" class="pointer-events-none absolute -top-14 -right-14 size-36 rounded-full bg-accent-light opacity-60 blur-2xl"></span>
+            <div class="relative flex items-start gap-3">
+                <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent-light text-accent-dark">
+                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z"/>
+                    </svg>
+                </span>
+                <div>
+                    <h3 class="font-heading text-base font-bold text-ink">Top countries</h3>
+                    <p class="text-sm text-ink-muted">Where visitors are coming from, by IP.</p>
+                </div>
+            </div>
             @if ($countryChart->isNotEmpty())
-                <div class="mt-6">
-                    <x-admin.wave-chart :data="$countryChart" id="visitors-country"/>
+                <div class="relative mt-6">
+                    <x-admin.pie-chart :data="$countryChart"/>
                 </div>
             @else
-                <p class="mt-6 text-sm text-ink-muted">No located visitors yet.</p>
+                <p class="relative mt-6 text-sm text-ink-muted">No located visitors yet.</p>
             @endif
         </div>
     </div>
@@ -84,7 +104,12 @@
                                 <p class="font-medium text-ink">{{ $visitor->browser ?: 'Unknown browser' }}</p>
                                 <p class="text-xs text-ink-muted">{{ ucfirst($visitor->device_type ?: 'unknown') }} &middot; {{ $visitor->os ?: 'Unknown OS' }}</p>
                             </td>
-                            <td class="px-5 py-3.5 text-ink-muted">{{ $visitor->country_name ?: 'Unknown' }}</td>
+                            <td class="px-5 py-3.5 text-ink-muted">
+                                @if ($visitor->country_flag)
+                                    <span aria-hidden="true">{{ $visitor->country_flag }}</span>
+                                @endif
+                                {{ $visitor->country_name ?: 'Unknown' }}
+                            </td>
                             <td class="px-5 py-3.5 font-mono text-xs text-ink-muted">{{ $visitor->ip_address }}</td>
                             <td class="px-5 py-3.5 text-ink-muted">{{ $visitor->first_seen_at?->format('M j, Y g:ia') }}</td>
                             <td class="px-5 py-3.5 text-ink-muted">{{ $visitor->last_seen_at?->format('M j, Y g:ia') }}</td>

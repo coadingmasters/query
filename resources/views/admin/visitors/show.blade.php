@@ -14,7 +14,7 @@
     @php
         $facts = [
             ['label' => 'IP address', 'value' => $visitor->ip_address, 'icon' => 'M12 21c-4.97-4-9-7.58-9-11.5A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9 3.5C21 13.42 16.97 17 12 21Z M12 12a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z'],
-            ['label' => 'Country', 'value' => $visitor->country_name ?: 'Unknown', 'icon' => 'M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z'],
+            ['label' => 'Country', 'value' => trim($visitor->country_flag.' '.($visitor->country_name ?: 'Unknown')), 'icon' => 'M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z'],
             ['label' => 'Operating system', 'value' => $visitor->os ?: 'Unknown', 'icon' => 'M4 5h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z M8 21h8M12 17v4'],
             ['label' => 'Last seen', 'value' => $visitor->last_seen_at?->diffForHumans(), 'icon' => 'M12 8v4l3 3M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z'],
         ];

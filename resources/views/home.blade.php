@@ -533,14 +533,16 @@
 
             {{-- A magazine front page, not a grid of identical tiles: the
                  newest post runs as a full hero with its title and excerpt
-                 sitting on the photo, and the next three read as a compact
-                 "more from the blog" list beside it. Order follows recency
-                 on purpose — the newest post earns the hero spot, no
-                 separate "featured" flag to keep in sync by hand. --}}
+                 sitting on the photo; the next two stack beside it at half
+                 the height each; the four after that read as an even row
+                 underneath. Straight off $posts (latest-first, no cache),
+                 so this always reflects whatever was published most
+                 recently — no separate "featured" flag to keep in sync. --}}
             @php
-                $latestPosts = $posts->take(4);
-                $featuredPost = $latestPosts->first();
-                $listedPosts = $latestPosts->slice(1);
+                $latestPosts = $posts->take(7);
+                $featuredPost = $latestPosts->get(0);
+                $stackedPosts = $latestPosts->slice(1, 2);
+                $gridPosts = $latestPosts->slice(3, 4);
             @endphp
 
             <div class="mt-12 grid gap-5 lg:grid-cols-5 lg:gap-6">
@@ -578,31 +580,84 @@
                     </a>
                 @endif
 
-                <div class="flex flex-col gap-4 lg:col-span-2">
-                    @foreach ($listedPosts as $post)
+                {{-- Two cards stacked to match the hero's height: flex-1 on
+                     each splits that stretched height evenly, and the
+                     card-body centers its title in whatever's left over
+                     after the image, so a short title never looks stranded. --}}
+                <div class="flex flex-col gap-5 lg:col-span-2 lg:gap-6">
+                    @foreach ($stackedPosts as $post)
                         <a href="{{ route('blog.show', $post->slug) }}"
-                           class="card reveal group flex-1 flex-row items-stretch gap-4 p-3"
+                           class="card reveal group flex-1"
                            style="--reveal-delay: {{ ($loop->index + 1) * 80 }}ms">
-                            <span class="relative aspect-square w-24 shrink-0 overflow-hidden rounded-xl sm:w-28">
+                            <div class="card-media aspect-[16/9]">
                                 <x-post-image :post="$post" class="transition-transform duration-500 group-hover:scale-105"/>
-                            </span>
 
-                            <span class="flex min-w-0 flex-1 flex-col justify-center py-1">
-                                <span class="flex items-center gap-2 text-[11px] font-bold tracking-wide text-primary uppercase">
+                                <span aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent"></span>
+
+                                <span class="absolute top-3 left-3 rounded-full bg-primary-vivid px-2.5 py-1 text-[11px] font-bold text-ink shadow-sm">
                                     {{ $post->category?->name }}
-                                    <span aria-hidden="true" class="text-ink-muted/50">&middot;</span>
-                                    <span class="font-medium text-ink-muted normal-case">{{ $post->reading_time }} min</span>
                                 </span>
-                                <span class="mt-1 line-clamp-2 font-heading text-sm leading-snug font-bold text-ink transition-colors group-hover:text-primary sm:text-base">
+
+                                <span class="absolute right-3 bottom-3 left-3 flex items-center gap-1.5 text-[11px] font-semibold text-ink-inverse">
+                                    <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M12 8v4l3 3M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/>
+                                    </svg>
+                                    {{ $post->reading_time }} min read
+                                </span>
+                            </div>
+
+                            <div class="card-body flex-1 justify-center py-3">
+                                <h3 class="line-clamp-2 font-heading text-sm leading-snug font-bold text-ink transition-colors group-hover:text-primary sm:text-base">
                                     {{ $post->title }}
-                                </span>
-                            </span>
+                                </h3>
+                            </div>
                         </a>
                     @endforeach
                 </div>
             </div>
 
-            @if ($posts->count() > 4)
+            {{-- The even row underneath: same card language as the two
+                 above, just four in a row and roomy enough for the excerpt
+                 and a "read the guide" line. --}}
+            <div class="mt-5 grid grid-cols-2 gap-4 sm:gap-6 lg:mt-6 lg:grid-cols-4">
+                @foreach ($gridPosts as $post)
+                    <a href="{{ route('blog.show', $post->slug) }}"
+                        class="card reveal group" style="--reveal-delay: {{ ($loop->index + 3) * 80 }}ms">
+                        <div class="card-media aspect-[3/2]">
+                            <x-post-image :post="$post" class="transition-transform duration-500 group-hover:scale-105"/>
+
+                            <span aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent"></span>
+
+                            <span class="absolute top-3 left-3 rounded-full bg-primary-vivid px-2.5 py-1 text-[11px] font-bold text-ink shadow-sm">
+                                {{ $post->category?->name }}
+                            </span>
+
+                            <span class="absolute right-3 bottom-3 left-3 flex items-center gap-1.5 text-[11px] font-semibold text-ink-inverse">
+                                <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M12 8v4l3 3M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/>
+                                </svg>
+                                {{ $post->reading_time }} min read
+                            </span>
+                        </div>
+
+                        <div class="card-body">
+                            <h3 class="line-clamp-2 font-heading text-base leading-snug font-bold text-ink transition-colors group-hover:text-primary sm:text-lg">
+                                {{ $post->title }}
+                            </h3>
+                            <p class="card-text line-clamp-2 flex-1">{{ $post->excerpt }}</p>
+
+                            <span class="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-primary">
+                                Read the guide
+                                <svg class="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                     stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                            </span>
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+
+            @if ($posts->count() > 7)
                 <div class="mt-10 text-center">
                     <a href="{{ route('blog.index') }}" class="btn-outline rounded-full px-7">
                         View all {{ $posts->count() }} guides

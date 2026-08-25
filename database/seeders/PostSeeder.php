@@ -823,8 +823,8 @@ class PostSeeder extends Seeder
             ],
             [
                 'slug' => 'can-cats-eat-chickpeas',
-                'title' => 'Can Cats Eat Chickpeas? Are They Safe?',
-                'meta_title' => 'Can Cats Eat Chickpeas? Are They Safe?',
+                'title' => 'Can Cats Eat Chickpeas? Hummus, Flour & Dried Bean Risks',
+                'meta_title' => 'Can Cats Eat Chickpeas? Hummus, Flour & Dried Bean Risks',
                 'excerpt' => 'Plain chickpeas are not toxic, but hummus, chickpea flour and '
                     .'dried beans each carry their own risk. What is actually safe, and how '
                     .'much.',

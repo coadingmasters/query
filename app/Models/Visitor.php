@@ -47,4 +47,26 @@ class Visitor extends Model
 
         return mb_chr(0x1F1E6 + ord($code[0]) - 65).mb_chr(0x1F1E6 + ord($code[1]) - 65);
     }
+
+    /**
+     * No user-agent trick can prove a visitor is a bot — the reliable tell
+     * is speed. This is the same pattern that outed a real GCP crawler
+     * spoofing a normal phone's Chrome: five or more page views packed
+     * into ten seconds or less, far faster than anyone could actually read
+     * and click through that many pages. Reads the eager-loaded
+     * page_views_count when it's there (withCount('pageViews'), cheap for
+     * a whole list) and falls back to counting an already-loaded pageViews
+     * relation (the single-visitor page loads that anyway) — never fires
+     * an extra query just to answer this.
+     */
+    public function getIsLikelyBotAttribute(): bool
+    {
+        $views = $this->page_views_count ?? ($this->relationLoaded('pageViews') ? $this->pageViews->count() : 0);
+
+        if ($views < 5 || ! $this->first_seen_at || ! $this->last_seen_at) {
+            return false;
+        }
+
+        return $this->first_seen_at->diffInSeconds($this->last_seen_at) <= 10;
+    }
 }

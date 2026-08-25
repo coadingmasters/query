@@ -40,6 +40,20 @@ class VisitorsController extends Controller
             'count' => (int) $row->total,
         ])->values();
 
+        // is_likely_bot needs page_views_count loaded, so this is a second,
+        // lightweight pass over every visitor rather than reusing the
+        // paginated $visitors below — this one has to see all of them to
+        // give an honest total, not just the current page of 25.
+        $botCount = Visitor::query()
+            ->withCount('pageViews')
+            ->get(['id', 'first_seen_at', 'last_seen_at'])
+            ->filter(fn (Visitor $v) => $v->is_likely_bot)
+            ->count();
+        $trafficChart = collect([
+            ['label' => 'Organic', 'count' => $total - $botCount],
+            ['label' => 'Likely bot', 'count' => $botCount],
+        ])->filter(fn ($row) => $row['count'] > 0)->values();
+
         return view('admin.visitors.index', [
             'visitors' => Visitor::query()
                 ->withCount('pageViews', 'clickEvents')
@@ -48,6 +62,8 @@ class VisitorsController extends Controller
             'counts' => ['total' => $total, 'today' => $today, 'pageViews' => $pageViews, 'clicks' => $clicks],
             'deviceChart' => $deviceChart,
             'countryChart' => $countryChart,
+            'trafficChart' => $trafficChart,
+            'botCount' => $botCount,
         ]);
     }
 

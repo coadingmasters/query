@@ -36,7 +36,31 @@
         @endforeach
     </div>
 
-    <div class="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
+    <div class="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div class="relative overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-sm">
+            <span aria-hidden="true" class="pointer-events-none absolute -top-14 -right-14 size-36 rounded-full bg-danger/10 opacity-60 blur-2xl"></span>
+            <div class="relative flex items-start gap-3">
+                <span class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-danger-light text-danger">
+                    <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 8V4H8 M4 8h16v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8Z M2 14h2 M20 14h2 M9 14v0 M15 14v0"/>
+                    </svg>
+                </span>
+                <div>
+                    <h3 class="font-heading text-base font-bold text-ink">Traffic quality</h3>
+                    <p class="text-sm text-ink-muted">
+                        Organic vs. likely bots &mdash; flagged by speed: {{ $botCount }} {{ Str::plural('visitor', $botCount) }} loaded 5+ pages in 10 seconds or less, faster than a person can click through.
+                    </p>
+                </div>
+            </div>
+            @if ($trafficChart->isNotEmpty())
+                <div class="relative mt-6">
+                    <x-admin.pie-chart :data="$trafficChart"/>
+                </div>
+            @else
+                <p class="relative mt-6 text-sm text-ink-muted">No visitors yet.</p>
+            @endif
+        </div>
+
         <div class="relative overflow-hidden rounded-2xl border border-line bg-surface p-6 shadow-sm">
             <span aria-hidden="true" class="pointer-events-none absolute -top-14 -right-14 size-36 rounded-full bg-info-light opacity-60 blur-2xl"></span>
             <div class="relative flex items-start gap-3">
@@ -101,7 +125,12 @@
                     @forelse ($visitors as $visitor)
                         <tr class="cursor-pointer transition hover:bg-surface-soft" onclick="window.location='{{ route('admin.visitors.show', $visitor) }}'">
                             <td class="px-5 py-3.5">
-                                <p class="font-medium text-ink">{{ $visitor->browser ?: 'Unknown browser' }}</p>
+                                <p class="flex items-center gap-2 font-medium text-ink">
+                                    {{ $visitor->browser ?: 'Unknown browser' }}
+                                    @if ($visitor->is_likely_bot)
+                                        <span class="rounded-full bg-danger-light px-2 py-0.5 text-[10px] font-bold tracking-wide text-danger uppercase">Likely bot</span>
+                                    @endif
+                                </p>
                                 <p class="text-xs text-ink-muted">{{ ucfirst($visitor->device_type ?: 'unknown') }} &middot; {{ $visitor->os ?: 'Unknown OS' }}</p>
                             </td>
                             <td class="px-5 py-3.5 text-ink-muted">

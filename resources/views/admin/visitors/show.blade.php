@@ -5,8 +5,11 @@
             <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
             All visitors
         </a>
-        <h2 class="mt-3 font-heading text-2xl font-extrabold tracking-tight text-ink">
+        <h2 class="mt-3 flex flex-wrap items-center gap-3 font-heading text-2xl font-extrabold tracking-tight text-ink">
             {{ $visitor->browser ?: 'Unknown browser' }} &middot; {{ ucfirst($visitor->device_type ?: 'unknown') }}
+            @if ($visitor->is_likely_bot)
+                <span class="rounded-full bg-danger-light px-2.5 py-1 text-xs font-bold tracking-wide text-danger uppercase">Likely bot</span>
+            @endif
         </h2>
         <p class="mt-1 text-sm text-ink-muted">First seen {{ $visitor->first_seen_at?->format('M j, Y \a\t g:ia') }}, {{ $visitor->visits_count }} {{ Str::plural('visit', $visitor->visits_count) }} total.</p>
     </div>

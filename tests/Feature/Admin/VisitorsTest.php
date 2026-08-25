@@ -115,6 +115,60 @@ class VisitorsTest extends TestCase
             ->assertSee('203.0.113.4');
     }
 
+    public function test_a_visitor_with_many_pages_in_seconds_is_flagged_a_likely_bot(): void
+    {
+        $visitor = Visitor::create([
+            'token' => (string) Str::uuid(), 'ip_address' => '34.169.76.90',
+            'country_name' => 'United States', 'device_type' => 'mobile', 'browser' => 'Chrome',
+            'first_seen_at' => now()->subSeconds(3), 'last_seen_at' => now(), 'visits_count' => 5,
+        ]);
+
+        for ($i = 0; $i < 5; $i++) {
+            PageView::create(['visitor_id' => $visitor->id, 'path' => "/page-{$i}", 'source' => 'direct', 'created_at' => now()]);
+        }
+
+        $this->assertTrue($visitor->loadCount('pageViews')->is_likely_bot);
+    }
+
+    public function test_a_normal_browsing_pace_is_not_flagged(): void
+    {
+        $visitor = Visitor::create([
+            'token' => (string) Str::uuid(), 'ip_address' => '203.0.113.9',
+            'country_name' => 'Testland', 'device_type' => 'desktop', 'browser' => 'Chrome',
+            'first_seen_at' => now()->subMinutes(5), 'last_seen_at' => now(), 'visits_count' => 5,
+        ]);
+
+        for ($i = 0; $i < 5; $i++) {
+            PageView::create(['visitor_id' => $visitor->id, 'path' => "/page-{$i}", 'source' => 'direct', 'created_at' => now()]);
+        }
+
+        $this->assertFalse($visitor->loadCount('pageViews')->is_likely_bot);
+    }
+
+    public function test_the_traffic_quality_card_and_bot_badge_show_on_the_index(): void
+    {
+        $bot = Visitor::create([
+            'token' => (string) Str::uuid(), 'ip_address' => '34.169.76.90',
+            'country_name' => 'United States', 'device_type' => 'mobile', 'browser' => 'Chrome',
+            'first_seen_at' => now()->subSeconds(3), 'last_seen_at' => now(), 'visits_count' => 5,
+        ]);
+        for ($i = 0; $i < 5; $i++) {
+            PageView::create(['visitor_id' => $bot->id, 'path' => "/page-{$i}", 'source' => 'direct', 'created_at' => now()]);
+        }
+
+        Visitor::create([
+            'token' => (string) Str::uuid(), 'ip_address' => '203.0.113.9',
+            'country_name' => 'Testland', 'device_type' => 'desktop', 'browser' => 'Firefox',
+            'first_seen_at' => now(), 'last_seen_at' => now(), 'visits_count' => 1,
+        ]);
+
+        $this->actingAs(User::factory()->create())
+            ->get('/admin/visitors')
+            ->assertOk()
+            ->assertSee('Traffic quality')
+            ->assertSee('Likely bot');
+    }
+
     public function test_a_visitor_show_page_lists_its_timeline(): void
     {
         $visitor = Visitor::create([

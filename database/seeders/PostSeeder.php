@@ -821,6 +821,40 @@ class PostSeeder extends Seeder
                     ['name' => 'VCA Animal Hospitals: pancreatitis in cats', 'url' => 'https://vcahospitals.com/know-your-pet/pancreatitis-in-cats', 'note' => 'Clinical overview of pancreatitis in cats, including dietary fat as a recognized trigger.'],
                 ],
             ],
+            [
+                'slug' => 'can-cats-eat-chickpeas',
+                'title' => 'Can Cats Eat Chickpeas? Are They Safe?',
+                'meta_title' => 'Can Cats Eat Chickpeas? Are They Safe?',
+                'excerpt' => 'Plain chickpeas are not toxic, but hummus, chickpea flour and '
+                    .'dried beans each carry their own risk. What is actually safe, and how '
+                    .'much.',
+                'category' => 'Food Safety',
+                'published' => '2026-08-25',
+                'updated' => '2026-08-25',
+                'image' => 'cat-sniffing-chickpeas-bowl',
+                'alt' => 'Cat sniffing a small bowl of plain cooked chickpeas on a kitchen counter',
+                'answer' => 'A bite or two of plain, fully cooked chickpeas with no seasoning is '
+                    .'not toxic to cats, but chickpeas offer nothing a cat\'s diet needs and are '
+                    .'hard for a carnivore\'s digestive system to process, often causing gas or '
+                    .'loose stool in anything more than a small amount. Hummus is a separate and '
+                    .'real danger: the garlic in it can cause hemolytic anemia in cats, and it '
+                    .'should be kept away entirely rather than treated as safe because it is '
+                    .'mostly chickpeas. Dried, uncooked chickpeas add a choking and blockage risk '
+                    .'on top. Garbanzo bean is simply another name for chickpea, and the same '
+                    .'guidance applies to both.',
+                'faq' => [
+                    ['q' => 'Can cats eat plain chickpeas?', 'a' => 'A bite or two of plain, fully cooked chickpeas with no salt, garlic, onion or seasoning is not toxic to a cat. Chickpeas do not offer anything a cat\'s diet actually needs though, and more than a small amount commonly causes gas or loose stool, so they are worth treating as an occasional curiosity rather than a regular treat.'],
+                    ['q' => 'Are chickpeas and garbanzo beans the same thing?', 'a' => 'Yes. Chickpea and garbanzo bean are two names for the exact same legume, and every safety point about one applies equally to the other. There is no difference to account for based on which name is used.'],
+                    ['q' => 'Can cats eat hummus?', 'a' => 'No. Hummus is chickpeas blended with garlic, tahini and oil, and the garlic is dangerous to cats even in small amounts, since it can damage red blood cells and cause hemolytic anemia. Symptoms can take a day or more to appear, so hummus should be kept away from cats entirely rather than treated as safe because it is mostly chickpeas.'],
+                    ['q' => 'Is chickpea flour safe for cats?', 'a' => 'Chickpea flour carries the same digestive concerns as whole chickpeas, only more concentrated, so a small lick of dry flour or batter is not toxic but is easy to overconsume by accident. The bigger risk is usually whatever the flour is mixed with, since chickpea flour recipes often include salt, onion or garlic seasoning that is the real hazard.'],
+                    ['q' => 'What happens if my cat eats dried, uncooked chickpeas?', 'a' => 'Dried chickpeas are hard and dense, which makes them harder to chew and digest than the cooked version and adds a choking or blockage risk, especially in any real quantity. A cat that eats one or two is unlikely to have a serious problem but is worth watching for vomiting or a swollen abdomen, while a cat that gets into a large handful or a full bag should see a vet regardless of how it seems at first.'],
+                ],
+                'sources' => [
+                    ['name' => 'ASPCA Animal Poison Control Center', 'url' => 'https://www.aspca.org/pet-care/animal-poison-control', 'note' => 'Reference for allium toxicity (garlic and onion) and other foods that pose a toxicity or GI risk to cats.'],
+                    ['name' => 'Cornell Feline Health Center', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center', 'note' => 'Veterinary guidance on feline nutrition and safe feeding practices relevant to plant-based, fiber-heavy human foods.'],
+                    ['name' => 'VCA Animal Hospitals: onion, garlic, chive and leek toxicity', 'url' => 'https://vcahospitals.com/know-your-pet/onion-garlic-chive-and-leek-toxicity-in-dogs', 'note' => 'Clinical overview of allium toxicity, including its greater sensitivity in cats, the mechanism behind the hummus warning in this guide.'],
+                ],
+            ],
         ];
     }
 }

@@ -39,6 +39,7 @@ class UsEnglishTest extends TestCase
             'bread article' => ['/blog/can-cats-eat-bread'],
             'bananas article' => ['/blog/can-cats-eat-bananas'],
             'popcorn article' => ['/blog/can-cats-eat-popcorn'],
+            'chickpeas article' => ['/blog/can-cats-eat-chickpeas'],
             'new owner article' => ['/blog/new-cat-owner-guide'],
             'age calculator' => ['/tools/cat-age-calculator'],
             'pregnancy calculator' => ['/tools/cat-pregnancy-calculator'],

@@ -209,6 +209,7 @@ return [
             ],
             'deep_dives' => [
                 ['label' => 'Can Cats Eat Bread?', 'slug' => 'can-cats-eat-bread'],
+                ['label' => 'Can Cats Eat Chickpeas?', 'slug' => 'can-cats-eat-chickpeas'],
             ],
         ],
         [

@@ -347,10 +347,10 @@
 {{-- ══ 5. KEEP READING ═══════════════════════════════════════════════════ --}}
 @if ($posts->isNotEmpty())
     <section class="bg-surface-soft py-10 lg:py-14">
-        <div class="container-page max-w-4xl">
-            <h2 class="font-heading text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">Keep reading</h2>
+        <div class="container-page max-w-[1600px]">
+            <h2 class="font-heading text-2xl font-extrabold tracking-tight text-ink sm:text-3xl">You may also like</h2>
 
-            <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+            <ul class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($posts as $next)
                     <li>
                         <a href="{{ route('blog.show', $next->slug) }}"

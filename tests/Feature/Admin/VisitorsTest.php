@@ -4,6 +4,7 @@ namespace Tests\Feature\Admin;
 
 use App\Models\ClickEvent;
 use App\Models\IpRange;
+use App\Models\Ipv6Range;
 use App\Models\PageView;
 use App\Models\User;
 use App\Models\Visitor;
@@ -80,7 +81,18 @@ class VisitorsTest extends TestCase
         $this->assertNull(IpRange::countryFor('8.8.8.8'), 'an address outside every imported range should resolve to nothing');
     }
 
-    public function test_ip_to_country_returns_null_for_ipv6(): void
+    public function test_ip_to_country_resolves_a_known_ipv6_range(): void
+    {
+        Ipv6Range::create([
+            'ip_from' => inet_pton('2001:4860::'), 'ip_to' => inet_pton('2001:4860:ffff:ffff:ffff:ffff:ffff:ffff'),
+            'country_code' => 'US', 'country_name' => 'United States',
+        ]);
+
+        $this->assertSame('United States', IpRange::countryFor('2001:4860:7:222::fc')->country_name);
+        $this->assertNull(IpRange::countryFor('2001:4870::1'), 'an address outside every imported range should resolve to nothing');
+    }
+
+    public function test_ip_to_country_returns_null_for_an_unmatched_ipv6_address(): void
     {
         $this->assertNull(IpRange::countryFor('2001:4860:4860::8888'));
     }

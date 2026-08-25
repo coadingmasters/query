@@ -9,23 +9,23 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * Imports a DB-IP "country lite" CSV (ip_from,ip_to,country_code — no
- * header row, no country name) into ip_ranges. Free, no signup, no API key:
- * https://db-ip.com/db/download/ip-to-country-lite — pass either a local
- * path or a direct URL to the .csv or .csv.gz file.
+ * header row, no country name) into ip_ranges and ipv6_ranges. Free, no
+ * signup, no API key: https://db-ip.com/db/download/ip-to-country-lite —
+ * pass either a local path or a direct URL to the .csv or .csv.gz file.
  *
- * IPv6 rows are skipped: ip_ranges stores plain unsigned integers, which
- * only fit an IPv4 address. A visitor on IPv6 simply gets no country rather
- * than a wrong one.
+ * Both address families live in the same source file; each row is routed
+ * to whichever table its address actually fits.
  */
 #[Signature('geoip:import {source : Local file path or URL to the DB-IP country-lite CSV/CSV.GZ}')]
-#[Description('Import an IP-to-country dataset into ip_ranges')]
+#[Description('Import an IP-to-country dataset into ip_ranges and ipv6_ranges')]
 class ImportGeoIp extends Command
 {
     private const CHUNK_SIZE = 1000;
 
     public function handle(): int
     {
-        $path = $this->localize($this->argument('source'));
+        $source = $this->argument('source');
+        $path = $this->localize($source);
 
         if (! $path) {
             $this->error("Could not read {$source}");
@@ -43,22 +43,49 @@ class ImportGeoIp extends Command
         }
 
         DB::table('ip_ranges')->truncate();
+        DB::table('ipv6_ranges')->truncate();
 
-        $buffer = [];
-        $imported = 0;
+        $v4Buffer = [];
+        $v6Buffer = [];
+        $v4Count = 0;
+        $v6Count = 0;
         $skipped = 0;
         $read = str_ends_with($path, '.gz') ? 'gzgets' : 'fgets';
 
         while (($line = $read($handle)) !== false) {
             $row = str_getcsv(trim($line));
 
-            if (count($row) < 3 || str_contains($row[0], ':')) {
+            if (count($row) < 3) {
                 $skipped++;
 
                 continue;
             }
 
             [$from, $to, $code] = $row;
+            $name = $countries[$code] ?? $code;
+
+            if (str_contains($from, ':')) {
+                $fromBinary = @inet_pton($from);
+                $toBinary = @inet_pton($to);
+
+                if ($fromBinary === false || $toBinary === false) {
+                    $skipped++;
+
+                    continue;
+                }
+
+                $v6Buffer[] = ['ip_from' => $fromBinary, 'ip_to' => $toBinary, 'country_code' => $code, 'country_name' => $name];
+
+                if (count($v6Buffer) >= self::CHUNK_SIZE) {
+                    DB::table('ipv6_ranges')->insert($v6Buffer);
+                    $v6Count += count($v6Buffer);
+                    $v6Buffer = [];
+                    $this->output->write('.');
+                }
+
+                continue;
+            }
+
             $fromLong = ip2long($from);
             $toLong = ip2long($to);
 
@@ -68,30 +95,35 @@ class ImportGeoIp extends Command
                 continue;
             }
 
-            $buffer[] = [
+            $v4Buffer[] = [
                 'ip_from' => sprintf('%u', $fromLong),
                 'ip_to' => sprintf('%u', $toLong),
                 'country_code' => $code,
-                'country_name' => $countries[$code] ?? $code,
+                'country_name' => $name,
             ];
 
-            if (count($buffer) >= self::CHUNK_SIZE) {
-                DB::table('ip_ranges')->insert($buffer);
-                $imported += count($buffer);
-                $buffer = [];
+            if (count($v4Buffer) >= self::CHUNK_SIZE) {
+                DB::table('ip_ranges')->insert($v4Buffer);
+                $v4Count += count($v4Buffer);
+                $v4Buffer = [];
                 $this->output->write('.');
             }
         }
 
-        if ($buffer) {
-            DB::table('ip_ranges')->insert($buffer);
-            $imported += count($buffer);
+        if ($v4Buffer) {
+            DB::table('ip_ranges')->insert($v4Buffer);
+            $v4Count += count($v4Buffer);
+        }
+
+        if ($v6Buffer) {
+            DB::table('ipv6_ranges')->insert($v6Buffer);
+            $v6Count += count($v6Buffer);
         }
 
         $read === 'gzgets' ? gzclose($handle) : fclose($handle);
 
         $this->newLine();
-        $this->info("Imported {$imported} IPv4 ranges (skipped {$skipped} IPv6/invalid rows).");
+        $this->info("Imported {$v4Count} IPv4 and {$v6Count} IPv6 ranges (skipped {$skipped} invalid rows).");
 
         return self::SUCCESS;
     }

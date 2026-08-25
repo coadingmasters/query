@@ -10,9 +10,18 @@ class IpRange extends Model
 
     protected $fillable = ['ip_from', 'ip_to', 'country_code', 'country_name'];
 
-    /** Null for anything that isn't a routable IPv4 address (including every IPv6 visitor — see the ip_ranges migration). */
-    public static function countryFor(string $ip): ?self
+    /**
+     * Null for anything that resolves in neither ip_ranges (IPv4) nor
+     * ipv6_ranges (IPv6). The single entry point both TrackPageView and the
+     * click endpoint call through, so neither has to know which table an
+     * address actually lives in.
+     */
+    public static function countryFor(string $ip): IpRange|Ipv6Range|null
     {
+        if (str_contains($ip, ':')) {
+            return Ipv6Range::countryFor($ip);
+        }
+
         $long = ip2long($ip);
 
         if ($long === false) {

@@ -205,12 +205,12 @@
    a utility on every tag, because the article body is the one place on this
    site where the markup is mostly plain HTML and stays readable that way.
 
-   The measure is capped near 68 characters: past that the eye loses the start
+   The measure is capped near 80 characters: past that the eye loses the start
    of the next line, which is the single biggest thing separating a page that
    gets read from one that gets skimmed and closed.
    ========================================================================== */
 .article {
-    --measure: 42rem;
+    --measure: 48rem;
     color: var(--color-ink-muted);
     font-size: 1.0625rem;
     line-height: 1.75;
@@ -306,8 +306,10 @@
 }
 
 .article figcaption {
-    margin-top: 0.65rem;
+    margin-top: 0.75rem;
+    text-align: center;
     font-size: 0.875rem;
+    font-style: italic;
     color: var(--color-ink-muted);
 }
 

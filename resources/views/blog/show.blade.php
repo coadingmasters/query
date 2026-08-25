@@ -14,7 +14,7 @@
 
 <article>
     {{-- ══ 1. HERO ═══════════════════════════════════════════════════════ --}}
-    <div class="container-page max-w-6xl pt-6">
+    <div class="container-page max-w-[1600px] pt-6">
         <nav aria-label="Breadcrumb" class="text-sm text-ink-muted">
             <ol class="flex flex-wrap items-center gap-1.5">
                 <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
@@ -70,22 +70,18 @@
 
     {{-- ══ 2. BODY AND SIDEBAR ═══════════════════════════════════════════ --}}
     <div class="py-8 lg:py-10">
-        <div class="container-page grid max-w-6xl gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-10">
+        <div class="container-page grid max-w-[1600px] gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-10">
 
             <div class="min-w-0">
                 {{-- The answer, before any preamble. It is what the reader came
                      for and what Google lifts for a snippet. --}}
                 @if ($post->quick_answer)
-                    <div class="relative overflow-hidden rounded-2xl border border-accent-light bg-accent-light p-5 pr-24 sm:p-6 sm:pr-32">
-                        <p class="flex items-center gap-2 text-xs font-bold tracking-wider text-accent-dark uppercase">
+                    <div class="relative overflow-hidden rounded-2xl border border-line border-l-4 border-l-primary-vivid bg-surface-section p-5 sm:p-6">
+                        <p class="flex items-center gap-2 text-xs font-bold tracking-wider text-primary uppercase">
                             <x-paw-print class="size-4"/>
                             Quick answer
                         </p>
                         <p class="mt-2.5 text-base leading-relaxed font-medium text-ink">{{ $post->quick_answer }}</p>
-
-                        <div aria-hidden="true" class="pointer-events-none absolute -right-4 bottom-0 hidden h-24 w-28 sm:block">
-                            <x-img name="purrquery-cat-saying-hi" alt="" sizes="112px" fit="contain"/>
-                        </div>
                     </div>
                 @endif
 

@@ -26,7 +26,11 @@ class TrackPageView
 
     private const SOCIAL_NETWORKS = ['facebook.', 'instagram.', 'twitter.', 'x.com', 't.co', 'pinterest.', 'reddit.', 'linkedin.', 'tiktok.'];
 
-    private const BOT_SIGNATURES = ['bot', 'spider', 'crawl', 'slurp', 'facebookexternalhit', 'preview', 'headless'];
+    // Chrome's newer --headless=new mode deliberately sends the same UA as a
+    // real browser (the old mode's giveaway "HeadlessChrome" string is gone),
+    // so QA/dev tooling hitting the live site has to self-identify instead of
+    // being caught by a generic signature. "curl" covers plain curl checks.
+    private const BOT_SIGNATURES = ['bot', 'spider', 'crawl', 'slurp', 'facebookexternalhit', 'preview', 'headless', 'curl', 'purrquery-qa'];
 
     public function handle(Request $request, Closure $next): Response
     {

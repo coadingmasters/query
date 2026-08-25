@@ -53,7 +53,7 @@
             </div>
         </div>
 
-        <nav class="flex-1 space-y-1 overflow-y-auto px-3 py-5">
+        <nav class="min-h-0 flex-1 space-y-1 overflow-y-auto px-3 py-5">
             @foreach ($navItems as $item)
                 @php $isActive = $item['key'] === $active; @endphp
                 @if ($item['soon'] ?? false)

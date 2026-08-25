@@ -30,8 +30,8 @@
     <div class="container-page relative grid items-center gap-10 py-10 lg:grid-cols-2 lg:gap-10 xl:grid-cols-[1fr_1.14fr] lg:py-14">
         <div>
             <p class="eyebrow">
-                <span class="size-1.5 rounded-full bg-accent-vivid"></span>
-                {{ count(config('catalog.tools')) + count(config('catalog.foods')) + $posts->count() }} free tools and guides
+                <x-paw-print class="size-3.5 text-accent-vivid"/>
+                {{ count(config('catalog.tools')) + count(config('catalog.foods')) + $posts->count() }}+ free tools and guides
             </p>
 
             <h1 class="mt-5 font-heading text-4xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-5xl">
@@ -158,25 +158,70 @@
         </div>
 
         <div class="relative">
+            {{-- A soft coral stage behind the photo, echoing the sample's
+                 backdrop circle. Kept low-opacity so it reads as light
+                 falling on the wall, not a flat sticker behind the cat. --}}
+            <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
+                <div class="size-[92%] rounded-full bg-primary-vivid opacity-25 blur-2xl"></div>
+            </div>
+
             {{-- The soft off-square corners come from a border-radius, not an
                  SVG clip path: a clip would cut the shadow off with it. --}}
             <div class="relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg">
-                <x-img name="purrquery-hero-cat-owner-smiling"
-                       alt="Cat owner smiling as she holds her fluffy tabby"
-                       sizes="(max-width: 1023px) 92vw, 780px"
-                       :priority="true"/>
+                @php
+                    // Admin-uploaded via Media (category "general", name
+                    // below) rather than the resources/images manifest, so
+                    // swapping the photo is an upload, not a deploy. Falls
+                    // back to the launch photo until one is uploaded.
+                    $heroMedia = \App\Models\Media::where('name', 'home-page-hero-section')->latest()->first();
+                @endphp
+                @if ($heroMedia)
+                    <img src="{{ $heroMedia->url }}"
+                         width="{{ $heroMedia->width }}" height="{{ $heroMedia->height }}"
+                         alt="Cat reaching up to play with a feather wand toy"
+                         sizes="(max-width: 1023px) 92vw, 780px"
+                         fetchpriority="high" decoding="sync"
+                         class="h-full w-full object-cover">
+                @else
+                    <x-img name="purrquery-hero-cat-owner-smiling"
+                           alt="Cat owner smiling as she holds her fluffy tabby"
+                           sizes="(max-width: 1023px) 92vw, 780px"
+                           :priority="true"/>
+                @endif
+            </div>
+
+            {{-- Floating context badges: purely decorative, so hidden from
+                 screen readers and dropped below the breakpoint where the
+                 photo is too small for them to sit on cleanly. --}}
+            <div aria-hidden="true" class="absolute -top-4 -left-4 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
+                <svg class="size-6 text-primary-vivid" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 21c-.28 0-.53-.11-.71-.29C7.4 16.98 3.5 13.1 3.5 9.36 3.5 6.4 5.9 4 8.85 4c1.68 0 3.24.83 4.15 2.14C13.91 4.83 15.47 4 17.15 4 20.1 4 22.5 6.4 22.5 9.36c0 3.74-3.9 7.62-7.79 11.35a1 1 0 0 1-.71.29Z"/>
+                </svg>
+            </div>
+
+            <div aria-hidden="true" class="absolute top-[36%] -right-5 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
+                <svg class="size-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <ellipse cx="12" cy="8" rx="8" ry="3"/>
+                    <path d="M4 8v2.5c0 3.6 3.6 6.5 8 6.5s8-2.9 8-6.5V8"/>
+                </svg>
+            </div>
+
+            <div aria-hidden="true" class="absolute top-8 right-14 hidden size-11 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
+                <svg class="size-5 text-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                    <path d="M12 4v16M4 12h16"/>
+                </svg>
             </div>
 
             {{-- Duplicates a line from the trust row below, so it is hidden
                  from screen readers rather than read out twice. --}}
             <div aria-hidden="true"
-                 class="absolute -bottom-5 left-4 hidden items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 shadow-lg sm:flex">
-                <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent-light text-accent-dark">
+                 class="absolute -bottom-5 right-4 hidden items-center gap-3 rounded-full bg-accent px-4 py-3 shadow-lg sm:flex">
+                <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-accent">
                     <x-paw-print class="size-5"/>
                 </span>
                 <span>
-                    <span class="block font-heading text-sm font-extrabold text-ink">Free forever</span>
-                    <span class="mt-0.5 block text-xs text-ink-muted">No account, no paywall</span>
+                    <span class="block font-heading text-sm font-extrabold text-ink-inverse">Free forever</span>
+                    <span class="mt-0.5 block text-xs text-ink-inverse/85">No account, no paywall</span>
                 </span>
             </div>
         </div>

@@ -52,6 +52,7 @@ class SettingsController extends Controller
             'schema_instagram_url' => ['nullable', 'url', 'max:255'],
             'schema_twitter_url' => ['nullable', 'url', 'max:255'],
             'schema_youtube_url' => ['nullable', 'url', 'max:255'],
+            'schema_pinterest_url' => ['nullable', 'url', 'max:255'],
             'robots_txt' => ['nullable', 'string', 'max:2000'],
             'sitemap_excluded_paths' => ['nullable', 'string', 'max:2000'],
         ]);

@@ -107,6 +107,72 @@ class SearchController extends Controller
             return 30;
         }
 
+        // Nothing matched as typed. Before giving up, check whether it's a
+        // typo of the title rather than a different word — "chikin" for
+        // "chicken" — so a misspelled search still finds the right page
+        // instead of a blank results screen. Ranked below every real
+        // substring match, so a genuine hit is never displaced by a guess.
+        if ($this->isTypoOfTitle($needle, $title)) {
+            return 20;
+        }
+
         return 0;
+    }
+
+    /** Every word in the query must be a close-enough spelling of some word in the title. */
+    private function isTypoOfTitle(string $needle, string $title): bool
+    {
+        // Split on anything that isn't a letter or number, so a title's own
+        // punctuation ("Chicken?") doesn't count against it in the edit
+        // distance below.
+        $queryWords = preg_split('/[^\p{L}\p{N}]+/u', $needle, -1, PREG_SPLIT_NO_EMPTY);
+        $titleWords = preg_split('/[^\p{L}\p{N}]+/u', $title, -1, PREG_SPLIT_NO_EMPTY);
+
+        if (! $queryWords || ! $titleWords) {
+            return false;
+        }
+
+        foreach ($queryWords as $queryWord) {
+            $isCloseToAnyTitleWord = collect($titleWords)
+                ->contains(fn (string $titleWord): bool => $this->isCloseSpelling($queryWord, $titleWord));
+
+            if (! $isCloseToAnyTitleWord) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * How many edits (letters swapped, missing or extra) two words can
+     * differ by and still count as the same word, typed wrong. Scales with
+     * length: one edit is already a big share of a 3-letter word, so short
+     * words require an exact match or they'd fuzz-match half the dictionary.
+     */
+    private function isCloseSpelling(string $a, string $b): bool
+    {
+        if (strlen($a) < 4 || strlen($b) < 4) {
+            return $a === $b;
+        }
+
+        // A typo overwhelmingly preserves the first letter someone actually
+        // typed - it's transpositions, doubled letters and missing letters
+        // later in the word that cause most misspellings. Requiring it is
+        // what keeps a short, common word elsewhere in the site's titles
+        // (e.g. "feeding") from being pulled in as a false match for an
+        // unrelated word within the same edit distance ("kneding").
+        if ($a[0] !== $b[0]) {
+            return false;
+        }
+
+        $longest = max(strlen($a), strlen($b));
+        $allowedEdits = match (true) {
+            $longest <= 5 => 1,
+            $longest <= 9 => 2,
+            default => 3,
+        };
+
+        return levenshtein($a, $b) <= $allowedEdits;
     }
 }

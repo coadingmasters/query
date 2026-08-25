@@ -19,6 +19,7 @@ class Setting extends Model
         'legal_jurisdiction',
         'seo_site_name', 'seo_og_image', 'seo_twitter_card',
         'schema_org_logo', 'schema_facebook_url', 'schema_instagram_url', 'schema_twitter_url', 'schema_youtube_url',
+        'schema_pinterest_url',
         'robots_txt', 'sitemap_excluded_paths',
     ];
 

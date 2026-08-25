@@ -138,6 +138,7 @@ class AppServiceProvider extends ServiceProvider
             $settings->schema_instagram_url,
             $settings->schema_twitter_url,
             $settings->schema_youtube_url,
+            $settings->schema_pinterest_url,
         ]));
 
         if ($orgProfiles) {

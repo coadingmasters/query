@@ -70,6 +70,22 @@ class SearchTest extends TestCase
         $this->assertNotContains('Breed Quiz', $titles);
     }
 
+    /** A close misspelling of a real title still finds it, ranked below any exact substring match. */
+    public function test_a_misspelled_query_still_finds_a_close_match(): void
+    {
+        $this->get('/search?q=chikin')
+            ->assertOk()
+            ->assertSee('Can Cats Eat Chicken');
+    }
+
+    /** Nonsense shouldn't fuzz-match into an unrelated title just because some word is a similar length. */
+    public function test_an_unrelated_short_query_does_not_fuzzy_match_an_unrelated_title(): void
+    {
+        $titles = collect($this->getJson('/search/suggest?q=kneding')->json('results'))->pluck('title');
+
+        $this->assertEmpty($titles);
+    }
+
     public function test_no_matches_shows_the_empty_state(): void
     {
         $this->get('/search?q=xyznonexistentquery')

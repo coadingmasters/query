@@ -226,6 +226,10 @@
                     <label for="schema_youtube_url" class="{{ $label }}">YouTube</label>
                     <input id="schema_youtube_url" name="schema_youtube_url" type="url" value="{{ old('schema_youtube_url', $settings->schema_youtube_url) }}" placeholder="https://" class="{{ $input }}">
                 </div>
+                <div>
+                    <label for="schema_pinterest_url" class="{{ $label }}">Pinterest</label>
+                    <input id="schema_pinterest_url" name="schema_pinterest_url" type="url" value="{{ old('schema_pinterest_url', $settings->schema_pinterest_url) }}" placeholder="https://" class="{{ $input }}">
+                </div>
             </div>
             <p class="{{ $hint }} mt-2">Empty ones are left out — an unverifiable social link is worse than no link.</p>
         </div>

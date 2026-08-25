@@ -10,6 +10,7 @@ class RobotsController extends Controller
     private const DEFAULT = <<<'TXT'
         User-agent: *
         Allow: /
+        Disallow: /cdn-cgi/
 
         Sitemap: {sitemap}
         TXT;

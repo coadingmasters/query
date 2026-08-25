@@ -238,6 +238,8 @@ class SeoTest extends TestCase
         $robots = $this->get('/robots.txt')->assertOk()->getContent();
 
         $this->assertStringContainsString('Sitemap:', $robots);
-        $this->assertStringNotContainsString('Disallow: /', $robots);
+
+        // A site-wide block, not a specific path like "Disallow: /cdn-cgi/".
+        $this->assertDoesNotMatchRegularExpression('/^Disallow: \/\s*$/m', $robots);
     }
 }

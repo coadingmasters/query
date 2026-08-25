@@ -159,56 +159,54 @@
 
         <div class="relative">
             {{-- A soft coral stage behind the photo, echoing the sample's
-                 backdrop circle. Kept low-opacity so it reads as light
-                 falling on the wall, not a flat sticker behind the cat. --}}
+                 backdrop circle. Only visible around a cutout with real
+                 transparency — the launch photo below is opaque and hides it. --}}
             <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
-                <div class="size-[92%] rounded-full bg-primary-vivid opacity-25 blur-2xl"></div>
+                <div class="size-[80%] rounded-full bg-primary-vivid opacity-30 blur-3xl"></div>
             </div>
 
-            {{-- The soft off-square corners come from a border-radius, not an
-                 SVG clip path: a clip would cut the shadow off with it. --}}
-            <div class="relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg">
-                @php
-                    // Admin-uploaded via Media (category "general", name
-                    // below) rather than the resources/images manifest, so
-                    // swapping the photo is an upload, not a deploy. Falls
-                    // back to the launch photo until one is uploaded.
-                    $heroMedia = \App\Models\Media::where('name', 'home-page-hero-section')->latest()->first();
-                @endphp
-                @if ($heroMedia)
-                    <img src="{{ $heroMedia->url }}"
-                         width="{{ $heroMedia->width }}" height="{{ $heroMedia->height }}"
-                         alt="Cat reaching up to play with a feather wand toy"
-                         sizes="(max-width: 1023px) 92vw, 780px"
-                         fetchpriority="high" decoding="sync"
-                         class="h-full w-full object-cover">
-                @else
+            @php
+                // Admin-uploaded via Media (category "general", name below)
+                // rather than the resources/images manifest, so swapping the
+                // photo is an upload, not a deploy. Falls back to the launch
+                // photo, in its framed card, until one is uploaded.
+                $heroMedia = \App\Models\Media::where('name', 'home-page-hero-section')->latest()->first();
+            @endphp
+            @if ($heroMedia)
+                {{-- This photo is an alpha-transparent cutout, not a framed
+                     shot, so it sits directly on the hero background rather
+                     than inside a card: no fill, no border, no box-shadow —
+                     just a shadow that follows the cat's own silhouette. --}}
+                <img src="{{ $heroMedia->url }}"
+                     width="{{ $heroMedia->width }}" height="{{ $heroMedia->height }}"
+                     alt="Cat reaching up to play with a feather wand toy"
+                     sizes="(max-width: 1023px) 92vw, 780px"
+                     fetchpriority="high" decoding="sync"
+                     class="relative h-full w-full object-contain drop-shadow-xl">
+            @else
+                <div class="relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg">
                     <x-img name="purrquery-hero-cat-owner-smiling"
                            alt="Cat owner smiling as she holds her fluffy tabby"
                            sizes="(max-width: 1023px) 92vw, 780px"
                            :priority="true"/>
-                @endif
-            </div>
+                </div>
+            @endif
 
             {{-- Floating context badges: purely decorative, so hidden from
                  screen readers and dropped below the breakpoint where the
-                 photo is too small for them to sit on cleanly. --}}
-            <div aria-hidden="true" class="absolute -top-4 -left-4 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
+                 photo is too small for them to sit on cleanly. The third
+                 (top-right) badge from the first pass collided with the
+                 feather wand and was dropped rather than shuffled around it. --}}
+            <div aria-hidden="true" class="absolute top-2 -left-4 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
                 <svg class="size-6 text-primary-vivid" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M12 21c-.28 0-.53-.11-.71-.29C7.4 16.98 3.5 13.1 3.5 9.36 3.5 6.4 5.9 4 8.85 4c1.68 0 3.24.83 4.15 2.14C13.91 4.83 15.47 4 17.15 4 20.1 4 22.5 6.4 22.5 9.36c0 3.74-3.9 7.62-7.79 11.35a1 1 0 0 1-.71.29Z"/>
                 </svg>
             </div>
 
-            <div aria-hidden="true" class="absolute top-[36%] -right-5 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
+            <div aria-hidden="true" class="absolute top-[46%] -right-5 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
                 <svg class="size-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <ellipse cx="12" cy="8" rx="8" ry="3"/>
                     <path d="M4 8v2.5c0 3.6 3.6 6.5 8 6.5s8-2.9 8-6.5V8"/>
-                </svg>
-            </div>
-
-            <div aria-hidden="true" class="absolute top-8 right-14 hidden size-11 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
-                <svg class="size-5 text-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-                    <path d="M12 4v16M4 12h16"/>
                 </svg>
             </div>
 

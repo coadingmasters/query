@@ -95,7 +95,7 @@ return [
         [
             'slug' => 'fruits',
             'title' => 'Fruits',
-            'question' => 'Can cats eat fruit?',
+            'question' => 'Can Cats Eat Fruit?',
             'answer' => 'Small amounts of melon, blueberries or apple flesh are fine. Never grapes or raisins.',
             'verdict' => 'caution',
             'note' => 'Some in small amounts',
@@ -108,11 +108,14 @@ return [
                 'Any amount of grape or raisin eaten, even a small piece, warrants a call to a vet',
                 'Lethargy or decreased urination in the day or two after eating grapes or raisins',
             ],
+            'deep_dives' => [
+                ['label' => 'Can Cats Eat Bananas?', 'slug' => 'can-cats-eat-bananas'],
+            ],
         ],
         [
             'slug' => 'vegetables',
             'title' => 'Vegetables',
-            'question' => 'Can cats eat vegetables?',
+            'question' => 'Can Cats Eat Vegetables?',
             'answer' => 'Plain cooked carrot, broccoli or pumpkin in small amounts. Skip onion, garlic and leek entirely.',
             'verdict' => 'caution',
             'note' => 'Cooked and plain only',
@@ -125,11 +128,14 @@ return [
                 'Vomiting or diarrhea after a new vegetable, especially a raw one',
                 'Reduced appetite that continues beyond a day',
             ],
+            'deep_dives' => [
+                ['label' => 'Can Cats Eat Broccoli?', 'slug' => 'can-cats-eat-broccoli'],
+            ],
         ],
         [
             'slug' => 'meat-and-seafood',
             'title' => 'Meat & Seafood',
-            'question' => 'Can cats eat meat and fish?',
+            'question' => 'Can Cats Eat Meat and Fish?',
             'answer' => 'Yes. Plain cooked chicken, turkey or fish, boneless and without salt, oil or seasoning.',
             'verdict' => 'safe',
             'note' => 'Cooked, unseasoned',
@@ -142,11 +148,15 @@ return [
                 'Difficulty swallowing, drooling or pawing at the mouth after any bone-in meat',
                 'Repeated fatty extras (skin, drippings) are a recognized risk factor for pancreatitis',
             ],
+            'deep_dives' => [
+                ['label' => 'Can Cats Eat Chicken?', 'slug' => 'can-cats-eat-chicken'],
+                ['label' => 'Can Cats Eat Tuna?', 'slug' => 'can-cats-eat-tuna'],
+            ],
         ],
         [
             'slug' => 'dairy-and-eggs',
             'title' => 'Dairy & Eggs',
-            'question' => 'Can cats eat dairy and eggs?',
+            'question' => 'Can Cats Eat Dairy and Eggs?',
             'answer' => 'Cooked egg is fine. Most adult cats are lactose intolerant, so milk and cheese cause upset.',
             'verdict' => 'caution',
             'note' => 'Most cats are lactose intolerant',
@@ -159,11 +169,15 @@ return [
                 'Vomiting after raw egg specifically',
                 'Excessive gas or bloating after cheese',
             ],
+            'deep_dives' => [
+                ['label' => 'Can Cats Eat Eggs?', 'slug' => 'can-cats-eat-eggs'],
+                ['label' => 'Can Cats Eat Cheese?', 'slug' => 'can-cats-eat-cheese'],
+            ],
         ],
         [
             'slug' => 'toxic-foods',
             'title' => 'Toxic Foods',
-            'question' => 'What foods are toxic to cats?',
+            'question' => 'What Foods Are Toxic to Cats?',
             'answer' => 'Onion, garlic, chocolate, grapes, raisins, alcohol and xylitol. Call a vet if any is eaten.',
             'verdict' => 'unsafe',
             'note' => 'Never. Call a vet',
@@ -181,7 +195,7 @@ return [
         [
             'slug' => 'grains-and-seeds',
             'title' => 'Grains & Seeds',
-            'question' => 'Can cats eat grains and seeds?',
+            'question' => 'Can Cats Eat Grains and Seeds?',
             'answer' => 'Small amounts of cooked rice or oats are harmless, but cats gain nothing nutritionally from them.',
             'verdict' => 'caution',
             'note' => 'Cooked, in tiny amounts',
@@ -193,11 +207,14 @@ return [
                 'Itchy skin, ear infections or soft stool that shows up consistently after a specific grain',
                 'Bloating or gas after a larger-than-usual portion',
             ],
+            'deep_dives' => [
+                ['label' => 'Can Cats Eat Bread?', 'slug' => 'can-cats-eat-bread'],
+            ],
         ],
         [
             'slug' => 'sweets',
             'title' => 'Sweets',
-            'question' => 'Can cats eat sweets?',
+            'question' => 'Can Cats Eat Sweets?',
             'answer' => 'No. Cats cannot taste sweetness, and chocolate and xylitol are outright poisonous.',
             'verdict' => 'unsafe',
             'note' => 'No nutritional value',
@@ -213,7 +230,7 @@ return [
         [
             'slug' => 'junk-food',
             'title' => 'Junk Food',
-            'question' => 'Can cats eat junk food?',
+            'question' => 'Can Cats Eat Junk Food?',
             'answer' => 'No. The salt, fat and seasoning in chips, burgers and pizza are far past what a cat can handle.',
             'verdict' => 'unsafe',
             'note' => 'Salt and fat overload',
@@ -226,11 +243,14 @@ return [
                 'Excessive thirst or urination after a high-salt food, a sign of sodium ion intake worth watching',
                 'Abdominal pain, hunching or reluctance to be touched near the belly, possible signs of pancreatitis after a fatty meal',
             ],
+            'deep_dives' => [
+                ['label' => 'Can Cats Eat Popcorn?', 'slug' => 'can-cats-eat-popcorn'],
+            ],
         ],
         [
             'slug' => 'herbs-and-spices',
             'title' => 'Herbs & Spices',
-            'question' => 'Can cats eat herbs and spices?',
+            'question' => 'Can Cats Eat Herbs and Spices?',
             'answer' => 'Basil and rosemary are harmless in tiny amounts. Onion and garlic powder are dangerous.',
             'verdict' => 'caution',
             'note' => 'A few safe, many are not',
@@ -246,7 +266,7 @@ return [
         [
             'slug' => 'treats-and-snacks',
             'title' => 'Treats & Snacks',
-            'question' => 'Can cats eat treats?',
+            'question' => 'Can Cats Eat Treats?',
             'answer' => 'Yes, as long as treats stay under a tenth of daily calories so meals keep their nutrition.',
             'verdict' => 'safe',
             'note' => 'Under 10% of daily calories',

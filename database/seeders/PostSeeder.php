@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Author;
+use App\Models\Media;
 use App\Models\Post;
 use App\Models\PostCategory;
 use App\Support\Images;
@@ -83,15 +84,9 @@ class PostSeeder extends Seeder
      */
     private function attachImage(Post $post, string $manifestName): void
     {
-        $variant = Images::largest($manifestName);
+        $source = $this->resolveImageSource($manifestName);
 
-        if (! $variant) {
-            return;
-        }
-
-        $source = public_path(ltrim($variant, '/'));
-
-        if (! is_file($source)) {
+        if (! $source) {
             return;
         }
 
@@ -103,6 +98,35 @@ class PostSeeder extends Seeder
         // A second save so the model's saving hook reads the file that was
         // just written and records its real width and height.
         $post->update(['featured_image' => $path]);
+    }
+
+    /**
+     * A post's `image` name resolves two possible ways: an admin-uploaded
+     * Media entry (uploaded through /admin/media, stored under
+     * storage/app/public), or, for the site's original launch posts, a
+     * name in the resources/images build manifest. Checking Media first
+     * means every post from here on can just point at whatever real photo
+     * was uploaded for it, the same way inline content images already do.
+     */
+    private function resolveImageSource(string $name): ?string
+    {
+        $media = Media::where('name', $name)->first();
+
+        if ($media) {
+            $path = Storage::disk('public')->path($media->path);
+
+            return is_file($path) ? $path : null;
+        }
+
+        $variant = Images::largest($name);
+
+        if (! $variant) {
+            return null;
+        }
+
+        $source = public_path(ltrim($variant, '/'));
+
+        return is_file($source) ? $source : null;
     }
 
     /** @param array<int, array{q: string, a: string}> $faqs */
@@ -591,6 +615,210 @@ class PostSeeder extends Seeder
                     ['name' => 'American Association of Feline Practitioners: senior care guidelines', 'url' => 'https://catvets.com/guidelines/practice-guidelines/senior-care-guidelines', 'note' => 'Clinical guidelines on senior cat checkup frequency and screening.'],
                     ['name' => 'Cornell Feline Health Center', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center', 'note' => 'Background on age-related feline diseases including kidney disease and hyperthyroidism.'],
                     ['name' => 'VCA Animal Hospitals: senior cat care', 'url' => 'https://vcahospitals.com/know-your-pet/senior-cat-care', 'note' => 'Clinical overview of common conditions and home care for older cats.'],
+                ],
+            ],
+            [
+                'slug' => 'can-cats-eat-tuna',
+                'title' => 'Can Cats Eat Tuna? A Safe Feeding Guide',
+                'meta_title' => 'Can Cats Eat Tuna? A Safe Feeding Guide',
+                'excerpt' => 'Tuna is not off-limits for a cat, but not a food to feed often. '
+                    .'The rules are mercury, portion, and never letting it replace a '
+                    .'balanced diet.',
+                'category' => 'Food Safety',
+                'published' => '2026-08-25',
+                'updated' => '2026-08-25',
+                'image' => 'cat-sniffing-tuna-plate',
+                'alt' => 'Cat sniffing a small piece of plain tuna on a plate',
+                'answer' => 'Cats can eat tuna, but only in small, occasional amounts, never as '
+                    .'a regular food or a replacement for cat food. Tuna accumulates mercury, and '
+                    .'repeated feedings build up real exposure over time in an animal as small as '
+                    .'a cat. Cats can also become fixated on tuna\'s smell and taste, refusing '
+                    .'balanced food in favor of it, which leads to real nutritional deficiency. '
+                    .'Plain tuna packed in water with no added salt, and cooked rather than raw, is '
+                    .'the safer choice on the rare occasion it is given, and it is never a '
+                    .'substitute for tuna-flavored cat food actually formulated to be complete.',
+                'faq' => [
+                    ['q' => 'Can cats eat tuna?', 'a' => 'Yes, but only in small amounts and only now and then. A bite of plain tuna is unlikely to do any harm as an occasional extra, and tuna is not toxic to cats the way onion or garlic is. It is not, however, a food to offer regularly, and whole tuna is not a substitute for a complete cat food.'],
+                    ['q' => 'Why can\'t cats eat tuna often?', 'a' => 'The main reason is mercury. Tuna accumulates mercury as it feeds, with larger, older fish carrying more of it, and repeated tuna feedings build up real mercury exposure over time in an animal as small as a cat. A single occasional bite is a very different thing from tuna offered as a regular food, which is why moderation matters more than an outright ban.'],
+                    ['q' => 'What is "tuna addiction" in cats?', 'a' => 'It describes a cat becoming so fixated on tuna\'s strong smell and taste that they start refusing their normal, balanced food in favor of it. Vets cite this as a genuine concern, since a cat holding out for tuna is no longer eating a complete diet, and that pattern causes real nutritional deficiency over time. Keeping tuna a rare, small extra rather than a favorite regular food is what prevents the fixation from forming in the first place.'],
+                    ['q' => 'Is raw tuna worse for cats than cooked tuna?', 'a' => 'Raw fish, tuna included, contains an enzyme called thiaminase that breaks down vitamin B1 (thiamine), and cooking deactivates that enzyme, which makes cooked tuna the better option if tuna is offered at all. A diet too heavy in fish, raw or cooked, has also been linked to steatitis, a painful inflammation of body fat, so cooking lowers one specific risk without removing the reason to keep tuna infrequent overall.'],
+                    ['q' => 'Should tuna be packed in water or oil?', 'a' => 'Water, with no salt added, is the safer choice on the rare occasion tuna is given. Tuna canned for people is not formulated for cats regardless of packing, since it is missing the calcium ratio a cat needs and is not fortified with taurine, but oil-packed or heavily salted tuna adds unnecessary fat and sodium on top of that baseline issue. This is different from tuna-flavored cat food or treats, which are formulated to be nutritionally complete.'],
+                    ['q' => 'How much tuna can I give my cat?', 'a' => 'A small bite, offered occasionally, not a set amount on any regular schedule. Treats and extras, tuna included, are generally kept under about ten percent of a cat\'s daily calories, and our feeding guide covers how to work out a cat\'s daily calorie total so extras like this stay in proportion.'],
+                ],
+                'sources' => [
+                    ['name' => 'Cornell Feline Health Center: feeding your cat', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feeding', 'note' => 'Background on why whole fish like tuna cannot replace a complete, balanced feline diet.'],
+                    ['name' => 'VCA Animal Hospitals: thiamine', 'url' => 'https://vcahospitals.com/know-your-pet/thiamine', 'note' => 'Clinical background on thiamine (vitamin B1) and the deficiency risk that raw fish containing thiaminase can cause.'],
+                    ['name' => 'Tufts Now: mercury and canned tuna for cats', 'url' => 'https://now.tufts.edu/2014/01/27/concerns-about-mercury-poisoning-it-safe-give-canned-tuna-cats-treat', 'note' => 'A veterinary school\'s direct answer on mercury exposure from feeding cats canned tuna as a treat.'],
+                ],
+            ],
+            [
+                'slug' => 'can-cats-eat-eggs',
+                'title' => 'Can Cats Eat Eggs? A Safe Feeding Guide',
+                'meta_title' => 'Can Cats Eat Eggs? A Safe Feeding Guide',
+                'excerpt' => 'Cooked eggs are a good protein source for cats in small amounts. '
+                    .'The rules are raw versus cooked, portion, and whether egg can replace a '
+                    .'real meal.',
+                'category' => 'Food Safety',
+                'published' => '2026-08-25',
+                'updated' => '2026-08-25',
+                'image' => 'cat-looking-scrambled-egg',
+                'alt' => 'Tabby cat sniffing a small bowl of plain scrambled egg on a kitchen counter',
+                'answer' => 'Yes, cooked eggs are safe for cats and a good source of protein in '
+                    .'small amounts. Scrambled or hard-boiled, plain, with nothing added, is the '
+                    .'right way to serve one. Raw eggs are the part to avoid: they carry a real '
+                    .'salmonella risk and, if fed repeatedly, can interfere with biotin absorption '
+                    .'through a protein called avidin. Egg is not a complete diet on its own, since '
+                    .'it is missing taurine at the level a complete cat food provides, so it works '
+                    .'best as an occasional topper kept within the usual ten percent treat '
+                    .'allowance.',
+                'faq' => [
+                    ['q' => 'Are eggs safe for cats?', 'a' => 'Yes, cooked eggs are safe for cats and a genuinely good source of protein in small amounts. Scrambled or hard-boiled, plain, with nothing added, is the right way to serve one. The safety question comes down almost entirely to preparation rather than the egg itself as an ingredient.'],
+                    ['q' => 'Can cats eat raw eggs?', 'a' => 'No, raw eggs are not worth feeding. They carry a real risk of salmonella and other bacteria, the same concern as raw meat, which can make a cat unwell and can spread to people handling the food or litter box afterward. Raw egg white also contains avidin, a protein that binds biotin and can interfere with its absorption if raw eggs are fed repeatedly over time. Cooking denatures avidin and removes both risks, which is why cooked is always the better choice.'],
+                    ['q' => 'Can eggs replace a meal for a cat?', 'a' => 'No, eggs are not a complete diet on their own. They are missing taurine at the level and balance a complete cat food provides, the same gap that applies to chicken or any other single-ingredient food fed alone. Eggs work well as an occasional topper or treat, not as a stand-in for a full meal.'],
+                    ['q' => 'Can cats eat eggshells?', 'a' => 'There is no need to feed eggshell to a cat, though it is not toxic if a small piece is eaten by accident. It is sometimes suggested as a calcium source, but there is no established benefit and it is not part of standard veterinary advice, so cooked egg white and yolk are enough on their own.'],
+                    ['q' => 'Can cats be allergic to eggs?', 'a' => 'It is possible, though a genuine egg allergy is less common in cats than allergies to chicken, fish, or beef. Signs include itchy skin, digestive upset, or ear infections that show up consistently after a cat eats egg. If that pattern appears every time, it is worth mentioning to a vet.'],
+                ],
+                'sources' => [
+                    ['name' => 'Cornell Feline Health Center', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center', 'note' => 'Background on feline nutrition needs and the risks of bacterial contamination from raw animal-derived foods.'],
+                    ['name' => 'ASPCA Animal Poison Control', 'url' => 'https://www.aspca.org/pet-care/animal-poison-control', 'note' => 'Reference on foods that pose a bacterial or nutritional risk to cats, including raw eggs and salmonella exposure.'],
+                    ['name' => 'VCA Animal Hospitals: feeding guidelines for cats', 'url' => 'https://vcahospitals.com/know-your-pet/nutrition-general-feeding-guidelines-for-cats', 'note' => 'Background on what a complete and balanced feline diet requires, including taurine, beyond protein alone.'],
+                ],
+            ],
+            [
+                'slug' => 'can-cats-eat-cheese',
+                'title' => 'Can Cats Eat Cheese? A Safe Feeding Guide',
+                'meta_title' => 'Can Cats Eat Cheese? A Safe Feeding Guide',
+                'excerpt' => 'Cheese is not dangerous like some foods, but most cats are lactose '
+                    .'intolerant. The rules are hard over soft, tolerance, and staying '
+                    .'occasional.',
+                'category' => 'Food Safety',
+                'published' => '2026-08-25',
+                'updated' => '2026-08-25',
+                'image' => 'cat-sniffing-cheese-cube',
+                'alt' => 'Cat sniffing a small cube of cheddar cheese on a plate',
+                'answer' => 'In small amounts, sometimes. Most adult cats are lactose intolerant '
+                    .'to some degree, so dairy in general can cause an upset stomach, but hard, '
+                    .'aged cheeses like cheddar or parmesan have gone through a fermenting process '
+                    .'that removes much of the lactose and are usually better tolerated than milk '
+                    .'or soft cheeses. Tolerance still varies cat to cat, so a very small amount '
+                    .'tried first, then watched, is the safest way to find out. Cheese is also high '
+                    .'in fat and sodium, which makes it worth keeping occasional rather than '
+                    .'regular, and it should always be plain, since flavored or seasoned cheese can '
+                    .'contain onion or garlic, which are genuinely dangerous to cats.',
+                'faq' => [
+                    ['q' => 'Can cats eat cheese?', 'a' => 'In small amounts, sometimes. Plain, unflavored hard cheese is not toxic to cats, but most adult cats are lactose intolerant to some degree, so how well a cat handles it varies a lot from one cat to the next. It is best treated as an occasional small extra rather than a regular treat.'],
+                    ['q' => 'Why are cats lactose intolerant?', 'a' => 'Kittens produce plenty of lactase, the enzyme that digests lactose, so they can nurse from their mother, but most cats lose much of that ability after weaning, the same way many adult humans do. Without enough lactase, lactose passes through the gut largely undigested, which is why dairy in general is a common cause of loose stools and stomach upset in adult cats.'],
+                    ['q' => 'Is hard cheese better for cats than soft cheese?', 'a' => 'Yes, generally. Hard, aged cheeses like cheddar or parmesan go through a fermenting process that removes much of the lactose, so they are usually easier on a cat\'s stomach than milk or soft, fresh cheeses like cottage cheese or cream cheese. Tolerance still varies by cat, so a small amount tried first and watched is the safest approach either way.'],
+                    ['q' => 'Can you hide a cat\'s pill in cheese?', 'a' => 'Yes, and it is a common, legitimate trick. A small piece of soft cheese pressed around a pill can get a cat that refuses medication any other way to swallow it without a fight. This is a small, functional, occasional amount used to solve a real problem, not a general snack, though the same fat and lactose considerations still apply underneath it.'],
+                    ['q' => 'Is flavored or seasoned cheese safe for cats?', 'a' => 'No. Cheese blended with garlic, onion or herbs, and spreadable cheeses with those add-ins, should be avoided entirely. Onion and garlic are genuinely dangerous to cats in any form and any amount, since they damage red blood cells and can cause anemia, so only plain, unflavored cheese is worth offering.'],
+                ],
+                'sources' => [
+                    ['name' => 'Cornell Feline Health Center: feeding your cat', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feeding', 'note' => 'Background on what a cat\'s digestive system is and is not built to handle, including dairy.'],
+                    ['name' => 'ASPCA: cat health and wellness', 'url' => 'https://www.aspca.org/pet-care/cat-care', 'note' => 'General guidance on safe and unsafe human foods for cats, including dairy and onion or garlic.'],
+                    ['name' => 'VCA Animal Hospitals: lactose intolerance in cats', 'url' => 'https://vcahospitals.com/know-your-pet/lactose-intolerance-in-cats', 'note' => 'Explains why cats lose the ability to digest lactose after weaning and how that shows up as digestive upset.'],
+                ],
+            ],
+            [
+                'slug' => 'can-cats-eat-bread',
+                'title' => 'Can Cats Eat Bread? A Safe Feeding Guide',
+                'meta_title' => 'Can Cats Eat Bread? A Safe Feeding Guide',
+                'excerpt' => 'Baked bread is low risk in tiny amounts but offers nothing '
+                    .'nutritionally. Raw dough is different: it is a genuine veterinary '
+                    .'emergency.',
+                'category' => 'Food Safety',
+                'published' => '2026-08-25',
+                'updated' => '2026-08-25',
+                'image' => 'cat-sniffing-plain-bread',
+                'alt' => 'Cat sniffing a small piece of plain baked bread on a plate',
+                'answer' => 'Plain, fully baked bread in small amounts is not toxic to cats, '
+                    .'though it offers no real nutritional value and is not worth feeding on '
+                    .'purpose. Raw, unbaked yeast dough is a different matter entirely and a '
+                    .'genuine veterinary emergency: the yeast keeps fermenting in the warmth of a '
+                    .'cat\'s stomach, producing alcohol that can cause toxicosis and gas that can '
+                    .'make the dough expand and cause severe bloating or a life-threatening '
+                    .'obstruction. If a cat eats raw dough, call an emergency vet immediately. '
+                    .'Raisin bread and garlic or onion bread should be avoided entirely, '
+                    .'regardless of the dough issue, since raisins and onion or garlic carry their '
+                    .'own separate risks.',
+                'faq' => [
+                    ['q' => 'Can cats eat bread?', 'a' => 'A small bite of plain, fully baked bread, white or wheat with no seasoning or mixed-in extras, is not toxic to cats. It has no real nutritional value for a cat, though, so it is best treated as harmless if it happens by accident rather than something worth offering on purpose.'],
+                    ['q' => 'What happens if a cat eats raw bread dough?', 'a' => 'This is a genuine emergency. The warm, moist environment of a cat\'s stomach lets the yeast in raw dough keep fermenting, which produces ethanol that the cat absorbs and that can cause real alcohol toxicosis. The same fermentation also produces gas, so the dough keeps expanding inside the stomach, which can cause severe bloating and in serious cases a life-threatening obstruction or rupture. Call an emergency vet immediately if this happens.'],
+                    ['q' => 'Is raisin bread or garlic bread safe for cats?', 'a' => 'No, avoid both entirely. Raisin bread carries the same risk as grapes and raisins on their own, which are linked to acute kidney injury in cats with no known safe amount. Garlic bread and onion-flavored breads can damage a cat\'s red blood cells and cause anemia even in small amounts, so both should be kept away from cats completely.'],
+                    ['q' => 'Can bread give a cat an upset stomach?', 'a' => 'Some cats show mild sensitivity to gluten or wheat, which can show up as soft stool or mild digestive upset after eating bread. A true, diagnosed grain allergy is less common in cats than marketing often suggests, though, and most cats will not react to an occasional small bite of plain bread at all.'],
+                    ['q' => 'How much bread can I give my cat?', 'a' => 'Keep it to an occasional accidental bite rather than a regular treat, since bread adds calories without any real nutritional benefit. Treats and extras are generally kept under about ten percent of a cat\'s daily calories, and our feeding guide covers how to work out a cat\'s daily calorie total so occasional bites like this stay in proportion.'],
+                ],
+                'sources' => [
+                    ['name' => 'ASPCA Animal Poison Control Center', 'url' => 'https://www.aspca.org/pet-care/animal-poison-control', 'note' => 'Documents yeast bread dough toxicity in pets, including ethanol production from fermentation and the gastric expansion/obstruction risk.'],
+                    ['name' => 'VCA Animal Hospitals', 'url' => 'https://vcahospitals.com', 'note' => 'Veterinary reference used for general food safety and toxicity guidance covering onion, garlic, and grape or raisin toxicity in cats.'],
+                    ['name' => 'Pet Poison Helpline', 'url' => 'https://www.petpoisonhelpline.com', 'note' => 'Veterinary toxicology hotline resource covering bread dough (alcohol toxicosis and bloat risk) and other common household food hazards for cats.'],
+                ],
+            ],
+            [
+                'slug' => 'can-cats-eat-bananas',
+                'title' => 'Can Cats Eat Bananas? A Safe Feeding Guide',
+                'meta_title' => 'Can Cats Eat Bananas? A Safe Feeding Guide',
+                'excerpt' => 'A small piece of banana is safe for most cats, though not something '
+                    .'they need or crave. The rules are portion, ripeness, and skipping the '
+                    .'peel.',
+                'category' => 'Food Safety',
+                'published' => '2026-08-25',
+                'updated' => '2026-08-25',
+                'image' => 'cat-sniffing-banana-slice',
+                'alt' => 'Cat sniffing a small slice of banana on a plate',
+                'answer' => 'Yes, a small piece of plain, ripe banana flesh is safe for most cats '
+                    .'in small amounts, and bananas are not toxic to cats. Cats lack a functional '
+                    .'sweet taste receptor gene, so they cannot taste sweetness the way people can, '
+                    .'and any interest in banana is about texture and smell, not sugar. Banana has '
+                    .'no nutritional need in a cat\'s diet, and too much can cause soft stool or an '
+                    .'upset stomach because of its sugar and fiber content. Only the flesh should '
+                    .'be offered, never the peel, and cats with diabetes or weight concerns should '
+                    .'have banana avoided or given even more sparingly.',
+                'faq' => [
+                    ['q' => 'Can cats eat bananas?', 'a' => 'Yes, a small piece of plain, ripe banana flesh is safe for most cats in small amounts. Bananas are not toxic to cats. It is not a food a cat needs, so it should stay an occasional extra rather than a regular part of the diet.'],
+                    ['q' => 'Do cats like the taste of banana?', 'a' => 'Not for the reason it might look like. Cats lack a functional sweet taste receptor gene, so they cannot taste sweetness at all, unlike people or dogs. A cat interested in banana is responding to its soft texture or smell, not a sweet taste, since that sense doesn\'t functionally exist for cats.'],
+                    ['q' => 'Can banana upset a cat\'s stomach?', 'a' => 'Yes, if too much is given. Banana\'s sugar and fiber content can cause soft stool, diarrhea, or a generally upset stomach in a cat that eats more than a small piece, especially one that isn\'t used to it. Keeping the portion small and infrequent avoids this.'],
+                    ['q' => 'Can cats eat banana peel?', 'a' => 'No, banana peel should not be offered to cats. It is not toxic, but it is fibrous and tough to digest, offers no nutritional benefit, and can be a minor choking or blockage concern for a small animal. Only the peeled flesh should ever be given.'],
+                    ['q' => 'How much banana can a cat have?', 'a' => 'A small piece, offered occasionally, is plenty for most cats, since banana has no nutritional job to do in a cat\'s diet. Treats and extras are generally kept under about ten percent of a cat\'s daily calories, and cats with diabetes or weight concerns should have banana avoided or offered even more sparingly.'],
+                ],
+                'sources' => [
+                    ['name' => 'Cornell Feline Health Center: feeding your cat', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/feeding-your-cat', 'note' => 'Explains the obligate carnivore basis of feline nutrition and why a cat\'s diet is built around protein and fat rather than carbohydrate.'],
+                    ['name' => 'ASPCA: people foods to avoid feeding your pets', 'url' => 'https://www.aspca.org/pet-care/aspca-poison-control/people-foods-avoid-feeding-your-pets', 'note' => 'Maintains guidance on which human foods are toxic versus safe in moderation for cats, confirming banana falls outside the toxic list.'],
+                    ['name' => 'VCA Animal Hospitals: nutrition for cats with diabetes mellitus', 'url' => 'https://vcahospitals.com/know-your-pet/nutrition-for-cats-with-diabetes-mellitus', 'note' => 'Covers why sugar and carbohydrate intake needs tighter control in cats with diabetes, supporting the extra caution around sugary extras like banana.'],
+                ],
+            ],
+            [
+                'slug' => 'can-cats-eat-popcorn',
+                'title' => 'Can Cats Eat Popcorn? What to Know Before Sharing',
+                'meta_title' => 'Can Cats Eat Popcorn? What to Know Before Sharing',
+                'excerpt' => 'Popcorn is not really worth feeding a cat. Plain kernels offer '
+                    .'nothing nutritionally, and buttered, salted or unpopped versions bring '
+                    .'real risks.',
+                'category' => 'Food Safety',
+                'published' => '2026-08-25',
+                'updated' => '2026-08-25',
+                'image' => 'cat-sniffing-popcorn-bowl',
+                'alt' => 'Cat sniffing a bowl of plain popcorn on a kitchen counter',
+                'answer' => 'Plain, fully air-popped popcorn with no butter, salt or seasoning is '
+                    .'not toxic to cats in a stray piece, but it offers nothing nutritionally and '
+                    .'is not worth feeding on purpose. Buttered or salted popcorn, the kind most '
+                    .'people actually eat, is high in sodium and fat, which can upset a cat\'s '
+                    .'stomach and trigger pancreatitis. Unpopped kernels are a separate and bigger '
+                    .'concern: they are hard and small enough for a cat to swallow without '
+                    .'chewing, creating a real choking hazard and a possible intestinal blockage. '
+                    .'Between the lack of nutrition, the salt and fat, and the physical shape, '
+                    .'popcorn is a food to keep away from cats rather than share, even '
+                    .'occasionally.',
+                'faq' => [
+                    ['q' => 'Can cats eat plain popcorn?', 'a' => 'Plain, fully air-popped popcorn with no butter, salt, oil or seasoning is not toxic to a cat in a tiny amount, as long as every kernel is completely popped. It does not offer any nutritional benefit though, since it contains no protein a cat\'s diet needs. It is not a food worth offering on purpose, even in this cleanest form.'],
+                    ['q' => 'Is buttered or salted popcorn bad for cats?', 'a' => 'Yes. Movie theater and bagged snack popcorn is heavily salted and coated in butter or oil, and that combination of high sodium and high fat can cause an upset stomach and is a recognized trigger for pancreatitis in cats. This is the type of popcorn most people are actually asking about, and it should be kept away from cats rather than shared, even as a one-off treat.'],
+                    ['q' => 'Why are unpopped popcorn kernels dangerous for cats?', 'a' => 'Unpopped kernels, often called old maids, are hard and small enough for a cat to swallow without chewing them properly. That creates a real choking risk in the moment and a possible intestinal blockage if a kernel is swallowed whole and does not pass through on its own. This hazard exists even in a bowl of otherwise plain, unsalted, unbuttered popcorn.'],
+                    ['q' => 'Can popcorn cause a cat to choke?', 'a' => 'Yes. Popcorn\'s light, irregular shape and air-pocketed texture make it an awkward food for a cat to swallow safely compared with something like a small piece of cooked meat. Cats tend to gulp small items rather than chew thoroughly, which raises the choking risk further when unpopped kernels are mixed in with the popped pieces.'],
+                    ['q' => 'How much popcorn can I give my cat?', 'a' => 'The honest answer is none, intentionally. Popcorn is not a moderation food the way lean cooked meat is; it is closer to something to avoid altogether. A single stray piece of clean, fully popped popcorn is not an emergency, but that is different from choosing to offer popcorn as a treat, since it carries choking and blockage risks with no nutritional benefit in return.'],
+                ],
+                'sources' => [
+                    ['name' => 'ASPCA Animal Poison Control Center', 'url' => 'https://www.aspca.org/pet-care/animal-poison-control', 'note' => 'Reference for foods and additives, including high-salt and high-fat snack items, that pose a toxicity or GI risk to cats.'],
+                    ['name' => 'Cornell Feline Health Center', 'url' => 'https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center', 'note' => 'Veterinary guidance on feline digestive health and safe feeding practices relevant to fatty, salty human snack foods.'],
+                    ['name' => 'VCA Animal Hospitals: pancreatitis in cats', 'url' => 'https://vcahospitals.com/know-your-pet/pancreatitis-in-cats', 'note' => 'Clinical overview of pancreatitis in cats, including dietary fat as a recognized trigger.'],
                 ],
             ],
         ];

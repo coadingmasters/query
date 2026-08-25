@@ -74,6 +74,24 @@
                 <p class="mt-3 text-base leading-relaxed text-ink-muted">{{ $food['guidance'] }}</p>
             @endif
 
+            {{-- Points at the full single-food article for anything covered
+                 here that has one, rather than this overview page trying to
+                 rank for that specific question too. --}}
+            @if (! empty($food['deep_dives']))
+                <div class="mt-6 flex flex-wrap gap-2.5">
+                    @foreach ($food['deep_dives'] as $dive)
+                        <a href="{{ route('blog.show', $dive['slug']) }}"
+                           class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink shadow-sm transition hover:border-line-strong hover:text-primary">
+                            Full guide: {{ $dive['label'] }}
+                            <svg class="size-3.5 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="m9 6 6 6-6 6"/>
+                            </svg>
+                        </a>
+                    @endforeach
+                </div>
+            @endif
+
             @if (! empty($food['watch_for']))
                 <h2 class="mt-8 font-heading text-xl font-extrabold tracking-tight text-ink">Signs to watch for</h2>
                 <ul class="mt-3 space-y-2.5">

@@ -37,7 +37,7 @@ class FoodGuideTest extends TestCase
     {
         $this->get('/food-guides/toxic-foods')
             ->assertOk()
-            ->assertSee('What foods are toxic to cats?')
+            ->assertSee('What Foods Are Toxic to Cats?')
             ->assertSee('Onion, garlic, chocolate');
     }
 

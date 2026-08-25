@@ -42,7 +42,7 @@ class FoodGuideController extends Controller
                     'description' => $description,
                     'isPartOf' => ['@id' => $url.'/#website'],
                 ],
-                Schema::itemList($url.'/food-guides#guides', 'Cat food safety guides',
+                Schema::itemList('/food-guides#guides', 'Cat food safety guides',
                     $foods->map(fn (array $f): array => [
                         'name' => $f['question'], 'description' => $f['answer'],
                     ])->all()),
@@ -86,7 +86,7 @@ class FoodGuideController extends Controller
                     'description' => $description,
                     'isPartOf' => ['@id' => $url.'/#website'],
                 ],
-                Schema::faq($url.$path.'#faq', [
+                Schema::faq($path.'#faq', [
                     ['q' => $food['question'], 'a' => $food['answer']],
                 ]),
                 Schema::breadcrumbs($path, [

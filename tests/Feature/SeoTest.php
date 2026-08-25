@@ -212,6 +212,28 @@ class SeoTest extends TestCase
     }
 
     /**
+     * Schema::url() already prepends the site's domain, so a caller passing
+     * an already-absolute URL into Schema::faq()/itemList() (rather than a
+     * root-relative path) doubles it up: "https://site.comhttps://site.com/...".
+     * That slipped past every other check here because it only corrupts the
+     * @id, not the visible page or the FAQ text itself.
+     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('pages')]
+    public function test_structured_data_ids_are_not_double_prefixed_with_the_domain(string $path): void
+    {
+        $html = $this->get($path)->getContent();
+
+        preg_match('/<script type="application\/ld\+json">\s*(.*?)\s*<\/script>/s', $html, $m);
+
+        $host = parse_url(config('app.url'), PHP_URL_HOST);
+        $doubled = 'http://'.$host.'http://'.$host;
+        $doubledSecure = 'https://'.$host.'https://'.$host;
+
+        $this->assertStringNotContainsString($doubled, $m[1], "$path has a doubled-domain @id");
+        $this->assertStringNotContainsString($doubledSecure, $m[1], "$path has a doubled-domain @id");
+    }
+
+    /**
      * Redundant with the meta tag on an ordinary page, and that is fine: this
      * is what covers a response a meta tag cannot reach, like a PDF or an
      * image, the day the site starts serving one.

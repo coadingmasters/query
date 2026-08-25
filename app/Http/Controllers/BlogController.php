@@ -56,7 +56,7 @@ class BlogController extends Controller
                 ],
                 // Only the articles that exist. Listing the unwritten ones
                 // would describe a library that is not there.
-                Schema::itemList($url.'/blog#articles', 'Cat care articles',
+                Schema::itemList('/blog#articles', 'Cat care articles',
                     $posts->map(fn (Post $p): array => [
                         'name' => $p->title,
                         'description' => $p->excerpt,
@@ -122,7 +122,7 @@ class BlogController extends Controller
                     'name' => $post->meta_title ?: $post->title,
                     'isPartOf' => ['@id' => $url.'/#website'],
                 ],
-                Schema::faq($url.$path.'#faq', $post->faqs
+                Schema::faq($path.'#faq', $post->faqs
                     ->map(fn ($faq): array => ['q' => $faq->question, 'a' => $faq->answer])->all()),
                 Schema::breadcrumbs($path, [
                     'Home' => '/',

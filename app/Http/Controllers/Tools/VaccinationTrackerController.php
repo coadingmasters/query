@@ -59,7 +59,7 @@ class VaccinationTrackerController extends Controller
                 ] + (config('author.founder.name') ? [
                     'author' => ['@id' => $url.'/#founder'],
                 ] : []),
-                Schema::faq($url.$path.'#faq', collect($faq)
+                Schema::faq($path.'#faq', collect($faq)
                     ->map(fn (array $i): array => ['q' => $i['q'], 'a' => $i['a']])->all()),
                 Schema::breadcrumbs($path, [
                     'Home' => '/',

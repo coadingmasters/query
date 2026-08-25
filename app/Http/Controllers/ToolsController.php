@@ -29,7 +29,7 @@ class ToolsController extends Controller
                     'description' => $description,
                     'isPartOf' => ['@id' => $url.'/#website'],
                 ],
-                Schema::itemList($url.'/tools#tools', 'Free cat care tools',
+                Schema::itemList('/tools#tools', 'Free cat care tools',
                     $tools->filter(fn (array $t): bool => isset($t['url']))
                         ->map(fn (array $t): array => [
                             'name' => $t['title'], 'description' => $t['blurb'],

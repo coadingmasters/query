@@ -39,7 +39,7 @@
         <div class="mt-8 max-w-2xl">
             {{-- The answer, before anything else. It is what the reader came
                  for and what Google lifts for a snippet. --}}
-            <div class="relative overflow-hidden rounded-2xl border border-line border-l-4 border-l-primary-vivid bg-surface-section p-5 sm:p-6">
+            <div class="relative overflow-hidden rounded-2xl border border-line border-l-4 border-l-primary-vivid p-5 sm:p-6">
                 <p class="flex items-center gap-2 text-xs font-bold tracking-wider text-primary uppercase">
                     <x-paw-print class="size-4"/>
                     Quick answer

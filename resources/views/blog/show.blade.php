@@ -76,7 +76,7 @@
                 {{-- The answer, before any preamble. It is what the reader came
                      for and what Google lifts for a snippet. --}}
                 @if ($post->quick_answer)
-                    <div class="relative overflow-hidden rounded-2xl border border-line border-l-4 border-l-primary-vivid bg-surface-section p-5 sm:p-6">
+                    <div class="relative overflow-hidden rounded-2xl border border-line border-l-4 border-l-primary-vivid p-5 sm:p-6">
                         <p class="flex items-center gap-2 text-xs font-bold tracking-wider text-primary uppercase">
                             <x-paw-print class="size-4"/>
                             Quick answer

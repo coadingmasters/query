@@ -29,7 +29,7 @@ class FoodGuideController extends Controller
             .'moderation, or never, with the reason behind each verdict.';
 
         return view('food-guides.index', [
-            'title' => 'Cat Food Safety Guides | '.config('app.name'),
+            'title' => 'What Can Cats Eat? Cat Food Safety Guides | '.config('app.name'),
             'description' => $description,
             'canonical' => $url.'/food-guides',
             'foods' => $foods,

@@ -251,7 +251,7 @@ return [
         [
             'slug' => 'herbs-and-spices',
             'title' => 'Herbs & Spices',
-            'question' => 'Can Cats Eat Herbs and Spices?',
+            'question' => 'Can Cats Eat Seasoning, Herbs and Spices?',
             'answer' => 'Basil and rosemary are harmless in tiny amounts. Onion and garlic powder are dangerous.',
             'verdict' => 'caution',
             'note' => 'A few safe, many are not',

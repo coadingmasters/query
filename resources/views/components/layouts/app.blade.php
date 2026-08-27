@@ -25,6 +25,9 @@
     {{-- Pinterest business account: domain claim verification. --}}
     <meta name="p:domain_verify" content="d9c7d9cd6282aa26dbf6d50c67bd382f">
 
+    {{-- Impact.com (Chewy's affiliate network): site ownership verification. --}}
+    <meta name="impact-site-verification" content="f13e11e5-1b54-44ad-ad8d-3b9a74ba051b">
+
     <title>{{ $title }}</title>
     <meta name="description" content="{{ $description }}">
     <link rel="canonical" href="{{ $canonical }}">

@@ -18,6 +18,33 @@ window.addEventListener('unhandledrejection', (event) => {
 });
 
 /**
+ * Scroll-reveal for any `.reveal` element (cards, mostly): fades and lifts
+ * it in the first time it crosses into view. The CSS only ever styles
+ * `.reveal.is-armed`, on purpose - a visitor without JavaScript, or a
+ * crawler that never fires scroll events, sees the content immediately
+ * rather than permanently hidden, so "armed" is added here rather than
+ * being the class's own resting state.
+ */
+if ('IntersectionObserver' in window) {
+    const revealTargets = document.querySelectorAll('.reveal');
+
+    if (revealTargets.length) {
+        revealTargets.forEach((el) => el.classList.add('is-armed'));
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+
+        revealTargets.forEach((el) => revealObserver.observe(el));
+    }
+}
+
+/**
  * Shared toast notifications for the admin panel. Reads/writes the
  * #toast-stack container rendered once in components/admin/shell.blade.php.
  */

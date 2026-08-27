@@ -60,6 +60,14 @@ return [
             'image' => 'cat-vaccination-tracker-vet-examination',
             'alt' => 'Veterinarian examining a calm tabby cat',
         ],
+        [
+            'slug' => 'cat-name-generator',
+            'url' => '/tools/cat-name-generator',
+            'title' => 'Cat Name Generator',
+            'blurb' => 'Filter by style, personality and breed for a name with a real meaning behind it.',
+            'image' => 'cat-name-generator-cute-kitten',
+            'alt' => 'Fluffy kitten beside a board of name ideas',
+        ],
     ],
 
     /*
@@ -76,13 +84,6 @@ return [
             'blurb' => 'Answer a few questions about coat, build and temperament to narrow down the breed.',
             'image' => 'cat-breed-quiz-multiple-cat-breeds',
             'alt' => 'Persian, Siamese and Maine Coon cats side by side',
-        ],
-        [
-            'slug' => 'cat-name-generator',
-            'title' => 'Name Generator',
-            'blurb' => 'Thousands of names filtered by style, origin and how they sound when called.',
-            'image' => 'cat-name-generator-cute-kitten',
-            'alt' => 'Fluffy kitten beside a board of name ideas',
         ],
     ],
 

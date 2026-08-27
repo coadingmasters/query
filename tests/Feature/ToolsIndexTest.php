@@ -36,10 +36,10 @@ class ToolsIndexTest extends TestCase
         }
     }
 
-    /** Breed Quiz and Name Generator have no page yet — catalog.tools_upcoming keeps them out of every listing until they do. */
+    /** Breed Quiz has no page yet — catalog.tools_upcoming keeps it out of every listing until it does. */
     public function test_a_tool_with_no_page_yet_is_not_shown_anywhere(): void
     {
-        foreach (['Breed Quiz', 'Name Generator'] as $upcoming) {
+        foreach (['Breed Quiz'] as $upcoming) {
             $this->get('/tools')->assertDontSee($upcoming);
             $this->get('/')->assertDontSee($upcoming);
         }

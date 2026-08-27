@@ -425,8 +425,10 @@
             <p class="eyebrow">Food guides</p>
             <h2 class="section-title">Can cats eat that?</h2>
             <p class="section-intro">
-                The answer, before the article. Ten categories covering what is
-                safe, what needs care, and what to never let near your cat.
+                The answer, before the article.
+                {{ ucfirst(\Illuminate\Support\Number::spell(count(config('catalog.foods')))) }}
+                categories covering what is safe, what needs care, and what to
+                never let near your cat.
             </p>
         </div>
 
@@ -486,7 +488,7 @@
             <ul class="mt-8 space-y-4">
                 @foreach ([
                     ucfirst(\Illuminate\Support\Number::spell(count(config('catalog.tools')))).' calculators covering age, weight, calories and health',
-                    'Ten food-safety guides with the verdict up front',
+                    ucfirst(\Illuminate\Support\Number::spell(count(config('catalog.foods')))).' food-safety guides with the verdict up front',
                     'Guides reviewed against published veterinary sources',
                     'Free forever, with no account, no paywall and no email wall',
                 ] as $point)
@@ -506,7 +508,7 @@
         <div class="grid grid-cols-2 gap-5">
             @foreach ([
                 [(string) count(config('catalog.tools')), 'Free tools'],
-                ['10', 'Food guides'],
+                [(string) count(config('catalog.foods')), 'Food guides'],
                 ['0', 'Sign-ups needed'],
                 ['100%', 'Free to use'],
             ] as [$figure, $label])

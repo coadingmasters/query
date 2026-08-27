@@ -53,6 +53,7 @@ class SitemapController extends Controller
             ['/tools/cat-weight-checker', 'views/tools/cat-weight-checker.blade.php', '0.9'],
             ['/food-guides', 'views/food-guides/index.blade.php', '0.8'],
             ['/blog', 'views/blog/index.blade.php', '0.8'],
+            ['/shop', 'views/shop/index.blade.php', '0.7'],
             ['/faq', 'views/faq.blade.php', '0.8'],
             ['/contact', 'views/contact.blade.php', '0.5'],
             ['/terms', 'views/terms.blade.php', '0.3'],

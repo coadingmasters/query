@@ -129,6 +129,9 @@
             <a href="{{ route('blog.index') }}" class="rounded-lg px-3 py-2 text-sm font-semibold text-ink-muted transition-colors hover:bg-surface-soft hover:text-primary">
                 Blog
             </a>
+            <a href="{{ route('shop.index') }}" class="rounded-lg px-3 py-2 text-sm font-semibold text-ink-muted transition-colors hover:bg-surface-soft hover:text-primary">
+                Shop
+            </a>
             <a href="{{ route('about') }}" class="rounded-lg px-3 py-2 text-sm font-semibold text-ink-muted transition-colors hover:bg-surface-soft hover:text-primary">
                 About Us
             </a>
@@ -236,6 +239,7 @@
 
         @foreach ([
             [route('blog.index'), 'Blog', 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z|M14 3v5h5|M9 13h6M9 17h4'],
+            [route('shop.index'), 'Shop', 'M3.5 12.5h17a8.5 8.5 0 0 1-17 0Z|M6 9.2c0-1.6 1.4-2.2 1.4-3.4M17.4 9.2c0-1.6-1.4-2.2-1.4-3.4'],
             [route('about'), 'About Us', 'M12 21.5a9.5 9.5 0 1 0 0-19 9.5 9.5 0 0 0 0 19Z|M12 10.5v6M12 7.5h.01'],
             [route('contact'), 'Contact Us', 'M3 7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5Z|m3.5 8 7.6 5a1.6 1.6 0 0 0 1.8 0l7.6-5'],
         ] as [$href, $label, $paths])

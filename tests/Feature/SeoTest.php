@@ -55,6 +55,7 @@ class SeoTest extends TestCase
             'food guides index' => ['/food-guides'],
             'fruits food guide' => ['/food-guides/fruits'],
             'toxic foods food guide' => ['/food-guides/toxic-foods'],
+            'shop index' => ['/shop'],
         ];
     }
 

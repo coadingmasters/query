@@ -29,6 +29,7 @@ use App\Http\Controllers\HowItWorksController;
 use App\Http\Controllers\ManifestController;
 use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Tools\CatAgeCalculatorController;
 use App\Http\Controllers\Tools\CatCalorieCalculatorController;
@@ -69,6 +70,8 @@ Route::get('/tools', [ToolsController::class, 'index'])->name('tools.index');
 
 Route::get('/food-guides', [FoodGuideController::class, 'index'])->name('food-guides.index');
 Route::get('/food-guides/{slug}', [FoodGuideController::class, 'show'])->name('food-guides.show');
+
+Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 
 Route::get('/tools/cat-age-calculator', CatAgeCalculatorController::class)
     ->name('tools.cat-age-calculator');

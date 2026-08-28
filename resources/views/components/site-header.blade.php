@@ -17,27 +17,19 @@
     $foods = collect(config('catalog.foods'))->map(fn (array $f): array => [
         'label' => $f['title'],
         'href' => route('food-guides.show', $f['slug']),
-        'verdict' => $f['verdict'],
-        'note' => $f['note'] ?? null,
     ]);
-
-    $verdicts = [
-        'safe' => 'bg-accent-light text-accent-dark',
-        'caution' => 'bg-warning-light text-warning',
-        'unsafe' => 'bg-danger-light text-danger',
-    ];
 @endphp
 
 <header class="sticky top-0 z-50 border-b border-line/70 bg-surface/85 backdrop-blur-md">
-    <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto flex h-24 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
 
         {{-- The badge alone, with no wordmark beside it. It carries the name
              around its rim, so it is sized to let that read, and the alt text
              has to spell the name out, because it is now the only thing naming
              this link to a screen reader or to Google. --}}
-        <a href="/" class="flex shrink-0 items-center">
-            <span class="block size-14 shrink-0 sm:size-16">
-                <x-img name="purrquerylogo" alt="{{ config('app.name') }}" sizes="64px" fit="contain"/>
+        <a href="/" class="group flex shrink-0 items-center">
+            <span class="block size-18 shrink-0 transition-transform duration-300 group-hover:scale-105 sm:size-20">
+                <x-img name="purrquerylogo" alt="{{ config('app.name') }}" sizes="80px" fit="contain"/>
             </span>
         </a>
 
@@ -60,7 +52,7 @@
                 </button>
 
                 <div data-menu-panel hidden
-                     class="absolute top-full left-0 z-50 mt-2 w-[34rem] rounded-2xl border border-line bg-surface p-3 shadow-2xl">
+                     class="absolute top-full left-0 z-50 mt-3 w-[30rem] origin-top scale-95 rounded-2xl border border-line bg-surface p-3 opacity-0 shadow-2xl transition duration-200 ease-out">
                     <p class="px-3 pt-1 pb-2 text-xs font-bold tracking-wider text-ink-muted uppercase">
                         What is safe to feed
                     </p>
@@ -68,11 +60,12 @@
                         @foreach ($foods as $food)
                             <li>
                                 <a href="{{ $food['href'] }}"
-                                   class="flex items-center justify-between gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-surface-soft">
+                                   class="group/item flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 transition-colors hover:bg-surface-soft">
                                     <span class="text-sm font-medium text-ink">{{ $food['label'] }}</span>
-                                    <span @class(['rounded-full px-2 py-0.5 text-[11px] font-bold capitalize', $verdicts[$food['verdict']]])>
-                                        {{ $food['verdict'] }}
-                                    </span>
+                                    <svg class="size-3.5 shrink-0 text-ink-muted opacity-0 transition-all duration-150 group-hover/item:translate-x-0.5 group-hover/item:text-primary group-hover/item:opacity-100"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                        <path d="m9 6 6 6-6 6"/>
+                                    </svg>
                                 </a>
                             </li>
                         @endforeach
@@ -96,7 +89,7 @@
                 </button>
 
                 <div data-menu-panel hidden
-                     class="absolute top-full left-0 z-50 mt-2 w-[32rem] rounded-2xl border border-line bg-surface p-3 shadow-2xl">
+                     class="absolute top-full left-0 z-50 mt-3 w-[32rem] origin-top scale-95 rounded-2xl border border-line bg-surface p-3 opacity-0 shadow-2xl transition duration-200 ease-out">
                     <p class="px-3 pt-1 pb-2 text-xs font-bold tracking-wider text-ink-muted uppercase">
                         Free calculators and checkers
                     </p>
@@ -104,8 +97,8 @@
                         @foreach ($tools as $tool)
                             <li>
                                 <a href="{{ $tool['href'] }}"
-                                   class="flex items-start gap-2.5 rounded-xl px-3 py-2.5 transition-colors hover:bg-surface-soft">
-                                    <span class="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary-light text-primary">
+                                   class="group/item flex items-start gap-2.5 rounded-xl px-3 py-2.5 transition-colors hover:bg-surface-soft">
+                                    <span class="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary-light text-primary transition-transform duration-200 group-hover/item:scale-110">
                                         <x-paw-print class="size-3.5"/>
                                     </span>
                                     <span class="min-w-0">
@@ -140,9 +133,13 @@
             </a>
         </nav>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 sm:gap-3">
             <a href="{{ route('tools.index') }}"
-               class="hidden rounded-lg bg-primary-vivid px-4 py-2.5 text-sm font-semibold text-ink shadow-sm transition hover:brightness-95 sm:inline-flex">
+               class="group hidden items-center gap-2 rounded-full bg-primary-vivid px-5 py-2.5 text-sm font-semibold text-ink shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:brightness-95 sm:inline-flex">
+                <svg class="size-4 transition-transform duration-300 group-hover:rotate-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v3.5M12 17.5V21M3 12h3.5M17.5 12H21M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>
+                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                </svg>
                 Try Free Tools
             </a>
 
@@ -150,7 +147,7 @@
                  two rotate onto it, so the button says which state it is in
                  rather than swapping one glyph for another. --}}
             <button type="button" data-drawer-toggle aria-expanded="false" aria-controls="mobile-drawer"
-                    class="group relative inline-flex size-11 items-center justify-center rounded-xl bg-primary-vivid text-ink shadow-sm transition hover:brightness-95 lg:hidden">
+                    class="group relative inline-flex size-12 items-center justify-center rounded-full bg-primary-vivid text-ink shadow-sm transition-all duration-200 hover:scale-105 hover:shadow-md active:scale-95 lg:hidden">
                 <span class="sr-only">Open menu</span>
                 <span aria-hidden="true" class="relative block h-4 w-5">
                     <span class="absolute inset-x-0 top-0 h-0.5 rounded-full bg-ink transition-transform duration-300 group-aria-expanded:translate-y-[7px] group-aria-expanded:rotate-45"></span>
@@ -201,11 +198,8 @@
             <ul class="mt-1 space-y-0.5 pb-1 pl-11">
                 @foreach ($foods as $food)
                     <li>
-                        <a href="{{ $food['href'] }}" class="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-surface-soft hover:text-primary">
+                        <a href="{{ $food['href'] }}" class="block rounded-lg px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-surface-soft hover:text-primary">
                             {{ $food['label'] }}
-                            <span @class(['rounded-full px-1.5 py-0.5 text-[10px] font-bold capitalize', $verdicts[$food['verdict']]])>
-                                {{ $food['verdict'] }}
-                            </span>
                         </a>
                     </li>
                 @endforeach
@@ -282,9 +276,26 @@
                 chevron: root.querySelector('[data-menu-chevron]'),
             }));
 
+            // Fades and scales the panel in/out rather than an instant show,
+            // the same enter/leave timing the mobile drawer uses below.
+            // `hidden` is only added back once the leave transition finishes,
+            // so the panel doesn't just vanish mid-fade.
+            const openPanel = (panel) => {
+                panel.removeAttribute('hidden');
+                requestAnimationFrame(() => {
+                    panel.classList.remove('opacity-0', 'scale-95');
+                });
+            };
+
+            const closePanel = (panel) => {
+                if (panel.hasAttribute('hidden')) return;
+                panel.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => panel.setAttribute('hidden', ''), 200);
+            };
+
             const closeMenus = (except = null) => menus.forEach(m => {
                 if (m === except) return;
-                m.panel.setAttribute('hidden', '');
+                closePanel(m.panel);
                 m.button.setAttribute('aria-expanded', 'false');
                 m.chevron.classList.remove('rotate-180');
             });
@@ -293,7 +304,7 @@
                 m.button.addEventListener('click', () => {
                     const willOpen = m.panel.hasAttribute('hidden');
                     closeMenus(m);
-                    m.panel.toggleAttribute('hidden', !willOpen);
+                    willOpen ? openPanel(m.panel) : closePanel(m.panel);
                     m.button.setAttribute('aria-expanded', String(willOpen));
                     m.chevron.classList.toggle('rotate-180', willOpen);
                 });

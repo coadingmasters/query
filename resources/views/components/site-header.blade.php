@@ -147,11 +147,11 @@
                  two rotate onto it, so the button says which state it is in
                  rather than swapping one glyph for another. --}}
             <button type="button" data-drawer-toggle aria-expanded="false" aria-controls="mobile-drawer"
-                    class="group relative inline-flex size-12 items-center justify-center rounded-full bg-primary-vivid text-ink shadow-sm transition-all duration-200 hover:scale-105 hover:shadow-md active:scale-95 lg:hidden">
+                    class="group relative inline-flex size-12 items-center justify-center rounded-full text-ink transition-transform duration-200 hover:bg-surface-soft active:scale-90 lg:hidden">
                 <span class="sr-only">Open menu</span>
                 <span aria-hidden="true" class="relative block h-4 w-5">
                     <span class="absolute inset-x-0 top-0 h-0.5 rounded-full bg-ink transition-transform duration-300 group-aria-expanded:translate-y-[7px] group-aria-expanded:rotate-45"></span>
-                    <span class="absolute inset-x-0 top-[7px] h-0.5 rounded-full bg-ink transition-opacity duration-200 group-aria-expanded:opacity-0"></span>
+                    <span class="absolute inset-x-0 top-[7px] h-0.5 rounded-full bg-ink transition-all duration-200 group-aria-expanded:scale-x-0 group-aria-expanded:opacity-0"></span>
                     <span class="absolute inset-x-0 top-[14px] h-0.5 rounded-full bg-ink transition-transform duration-300 group-aria-expanded:-translate-y-[7px] group-aria-expanded:-rotate-45"></span>
                 </span>
             </button>

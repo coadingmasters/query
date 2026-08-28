@@ -244,7 +244,7 @@
                     <template x-if="twoCats && pairs.length">
                         <div class="mt-5 grid gap-3 sm:grid-cols-2">
                             <template x-for="pair in pairs" :key="pair.cats[0].name + pair.cats[1].name">
-                                <div class="rounded-xl border border-line bg-surface-soft p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                                <div class="rounded-xl border border-line p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
                                     <p class="font-heading text-lg font-extrabold text-ink">
                                         <span x-text="pair.cats[0].name"></span>
                                         <span class="text-primary">&amp;</span>
@@ -320,7 +320,7 @@
                     </div>
                     <ul class="mt-4 flex flex-wrap gap-2">
                         <template x-for="fav in favorites" :key="fav.name">
-                            <li class="flex items-center gap-2 rounded-full border border-line bg-surface-soft py-1.5 pr-2 pl-4 text-sm font-semibold text-ink">
+                            <li class="flex items-center gap-2 rounded-full border border-line py-1.5 pr-2 pl-4 text-sm font-semibold text-ink">
                                 <span x-text="fav.name"></span>
                                 <button type="button" x-on:click="removeFavorite(fav.name)" aria-label="Remove from favorites"
                                         class="flex size-5 items-center justify-center rounded-full text-ink-muted transition hover:bg-danger-light hover:text-danger">
@@ -368,7 +368,6 @@
                 {{-- How naming works --}}
                 <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <h2 class="{{ $panelHeading }}">
-                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
                         How cat naming actually works
                     </h2>
                     <div class="mt-5 space-y-4 text-base leading-relaxed text-ink-muted">
@@ -405,7 +404,6 @@
                 {{-- Popular names --}}
                 <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <h2 class="{{ $panelHeading }}">
-                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
                         Popular cat names
                     </h2>
                     <p class="mt-4 text-base leading-relaxed text-ink-muted">
@@ -416,7 +414,7 @@
                     </p>
                     <div class="mt-5 grid gap-4 sm:grid-cols-2">
                         @foreach (['female' => 'Popular female cat names', 'male' => 'Popular male cat names'] as $key => $heading)
-                            <div class="rounded-xl border border-line bg-surface-soft p-4">
+                            <div class="rounded-xl border border-line p-4">
                                 <h3 class="font-heading text-sm font-bold text-ink">{{ $heading }}</h3>
                                 <p class="mt-2 text-sm leading-relaxed text-ink-muted">{{ implode(', ', $popularNames[$key]) }}</p>
                             </div>
@@ -427,7 +425,6 @@
                 {{-- By style --}}
                 <div id="by-style" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <h2 class="{{ $panelHeading }}">
-                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
                         Cat names by style
                     </h2>
                     <p class="mt-4 text-base leading-relaxed text-ink-muted">
@@ -437,7 +434,7 @@
                     <div class="mt-5 grid gap-3 sm:grid-cols-2">
                         @foreach ($styleExamples as $slug => $data)
                             <button type="button" x-on:click="pickCategory('{{ $slug }}')"
-                                    class="group rounded-xl border border-line bg-surface-soft p-4 text-left transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                                    class="group rounded-xl border border-line p-4 text-left transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
                                 <h3 class="font-heading text-sm font-bold text-ink transition-colors group-hover:text-primary">{{ $data['label'] }} cat names</h3>
                                 <p class="mt-2 text-sm leading-relaxed text-ink-muted">{{ $data['names']->pluck('name')->implode(', ') }}</p>
                             </button>
@@ -448,7 +445,6 @@
                 {{-- By personality --}}
                 <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <h2 class="{{ $panelHeading }}">
-                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
                         Cat names by personality
                     </h2>
                     <p class="mt-4 text-base leading-relaxed text-ink-muted">
@@ -478,7 +474,6 @@
                 {{-- By breed --}}
                 <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <h2 class="{{ $panelHeading }}">
-                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
                         Cat names by breed
                     </h2>
                     <p class="mt-4 text-base leading-relaxed text-ink-muted">
@@ -488,7 +483,7 @@
                     </p>
                     <div class="mt-5 grid gap-3 sm:grid-cols-2">
                         @foreach ($breedGuide as $breed)
-                            <div class="rounded-xl border border-line bg-surface-soft p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                            <div class="rounded-xl border border-line p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
                                 <h3 class="font-heading text-sm font-bold text-ink">{{ $breed['breed'] }} cat names</h3>
                                 <p class="mt-0.5 text-xs font-semibold text-primary">{{ $breed['theme'] }}</p>
                                 <p class="mt-2 text-sm leading-relaxed text-ink-muted">{{ implode(', ', $breed['names']) }}</p>
@@ -500,7 +495,6 @@
                 {{-- Kitten vs adult --}}
                 <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <h2 class="{{ $panelHeading }}">
-                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
                         Kitten names vs. adult cat names
                     </h2>
                     <div class="mt-5 space-y-4 text-base leading-relaxed text-ink-muted">
@@ -527,7 +521,6 @@
                 {{-- Rules --}}
                 <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <h2 class="{{ $panelHeading }}">
-                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
                         Seven rules for choosing the right cat name
                     </h2>
                     <ol class="mt-5 space-y-3">
@@ -555,7 +548,6 @@
                 {{-- Two cats --}}
                 <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <h2 class="{{ $panelHeading }}">
-                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
                         Cat names for two cats
                     </h2>
                     <p class="mt-4 text-base leading-relaxed text-ink-muted">
@@ -592,23 +584,21 @@
                 {{-- FAQ --}}
                 <div id="faq" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <h2 class="{{ $panelHeading }}">
-                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
                         Common Questions
                     </h2>
 
                     <div class="mt-5 space-y-2.5">
                         @foreach ($faq as $item)
-                            <details class="group rounded-xl border border-line bg-surface-soft px-4 transition hover:border-line-strong">
-                                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-3.5 text-sm font-bold text-ink marker:content-['']">
+                            <details class="group border-b border-line last:border-b-0">
+                                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-bold text-ink transition-colors hover:text-primary marker:content-['']">
                                     {{ $item['q'] }}
-                                    <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary transition-transform duration-200 group-open:rotate-45">
-                                        <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                             stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-                                            <path d="M12 5v14M5 12h14"/>
-                                        </svg>
-                                    </span>
+                                    <svg class="size-4 shrink-0 text-ink-muted transition-transform duration-200 group-open:rotate-180"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                        <path d="m6 9 6 6 6-6"/>
+                                    </svg>
                                 </summary>
-                                <p class="pb-4 text-sm leading-relaxed text-ink-muted">{{ $item['a'] }}</p>
+                                <p class="pb-4 text-base leading-relaxed text-ink-muted">{{ $item['a'] }}</p>
                             </details>
                         @endforeach
                     </div>
@@ -642,13 +632,12 @@
                 {{-- Keep exploring --}}
                 <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <h2 class="{{ $panelHeading }}">
-                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
                         Keep exploring
                     </h2>
                     <div class="mt-5 grid gap-3 sm:grid-cols-2">
                         @foreach ($internalLinks as $link)
                             <a href="{{ $link['url'] }}"
-                               class="group flex items-center justify-between gap-2 rounded-xl border border-line bg-surface-soft px-4 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                               class="group flex items-center justify-between gap-2 rounded-xl border border-line px-4 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
                                 {{ $link['label'] }}
                                 <svg class="size-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5 group-hover:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                     <path d="m9 6 6 6-6 6"/>
@@ -737,15 +726,7 @@
 
                     <ul class="mt-4 space-y-3.5">
                         @foreach ($namingTips as $tip)
-                            <li class="group flex gap-3">
-                                <span @class([
-                                    'flex size-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110',
-                                    'bg-primary-light text-primary' => $tip['tone'] === 'primary',
-                                    'bg-accent-light text-accent-dark' => $tip['tone'] === 'accent',
-                                    'bg-info-light text-info' => $tip['tone'] === 'info',
-                                ])>
-                                    <x-paw-print class="size-3.5"/>
-                                </span>
+                            <li class="border-l-2 border-line pl-3">
                                 <span class="text-sm leading-relaxed text-ink-muted">{{ $tip['tip'] }}</span>
                             </li>
                         @endforeach
@@ -856,34 +837,28 @@
 </section>
 
 {{-- ══ 3. MORE TOOLS ═════════════════════════════════════════════════════ --}}
-<section class="border-t border-line bg-surface py-10 lg:py-12" x-data="toolsCarousel()">
+<section class="border-t border-line bg-surface py-10 lg:py-12">
     <div class="mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[50px]">
-        <div class="flex items-center justify-between gap-4">
-            <h2 class="flex items-center gap-2 font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">
-                <x-paw-print class="size-5 text-primary-vivid"/>
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <h2 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">
                 More Tools You Will Love
             </h2>
-
-            <div class="hidden gap-2 sm:flex">
-                <button type="button" x-on:click="scrollBy(-1)" aria-label="Previous tools"
-                        class="flex size-9 items-center justify-center rounded-full border border-line bg-surface text-ink-muted transition hover:border-primary/40 hover:text-primary">
-                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>
-                </button>
-                <button type="button" x-on:click="scrollBy(1)" aria-label="Next tools"
-                        class="flex size-9 items-center justify-center rounded-full border border-line bg-surface text-ink-muted transition hover:border-primary/40 hover:text-primary">
-                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-                </button>
-            </div>
+            <a href="{{ route('tools.index') }}" class="text-sm font-semibold text-primary transition hover:underline">
+                View all tools
+            </a>
         </div>
 
-        <div x-ref="track" class="-mx-1 mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2">
-            @foreach ($moreTools as $tool)
+        {{-- A plain grid, not a scroller: five tools do not need paging, and a
+             horizontal scroll container shows a scrollbar on most desktops. --}}
+        <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            @foreach ($moreTools->take(3) as $tool)
                 <a href="{{ $tool['url'] }}"
-                   class="card reveal group w-64 shrink-0 snap-start sm:w-72"
+                   class="card reveal group"
                    style="--reveal-delay: {{ $loop->index * 70 }}ms">
                     <div class="card-media aspect-[16/10]">
                         <x-img :name="$tool['image']" :alt="$tool['alt']"
-                               class="transition-transform duration-500 group-hover:scale-105" sizes="288px"/>
+                               class="transition-transform duration-500 group-hover:scale-105"
+                               sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 30vw"/>
                     </div>
                     <div class="card-body">
                         <h3 class="card-title transition-colors group-hover:text-primary">{{ $tool['title'] }}</h3>
@@ -898,6 +873,18 @@
                 </a>
             @endforeach
         </div>
+
+        {{-- The remaining tools still get a real link from this page, just as
+             text rather than another row of cards. --}}
+        <ul class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            @foreach ($moreTools->skip(3) as $tool)
+                <li>
+                    <a href="{{ $tool['url'] }}" class="font-semibold text-ink-muted transition hover:text-primary">
+                        {{ $tool['title'] }}
+                    </a>
+                </li>
+            @endforeach
+        </ul>
     </div>
 </section>
 
@@ -1134,18 +1121,6 @@
             };
         }
 
-        function toolsCarousel() {
-            return {
-                scrollBy(direction) {
-                    const track = this.$refs.track;
-                    const card = track.querySelector('a');
-                    if (!card) return;
-
-                    const step = card.getBoundingClientRect().width + 16;
-                    track.scrollBy({ left: step * direction, behavior: 'smooth' });
-                },
-            };
-        }
     </script>
 @endpush
 

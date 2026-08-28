@@ -80,7 +80,7 @@
 </section>
 
 {{-- ══ 2. GENERATOR ══════════════════════════════════════════════════════ --}}
-<section id="generator" class="scroll-mt-24 bg-surface py-10 lg:py-14"
+<section id="generator" class="scroll-mt-24 relative overflow-hidden bg-surface py-10 lg:py-14"
          x-data="catNameGenerator({
              names: @js($names),
              breeds: @js($breeds),
@@ -92,7 +92,16 @@
              saveUrl: @js(route('tools.cat-name-generator.save')),
              csrfToken: @js(csrf_token()),
          })">
-    <div class="container-page max-w-4xl">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+        <div class="absolute -top-16 right-[8%] size-72 rounded-full bg-accent-vivid opacity-[0.06] blur-3xl"></div>
+        <div class="absolute -bottom-20 left-[4%] size-80 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
+        <x-paw-print class="paw absolute top-[10%] right-[12%] hidden size-8 text-primary-vivid/20 lg:block [animation-duration:21s]"/>
+        <x-paw-print class="paw absolute bottom-[14%] left-[8%] hidden size-6 text-accent-vivid/20 lg:block [animation-delay:-11s] [animation-duration:25s]"/>
+    </div>
+
+    <div class="relative mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[50px]">
+        <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <div>
 
         {{-- Quick start --}}
         <div class="reveal mb-6 flex flex-wrap justify-center gap-2.5 sm:justify-start">
@@ -153,48 +162,41 @@
             </div>
         </div>
 
-        <div class="reveal rounded-2xl border border-line bg-surface-soft p-5 shadow-sm sm:p-8">
+        <div class="reveal relative overflow-hidden rounded-2xl border border-line bg-surface-soft p-5 shadow-sm sm:p-8">
+            <div aria-hidden="true" class="pointer-events-none absolute -top-10 -right-10 size-40 rounded-full bg-primary-vivid opacity-[0.06] blur-2xl"></div>
 
-            {{-- One cat / two cats --}}
-            <div class="mb-6 flex w-fit gap-1 rounded-full border border-line bg-surface p-1">
-                <button type="button" x-on:click="twoCats = false"
-                        :class="!twoCats ? 'bg-primary-vivid text-ink' : 'text-ink-muted'"
-                        class="rounded-full px-4 py-1.5 text-sm font-semibold transition">One Cat</button>
-                <button type="button" x-on:click="twoCats = true"
-                        :class="twoCats ? 'bg-primary-vivid text-ink' : 'text-ink-muted'"
-                        class="rounded-full px-4 py-1.5 text-sm font-semibold transition">Two Cats</button>
-            </div>
-
-            {{-- Gender --}}
-            <div>
-                <p class="text-xs font-bold tracking-wide text-ink-muted uppercase">Gender</p>
-                <div class="mt-2.5 flex flex-wrap gap-2">
-                    @foreach (['any' => 'Any', 'male' => 'Male', 'female' => 'Female', 'neutral' => 'Either'] as $value => $label)
-                        <button type="button" x-on:click="gender = '{{ $value }}'"
-                                :class="gender === '{{ $value }}' ? 'bg-primary-vivid text-ink border-primary-vivid' : 'bg-surface text-ink-muted border-line hover:border-line-strong'"
-                                class="rounded-full border px-4 py-1.5 text-sm font-semibold transition">
-                            {{ $label }}
-                        </button>
-                    @endforeach
+            <div class="relative flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <p class="font-heading text-lg font-bold text-ink">Build your filters</p>
+                    <p class="mt-0.5 text-sm text-ink-muted">Mix and match. Nothing here is required.</p>
                 </div>
+
+                {{-- One cat / two cats --}}
+                <label class="flex items-center gap-2.5 text-sm font-semibold text-ink">
+                    <span>Two cats mode</span>
+                    <button type="button" role="switch" x-on:click="twoCats = !twoCats"
+                            :aria-checked="twoCats ? 'true' : 'false'"
+                            :class="twoCats ? 'bg-primary-vivid' : 'bg-line'"
+                            class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors duration-200">
+                        <span :class="twoCats ? 'translate-x-5' : 'translate-x-1'"
+                              class="inline-block size-4 transform rounded-full bg-surface shadow transition-transform duration-200"></span>
+                    </button>
+                </label>
             </div>
 
-            {{-- Style --}}
-            <div class="mt-6">
-                <p class="text-xs font-bold tracking-wide text-ink-muted uppercase">Style <span class="font-medium normal-case text-ink-muted/70">(pick any number)</span></p>
-                <div class="mt-2.5 flex flex-wrap gap-2">
-                    @foreach ($styles as $style)
-                        <button type="button" x-on:click="toggleStyle('{{ $style['slug'] }}')"
-                                :class="styles.includes('{{ $style['slug'] }}') ? 'bg-accent text-ink-inverse border-accent' : 'bg-surface text-ink-muted border-line hover:border-line-strong'"
-                                class="rounded-full border px-4 py-1.5 text-sm font-semibold transition">
-                            {{ $style['label'] }}
-                        </button>
-                    @endforeach
+            {{-- Gender, personality, breed, letter, length --}}
+            <div class="relative mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                <div>
+                    <label for="gender" class="text-xs font-bold tracking-wide text-ink-muted uppercase">Gender</label>
+                    <select id="gender" x-model="gender"
+                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                        <option value="any">Any</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="neutral">Either</option>
+                    </select>
                 </div>
-            </div>
 
-            {{-- Personality, breed, letter, length --}}
-            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div>
                     <label for="personality" class="text-xs font-bold tracking-wide text-ink-muted uppercase">Personality</label>
                     <select id="personality" x-model="personality"
@@ -240,7 +242,21 @@
                 </div>
             </div>
 
-            <p class="mt-4 text-xs text-ink-muted" x-show="poolCount() === 0" x-cloak>
+            {{-- Style --}}
+            <div class="relative mt-6">
+                <p class="text-xs font-bold tracking-wide text-ink-muted uppercase">Style <span class="font-medium normal-case text-ink-muted/70">(pick any number)</span></p>
+                <div class="mt-2.5 flex flex-wrap gap-2">
+                    @foreach ($styles as $style)
+                        <button type="button" x-on:click="toggleStyle('{{ $style['slug'] }}')"
+                                :class="styles.includes('{{ $style['slug'] }}') ? 'bg-accent text-ink-inverse border-accent' : 'bg-surface text-ink-muted border-line hover:border-line-strong'"
+                                class="rounded-full border px-4 py-1.5 text-sm font-semibold transition">
+                            {{ $style['label'] }}
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+
+            <p class="relative mt-4 text-xs text-ink-muted" x-show="poolCount() === 0" x-cloak>
                 No exact match for that combination. Generating will pick from the full list instead.
             </p>
 
@@ -285,6 +301,39 @@
                 </template>
             </ul>
         </div>
+
+        </div>
+
+        {{-- Live preview: purely decorative motion so the wide layout never
+             sits next to an empty column, cycling through real names from
+             the same pool the generator itself uses. --}}
+        <div class="hidden lg:block">
+            <div class="reveal sticky top-24 overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-primary-light via-surface to-accent-light p-6 text-center shadow-sm" style="--reveal-delay: 100ms">
+                <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+                    <x-paw-print class="paw absolute top-3 right-3 size-7 text-primary-vivid/20 [animation-duration:18s]"/>
+                    <x-paw-print class="paw absolute bottom-4 left-3 size-5 text-accent-vivid/20 [animation-delay:-8s] [animation-duration:22s]"/>
+                </div>
+
+                <p class="relative text-xs font-bold tracking-wide text-ink-muted uppercase">Fresh pick</p>
+
+                <div class="relative mx-auto mt-4 flex size-20 items-center justify-center rounded-full bg-surface/80">
+                    <x-cat-face-icon size="size-16"/>
+                </div>
+
+                <p class="relative mt-4 font-heading text-xl font-extrabold text-ink" x-text="previewPick?.name"></p>
+                <p class="relative mt-1 text-sm leading-relaxed text-ink-muted" x-text="previewPick?.meaning"></p>
+
+                <button type="button" x-on:click="generate()"
+                        class="btn-outline relative mt-5 w-full justify-center rounded-full text-sm">
+                    Generate my own
+                </button>
+
+                <p class="relative mt-4 text-xs text-ink-muted">
+                    {{ count($inToolNames) }}+ names in the full list
+                </p>
+            </div>
+        </div>
+        </div>
     </div>
 
     {{-- Result dialog: reuses the site's cat-face reveal animation (the same
@@ -299,31 +348,7 @@
         <template x-if="result && !result.pair">
             <div class="p-6 text-center sm:p-8">
                 <div class="relative mx-auto flex size-32 items-center justify-center rounded-full bg-primary-light">
-                    <svg class="result-cat size-24" viewBox="0 0 120 120" fill="none" aria-hidden="true">
-                        <path d="M40 36 L45 13 L60 30 Z" fill="currentColor" class="text-primary-vivid"/>
-                        <path d="M80 36 L75 13 L60 30 Z" fill="currentColor" class="text-primary-vivid"/>
-                        <path d="M45 33 L47 21 L55 30 Z" fill="#FCE3DD"/>
-                        <path d="M75 33 L73 21 L65 30 Z" fill="#FCE3DD"/>
-                        <ellipse cx="60" cy="54" rx="31" ry="27" fill="currentColor" class="text-primary-vivid"/>
-                        <ellipse cx="60" cy="64" rx="17" ry="12" fill="#FFF6F1"/>
-                        <ellipse class="result-eye" cx="49" cy="50" rx="4.6" ry="6" fill="#12383B"/>
-                        <ellipse class="result-eye" cx="71" cy="50" rx="4.6" ry="6" fill="#12383B"/>
-                        <circle cx="50.6" cy="47.8" r="1.5" fill="#FFFFFF"/>
-                        <circle cx="72.6" cy="47.8" r="1.5" fill="#FFFFFF"/>
-                        <path d="M56 59 h8 l-4 4.5 Z" fill="#12383B"/>
-                        <path d="M60 63.5 q-4 5 -8 1.5 M60 63.5 q4 5 8 1.5" stroke="#12383B" stroke-width="2.4" stroke-linecap="round"/>
-                        <path d="M42 60 L26 56 M42 65 L27 66 M78 60 L94 56 M78 65 L93 66" stroke="#12383B" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
-                        <g class="result-paw">
-                            <ellipse cx="98" cy="74" rx="9" ry="10" fill="currentColor" class="text-primary-vivid"/>
-                            <circle cx="94" cy="69" r="2.1" fill="#FCE3DD"/>
-                            <circle cx="98.5" cy="67.5" r="2.1" fill="#FCE3DD"/>
-                            <circle cx="102.5" cy="70" r="2.1" fill="#FCE3DD"/>
-                            <ellipse cx="98" cy="76" rx="4" ry="3.4" fill="#FCE3DD"/>
-                        </g>
-                        <path class="result-heart" d="M20 30c-2.4-1.5-4.6-3.1-4.6-5.6a2.6 2.6 0 0 1 4.6-1.5 2.6 2.6 0 0 1 4.6 1.5c0 2.5-2.2 4.1-4.6 5.6Z" fill="#F47C6B"/>
-                        <path class="result-heart result-heart-2" d="M100 26c-2-1.3-3.9-2.6-3.9-4.7a2.2 2.2 0 0 1 3.9-1.3 2.2 2.2 0 0 1 3.9 1.3c0 2.1-1.9 3.4-3.9 4.7Z" fill="#F47C6B"/>
-                        <path class="result-heart result-heart-3" d="M31 15c-1.7-1.1-3.3-2.2-3.3-4a1.9 1.9 0 0 1 3.3-1.1 1.9 1.9 0 0 1 3.3 1.1c0 1.8-1.6 2.9-3.3 4Z" fill="#F47C6B"/>
-                    </svg>
+                    <x-cat-face-icon size="size-24"/>
                 </div>
 
                 <h2 id="name-result-heading" class="mt-5 font-heading text-3xl font-extrabold tracking-tight text-ink" x-text="result.name"></h2>
@@ -749,6 +774,7 @@
                 shareCopied: false,
                 gridMode: null,
                 gridResults: [],
+                previewPick: null,
 
                 init() {
                     try {
@@ -756,6 +782,12 @@
                     } catch (e) {
                         this.favorites = [];
                     }
+
+                    // Purely decorative: cycles the sidebar preview through
+                    // real names from the pool so the wide layout never sits
+                    // next to a static empty panel.
+                    this.previewPick = this.pickOne(this.names);
+                    setInterval(() => { this.previewPick = this.pickOne(this.names); }, 4500);
                 },
 
                 toggleStyle(slug) {

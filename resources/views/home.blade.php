@@ -11,7 +11,7 @@
 @endpush
 
 {{-- ══ 1. Hero ═══════════════════════════════════════════════════════════ --}}
-<section class="relative overflow-hidden bg-surface-soft pb-16 lg:pb-20">
+<section class="relative overflow-hidden bg-surface-soft pb-10 lg:pb-14">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
         <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
@@ -27,20 +27,15 @@
         @endforeach
     </div>
 
-    <div class="container-page relative grid items-center gap-10 py-10 lg:grid-cols-2 lg:gap-10 xl:grid-cols-[1fr_1.14fr] lg:py-14">
+    <div class="container-page relative grid items-center gap-8 py-8 lg:grid-cols-2 lg:gap-10 xl:grid-cols-[1fr_1.14fr] lg:py-10">
         <div>
-            <p class="eyebrow">
-                <x-paw-print class="size-3.5 text-accent-vivid"/>
-                {{ count(config('catalog.tools')) + count(config('catalog.foods')) + $posts->count() }}+ free tools and guides
-            </p>
-
-            <h1 class="mt-5 font-heading text-4xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-5xl">
+            <h1 class="hero-in font-heading text-4xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-5xl" style="--i: 0">
                 Everything You Need for a
                 <span class="text-primary">Healthy,</span>
                 <span class="text-accent">Happy</span> Cat
             </h1>
 
-            <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
+            <p class="hero-in mt-4 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg" style="--i: 1">
                 Free smart tools and clear, sourced answers, all in one place,
                 with no account and nothing to install.
             </p>
@@ -48,7 +43,7 @@
             {{-- A real search: suggestions as you type, Enter (or the button)
                  goes to a results page. Plain GET means it works with no JS
                  at all — the dropdown is a progressive enhancement on top. --}}
-            <form method="GET" action="{{ route('search') }}" class="relative mt-6 max-w-lg" role="search"
+            <form method="GET" action="{{ route('search') }}" class="hero-in relative mt-6 max-w-lg" role="search" style="--i: 2"
                   x-data="heroSearch()" @click.outside="open = false">
                 <label for="site-search" class="sr-only">Search cat care tools and guides</label>
                 <div class="relative">
@@ -100,14 +95,14 @@
                 <p data-search-status class="sr-only" role="status" aria-live="polite" x-text="statusText"></p>
             </form>
 
-            <div class="mt-5 flex flex-wrap gap-3">
-                <a href="#tools" class="btn-primary rounded-full px-7">
+            <div class="hero-in mt-5 flex flex-wrap gap-3" style="--i: 3">
+                <a href="#tools" class="btn-primary rounded-full px-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-lg">
                     Explore Free Tools
-                    <svg class="size-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <svg class="size-4 transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <path d="M13 2 4.5 12.5a.6.6 0 0 0 .5 1h4.5l-1 7.5a.3.3 0 0 0 .54.24L17.5 10.5a.6.6 0 0 0-.47-1H12.5l1-7.2a.3.3 0 0 0-.5-.3Z"/>
                     </svg>
                 </a>
-                <a href="#food-guides" class="btn-outline rounded-full px-7">
+                <a href="#food-guides" class="btn-outline rounded-full px-7 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-md">
                     <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M12 7.5v13"/>
@@ -117,41 +112,23 @@
                 </a>
             </div>
 
-            {{-- Each of these is true of the site as it stands. Counts and
-                 endorsements that cannot be backed are deliberately absent. --}}
-            <ul class="mt-7 grid max-w-lg grid-cols-2 gap-3">
+            {{-- One slim line rather than a block of stat cards: every claim
+                 here is still true of the site, it just no longer costs the
+                 hero half its height to say so. --}}
+            <ul class="hero-in mt-6 flex flex-wrap items-center gap-x-5 gap-y-2.5" style="--i: 4">
                 @foreach ([
-                    ['100% Free', 'Always will be', [
-                        'M12.6 2.9 20.8 11a1.5 1.5 0 0 1 0 2.1l-7.7 7.7a1.5 1.5 0 0 1-2.1 0L2.9 12.6a1.5 1.5 0 0 1-.4-1.1V4.3a1.7 1.7 0 0 1 1.7-1.7h7.2c.4 0 .8.1 1.1.3Z',
-                        'M7.4 7.4h.01',
-                    ]],
-                    ['No Sign-up', 'Start right away', [
-                        'M4.5 20.5a7.5 7.5 0 0 1 12-6',
-                        'M12 11.5a4.2 4.2 0 1 0 0-8.5 4.2 4.2 0 0 0 0 8.5Z',
-                        'm15.5 18.5 2 2 4-4',
-                    ]],
-                    ['Privacy First', 'Nothing is stored', [
-                        'M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z',
-                        'm9.4 12.2 1.9 1.9 3.6-3.7',
-                    ]],
-                    ['Vet Sources', 'Published guidance', [
-                        'M12 7.5v13',
-                        'M3.5 18.2a.8.8 0 0 1-.8-.8V4.9a.8.8 0 0 1 .8-.8h4.9A3.6 3.6 0 0 1 12 7.5a3.6 3.6 0 0 1 3.6-3.4h4.9a.8.8 0 0 1 .8.8v12.5a.8.8 0 0 1-.8.8h-5.4A3.1 3.1 0 0 0 12 20.5a3.1 3.1 0 0 0-3.1-2.3Z',
-                    ]],
-                ] as [$title, $sub, $paths])
-                    <li class="flex items-center gap-2.5 rounded-xl border border-line bg-surface/70 px-3 py-2.5 shadow-sm backdrop-blur-sm">
-                        <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary-light text-primary">
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                @foreach ($paths as $d)
-                                    <path d="{{ $d }}"/>
-                                @endforeach
-                            </svg>
-                        </span>
-                        <span class="min-w-0 leading-tight">
-                            <span class="block text-sm font-bold text-ink">{{ $title }}</span>
-                            <span class="mt-0.5 block text-xs text-ink-muted">{{ $sub }}</span>
-                        </span>
+                    'Always free',
+                    'No sign-up',
+                    'Nothing stored',
+                    'Vet-sourced',
+                ] as $claim)
+                    <li class="group flex items-center gap-1.5 text-sm font-medium text-ink-muted">
+                        <svg class="size-4 shrink-0 text-accent-dark transition-transform duration-300 group-hover:scale-125"
+                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M20 6 9 17l-5-5"/>
+                        </svg>
+                        {{ $claim }}
                     </li>
                 @endforeach
             </ul>

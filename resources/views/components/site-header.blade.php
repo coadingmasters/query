@@ -52,17 +52,20 @@
                 </button>
 
                 <div data-menu-panel hidden
-                     class="absolute top-full left-0 z-50 mt-3 w-[30rem] origin-top scale-95 rounded-2xl border border-line bg-surface p-3 opacity-0 shadow-2xl transition duration-200 ease-out">
-                    <p class="px-3 pt-1 pb-2 text-xs font-bold tracking-wider text-ink-muted uppercase">
+                     class="absolute top-full left-0 z-50 mt-3 w-[30rem] origin-top -translate-y-2 scale-[0.97] rounded-2xl border border-line bg-surface p-3 opacity-0 shadow-2xl ring-1 ring-primary/5 transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                    <span aria-hidden="true"
+                          class="absolute -top-1.5 left-8 size-3 rotate-45 rounded-[3px] border-t border-l border-line bg-surface"></span>
+
+                    <p class="menu-row px-3 pt-1 pb-2 text-xs font-bold tracking-wider text-ink-muted uppercase" style="--i: 0">
                         What is safe to feed
                     </p>
                     <ul class="grid grid-cols-2 gap-1">
                         @foreach ($foods as $food)
-                            <li>
+                            <li class="menu-row" style="--i: {{ $loop->index + 1 }}">
                                 <a href="{{ $food['href'] }}"
-                                   class="group/item flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 transition-colors hover:bg-surface-soft">
-                                    <span class="text-sm font-medium text-ink">{{ $food['label'] }}</span>
-                                    <svg class="size-3.5 shrink-0 text-ink-muted opacity-0 transition-all duration-150 group-hover/item:translate-x-0.5 group-hover/item:text-primary group-hover/item:opacity-100"
+                                   class="group/item flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 transition-colors duration-150 hover:bg-surface-soft">
+                                    <span class="text-sm font-medium text-ink transition-colors group-hover/item:text-primary">{{ $food['label'] }}</span>
+                                    <svg class="size-3.5 shrink-0 -translate-x-1 text-ink-muted opacity-0 transition-all duration-200 group-hover/item:translate-x-0 group-hover/item:text-primary group-hover/item:opacity-100"
                                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
                                         <path d="m9 6 6 6-6 6"/>
                                     </svg>
@@ -70,11 +73,14 @@
                             </li>
                         @endforeach
                     </ul>
-                    <a href="{{ route('food-guides.index') }}" class="mt-1 flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-surface-soft">
-                        All food guides
-                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                             stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-                    </a>
+                    <div class="menu-row mt-1 border-t border-line pt-1" style="--i: {{ count($foods) + 1 }}">
+                        <a href="{{ route('food-guides.index') }}"
+                           class="group/all flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-primary transition-colors duration-150 hover:bg-surface-soft">
+                            All food guides
+                            <svg class="size-4 transition-transform duration-200 group-hover/all:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                 stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -89,20 +95,23 @@
                 </button>
 
                 <div data-menu-panel hidden
-                     class="absolute top-full left-0 z-50 mt-3 w-[32rem] origin-top scale-95 rounded-2xl border border-line bg-surface p-3 opacity-0 shadow-2xl transition duration-200 ease-out">
-                    <p class="px-3 pt-1 pb-2 text-xs font-bold tracking-wider text-ink-muted uppercase">
+                     class="absolute top-full left-0 z-50 mt-3 w-[32rem] origin-top -translate-y-2 scale-[0.97] rounded-2xl border border-line bg-surface p-3 opacity-0 shadow-2xl ring-1 ring-primary/5 transition duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                    <span aria-hidden="true"
+                          class="absolute -top-1.5 left-8 size-3 rotate-45 rounded-[3px] border-t border-l border-line bg-surface"></span>
+
+                    <p class="menu-row px-3 pt-1 pb-2 text-xs font-bold tracking-wider text-ink-muted uppercase" style="--i: 0">
                         Free calculators and checkers
                     </p>
                     <ul class="grid gap-1 sm:grid-cols-2">
                         @foreach ($tools as $tool)
-                            <li>
+                            <li class="menu-row" style="--i: {{ $loop->index + 1 }}">
                                 <a href="{{ $tool['href'] }}"
-                                   class="group/item flex items-start gap-2.5 rounded-xl px-3 py-2.5 transition-colors hover:bg-surface-soft">
-                                    <span class="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary-light text-primary transition-transform duration-200 group-hover/item:scale-110">
+                                   class="group/item flex items-start gap-2.5 rounded-xl px-3 py-2.5 transition-colors duration-150 hover:bg-surface-soft">
+                                    <span class="mt-0.5 flex size-7 shrink-0 items-center justify-center rounded-lg bg-primary-light text-primary transition-transform duration-300 group-hover/item:scale-110 group-hover/item:rotate-6">
                                         <x-paw-print class="size-3.5"/>
                                     </span>
                                     <span class="min-w-0">
-                                        <span class="block text-sm font-medium text-ink">{{ $tool['label'] }}</span>
+                                        <span class="block text-sm font-medium text-ink transition-colors group-hover/item:text-primary">{{ $tool['label'] }}</span>
                                         @unless ($tool['live'])
                                             <span class="mt-0.5 block text-[11px] font-semibold text-ink-muted">Coming soon</span>
                                         @endunless
@@ -111,11 +120,14 @@
                             </li>
                         @endforeach
                     </ul>
-                    <a href="{{ route('tools.index') }}" class="mt-1 flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-surface-soft">
-                        All tools
-                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                             stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-                    </a>
+                    <div class="menu-row mt-1 border-t border-line pt-1" style="--i: {{ count($tools) + 1 }}">
+                        <a href="{{ route('tools.index') }}"
+                           class="group/all flex items-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-semibold text-primary transition-colors duration-150 hover:bg-surface-soft">
+                            All tools
+                            <svg class="size-4 transition-transform duration-200 group-hover/all:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                 stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -276,21 +288,24 @@
                 chevron: root.querySelector('[data-menu-chevron]'),
             }));
 
-            // Fades and scales the panel in/out rather than an instant show,
-            // the same enter/leave timing the mobile drawer uses below.
-            // `hidden` is only added back once the leave transition finishes,
-            // so the panel doesn't just vanish mid-fade.
+            // The panel lifts, scales and fades in; `is-open` then cascades its
+            // rows (see .menu-row in app.css). `hidden` is only added back once
+            // the leave transition finishes, so it never vanishes mid-fade.
+            const ENTER = ['opacity-0', 'scale-[0.97]', '-translate-y-2'];
+
             const openPanel = (panel) => {
                 panel.removeAttribute('hidden');
                 requestAnimationFrame(() => {
-                    panel.classList.remove('opacity-0', 'scale-95');
+                    panel.classList.remove(...ENTER);
+                    panel.classList.add('is-open');
                 });
             };
 
             const closePanel = (panel) => {
                 if (panel.hasAttribute('hidden')) return;
-                panel.classList.add('opacity-0', 'scale-95');
-                setTimeout(() => panel.setAttribute('hidden', ''), 200);
+                panel.classList.add(...ENTER);
+                panel.classList.remove('is-open');
+                setTimeout(() => panel.setAttribute('hidden', ''), 300);
             };
 
             const closeMenus = (except = null) => menus.forEach(m => {

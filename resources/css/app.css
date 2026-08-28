@@ -199,6 +199,63 @@
 }
 
 /* ==========================================================================
+   Header dropdown items
+   --------------------------------------------------------------------------
+   The panel itself fades and lifts via utility classes; its rows cascade in
+   behind it on a short per-row delay, which is what makes the menu read as
+   opening rather than simply appearing. Index comes from --i on each row.
+   ========================================================================== */
+[data-menu-panel] .menu-row {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0);
+}
+
+[data-menu-panel].is-open .menu-row {
+    opacity: 1;
+    transform: none;
+    transition:
+        opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--i, 0) * 28ms + 60ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-menu-panel] .menu-row {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ==========================================================================
+   Hero entrance
+   --------------------------------------------------------------------------
+   The home hero sits above the fold, so it cannot wait on the scroll observer
+   the way .reveal does. An animation with `backwards` fill covers the pre-run
+   state, which means content stays visible if the stylesheet never loads.
+   ========================================================================== */
+@keyframes hero-rise {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 20px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.hero-in {
+    animation: hero-rise 0.75s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+    animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-in {
+        animation: none;
+    }
+}
+
+/* ==========================================================================
    Article prose
    --------------------------------------------------------------------------
    Long-form body copy. Written as element rules under one class rather than

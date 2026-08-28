@@ -1,5 +1,11 @@
 <x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema">
 
+@php
+    // One heading style for every panel in the main column, so the whole page
+    // reads as a single design rather than a tool with an article bolted on.
+    $panelHeading = 'flex items-center gap-2.5 border-b-2 border-primary-vivid/25 pb-3 font-heading text-xl font-extrabold tracking-tight text-ink';
+@endphp
+
 {{-- ══ 1. HERO ═══════════════════════════════════════════════════════════ --}}
 <section class="relative overflow-hidden bg-surface-soft">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
@@ -359,10 +365,234 @@
                     </div>
                 </div>
 
+                {{-- How naming works --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
+                        How cat naming actually works
+                    </h2>
+                    <div class="mt-5 space-y-4 text-base leading-relaxed text-ink-muted">
+                        <p>
+                            Most name generators are a random word picker with a cat theme
+                            bolted on. This one starts from a smaller, curated list on
+                            purpose: every name here has a real reason attached, whether
+                            that is a genuine translation, a mythology figure, or a
+                            well-known character, rather than a string pulled from a
+                            dictionary with no context.
+                        </p>
+                        <p>
+                            The breed filter is the part worth using if you already know
+                            what you are bringing home. Pick a breed and the generator
+                            leans toward names that fit its actual origin country when
+                            there is a real match (Japanese names for a Japanese
+                            Bobtail, French names for a Chartreux), and shows that
+                            breed's real temperament alongside the result, pulled
+                            straight from our breed data rather than invented for this
+                            tool.
+                        </p>
+                        <p>
+                            A short name a cat can actually learn tends to work better
+                            than a long, elaborate one: most trainers suggest one or two
+                            syllables with a clear, consistent sound, which is exactly
+                            what the length filter is for. The nicknames included with
+                            some names are there for the same reason: a formal name for
+                            the vet's paperwork and a shorter one for calling them in for
+                            dinner are not a contradiction.
+                        </p>
+                    </div>
+                </div>
+
+                {{-- Popular names --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
+                        Popular cat names
+                    </h2>
+                    <p class="mt-4 text-base leading-relaxed text-ink-muted">
+                        No organization publishes a single verified real-time ranking of
+                        cat names, so treat this as what turns up again and again in
+                        cat-owner communities, vet clinic intake forms and pet insurance
+                        sign-ups, not an official chart.
+                    </p>
+                    <div class="mt-5 grid gap-4 sm:grid-cols-2">
+                        @foreach (['female' => 'Popular female cat names', 'male' => 'Popular male cat names'] as $key => $heading)
+                            <div class="rounded-xl border border-line bg-surface-soft p-4">
+                                <h3 class="font-heading text-sm font-bold text-ink">{{ $heading }}</h3>
+                                <p class="mt-2 text-sm leading-relaxed text-ink-muted">{{ implode(', ', $popularNames[$key]) }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- By style --}}
+                <div id="by-style" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
+                        Cat names by style
+                    </h2>
+                    <p class="mt-4 text-base leading-relaxed text-ink-muted">
+                        The style filter above covers ten long-tail directions, from
+                        mythology to food-inspired names. Here is a sample from each.
+                    </p>
+                    <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                        @foreach ($styleExamples as $slug => $data)
+                            <button type="button" x-on:click="pickCategory('{{ $slug }}')"
+                                    class="group rounded-xl border border-line bg-surface-soft p-4 text-left transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                                <h3 class="font-heading text-sm font-bold text-ink transition-colors group-hover:text-primary">{{ $data['label'] }} cat names</h3>
+                                <p class="mt-2 text-sm leading-relaxed text-ink-muted">{{ $data['names']->pluck('name')->implode(', ') }}</p>
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- By personality --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
+                        Cat names by personality
+                    </h2>
+                    <p class="mt-4 text-base leading-relaxed text-ink-muted">
+                        A name that matches how a cat actually acts tends to feel right
+                        longer than one picked from looks alone.
+                    </p>
+                    <div class="mt-5 overflow-hidden rounded-xl border border-line">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="border-b border-line bg-surface-section text-xs tracking-wider text-ink-muted uppercase">
+                                    <th scope="col" class="px-4 py-3 font-semibold">Personality</th>
+                                    <th scope="col" class="px-4 py-3 font-semibold">Example names</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-line">
+                                @foreach ($personalityExamples as $data)
+                                    <tr class="transition-colors hover:bg-surface-soft">
+                                        <td class="px-4 py-3 font-semibold text-ink">{{ $data['label'] }}</td>
+                                        <td class="px-4 py-3 text-ink-muted">{{ $data['names']->pluck('name')->implode(', ') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {{-- By breed --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
+                        Cat names by breed
+                    </h2>
+                    <p class="mt-4 text-base leading-relaxed text-ink-muted">
+                        Maine Coon, Siamese, Persian, Bengal, Russian Blue and more,
+                        matched to a theme that actually fits the breed rather than a
+                        generic list reused for all of them.
+                    </p>
+                    <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                        @foreach ($breedGuide as $breed)
+                            <div class="rounded-xl border border-line bg-surface-soft p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                                <h3 class="font-heading text-sm font-bold text-ink">{{ $breed['breed'] }} cat names</h3>
+                                <p class="mt-0.5 text-xs font-semibold text-primary">{{ $breed['theme'] }}</p>
+                                <p class="mt-2 text-sm leading-relaxed text-ink-muted">{{ implode(', ', $breed['names']) }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- Kitten vs adult --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
+                        Kitten names vs. adult cat names
+                    </h2>
+                    <div class="mt-5 space-y-4 text-base leading-relaxed text-ink-muted">
+                        <p>
+                            A kitten grows into a name the way it grows into everything
+                            else, so a cute or diminutive name like Peanut or Biscuit
+                            rarely feels wrong even years later. A nine-pound cat still
+                            named Peanut is its own kind of joke that keeps working.
+                        </p>
+                        <p>
+                            Adult cats and shelter rescues carry more nuance: many
+                            already answer to a name, and changing it is fine, but a
+                            switch tends to go smoother when the new name shares a
+                            similar sound or syllable count with the old one, since
+                            that overlap shortens the relearning period. A name chosen
+                            for a kitten is usually the name that cat keeps for the
+                            next fifteen-plus years, so it is worth picking one that
+                            still suits a full-grown, dignified adult cat, not just a
+                            fluffy kitten.
+                        </p>
+                    </div>
+                </div>
+
+                {{-- Rules --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
+                        Seven rules for choosing the right cat name
+                    </h2>
+                    <ol class="mt-5 space-y-3">
+                        @foreach ([
+                            ['Keep it short.', 'One or two syllables is easiest for a cat to learn and for you to call out consistently.'],
+                            ['End on a clear sound.', 'Names like Luna, Milo or Jax cut through background noise better than soft, trailing ones, which is part of why vets and trainers so often repeat this advice.'],
+                            ['Say it out loud, not just on paper.', 'A name that reads well can still sound awkward called across a yard.'],
+                            ['Avoid names that sound like commands.', '"Kit" sounds close to "sit," and overlap with a command word slows down training.'],
+                            ['Pick something the whole household agrees on.', 'A name everyone shortens differently just confuses a cat.'],
+                            ['Let personality guide it, not just looks.', 'A name chosen after living with a cat for a few days often fits better than one picked from a photo alone.'],
+                            ['Make sure it still works in five years.', 'Cats live well into their teens, so a name should suit a full-grown adult cat, not just a kitten.'],
+                        ] as $i => [$rule, $detail])
+                            <li class="group flex gap-3.5">
+                                <span class="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary-light font-heading text-sm font-extrabold text-primary transition-transform duration-300 group-hover:scale-110">
+                                    {{ $i + 1 }}
+                                </span>
+                                <span class="text-base leading-relaxed text-ink-muted">
+                                    <strong class="text-ink">{{ $rule }}</strong> {{ $detail }}
+                                </span>
+                            </li>
+                        @endforeach
+                    </ol>
+                </div>
+
+                {{-- Two cats --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
+                        Cat names for two cats
+                    </h2>
+                    <p class="mt-4 text-base leading-relaxed text-ink-muted">
+                        Naming two cats at once opens up pairs. Two Cats mode in the
+                        generator above builds a matched pair automatically and
+                        explains what actually connects them. A few tested pair ideas
+                        to start from:
+                    </p>
+                    <div class="mt-5 overflow-hidden rounded-xl border border-line">
+                        <table class="w-full text-left text-sm">
+                            <thead>
+                                <tr class="border-b border-line bg-surface-section text-xs tracking-wider text-ink-muted uppercase">
+                                    <th scope="col" class="px-4 py-3 font-semibold">Theme</th>
+                                    <th scope="col" class="px-4 py-3 font-semibold">Pair</th>
+                                    <th scope="col" class="hidden px-4 py-3 font-semibold sm:table-cell">Why it works</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-line">
+                                @foreach ($pairExamples as $pair)
+                                    <tr class="align-top transition-colors hover:bg-surface-soft">
+                                        <td class="px-4 py-3 font-semibold text-ink">{{ $pair['theme'] }}</td>
+                                        <td class="px-4 py-3 text-ink-muted">
+                                            {{ $pair['name1'] }} &amp; {{ $pair['name2'] }}
+                                            <span class="mt-1 block text-xs sm:hidden">{{ $pair['why'] }}</span>
+                                        </td>
+                                        <td class="hidden px-4 py-3 text-ink-muted sm:table-cell">{{ $pair['why'] }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 {{-- FAQ --}}
                 <div id="faq" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
-                    <h2 class="flex items-center gap-2 border-b-2 border-primary-vivid/25 pb-3 font-heading text-xl font-extrabold tracking-tight text-ink">
-                        <x-paw-print class="size-5 text-primary-vivid"/>
+                    <h2 class="{{ $panelHeading }}">
+                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
                         Common Questions
                     </h2>
 
@@ -406,6 +636,25 @@
                         <div class="hidden w-40 shrink-0 sm:block">
                             <x-img name="purrquery-cat-saying-hi" alt="Ginger kitten raising a paw" sizes="160px"/>
                         </div>
+                    </div>
+                </div>
+
+                {{-- Keep exploring --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        <x-paw-print class="size-5 shrink-0 text-primary-vivid"/>
+                        Keep exploring
+                    </h2>
+                    <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                        @foreach ($internalLinks as $link)
+                            <a href="{{ $link['url'] }}"
+                               class="group flex items-center justify-between gap-2 rounded-xl border border-line bg-surface-soft px-4 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                                {{ $link['label'] }}
+                                <svg class="size-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5 group-hover:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="m9 6 6 6-6 6"/>
+                                </svg>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -648,233 +897,6 @@
                     </div>
                 </a>
             @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- ══ 4. SEO CONTENT ════════════════════════════════════════════════════ --}}
-<section class="border-t border-line bg-surface-section py-10 lg:py-14">
-    <div class="mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[50px]">
-
-        <div class="reveal mx-auto max-w-3xl text-center">
-            <p class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.14em] text-primary uppercase">
-                <x-paw-print class="size-4"/>
-                The full guide
-            </p>
-            <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-                Everything worth knowing about naming a cat
-            </h2>
-        </div>
-
-        {{-- How it works --}}
-        <div class="reveal mx-auto mt-10 max-w-3xl">
-            <h3 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">How cat naming actually works</h3>
-            <div class="mt-4 space-y-4 text-base leading-relaxed text-ink-muted">
-                <p>
-                    Most name generators are a random word picker with a cat theme
-                    bolted on. This one starts from a smaller, curated list on
-                    purpose: every name here has a real reason attached, whether
-                    that is a genuine translation, a mythology figure, or a
-                    well-known character, rather than a string pulled from a
-                    dictionary with no context.
-                </p>
-                <p>
-                    The breed filter is the part worth using if you already know
-                    what you are bringing home. Pick a breed and the generator
-                    leans toward names that fit its actual origin country when
-                    there is a real match (Japanese names for a Japanese
-                    Bobtail, French names for a Chartreux), and shows that
-                    breed's real temperament alongside the result, pulled
-                    straight from our breed data rather than invented for this
-                    tool.
-                </p>
-                <p>
-                    A short name a cat can actually learn tends to work better
-                    than a long, elaborate one: most trainers suggest one or two
-                    syllables with a clear, consistent sound, which is exactly
-                    what the length filter is for. The nicknames included with
-                    some names are there for the same reason: a formal name for
-                    the vet's paperwork and a shorter one for calling them in for
-                    dinner are not a contradiction.
-                </p>
-            </div>
-        </div>
-
-        {{-- Popular names --}}
-        <div class="reveal mt-14">
-            <h3 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Popular cat names</h3>
-            <p class="mt-4 max-w-3xl text-base leading-relaxed text-ink-muted">
-                No organization publishes a single verified real-time ranking of
-                cat names, so treat this as what turns up again and again in
-                cat-owner communities, vet clinic intake forms and pet insurance
-                sign-ups, not an official chart.
-            </p>
-            <div class="mt-6 grid gap-4 sm:grid-cols-2">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Popular female cat names</h4>
-                        <p class="card-text">{{ implode(', ', $popularNames['female']) }}</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">Popular male cat names</h4>
-                        <p class="card-text">{{ implode(', ', $popularNames['male']) }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- By style --}}
-        <div id="by-style" class="reveal mt-14 scroll-mt-24">
-            <h3 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Cat names by style</h3>
-            <p class="mt-4 max-w-3xl text-base leading-relaxed text-ink-muted">
-                The style filter above covers ten long-tail directions, from
-                mythology to food-inspired names. Here is a sample from each.
-            </p>
-            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                @foreach ($styleExamples as $data)
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ $data['label'] }} cat names</h4>
-                            <p class="card-text">{{ $data['names']->pluck('name')->implode(', ') }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-        {{-- By personality --}}
-        <div class="reveal mt-14">
-            <h3 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Cat names by personality</h3>
-            <p class="mt-4 max-w-3xl text-base leading-relaxed text-ink-muted">
-                A name that matches how a cat actually acts tends to feel right
-                longer than one picked from looks alone.
-            </p>
-            <div class="mt-6 overflow-hidden rounded-2xl border border-line">
-                <table class="w-full text-left text-sm">
-                    <thead>
-                        <tr class="border-b border-line bg-surface text-xs tracking-wider text-ink-muted uppercase">
-                            <th scope="col" class="px-4 py-3 font-semibold">Personality</th>
-                            <th scope="col" class="px-4 py-3 font-semibold">Example names</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-line bg-surface">
-                        @foreach ($personalityExamples as $data)
-                            <tr>
-                                <td class="px-4 py-3 font-semibold text-ink">{{ $data['label'] }}</td>
-                                <td class="px-4 py-3 text-ink-muted">{{ $data['names']->pluck('name')->implode(', ') }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        {{-- By breed --}}
-        <div class="reveal mt-14">
-            <h3 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Cat names by breed</h3>
-            <p class="mt-4 max-w-3xl text-base leading-relaxed text-ink-muted">
-                Maine Coon, Siamese, Persian, Bengal, Russian Blue and more,
-                matched to a theme that actually fits the breed rather than a
-                generic list reused for all of them.
-            </p>
-            <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                @foreach ($breedGuide as $breed)
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">{{ $breed['breed'] }} cat names</h4>
-                            <p class="mt-0.5 text-xs font-semibold text-primary">{{ $breed['theme'] }}</p>
-                            <p class="card-text">{{ implode(', ', $breed['names']) }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-
-        {{-- Kitten vs adult --}}
-        <div class="reveal mx-auto mt-14 max-w-3xl">
-            <h3 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Kitten names vs. adult cat names</h3>
-            <div class="mt-4 space-y-4 text-base leading-relaxed text-ink-muted">
-                <p>
-                    A kitten grows into a name the way it grows into everything
-                    else, so a cute or diminutive name like Peanut or Biscuit
-                    rarely feels wrong even years later. A nine-pound cat still
-                    named Peanut is its own kind of joke that keeps working.
-                </p>
-                <p>
-                    Adult cats and shelter rescues carry more nuance: many
-                    already answer to a name, and changing it is fine, but a
-                    switch tends to go smoother when the new name shares a
-                    similar sound or syllable count with the old one, since
-                    that overlap shortens the relearning period. A name chosen
-                    for a kitten is usually the name that cat keeps for the
-                    next fifteen-plus years, so it is worth picking one that
-                    still suits a full-grown, dignified adult cat, not just a
-                    fluffy kitten.
-                </p>
-            </div>
-        </div>
-
-        {{-- Rules --}}
-        <div class="reveal mx-auto mt-14 max-w-3xl">
-            <h3 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Seven rules for choosing the right cat name</h3>
-            <ol class="mt-4 space-y-3 text-base leading-relaxed text-ink-muted">
-                <li><strong class="text-ink">1. Keep it short.</strong> One or two syllables is easiest for a cat to learn and for you to call out consistently.</li>
-                <li><strong class="text-ink">2. End on a clear sound.</strong> Names like Luna, Milo or Jax cut through background noise better than soft, trailing ones, which is part of why vets and trainers so often repeat this advice.</li>
-                <li><strong class="text-ink">3. Say it out loud, not just on paper.</strong> A name that reads well can still sound awkward called across a yard.</li>
-                <li><strong class="text-ink">4. Avoid names that sound like commands.</strong> "Kit" sounds close to "sit," and overlap with a command word slows down training.</li>
-                <li><strong class="text-ink">5. Pick something the whole household agrees on.</strong> A name everyone shortens differently just confuses a cat.</li>
-                <li><strong class="text-ink">6. Let personality guide it, not just looks.</strong> A name chosen after living with a cat for a few days often fits better than one picked from a photo alone.</li>
-                <li><strong class="text-ink">7. Make sure it still works in five years.</strong> Cats live well into their teens, so a name should suit a full-grown adult cat, not just a kitten.</li>
-            </ol>
-        </div>
-
-        {{-- Two cats --}}
-        <div class="reveal mt-14">
-            <h3 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Cat names for two cats</h3>
-            <p class="mt-4 max-w-3xl text-base leading-relaxed text-ink-muted">
-                Naming two cats at once opens up pairs. Two Cats mode in the
-                generator above builds a matched pair automatically and
-                explains what actually connects them. A few tested pair ideas
-                to start from:
-            </p>
-            <div class="mt-6 overflow-hidden rounded-2xl border border-line">
-                <table class="w-full text-left text-sm">
-                    <thead>
-                        <tr class="border-b border-line bg-surface text-xs tracking-wider text-ink-muted uppercase">
-                            <th scope="col" class="px-4 py-3 font-semibold">Theme</th>
-                            <th scope="col" class="px-4 py-3 font-semibold">Pair</th>
-                            <th scope="col" class="px-4 py-3 font-semibold">Why it works</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-line bg-surface">
-                        @foreach ($pairExamples as $pair)
-                            <tr>
-                                <td class="px-4 py-3 font-semibold text-ink">{{ $pair['theme'] }}</td>
-                                <td class="px-4 py-3 text-ink-muted">{{ $pair['name1'] }} &amp; {{ $pair['name2'] }}</td>
-                                <td class="px-4 py-3 text-ink-muted">{{ $pair['why'] }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        {{-- Internal links --}}
-        <div class="reveal mt-14">
-            <h3 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Keep exploring</h3>
-            <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                @foreach ($internalLinks as $link)
-                    <a href="{{ $link['url'] }}"
-                       class="group flex items-center justify-between gap-2 rounded-xl border border-line bg-surface px-4 py-3.5 text-sm font-semibold text-ink shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
-                        {{ $link['label'] }}
-                        <svg class="size-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5 group-hover:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="m9 6 6 6-6 6"/>
-                        </svg>
-                    </a>
-                @endforeach
-            </div>
         </div>
     </div>
 </section>

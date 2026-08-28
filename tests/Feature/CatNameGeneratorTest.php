@@ -55,4 +55,26 @@ class CatNameGeneratorTest extends TestCase
         $this->get('/tools')->assertSee('Cat Name Generator');
         $this->get('/tools')->assertDontSee('Coming soon');
     }
+
+    public function test_the_seo_content_sections_render(): void
+    {
+        $this->get('/tools/cat-name-generator')
+            ->assertOk()
+            ->assertSee('Surprise Me')
+            ->assertSee('Random Names')
+            ->assertSee('Trending Names')
+            ->assertSee('Maine Coon cat names')
+            ->assertSee('Siamese cat names')
+            ->assertSee('Popular female cat names')
+            ->assertSee('Seven rules for choosing the right cat name')
+            ->assertSee('Cat names for two cats');
+    }
+
+    public function test_internal_links_point_to_real_routes(): void
+    {
+        $response = $this->get('/tools/cat-name-generator');
+
+        $response->assertSee(route('tools.cat-age-calculator'), false);
+        $response->assertSee(route('tools.cat-calorie-calculator'), false);
+    }
 }

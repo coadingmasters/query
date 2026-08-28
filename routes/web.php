@@ -34,6 +34,7 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Tools\CatAgeCalculatorController;
 use App\Http\Controllers\Tools\CatCalorieCalculatorController;
 use App\Http\Controllers\Tools\CatNameGeneratorController;
+use App\Http\Controllers\Tools\CatNameGeneratorSaveController;
 use App\Http\Controllers\Tools\CatPregnancyCalculatorController;
 use App\Http\Controllers\Tools\CatWeightCheckerController;
 use App\Http\Controllers\Tools\VaccinationTrackerController;
@@ -91,6 +92,11 @@ Route::get('/tools/cat-weight-checker', CatWeightCheckerController::class)
 
 Route::get('/tools/cat-name-generator', CatNameGeneratorController::class)
     ->name('tools.cat-name-generator');
+
+// Rate limited: it writes to the database from an unauthenticated page.
+Route::post('/tools/cat-name-generator/save', [CatNameGeneratorSaveController::class, 'store'])
+    ->middleware('throttle:30,1')
+    ->name('tools.cat-name-generator.save');
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('search.suggest');

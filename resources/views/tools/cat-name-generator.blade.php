@@ -2,27 +2,29 @@
 
 {{-- ══ 1. HERO ═══════════════════════════════════════════════════════════ --}}
 <section class="relative overflow-hidden bg-surface-soft">
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-        <x-paw-print class="paw absolute top-[16%] left-[5%] hidden size-10 text-primary-vivid/30 lg:block [animation-duration:23s]"/>
-        <x-paw-print class="paw absolute right-[8%] bottom-[18%] hidden size-8 text-accent-vivid/30 lg:block [animation-delay:-9s] [animation-duration:27s]"/>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+        <div class="absolute -top-28 -left-20 size-80 rounded-full bg-primary-vivid opacity-[0.08] blur-3xl"></div>
+        <div class="absolute -right-20 bottom-0 size-72 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
+        <x-paw-print class="paw absolute top-[14%] left-[5%] hidden size-10 text-primary-vivid/30 lg:block [animation-duration:23s]"/>
+        <x-paw-print class="paw absolute right-[42%] bottom-[10%] hidden size-7 text-accent-vivid/30 lg:block [animation-delay:-9s] [animation-duration:27s]"/>
     </div>
 
-    <div class="container-page relative pt-8 pb-10 lg:pt-6">
-        <nav aria-label="Breadcrumb" class="text-sm text-ink-muted">
-            <ol class="flex flex-wrap items-center gap-1.5">
-                <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
-                <li aria-hidden="true">/</li>
-                <li><a href="{{ route('tools.index') }}" class="transition-colors hover:text-primary">Tools</a></li>
-                <li aria-hidden="true">/</li>
-                <li class="font-medium text-ink">Cat Name Generator</li>
-            </ol>
-        </nav>
+    <div class="container-page relative grid items-center gap-8 pt-8 pb-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:pt-6">
+        <div class="reveal relative z-10">
+            <nav aria-label="Breadcrumb" class="text-sm text-ink-muted">
+                <ol class="flex flex-wrap items-center gap-1.5">
+                    <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
+                    <li aria-hidden="true">/</li>
+                    <li><a href="{{ route('tools.index') }}" class="transition-colors hover:text-primary">Tools</a></li>
+                    <li aria-hidden="true">/</li>
+                    <li class="font-medium text-ink">Cat Name Generator</li>
+                </ol>
+            </nav>
 
-        <div class="mt-4 max-w-2xl">
-            <h1 class="font-heading text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
+            <h1 class="mt-4 font-heading text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
                 Cat Name Generator
             </h1>
-            <p class="mt-4 text-base leading-relaxed text-ink-muted sm:text-lg">
+            <p class="mt-4 max-w-lg text-base leading-relaxed text-ink-muted sm:text-lg">
                 150+ names, filtered by style, personality and even breed. Every
                 one comes with a real meaning behind it, not a made-up one.
             </p>
@@ -33,8 +35,8 @@
                     ['Free, no sign-up', 'M12 21c-4.2-2.5-8-5.2-8-9.4A4.4 4.4 0 0 1 12 9a4.4 4.4 0 0 1 8 2.6c0 4.2-3.8 6.9-8 9.4Z'],
                     ['Nothing leaves your browser', 'M5.5 5h13A1.5 1.5 0 0 1 20 6.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 15.5v-9A1.5 1.5 0 0 1 5.5 5Z'],
                 ] as [$label, $d])
-                    <li class="flex items-center gap-2 text-sm font-medium text-ink-muted">
-                        <svg class="size-4 shrink-0 text-accent-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    <li class="group flex items-center gap-2 text-sm font-medium text-ink-muted">
+                        <svg class="size-4 shrink-0 text-accent-dark transition-transform duration-300 group-hover:scale-125" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                              stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <path d="{{ $d }}"/>
                         </svg>
@@ -42,6 +44,32 @@
                     </li>
                 @endforeach
             </ul>
+
+            <a href="#generator" class="btn-primary mt-7 transition-transform duration-200 hover:scale-105">
+                <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 3v3.5M12 17.5V21M3 12h3.5M17.5 12H21M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>
+                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                </svg>
+                Start Generating
+            </a>
+        </div>
+
+        <div class="reveal relative" style="--reveal-delay: 150ms">
+            <div class="relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg transition-transform duration-500 hover:-translate-y-1.5">
+                <x-img name="cat-name-generator-cute-kitten" alt="Fluffy kitten beside a board of name ideas"
+                       sizes="(max-width: 1023px) 92vw, 780px" :priority="true"/>
+            </div>
+
+            <div aria-hidden="true"
+                 class="absolute -bottom-5 left-4 hidden items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 shadow-lg sm:flex">
+                <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent-light text-accent-dark">
+                    <x-paw-print class="size-5"/>
+                </span>
+                <span>
+                    <span class="block font-heading text-sm font-extrabold text-ink">150+ names</span>
+                    <span class="mt-0.5 block text-xs text-ink-muted">Every one with a real meaning</span>
+                </span>
+            </div>
         </div>
     </div>
 
@@ -52,7 +80,7 @@
 </section>
 
 {{-- ══ 2. GENERATOR ══════════════════════════════════════════════════════ --}}
-<section class="bg-surface py-10 lg:py-14"
+<section id="generator" class="scroll-mt-24 bg-surface py-10 lg:py-14"
          x-data="catNameGenerator(@js($names), @js($breeds))">
     <div class="container-page max-w-4xl">
         <div class="reveal rounded-2xl border border-line bg-surface-soft p-5 shadow-sm sm:p-8">

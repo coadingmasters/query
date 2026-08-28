@@ -154,18 +154,22 @@
                      shot, so it sits directly on the hero background rather
                      than inside a card: no fill, no border, no box-shadow —
                      just a shadow that follows the cat's own silhouette. --}}
-                <img src="{{ $heroMedia->url }}"
-                     width="{{ $heroMedia->width }}" height="{{ $heroMedia->height }}"
-                     alt="Cat reaching up to play with a feather wand toy"
-                     sizes="(max-width: 1023px) 92vw, 780px"
-                     fetchpriority="high" decoding="sync"
-                     class="relative h-full w-full object-contain drop-shadow-xl">
+                <div class="cat-walk">
+                    <img src="{{ $heroMedia->url }}"
+                         width="{{ $heroMedia->width }}" height="{{ $heroMedia->height }}"
+                         alt="Cat reaching up to play with a feather wand toy"
+                         sizes="(max-width: 1023px) 92vw, 780px"
+                         fetchpriority="high" decoding="sync"
+                         class="cat-breathe relative h-full w-full object-contain drop-shadow-xl">
+                </div>
             @else
-                <div class="relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg">
-                    <x-img name="purrquery-hero-cat-owner-smiling"
-                           alt="Cat owner smiling as she holds her fluffy tabby"
-                           sizes="(max-width: 1023px) 92vw, 780px"
-                           :priority="true"/>
+                <div class="cat-walk">
+                    <div class="cat-breathe relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg">
+                        <x-img name="purrquery-hero-cat-owner-smiling"
+                               alt="Cat owner smiling as she holds her fluffy tabby"
+                               sizes="(max-width: 1023px) 92vw, 780px"
+                               :priority="true"/>
+                    </div>
                 </div>
             @endif
 
@@ -174,13 +178,13 @@
                  photo is too small for them to sit on cleanly. The third
                  (top-right) badge from the first pass collided with the
                  feather wand and was dropped rather than shuffled around it. --}}
-            <div aria-hidden="true" class="absolute top-2 -left-4 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
+            <div aria-hidden="true" style="--i: 0" class="cat-badge absolute top-2 -left-4 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
                 <svg class="size-6 text-primary-vivid" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M12 21c-.28 0-.53-.11-.71-.29C7.4 16.98 3.5 13.1 3.5 9.36 3.5 6.4 5.9 4 8.85 4c1.68 0 3.24.83 4.15 2.14C13.91 4.83 15.47 4 17.15 4 20.1 4 22.5 6.4 22.5 9.36c0 3.74-3.9 7.62-7.79 11.35a1 1 0 0 1-.71.29Z"/>
                 </svg>
             </div>
 
-            <div aria-hidden="true" class="absolute top-[46%] -right-5 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
+            <div aria-hidden="true" style="--i: 1" class="cat-badge absolute top-[46%] -right-5 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
                 <svg class="size-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <ellipse cx="12" cy="8" rx="8" ry="3"/>
                     <path d="M4 8v2.5c0 3.6 3.6 6.5 8 6.5s8-2.9 8-6.5V8"/>
@@ -189,8 +193,8 @@
 
             {{-- Duplicates a line from the trust row below, so it is hidden
                  from screen readers rather than read out twice. --}}
-            <div aria-hidden="true"
-                 class="absolute -bottom-5 right-4 hidden items-center gap-3 rounded-full bg-accent px-4 py-3 shadow-lg sm:flex">
+            <div aria-hidden="true" style="--i: 2"
+                 class="cat-badge absolute -bottom-5 right-4 hidden items-center gap-3 rounded-full bg-accent px-4 py-3 shadow-lg sm:flex">
                 <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-accent">
                     <x-paw-print class="size-5"/>
                 </span>

@@ -1,12 +1,24 @@
 {{--
-    Cat Pregnancy Calculator: UI shell only.
+    Cat Pregnancy Calculator.
 
-    There is deliberately no calculation here yet. The Calculate button reveals
-    the results section with the dummy values written into the markup, and the
-    week timeline is static. Each section below is commented so the next pass
-    can target one without reading the whole file.
+    The hero runs full width, then everything else sits in one two-column
+    section: the tool and its writing on the left, a sticky sidebar on the
+    right. Each panel below is commented so the next pass can target one
+    without reading the whole file.
 --}}
 <x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema">
+
+@php
+    // One heading style for every panel in the main column, so the whole page
+    // reads as a single design rather than a tool with an article bolted on.
+    $panelHeading = 'flex items-center gap-2.5 border-b-2 border-primary-vivid/25 pb-3 font-heading text-xl font-extrabold tracking-tight text-ink';
+
+    // No controller-supplied list on this page, so the bottom grid builds its
+    // own from the catalogue with this tool taken out of it.
+    $moreTools = collect(config('catalog.tools'))
+        ->reject(fn ($t) => $t['slug'] === 'cat-pregnancy-calculator')
+        ->values();
+@endphp
 
 {{-- ══ 1. HEADER ═════════════════════════════════════════════════════════
      Tool title and one line saying what it does. The site header above it
@@ -46,403 +58,448 @@
     </svg>
 </section>
 
-<section class="section-tight bg-surface">
-    <div class="container-page max-w-5xl">
+{{-- ══ 2. TOOL + SIDEBAR ═════════════════════════════════════════════════ --}}
+<section class="bg-surface-section py-8 lg:py-12">
+    <div class="mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[50px]">
+        <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
 
-        {{-- ══ 2. INPUT ══════════════════════════════════════════════════════
-             Cat name, breed, mating date, an unknown-date toggle that reveals a
-             secondary input, and the Calculate button. The button reveals the
-             results section; it does no arithmetic yet.
-             ═══════════════════════════════════════════════════════════════ --}}
-        <form id="calculator-form" class="reveal rounded-2xl border border-line bg-surface p-6 shadow-md sm:p-8"
-              onsubmit="return false">
-            <h2 class="font-heading text-2xl font-extrabold tracking-tight text-ink">
-                Your cat’s details
-            </h2>
-            <p class="mt-2 text-sm text-ink-muted">
-                Nothing is sent anywhere. This runs entirely in your browser.
-            </p>
+            {{-- ── Main column ──────────────────────────────────────────── --}}
+            <div class="space-y-6">
 
-            <div class="mt-6 grid gap-5 sm:grid-cols-2">
-                {{-- Cat name --}}
-                <div>
-                    <label for="cat-name" class="block text-sm font-semibold text-ink">Cat’s name</label>
-                    <input id="cat-name" name="cat-name" type="text" autocomplete="off" placeholder="Luna"
-                           class="mt-2 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-sm transition placeholder:text-ink-muted focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                </div>
-
-                {{-- Breed: five placeholder options for now --}}
-                <div>
-                    <label for="cat-breed" class="block text-sm font-semibold text-ink">Breed</label>
-                    <select id="cat-breed" name="cat-breed"
-                            class="mt-2 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-sm transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                        {{-- Values match the gestation table in the script. A
-                             breed listed here without an entry there would
-                             silently fall back to the 65-day default. --}}
-                        <option value="mixed">Mixed breed / unknown</option>
-                        <option value="abyssinian">Abyssinian</option>
-                        <option value="bengal">Bengal</option>
-                        <option value="british-shorthair">British Shorthair</option>
-                        <option value="burmese">Burmese</option>
-                        <option value="devon-rex">Devon Rex</option>
-                        <option value="maine-coon">Maine Coon</option>
-                        <option value="oriental-shorthair">Oriental Shorthair</option>
-                        <option value="persian">Persian</option>
-                        <option value="ragdoll">Ragdoll</option>
-                        <option value="siamese">Siamese</option>
-                    </select>
-                </div>
-            </div>
-
-            {{-- Mating date. Hidden when the symptom mode is on, since the two
-                 are alternatives rather than both being filled in. --}}
-            <div class="mt-5" data-date-field>
-                <label for="mating-date" class="block text-sm font-semibold text-ink">Mating date</label>
-                <input id="mating-date" name="mating-date" type="date"
-                       class="mt-2 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-sm transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-            </div>
-
-            {{-- Unknown-date toggle. Checked state reveals the block below it. --}}
-            <div class="mt-5 rounded-xl border border-line bg-surface-soft p-4">
-                <label for="unknown-date" class="flex cursor-pointer items-start gap-3">
-                    <input id="unknown-date" name="unknown-date" type="checkbox" data-unknown-toggle
-                           class="mt-0.5 size-5 shrink-0 rounded border-line-strong text-primary focus:ring-2 focus:ring-primary/20">
-                    <span>
-                        <span class="block text-sm font-semibold text-ink">I don’t know the exact date</span>
-                        <span class="mt-0.5 block text-sm text-ink-muted">
-                            Estimate from what you have noticed instead.
-                        </span>
-                    </span>
-                </label>
-
-                {{-- ══ SYMPTOM MODE ═════════════════════════════════════════
-                     Shown when the mating date is unknown. Each card is a real
-                     checkbox with its label styled as a toggle. It keeps the
-                     keyboard behavior and the screen-reader semantics that a
-                     div dressed up as a button would throw away.
-
-                     min_day rides on the markup as data-min-day, so the script
-                     and the page can never disagree about a symptom's timing.
+                {{-- ══ INPUT ═════════════════════════════════════════════════
+                     Cat name, breed, mating date, an unknown-date toggle that
+                     reveals a secondary input, and the Calculate button.
                      ═══════════════════════════════════════════════════════ --}}
-                <div id="unknown-date-panel" hidden class="mt-4 border-t border-line pt-4">
-                    <fieldset>
-                        <legend class="text-sm font-semibold text-ink">
-                            Tick everything you have noticed
-                        </legend>
-                        <p class="mt-1 text-sm text-ink-muted">
-                            The latest sign she is showing tells us roughly how far
-                            along she is. More ticks means a more confident estimate.
-                        </p>
+                <div id="calculator" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        Your cat’s details
+                    </h2>
 
-                        <div class="mt-4 grid gap-3">
-                            @foreach (config('pregnancy-symptoms') as $symptom)
-                                <label for="symptom-{{ $symptom['id'] }}"
-                                       class="group flex cursor-pointer items-start gap-3 rounded-xl border border-line bg-surface p-4 shadow-sm transition duration-150 hover:border-line-strong has-checked:border-primary has-checked:bg-primary-light has-checked:shadow-md">
-                                    <input id="symptom-{{ $symptom['id'] }}" type="checkbox"
-                                           data-symptom data-min-day="{{ $symptom['min_day'] }}"
-                                           value="{{ $symptom['id'] }}" class="peer sr-only">
+                    <p class="mt-4 text-sm text-ink-muted">
+                        Nothing is sent anywhere. This runs entirely in your browser.
+                    </p>
 
-                                    {{-- Stands in for the hidden checkbox. The
-                                         real one still owns focus and state. --}}
-                                    <span aria-hidden="true"
-                                          class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md border-2 border-line-strong bg-surface transition peer-checked:border-primary peer-checked:bg-primary peer-focus-visible:ring-2 peer-focus-visible:ring-primary/30 peer-focus-visible:ring-offset-2">
-                                        <svg class="size-3 text-ink-inverse opacity-0 transition-opacity group-has-checked:opacity-100"
-                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"
-                                             stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M20 6 9 17l-5-5"/>
-                                        </svg>
-                                    </span>
+                    <form id="calculator-form" class="mt-5" onsubmit="return false">
+                        <div class="grid gap-5 sm:grid-cols-2">
+                            {{-- Cat name --}}
+                            <div>
+                                <label for="cat-name" class="block text-sm font-semibold text-ink">Cat’s name</label>
+                                <input id="cat-name" name="cat-name" type="text" autocomplete="off" placeholder="Luna"
+                                       class="mt-2 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-sm transition placeholder:text-ink-muted focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                            </div>
 
-                                    <span class="min-w-0">
-                                        <span class="block text-sm font-semibold text-ink">{{ $symptom['question'] }}</span>
-                                        <span class="mt-0.5 block text-sm text-ink-muted">{{ $symptom['detail'] }}</span>
-                                    </span>
-                                </label>
-                            @endforeach
+                            {{-- Breed: values match the gestation table in the script --}}
+                            <div>
+                                <label for="cat-breed" class="block text-sm font-semibold text-ink">Breed</label>
+                                <select id="cat-breed" name="cat-breed"
+                                        class="mt-2 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-sm transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                    {{-- Values match the gestation table in the script. A
+                                         breed listed here without an entry there would
+                                         silently fall back to the 65-day default. --}}
+                                    <option value="mixed">Mixed breed / unknown</option>
+                                    <option value="abyssinian">Abyssinian</option>
+                                    <option value="bengal">Bengal</option>
+                                    <option value="british-shorthair">British Shorthair</option>
+                                    <option value="burmese">Burmese</option>
+                                    <option value="devon-rex">Devon Rex</option>
+                                    <option value="maine-coon">Maine Coon</option>
+                                    <option value="oriental-shorthair">Oriental Shorthair</option>
+                                    <option value="persian">Persian</option>
+                                    <option value="ragdoll">Ragdoll</option>
+                                    <option value="siamese">Siamese</option>
+                                </select>
+                            </div>
                         </div>
 
-                        {{-- Confidence, filled in by the script as boxes are ticked --}}
-                        <div data-confidence hidden class="mt-4 rounded-xl border border-line bg-surface p-4">
-                            <div class="flex items-center justify-between gap-4">
-                                <span class="text-sm font-semibold text-ink">Confidence</span>
-                                <span data-confidence-label class="text-sm font-bold"></span>
-                            </div>
-                            <div class="mt-2 h-2 overflow-hidden rounded-full bg-line">
-                                <div data-confidence-bar class="h-full rounded-full transition-all duration-300" style="width: 0%"></div>
-                            </div>
-                            <p data-confidence-note class="mt-2 text-xs text-ink-muted"></p>
+                        {{-- Mating date. Hidden when the symptom mode is on, since the two
+                             are alternatives rather than both being filled in. --}}
+                        <div class="mt-5" data-date-field>
+                            <label for="mating-date" class="block text-sm font-semibold text-ink">Mating date</label>
+                            <input id="mating-date" name="mating-date" type="date"
+                                   class="mt-2 w-full rounded-xl border border-line bg-surface px-4 py-3 text-base text-ink shadow-sm transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
                         </div>
-                    </fieldset>
+
+                        {{-- Unknown-date toggle. Checked state reveals the block below it. --}}
+                        <div class="mt-5 rounded-xl border border-line p-4">
+                            <label for="unknown-date" class="flex cursor-pointer items-start gap-3">
+                                <input id="unknown-date" name="unknown-date" type="checkbox" data-unknown-toggle
+                                       class="mt-0.5 size-5 shrink-0 rounded border-line-strong text-primary focus:ring-2 focus:ring-primary/20">
+                                <span>
+                                    <span class="block text-sm font-semibold text-ink">I don’t know the exact date</span>
+                                    <span class="mt-0.5 block text-sm text-ink-muted">
+                                        Estimate from what you have noticed instead.
+                                    </span>
+                                </span>
+                            </label>
+
+                            {{-- ══ SYMPTOM MODE ═════════════════════════════════════════
+                                 Shown when the mating date is unknown. Each card is a real
+                                 checkbox with its label styled as a toggle. It keeps the
+                                 keyboard behavior and the screen-reader semantics that a
+                                 div dressed up as a button would throw away.
+
+                                 min_day rides on the markup as data-min-day, so the script
+                                 and the page can never disagree about a symptom's timing.
+                                 ═══════════════════════════════════════════════════════ --}}
+                            <div id="unknown-date-panel" hidden class="mt-4 border-t border-line pt-4">
+                                <fieldset>
+                                    <legend class="text-sm font-semibold text-ink">
+                                        Tick everything you have noticed
+                                    </legend>
+                                    <p class="mt-1 text-sm text-ink-muted">
+                                        The latest sign she is showing tells us roughly how far
+                                        along she is. More ticks means a more confident estimate.
+                                    </p>
+
+                                    <div class="mt-4 grid gap-3">
+                                        @foreach (config('pregnancy-symptoms') as $symptom)
+                                            <label for="symptom-{{ $symptom['id'] }}"
+                                                   class="group flex cursor-pointer items-start gap-3 rounded-xl border border-line bg-surface p-4 transition duration-150 hover:border-line-strong has-checked:border-primary has-checked:shadow-sm">
+                                                <input id="symptom-{{ $symptom['id'] }}" type="checkbox"
+                                                       data-symptom data-min-day="{{ $symptom['min_day'] }}"
+                                                       value="{{ $symptom['id'] }}" class="peer sr-only">
+
+                                                {{-- Stands in for the hidden checkbox. The
+                                                     real one still owns focus and state. --}}
+                                                <span aria-hidden="true"
+                                                      class="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-md border-2 border-line-strong bg-surface transition peer-checked:border-primary peer-checked:bg-primary peer-focus-visible:ring-2 peer-focus-visible:ring-primary/30 peer-focus-visible:ring-offset-2">
+                                                    <svg class="size-3 text-ink-inverse opacity-0 transition-opacity group-has-checked:opacity-100"
+                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"
+                                                         stroke-linecap="round" stroke-linejoin="round">
+                                                        <path d="M20 6 9 17l-5-5"/>
+                                                    </svg>
+                                                </span>
+
+                                                <span class="min-w-0">
+                                                    <span class="block text-sm font-semibold text-ink">{{ $symptom['question'] }}</span>
+                                                    <span class="mt-0.5 block text-sm text-ink-muted">{{ $symptom['detail'] }}</span>
+                                                </span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+
+                                    {{-- Confidence, filled in by the script as boxes are ticked --}}
+                                    <div data-confidence hidden class="mt-4 rounded-xl border border-line bg-surface p-4">
+                                        <div class="flex items-center justify-between gap-4">
+                                            <span class="text-sm font-semibold text-ink">Confidence</span>
+                                            <span data-confidence-label class="text-sm font-bold"></span>
+                                        </div>
+                                        <div class="mt-2 h-2 overflow-hidden rounded-full bg-line">
+                                            <div data-confidence-bar class="h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                                        </div>
+                                        <p data-confidence-note class="mt-2 text-xs text-ink-muted"></p>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        {{-- Validation messages land here. role=alert so a screen reader
+                             hears them without the focus being moved. --}}
+                        <p data-error role="alert" hidden
+                           class="mt-5 border-l-2 border-danger py-1 pl-4 text-sm leading-relaxed font-medium text-danger"></p>
+
+                        <button type="submit" data-calculate
+                                class="btn-primary mt-6 w-full rounded-full disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-8">
+                            <span data-calculate-label>Calculate due date</span>
+
+                            <svg data-calculate-arrow class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                 stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+
+                            {{-- Shown while the result is being prepared. aria-hidden
+                                 because the button's own label already announces it. --}}
+                            <svg data-calculate-spinner hidden class="size-4 animate-spin" viewBox="0 0 24 24"
+                                 fill="none" aria-hidden="true">
+                                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" opacity="0.25"/>
+                                <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+                {{-- ══ RESULTS ═══════════════════════════════════════════════
+                     Hidden until Calculate is pressed. The figures below are
+                     placeholders in the markup; the script writes the real
+                     ones in over them.
+                     ═══════════════════════════════════════════════════════ --}}
+                <section id="results" hidden aria-live="polite">
+                    <div class="overflow-hidden rounded-2xl border border-line bg-surface shadow-sm">
+
+                        {{-- Due date, prominent --}}
+                        <div class="bg-primary-vivid px-6 py-8 text-center sm:px-8">
+                            <p class="text-sm font-semibold tracking-wide text-ink/70 uppercase">
+                                Estimated due date
+                            </p>
+                            <p data-result-due-date class="mt-2 font-heading text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
+                                12 October 2026
+                            </p>
+                            <p data-result-window class="mt-3 text-base text-ink/80">
+                                Likely birth window: 9 – 15 October 2026
+                            </p>
+
+                            {{-- Copying a date is the thing people do next: into a
+                                 calendar, or a message to whoever else is watching. --}}
+                            <button type="button" data-copy
+                                    class="mt-5 inline-flex items-center gap-2 rounded-full border border-ink/25 px-4 py-2 text-sm font-semibold text-ink transition hover:bg-ink/5 focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:outline-none">
+                                <svg data-copy-icon class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="9" y="9" width="12" height="12" rx="2"/>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                </svg>
+                                <span data-copy-label>Copy the dates</span>
+                            </button>
+                            <span data-copy-status role="status" aria-live="polite" class="sr-only"></span>
+                        </div>
+
+                        {{-- An overdue or past-term pregnancy says so here, above the
+                             figures, because it is the only thing that matters then.
+                             The script rewrites this class list, so it has to keep
+                             matching WARNING_BASE below. --}}
+                        <p data-result-warning hidden role="alert"
+                           class="mx-6 mt-6 flex items-start gap-3 rounded-xl border px-4 py-3 text-sm font-medium sm:mx-8"></p>
+
+                        {{-- Week, days remaining, trimester, pinking up --}}
+                        <div class="grid gap-5 p-6 sm:grid-cols-2 sm:p-8">
+                            <div class="rounded-xl border border-line p-5 text-center">
+                                <p class="text-sm font-semibold text-ink-muted">Current stage</p>
+                                <p data-result-week class="mt-2 inline-flex items-center rounded-full bg-primary-light px-4 py-1.5 font-heading text-lg font-bold text-primary-dark">
+                                    Week 5 of 9
+                                </p>
+                            </div>
+
+                            <div class="rounded-xl border border-line p-5 text-center">
+                                <p class="text-sm font-semibold text-ink-muted">Days remaining</p>
+                                <p data-result-days class="mt-2 font-heading text-3xl font-extrabold tracking-tight text-ink">
+                                    28 days
+                                </p>
+                            </div>
+
+                            <div class="rounded-xl border border-line p-5 text-center">
+                                <p class="text-sm font-semibold text-ink-muted">Trimester</p>
+                                <p data-result-trimester class="mt-2 font-heading text-lg font-bold text-ink">
+                                    Second
+                                </p>
+                            </div>
+
+                            <div class="rounded-xl border border-line p-5 text-center">
+                                <p class="text-sm font-semibold text-ink-muted">Pinking up</p>
+                                <p data-result-pinking class="mt-2 font-heading text-lg font-bold text-ink">
+                                    1 September 2026
+                                </p>
+                                <p class="mt-1 text-xs text-ink-muted">Nipples redden, around day 21</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {{-- ══ TIMELINE ══════════════════════════════════════════════
+                     The nine weeks, rendered from config/pregnancy-weeks.php.
+
+                     All of it is in the markup, open or shut, rather than
+                     injected from a script. It is the substantial writing on
+                     this page, and content that only exists inside JavaScript
+                     is content a crawler may never read. The script's only job
+                     here is deciding which card is marked current, which are
+                     behind, and which are still ahead.
+
+                     Each card is a details/summary, so it expands with a
+                     keyboard and works with JavaScript switched off.
+                     ═══════════════════════════════════════════════════════ --}}
+                <div id="timeline" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        What happens, and when
+                    </h2>
+
+                    <p class="mt-4 text-base leading-relaxed text-ink-muted">
+                        A cat pregnancy runs about nine weeks. Run the calculator above
+                        and the week she is in now is marked here.
+                    </p>
+
+                    {{-- The rail runs behind the cards; the dots sit on it. --}}
+                    <ol class="relative mt-5 space-y-4 sm:pl-8">
+                        <span aria-hidden="true"
+                              class="absolute top-4 bottom-4 left-[15px] hidden w-px bg-line-strong sm:block"></span>
+
+                        @foreach (config('pregnancy-weeks') as $entry)
+                            <li data-week-card="{{ $entry['week'] }}" class="relative">
+                                {{-- Dot on the rail --}}
+                                <span aria-hidden="true" data-week-dot
+                                      class="absolute top-6 -left-8 hidden size-[9px] rounded-full bg-line-strong ring-4 ring-surface transition-colors sm:block"></span>
+
+                                <details data-week-details
+                                         class="group rounded-xl border border-line bg-surface transition duration-200 hover:border-line-strong open:shadow-sm">
+                                    <summary class="flex cursor-pointer list-none items-center gap-4 p-5 marker:content-['']">
+                                        <span data-week-number
+                                              class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-light font-heading text-lg font-extrabold text-primary-dark transition-colors">
+                                            {{ $entry['week'] }}
+                                        </span>
+
+                                        <span class="min-w-0 flex-1">
+                                            <span class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                                                <span class="font-heading text-lg font-bold text-ink">
+                                                    Week {{ $entry['week'] }}: {{ $entry['title'] }}
+                                                </span>
+
+                                                {{-- Filled in by the script once a week is known. --}}
+                                                <span data-week-badge hidden
+                                                      class="rounded-full px-2.5 py-0.5 text-xs font-bold"></span>
+                                            </span>
+                                            <span class="mt-1 block text-sm text-ink-muted">
+                                                {{ $entry['visible_signs'] }}
+                                            </span>
+                                        </span>
+
+                                        <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary transition-transform duration-200 group-open:rotate-45">
+                                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                 stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                                <path d="M12 5v14M5 12h14"/>
+                                            </svg>
+                                        </span>
+                                    </summary>
+
+                                    <div class="space-y-5 border-t border-line px-5 py-5">
+                                        <div>
+                                            <h3 class="font-heading text-sm font-bold tracking-wide text-ink uppercase">
+                                                What happens
+                                            </h3>
+                                            <p class="mt-2 text-sm leading-relaxed text-ink-muted">
+                                                {{ $entry['what_happens'] }}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <h3 class="font-heading text-sm font-bold tracking-wide text-ink uppercase">
+                                                What you might see
+                                            </h3>
+                                            <p class="mt-2 text-sm leading-relaxed text-ink-muted">
+                                                {{ $entry['visible_signs'] }}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            <h3 class="font-heading text-sm font-bold tracking-wide text-ink uppercase">
+                                                Care this week
+                                            </h3>
+                                            <ul class="mt-2 list-disc space-y-2 pl-5 text-sm leading-relaxed text-ink-muted marker:text-primary">
+                                                @foreach ($entry['care_tips'] as $tip)
+                                                    <li>{{ $tip }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+
+                                        @if ($entry['vet_action'])
+                                            <p class="border-l-2 border-info py-1 pl-4 text-sm leading-relaxed">
+                                                <span class="font-bold text-ink">Vet:</span>
+                                                <span class="text-ink-muted">{{ $entry['vet_action'] }}</span>
+                                            </p>
+                                        @endif
+                                    </div>
+                                </details>
+                            </li>
+                        @endforeach
+                    </ol>
+                </div>
+
+                {{-- ══ FAQ ═══════════════════════════════════════════════════
+                     Rendered into the markup, which is what lets the FAQPage
+                     data on this page describe content a visitor can actually
+                     reach. details/summary, so it opens with a keyboard and
+                     works with scripting off.
+                     ═══════════════════════════════════════════════════════ --}}
+                <div id="faq" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">
+                        Cat pregnancy, answered
+                    </h2>
+
+                    <p class="mt-4 text-base leading-relaxed text-ink-muted">
+                        The questions owners ask most once the calculator has given them
+                        a date.
+                    </p>
+
+                    <div class="mt-5 space-y-2.5">
+                        @foreach (config('pregnancy-faq') as $item)
+                            <details id="{{ $item['id'] }}"
+                                     class="group scroll-mt-24 border-b border-line last:border-b-0">
+                                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-bold text-ink transition-colors hover:text-primary marker:content-['']">
+                                    {{ $item['q'] }}
+                                    <svg class="size-4 shrink-0 text-ink-muted transition-transform duration-200 group-open:rotate-180"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                        <path d="m6 9 6 6 6-6"/>
+                                    </svg>
+                                </summary>
+                                <p class="pb-4 text-base leading-relaxed text-ink-muted">{{ $item['a'] }}</p>
+                            </details>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{-- ══ FOOTER NOTE ═══════════════════════════════════════════ --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <p class="border-l-2 border-warning py-1 pl-4 text-sm leading-relaxed text-ink-muted">
+                        This tool is for informational purposes only. Consult your vet.
+                    </p>
                 </div>
             </div>
 
-            {{-- Validation messages land here. role=alert so a screen reader
-                 hears them without the focus being moved. --}}
-            <p data-error role="alert" hidden
-               class="mt-5 rounded-xl border border-danger/30 bg-danger-light px-4 py-3 text-sm font-medium text-danger"></p>
-
-            <button type="submit" data-calculate
-                    class="btn-primary mt-6 w-full rounded-full disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:px-8">
-                <span data-calculate-label>Calculate due date</span>
-
-                <svg data-calculate-arrow class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-
-                {{-- Shown while the result is being prepared. aria-hidden
-                     because the button's own label already announces it. --}}
-                <svg data-calculate-spinner hidden class="size-4 animate-spin" viewBox="0 0 24 24"
-                     fill="none" aria-hidden="true">
-                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" opacity="0.25"/>
-                    <path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                </svg>
-            </button>
-        </form>
-
-        {{-- ══ 3. RESULTS ════════════════════════════════════════════════════
-             Hidden until Calculate is pressed. Every figure below is dummy data
-             held in the markup. Nothing here is computed yet.
-             ═══════════════════════════════════════════════════════════════ --}}
-        <section id="results" hidden aria-live="polite" class="mt-8">
-            <div class="overflow-hidden rounded-2xl border border-line bg-surface shadow-md">
-
-                {{-- Due date, prominent --}}
-                <div class="bg-primary-vivid px-6 py-8 text-center sm:px-8">
-                    <p class="text-sm font-semibold tracking-wide text-ink/70 uppercase">
-                        Estimated due date
-                    </p>
-                    <p data-result-due-date class="mt-2 font-heading text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
-                        12 October 2026
-                    </p>
-                    <p data-result-window class="mt-3 text-base text-ink/80">
-                        Likely birth window: 9 – 15 October 2026
-                    </p>
-
-                    {{-- Copying a date is the thing people do next: into a
-                         calendar, or a message to whoever else is watching. --}}
-                    <button type="button" data-copy
-                            class="mt-5 inline-flex items-center gap-2 rounded-full border border-ink/25 px-4 py-2 text-sm font-semibold text-ink transition hover:bg-ink/5 focus-visible:ring-2 focus-visible:ring-ink/40 focus-visible:outline-none">
-                        <svg data-copy-icon class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect x="9" y="9" width="12" height="12" rx="2"/>
-                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                        </svg>
-                        <span data-copy-label>Copy the dates</span>
-                    </button>
-                    <span data-copy-status role="status" aria-live="polite" class="sr-only"></span>
-                </div>
-
-                {{-- An overdue or past-term pregnancy says so here, above the
-                     figures, because it is the only thing that matters then. --}}
-                <p data-result-warning hidden role="alert"
-                   class="mx-6 mt-6 flex items-start gap-3 rounded-xl border px-4 py-3 text-sm font-medium sm:mx-8"></p>
-
-                {{-- Week, days remaining, trimester, pinking up --}}
-                <div class="grid gap-5 p-6 sm:grid-cols-2 sm:p-8">
-                    <div class="rounded-xl border border-line bg-surface-soft p-5 text-center">
-                        <p class="text-sm font-semibold text-ink-muted">Current stage</p>
-                        <p data-result-week class="mt-2 inline-flex items-center rounded-full bg-primary-light px-4 py-1.5 font-heading text-lg font-bold text-primary-dark">
-                            Week 5 of 9
-                        </p>
-                    </div>
-
-                    <div class="rounded-xl border border-line bg-surface-soft p-5 text-center">
-                        <p class="text-sm font-semibold text-ink-muted">Days remaining</p>
-                        <p data-result-days class="mt-2 font-heading text-3xl font-extrabold tracking-tight text-ink">
-                            28 days
-                        </p>
-                    </div>
-
-                    <div class="rounded-xl border border-line bg-surface-soft p-5 text-center">
-                        <p class="text-sm font-semibold text-ink-muted">Trimester</p>
-                        <p data-result-trimester class="mt-2 font-heading text-lg font-bold text-ink">
-                            Second
-                        </p>
-                    </div>
-
-                    <div class="rounded-xl border border-line bg-surface-soft p-5 text-center">
-                        <p class="text-sm font-semibold text-ink-muted">Pinking up</p>
-                        <p data-result-pinking class="mt-2 font-heading text-lg font-bold text-ink">
-                            1 September 2026
-                        </p>
-                        <p class="mt-1 text-xs text-ink-muted">Nipples redden, around day 21</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+            {{-- ── Sidebar ──────────────────────────────────────────────── --}}
+            <x-tool-sidebar slug="cat-pregnancy-calculator" :toc="[
+                ['id' => 'calculator', 'label' => 'Calculator'],
+                ['id' => 'timeline', 'label' => 'Week by week'],
+                ['id' => 'faq', 'label' => 'Common questions'],
+            ]"/>
+        </div>
     </div>
 </section>
 
-{{-- ══ 4. TIMELINE ═══════════════════════════════════════════════════════
-     The nine weeks, rendered from config/pregnancy-weeks.php.
-
-     All of it is in the markup, open or shut, rather than injected from a
-     script. It is the substantial writing on this page, and content that
-     only exists inside JavaScript is content a crawler may never read. The
-     script's only job here is deciding which card is marked current, which
-     are behind, and which are still ahead.
-
-     Each card is a details/summary, so it expands with a keyboard and works
-     with JavaScript switched off.
-     ═══════════════════════════════════════════════════════════════════════ --}}
-<section id="timeline" class="section-tight scroll-mt-24 bg-surface-soft">
-    <div class="container-page max-w-3xl">
-        <div class="text-center">
-            <p class="eyebrow">Week by week</p>
-            <h2 class="section-title">What happens, and when</h2>
-            <p class="section-intro">
-                A cat pregnancy runs about nine weeks. Run the calculator above
-                and the week she is in now is marked here.
-            </p>
+{{-- ══ 3. MORE TOOLS ═════════════════════════════════════════════════════ --}}
+<section class="border-t border-line bg-surface py-10 lg:py-12">
+    <div class="mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[50px]">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+            <h2 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">
+                More Tools You Will Love
+            </h2>
+            <a href="{{ route('tools.index') }}" class="text-sm font-semibold text-primary transition hover:underline">
+                View all tools
+            </a>
         </div>
 
-        {{-- The rail runs behind the cards; the dots sit on it. --}}
-        <ol class="relative mt-10 space-y-4 sm:pl-8">
-            <span aria-hidden="true"
-                  class="absolute top-4 bottom-4 left-[15px] hidden w-px bg-line-strong sm:block"></span>
+        {{-- A plain grid, not a scroller: five tools do not need paging, and a
+             horizontal scroll container shows a scrollbar on most desktops. --}}
+        <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            @foreach ($moreTools->take(3) as $tool)
+                <a href="{{ $tool['url'] }}"
+                   class="card reveal group"
+                   style="--reveal-delay: {{ $loop->index * 70 }}ms">
+                    <div class="card-media aspect-[16/10]">
+                        <x-img :name="$tool['image']" :alt="$tool['alt']"
+                               class="transition-transform duration-500 group-hover:scale-105"
+                               sizes="(max-width: 639px) 92vw, (max-width: 1023px) 46vw, 30vw"/>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title transition-colors group-hover:text-primary">{{ $tool['title'] }}</h3>
+                        <p class="card-text line-clamp-2 flex-1">{{ $tool['blurb'] }}</p>
+                        <span class="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-primary">
+                            Open tool
+                            <svg class="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                 stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </span>
+                    </div>
+                </a>
+            @endforeach
+        </div>
 
-            @foreach (config('pregnancy-weeks') as $entry)
-                <li data-week-card="{{ $entry['week'] }}" class="reveal relative">
-                    {{-- Dot on the rail --}}
-                    <span aria-hidden="true" data-week-dot
-                          class="absolute top-6 -left-8 hidden size-[9px] rounded-full bg-line-strong ring-4 ring-surface-soft transition-colors sm:block"></span>
-
-                    <details data-week-details
-                             class="group rounded-2xl border border-line bg-surface shadow-sm transition duration-200 hover:border-line-strong open:shadow-md">
-                        <summary class="flex cursor-pointer list-none items-center gap-4 p-5 marker:content-['']">
-                            <span data-week-number
-                                  class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary-light font-heading text-lg font-extrabold text-primary-dark transition-colors">
-                                {{ $entry['week'] }}
-                            </span>
-
-                            <span class="min-w-0 flex-1">
-                                <span class="flex flex-wrap items-center gap-x-3 gap-y-1">
-                                    <span class="font-heading text-lg font-bold text-ink">
-                                        Week {{ $entry['week'] }}: {{ $entry['title'] }}
-                                    </span>
-
-                                    {{-- Filled in by the script once a week is known. --}}
-                                    <span data-week-badge hidden
-                                          class="rounded-full px-2.5 py-0.5 text-xs font-bold"></span>
-                                </span>
-                                <span class="mt-1 block text-sm text-ink-muted">
-                                    {{ $entry['visible_signs'] }}
-                                </span>
-                            </span>
-
-                            <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary transition-transform duration-200 group-open:rotate-45">
-                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                     stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-                                    <path d="M12 5v14M5 12h14"/>
-                                </svg>
-                            </span>
-                        </summary>
-
-                        <div class="space-y-5 border-t border-line px-5 py-5">
-                            <div>
-                                <h3 class="font-heading text-sm font-bold tracking-wide text-ink uppercase">
-                                    What happens
-                                </h3>
-                                <p class="mt-2 text-sm leading-relaxed text-ink-muted">
-                                    {{ $entry['what_happens'] }}
-                                </p>
-                            </div>
-
-                            <div>
-                                <h3 class="font-heading text-sm font-bold tracking-wide text-ink uppercase">
-                                    What you might see
-                                </h3>
-                                <p class="mt-2 text-sm leading-relaxed text-ink-muted">
-                                    {{ $entry['visible_signs'] }}
-                                </p>
-                            </div>
-
-                            <div>
-                                <h3 class="font-heading text-sm font-bold tracking-wide text-ink uppercase">
-                                    Care this week
-                                </h3>
-                                <ul class="mt-2 space-y-2">
-                                    @foreach ($entry['care_tips'] as $tip)
-                                        <li class="flex items-start gap-2.5 text-sm leading-relaxed text-ink-muted">
-                                            <svg class="mt-1 size-3.5 shrink-0 text-accent" viewBox="0 0 24 24"
-                                                 fill="none" stroke="currentColor" stroke-width="3"
-                                                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                                <path d="M20 6 9 17l-5-5"/>
-                                            </svg>
-                                            {{ $tip }}
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-
-                            @if ($entry['vet_action'])
-                                <div class="flex items-start gap-3 rounded-xl border border-info-light bg-info-light p-4">
-                                    <svg class="mt-0.5 size-4 shrink-0 text-info" viewBox="0 0 24 24" fill="none"
-                                         stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                         stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z"/>
-                                        <path d="m9.4 12.2 1.9 1.9 3.6-3.7"/>
-                                    </svg>
-                                    <span class="text-sm leading-relaxed">
-                                        <span class="font-bold text-ink">Vet:</span>
-                                        <span class="text-ink-muted">{{ $entry['vet_action'] }}</span>
-                                    </span>
-                                </div>
-                            @endif
-                        </div>
-                    </details>
+        {{-- The remaining tools still get a real link from this page, just as
+             text rather than another row of cards. --}}
+        <ul class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            @foreach ($moreTools->skip(3) as $tool)
+                <li>
+                    <a href="{{ $tool['url'] }}" class="font-semibold text-ink-muted transition hover:text-primary">
+                        {{ $tool['title'] }}
+                    </a>
                 </li>
             @endforeach
-        </ol>
-    </div>
-</section>
-
-{{-- ══ 5. FAQ ══════════════════════════════════════════════════════════
-     Rendered into the markup, which is what lets the FAQPage data on this
-     page describe content a visitor can actually reach. details/summary, so
-     it opens with a keyboard and works with scripting off.
-     ═══════════════════════════════════════════════════════════════════════ --}}
-<section id="faq" class="section-tight scroll-mt-24 bg-surface">
-    <div class="container-page max-w-3xl">
-        <div class="text-center">
-            <p class="eyebrow">Common questions</p>
-            <h2 class="section-title">Cat pregnancy, answered</h2>
-            <p class="section-intro">
-                The questions owners ask most once the calculator has given them
-                a date.
-            </p>
-        </div>
-
-        <div class="mt-10 space-y-3">
-            @foreach (config('pregnancy-faq') as $item)
-                <details id="{{ $item['id'] }}"
-                         class="reveal group scroll-mt-24 rounded-xl border border-line bg-surface px-5 shadow-sm transition hover:border-line-strong open:shadow-md">
-                    <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-heading font-bold text-ink marker:content-['']">
-                        {{ $item['q'] }}
-                        <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary transition-transform duration-200 group-open:rotate-45">
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-                                <path d="M12 5v14M5 12h14"/>
-                            </svg>
-                        </span>
-                    </summary>
-                    <p class="pb-5 text-base leading-relaxed text-ink-muted">{{ $item['a'] }}</p>
-                </details>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- ══ 6. FOOTER NOTE ════════════════════════════════════════════════════ --}}
-<section class="bg-surface pt-8 pb-14">
-    <div class="container-page max-w-3xl">
-        <p class="flex items-start gap-3 rounded-xl border border-line bg-surface-soft px-5 py-4 text-sm leading-relaxed text-ink-muted">
-            <svg class="mt-0.5 size-4 shrink-0 text-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 9v4.5M12 17h.01"/>
-                <path d="M10.3 3.9 2.4 17.5A2 2 0 0 0 4.1 20.5h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/>
-            </svg>
-            <span>This tool is for informational purposes only. Consult your vet.</span>
-        </p>
+        </ul>
     </div>
 </section>
 

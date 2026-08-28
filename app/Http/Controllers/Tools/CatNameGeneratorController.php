@@ -71,9 +71,15 @@ class CatNameGeneratorController extends Controller
             ->limit(12)
             ->pluck('name');
 
-        $trendingNames = $trending->isNotEmpty()
-            ? $trending->map(fn (string $n) => $namesWithOrigin->firstWhere('name', $n))->filter()->values()
-            : $namesWithOrigin->take(12)->values();
+        // Real saves lead the list. Early on there are only a handful, so the
+        // rest is topped up from the curated list rather than rendering a
+        // one-item "popular" card that looks broken.
+        $trendingNames = $trending
+            ->map(fn (string $n) => $namesWithOrigin->firstWhere('name', $n))
+            ->filter()
+            ->concat($namesWithOrigin->whereNotIn('name', $trending->all()))
+            ->take(12)
+            ->values();
 
         $styleExamples = collect($config['styles'])->mapWithKeys(fn (array $style) => [
             $style['slug'] => [
@@ -90,6 +96,34 @@ class CatNameGeneratorController extends Controller
                     ->take(4)->values(),
             ],
         ]);
+
+        // Real counts off the same list the generator draws from, so the
+        // sidebar never advertises a category with more names than exist.
+        $categoryCounts = collect($config['styles'])->map(fn (array $style) => [
+            'slug' => $style['slug'],
+            'label' => $style['label'],
+            'count' => $names->filter(fn (array $n) => in_array($style['slug'], $n['styles']))->count(),
+        ])->sortByDesc('count')->values();
+
+        $namingTips = [
+            ['tip' => 'Avoid names that sound like commands, since "Kit" and "sit" are hard for a cat to tell apart.', 'tone' => 'primary'],
+            ['tip' => 'Say a shortlist out loud before deciding. A name is called across a room far more than it is read.', 'tone' => 'accent'],
+            ['tip' => 'Get the whole household to agree, because a name everyone shortens differently just confuses a cat.', 'tone' => 'info'],
+        ];
+
+        $howToChoose = [
+            ['title' => 'Match their personality', 'text' => 'Watch how they actually behave for a few days first. A name chosen after living with a cat usually fits better than one picked from a photo.'],
+            ['title' => 'Keep it easy to say', 'text' => 'One or two syllables is easiest for a cat to learn and for you to call out the same way every time.'],
+            ['title' => 'Try saying it out loud', 'text' => 'Say it a few times, at a normal speaking volume and called across a room. Some names only sound awkward once spoken.'],
+            ['title' => 'Think long term', 'text' => 'Cats live well into their teens, so pick something that still suits a full-grown, dignified adult cat, not only a kitten.'],
+        ];
+
+        $funFact = 'Cats can recognize their own name. A 2019 study in Scientific Reports found they '
+            .'reliably tell it apart from similar-sounding words, they just choose whether to answer.';
+
+        $moreTools = collect(config('catalog.tools'))
+            ->reject(fn (array $t): bool => $t['slug'] === 'cat-name-generator')
+            ->values();
 
         $popularNames = [
             'female' => ['Luna', 'Bella', 'Willow', 'Nala', 'Daisy', 'Coco', 'Olive', 'Hazel', 'Rosie', 'Ivy'],
@@ -159,6 +193,11 @@ class CatNameGeneratorController extends Controller
             'trendingNames' => $trendingNames,
             'styleExamples' => $styleExamples,
             'personalityExamples' => $personalityExamples,
+            'categoryCounts' => $categoryCounts,
+            'namingTips' => $namingTips,
+            'howToChoose' => $howToChoose,
+            'funFact' => $funFact,
+            'moreTools' => $moreTools,
             'popularNames' => $popularNames,
             'breedGuide' => $breedGuide,
             'inToolNames' => $inToolNames,

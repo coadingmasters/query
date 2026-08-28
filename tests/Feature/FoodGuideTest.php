@@ -97,11 +97,33 @@ class FoodGuideTest extends TestCase
             ->assertSee('Introducing a new fruit safely');
     }
 
-    /** Only fruits should have grown this content — every other guide stays exactly as it was. */
+    /** Only fruits supplies its own FAQ set, so only fruits gets the accordion. */
     public function test_other_food_guides_do_not_show_a_faq_accordion(): void
     {
-        $html = $this->get('/food-guides/vegetables')->getContent();
+        $this->get('/food-guides/vegetables')->assertDontSee('Frequently asked questions');
+        $this->get('/food-guides/fruits')->assertSee('Frequently asked questions');
+    }
 
-        $this->assertStringNotContainsString('group rounded-xl border border-line bg-surface px-5', $html);
+    /** Every guide carries the sidebar, and its contents list only real sections. */
+    public function test_the_sidebar_renders_on_every_guide(): void
+    {
+        foreach (config('catalog.foods') as $food) {
+            $response = $this->get(route('food-guides.show', $food['slug']))->assertOk();
+
+            $response->assertSee('On This Page')
+                ->assertSee('Quick Safety Guide')
+                ->assertSee('Related Guides')
+                ->assertSee('Recommended Tools');
+        }
+    }
+
+    /**
+     * A guide with no per-item table must not list one in its contents, and a
+     * guide that has one must.
+     */
+    public function test_the_contents_list_matches_the_sections_that_exist(): void
+    {
+        $this->get('/food-guides/fruits')->assertSee('Fruits, one at a time');
+        $this->get('/food-guides/toxic-foods')->assertDontSee(', one at a time');
     }
 }

@@ -75,6 +75,28 @@ class FoodGuideController extends Controller
         // once and earns a real FAQ block, so it supplies its own.
         $faq = $food['faq'] ?? [['q' => $food['question'], 'a' => $food['answer']]];
 
+        // Built from the sections that actually render for this food, so a
+        // guide with no per-item table never advertises one in its contents.
+        $toc = collect([
+            ['id' => 'why', 'label' => 'Why', 'when' => ! empty($food['why'])],
+            ['id' => 'each-one', 'label' => $food['title'].', one at a time', 'when' => ! empty($food['items'])],
+            ['id' => 'how-much', 'label' => $food['verdict'] === 'unsafe' ? 'If your cat ate this' : 'How much is safe', 'when' => ! empty($food['guidance'])],
+            ['id' => 'introduce', 'label' => 'Introducing it safely', 'when' => ! empty($food['introduce'])],
+            ['id' => 'avoid', 'label' => 'What to avoid entirely', 'when' => ! empty($food['avoid'])],
+            ['id' => 'signs', 'label' => 'Signs to watch for', 'when' => ! empty($food['watch_for'])],
+            ['id' => 'faq', 'label' => 'Questions, answered', 'when' => count($faq) > 1],
+        ])->where('when', true)->values();
+
+        // The at-a-glance card. Pulled from the per-item table when a guide
+        // has one, so it can never drift from the table below it.
+        $items = collect($food['items'] ?? []);
+        $safeList = $items->where('verdict', 'safe')->pluck('name');
+        $avoidList = $items->where('verdict', 'unsafe')->pluck('name');
+
+        $recommendedTools = collect(config('catalog.tools'))
+            ->whereIn('slug', ['cat-age-calculator', 'cat-weight-checker', 'cat-calorie-calculator'])
+            ->values();
+
         return view('food-guides.show', [
             'title' => $food['question'].' | '.config('app.name'),
             'description' => $description,
@@ -83,6 +105,10 @@ class FoodGuideController extends Controller
             'related' => $related,
             'sources' => self::SOURCES,
             'faq' => $faq,
+            'toc' => $toc,
+            'safeList' => $safeList,
+            'avoidList' => $avoidList,
+            'recommendedTools' => $recommendedTools,
             'schema' => Schema::graph([
                 [
                     '@type' => 'WebPage',

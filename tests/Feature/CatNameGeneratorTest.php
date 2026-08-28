@@ -60,14 +60,42 @@ class CatNameGeneratorTest extends TestCase
     {
         $this->get('/tools/cat-name-generator')
             ->assertOk()
-            ->assertSee('Surprise Me')
-            ->assertSee('Random Names')
-            ->assertSee('Trending Names')
             ->assertSee('Maine Coon cat names')
             ->assertSee('Siamese cat names')
             ->assertSee('Popular female cat names')
             ->assertSee('Seven rules for choosing the right cat name')
             ->assertSee('Cat names for two cats');
+    }
+
+    /** The sidebar is the tool's navigation, so its panels have to actually be there. */
+    public function test_the_tool_sidebar_panels_render(): void
+    {
+        $response = $this->get('/tools/cat-name-generator')->assertOk();
+
+        $response->assertSee('Popular Right Now')
+            ->assertSee('Name Ideas by Category')
+            ->assertSee('Naming Tips')
+            ->assertSee('Fun Fact')
+            ->assertSee('How to Choose the Perfect Name');
+
+        // Category counts come off the real name list, never a hardcoded number.
+        foreach (collect(config('cat-name-generator.styles'))->take(3) as $style) {
+            $response->assertSee($style['label']);
+        }
+    }
+
+    /** Every other live tool should be reachable from the bottom carousel. */
+    public function test_it_cross_links_the_other_tools(): void
+    {
+        $response = $this->get('/tools/cat-name-generator');
+
+        foreach (config('catalog.tools') as $tool) {
+            if ($tool['slug'] === 'cat-name-generator') {
+                continue;
+            }
+
+            $response->assertSee('href="'.$tool['url'].'"', false);
+        }
     }
 
     public function test_internal_links_point_to_real_routes(): void

@@ -5,82 +5,84 @@
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="absolute -top-28 -left-20 size-80 rounded-full bg-primary-vivid opacity-[0.08] blur-3xl"></div>
         <div class="absolute -right-20 bottom-0 size-72 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
-        <x-paw-print class="paw absolute top-[14%] left-[5%] hidden size-10 text-primary-vivid/30 lg:block [animation-duration:23s]"/>
-        <x-paw-print class="paw absolute right-[42%] bottom-[10%] hidden size-7 text-accent-vivid/30 lg:block [animation-delay:-9s] [animation-duration:27s]"/>
+        <x-paw-print class="paw absolute top-[14%] left-[5%] hidden size-10 text-primary-vivid/25 lg:block [animation-duration:23s]"/>
+        <x-paw-print class="paw absolute right-[46%] bottom-[10%] hidden size-7 text-accent-vivid/30 lg:block [animation-delay:-9s] [animation-duration:27s]"/>
     </div>
 
-    <div class="container-page relative grid items-center gap-8 pt-8 pb-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:pt-6">
-        <div class="reveal relative z-10">
-            <nav aria-label="Breadcrumb" class="text-sm text-ink-muted">
-                <ol class="flex flex-wrap items-center gap-1.5">
-                    <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
-                    <li aria-hidden="true">/</li>
-                    <li><a href="{{ route('tools.index') }}" class="transition-colors hover:text-primary">Tools</a></li>
-                    <li aria-hidden="true">/</li>
-                    <li class="font-medium text-ink">Cat Name Generator</li>
-                </ol>
-            </nav>
+    <div class="relative mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[50px]">
+        <div class="grid items-center gap-8 pt-6 pb-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
+            <div class="reveal relative z-10">
+                <nav aria-label="Breadcrumb" class="text-sm text-ink-muted">
+                    <ol class="flex flex-wrap items-center gap-1.5">
+                        <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
+                        <li aria-hidden="true">/</li>
+                        <li><a href="{{ route('tools.index') }}" class="transition-colors hover:text-primary">Tools</a></li>
+                        <li aria-hidden="true">/</li>
+                        <li class="font-medium text-ink">Cat Name Generator</li>
+                    </ol>
+                </nav>
 
-            <h1 class="mt-4 font-heading text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
-                Cat Name Generator
-            </h1>
-            <p class="mt-4 max-w-lg text-base leading-relaxed text-ink-muted sm:text-lg">
-                150+ names, filtered by style, personality and even breed. Every
-                one comes with a real meaning behind it, not a made-up one.
-            </p>
+                <h1 class="mt-4 flex flex-wrap items-center gap-3 font-heading text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">
+                    Cat Name Generator
+                    <x-paw-print class="size-8 shrink-0 text-primary-vivid"/>
+                </h1>
 
-            <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-3">
-                @foreach ([
-                    ['Real name meanings', 'M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z'],
-                    ['Free, no sign-up', 'M12 21c-4.2-2.5-8-5.2-8-9.4A4.4 4.4 0 0 1 12 9a4.4 4.4 0 0 1 8 2.6c0 4.2-3.8 6.9-8 9.4Z'],
-                    ['Nothing leaves your browser', 'M5.5 5h13A1.5 1.5 0 0 1 20 6.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 15.5v-9A1.5 1.5 0 0 1 5.5 5Z'],
-                ] as [$label, $d])
-                    <li class="group flex items-center gap-2 text-sm font-medium text-ink-muted">
-                        <svg class="size-4 shrink-0 text-accent-dark transition-transform duration-300 group-hover:scale-125" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                             stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="{{ $d }}"/>
-                        </svg>
-                        {{ $label }}
-                    </li>
-                @endforeach
-            </ul>
+                <p class="mt-3 font-heading text-lg font-bold text-primary sm:text-xl">
+                    Find the perfect name for your new best friend.
+                </p>
 
-            <a href="#generator" class="btn-primary mt-7 transition-transform duration-200 hover:scale-105">
-                <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M12 3v3.5M12 17.5V21M3 12h3.5M17.5 12H21M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>
-                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                </svg>
-                Start Generating
-            </a>
-        </div>
+                <p class="mt-3 max-w-lg text-base leading-relaxed text-ink-muted">
+                    150+ names, filtered by style, personality and even breed. Every
+                    one comes with a real meaning behind it, not a made-up one.
+                </p>
 
-        <div class="reveal relative" style="--reveal-delay: 150ms">
-            <div class="relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg transition-transform duration-500 hover:-translate-y-1.5">
-                <x-img name="cat-name-generator-cute-kitten" alt="Fluffy kitten beside a board of name ideas"
-                       sizes="(max-width: 1023px) 92vw, 780px" :priority="true"/>
+                <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-3">
+                    @foreach ([
+                        ['Real name meanings', 'primary', 'M20 12.5c0 4.5-3.2 6.9-7.1 8.2a1 1 0 0 1-.7 0C8.2 19.4 5 17 5 12.5V6.2a1 1 0 0 1 .9-1c1.9-.2 4.1-1.2 5.5-2.4a1 1 0 0 1 1.3 0c1.4 1.2 3.6 2.2 5.5 2.4a1 1 0 0 1 .8 1Z'],
+                        ['Free, no sign-up', 'accent', 'M12 21c-4.2-2.5-8-5.2-8-9.4A4.4 4.4 0 0 1 12 9a4.4 4.4 0 0 1 8 2.6c0 4.2-3.8 6.9-8 9.4Z'],
+                        ['Nothing leaves your browser', 'info', 'M5.5 5h13A1.5 1.5 0 0 1 20 6.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 15.5v-9A1.5 1.5 0 0 1 5.5 5Z'],
+                    ] as [$label, $tone, $d])
+                        <li class="group flex items-center gap-2 text-sm font-medium text-ink-muted">
+                            <span @class([
+                                'flex size-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110',
+                                'bg-primary-light text-primary' => $tone === 'primary',
+                                'bg-accent-light text-accent-dark' => $tone === 'accent',
+                                'bg-info-light text-info' => $tone === 'info',
+                            ])>
+                                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                     stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="{{ $d }}"/>
+                                </svg>
+                            </span>
+                            {{ $label }}
+                        </li>
+                    @endforeach
+                </ul>
             </div>
 
-            <div aria-hidden="true"
-                 class="absolute -bottom-5 left-4 hidden items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 shadow-lg sm:flex">
-                <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent-light text-accent-dark">
-                    <x-paw-print class="size-5"/>
-                </span>
-                <span>
-                    <span class="block font-heading text-sm font-extrabold text-ink">150+ names</span>
-                    <span class="mt-0.5 block text-xs text-ink-muted">Every one with a real meaning</span>
-                </span>
+            <div class="reveal relative" style="--reveal-delay: 150ms">
+                <div class="relative overflow-hidden rounded-[4rem_1.75rem_4rem_1.75rem] border-4 border-primary/15 bg-surface shadow-lg transition-transform duration-500 hover:-translate-y-1.5 sm:rounded-[5rem_2rem_5rem_2rem]">
+                    <x-img name="cat-name-generator-cute-kitten" alt="Fluffy kitten beside a board of name ideas"
+                           sizes="(max-width: 1023px) 92vw, 620px" :priority="true"/>
+                </div>
+
+                <div aria-hidden="true"
+                     class="absolute -bottom-5 left-4 hidden items-center gap-3 rounded-2xl border border-line bg-surface px-4 py-3 shadow-lg sm:flex">
+                    <span class="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent-light text-accent-dark">
+                        <x-paw-print class="size-5"/>
+                    </span>
+                    <span>
+                        <span class="block font-heading text-sm font-extrabold text-ink">{{ count($inToolNames) }}+ names</span>
+                        <span class="mt-0.5 block text-xs text-ink-muted">Every one with a real meaning</span>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
-
-    <svg class="absolute inset-x-0 bottom-0 h-10 w-full text-surface sm:h-16" viewBox="0 0 1440 120"
-         preserveAspectRatio="none" fill="currentColor" aria-hidden="true">
-        <path d="M0 60c180-45 360-45 540-10s360 55 540 20 300-55 360-60v110H0Z"/>
-    </svg>
 </section>
 
-{{-- ══ 2. GENERATOR ══════════════════════════════════════════════════════ --}}
-<section id="generator" class="scroll-mt-24 relative overflow-hidden bg-surface py-10 lg:py-14"
+{{-- ══ 2. TOOL + SIDEBAR ═════════════════════════════════════════════════ --}}
+<section id="generator" class="scroll-mt-24 bg-surface-section py-8 lg:py-12"
          x-data="catNameGenerator({
              names: @js($names),
              breeds: @js($breeds),
@@ -92,260 +94,443 @@
              saveUrl: @js(route('tools.cat-name-generator.save')),
              csrfToken: @js(csrf_token()),
          })">
-    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-        <div class="absolute -top-16 right-[8%] size-72 rounded-full bg-accent-vivid opacity-[0.06] blur-3xl"></div>
-        <div class="absolute -bottom-20 left-[4%] size-80 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
-        <x-paw-print class="paw absolute top-[10%] right-[12%] hidden size-8 text-primary-vivid/20 lg:block [animation-duration:21s]"/>
-        <x-paw-print class="paw absolute bottom-[14%] left-[8%] hidden size-6 text-accent-vivid/20 lg:block [animation-delay:-11s] [animation-duration:25s]"/>
-    </div>
+    <div class="mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[50px]">
+        <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
 
-    <div class="relative mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[50px]">
-        <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
-        <div>
+            {{-- ── Main column ──────────────────────────────────────────── --}}
+            <div class="space-y-6">
 
-        {{-- Quick start --}}
-        <div class="reveal mb-6 flex flex-wrap justify-center gap-2.5 sm:justify-start">
-            <button type="button" x-on:click="surpriseMe()"
-                    class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary hover:shadow-md">
-                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="4" y="4" width="16" height="16" rx="4"/>
-                    <circle cx="8.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"/>
-                    <circle cx="15.5" cy="8.5" r="1.1" fill="currentColor" stroke="none"/>
-                    <circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"/>
-                    <circle cx="8.5" cy="15.5" r="1.1" fill="currentColor" stroke="none"/>
-                    <circle cx="15.5" cy="15.5" r="1.1" fill="currentColor" stroke="none"/>
-                </svg>
-                Surprise Me
-            </button>
-            <button type="button" x-on:click="showRandomGrid()"
-                    class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary hover:shadow-md">
-                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="4" y="4" width="6" height="6" rx="1.4"/>
-                    <rect x="14" y="4" width="6" height="6" rx="1.4"/>
-                    <rect x="4" y="14" width="6" height="6" rx="1.4"/>
-                    <rect x="14" y="14" width="6" height="6" rx="1.4"/>
-                </svg>
-                Random Names
-            </button>
-            <button type="button" x-on:click="showTrendingGrid()"
-                    class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary hover:shadow-md">
-                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M3 17l6-6 4 4 8-8"/>
-                    <path d="M15 7h6v6"/>
-                </svg>
-                Trending Names
-            </button>
-        </div>
+                {{-- Generate a Name --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <div class="flex flex-wrap items-center justify-between gap-4 border-b-2 border-primary-vivid/25 pb-3">
+                        <h2 class="font-heading text-xl font-extrabold tracking-tight text-ink">Generate a Name</h2>
 
-        {{-- Random / trending grid --}}
-        <div class="reveal mb-6" x-show="gridMode" x-cloak x-transition>
-            <div class="flex items-center justify-between">
-                <h2 class="font-heading text-lg font-bold text-ink" x-text="gridMode === 'trending' ? 'Trending right now' : '12 random picks'"></h2>
-                <button type="button" x-on:click="gridMode = null" aria-label="Close"
-                        class="flex size-8 items-center justify-center rounded-full text-ink-muted transition hover:bg-surface-soft hover:text-ink">
-                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
-                </button>
-            </div>
-            <div class="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
-                <template x-for="pick in gridResults" :key="pick.name">
-                    <button type="button" x-on:click="openFromGrid(pick)"
-                            class="group flex flex-col items-start rounded-xl border border-line bg-surface p-3.5 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
-                        <span class="flex w-full items-center justify-between gap-1">
-                            <span class="font-heading text-base font-bold text-ink" x-text="pick.name"></span>
-                            <svg class="size-4 shrink-0 text-primary-vivid transition-transform group-hover:scale-110" viewBox="0 0 24 24" :fill="isFavorite(pick.name) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <label class="flex items-center gap-2.5 text-sm font-semibold text-ink">
+                            <span>Two cats</span>
+                            <button type="button" role="switch" x-on:click="twoCats = !twoCats"
+                                    :aria-checked="twoCats ? 'true' : 'false'"
+                                    :class="twoCats ? 'bg-primary-vivid' : 'bg-line-strong'"
+                                    class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors duration-200">
+                                <span :class="twoCats ? 'translate-x-5' : 'translate-x-1'"
+                                      class="inline-block size-4 transform rounded-full bg-surface shadow transition-transform duration-200"></span>
+                            </button>
+                        </label>
+                    </div>
+
+                    {{-- Gender --}}
+                    <fieldset class="mt-5">
+                        <legend class="text-sm font-bold text-ink">
+                            <span class="text-primary">1.</span> Gender
+                        </legend>
+                        <div class="mt-2.5 flex flex-wrap gap-2">
+                            @foreach (['any' => 'Any', 'male' => 'Male', 'female' => 'Female', 'neutral' => 'Either'] as $value => $label)
+                                <button type="button" x-on:click="gender = '{{ $value }}'"
+                                        :class="gender === '{{ $value }}' ? 'bg-primary-vivid text-ink border-primary-vivid shadow-sm' : 'bg-surface text-ink-muted border-line hover:border-primary/40 hover:text-primary'"
+                                        class="rounded-full border px-4 py-1.5 text-sm font-semibold transition">
+                                    {{ $label }}
+                                </button>
+                            @endforeach
+                        </div>
+                    </fieldset>
+
+                    {{-- Style --}}
+                    <fieldset class="mt-5">
+                        <legend class="text-sm font-bold text-ink">
+                            <span class="text-primary">2.</span> Style
+                            <span class="font-medium text-ink-muted">(pick any number)</span>
+                        </legend>
+                        <div class="mt-2.5 flex flex-wrap gap-2">
+                            @foreach ($styles as $style)
+                                <button type="button" x-on:click="toggleStyle('{{ $style['slug'] }}')"
+                                        :class="styles.includes('{{ $style['slug'] }}') ? 'bg-accent text-ink-inverse border-accent shadow-sm' : 'bg-surface text-ink-muted border-line hover:border-accent/40 hover:text-accent-dark'"
+                                        class="rounded-full border px-4 py-1.5 text-sm font-semibold transition">
+                                    {{ $style['label'] }}
+                                </button>
+                            @endforeach
+                        </div>
+                    </fieldset>
+
+                    {{-- Selects --}}
+                    <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        @foreach ([
+                            ['3', 'personality', 'Personality', null],
+                            ['4', 'breed', 'Breed', 'unique'],
+                            ['5', 'letter', 'Starts with', null],
+                            ['6', 'length', 'Length', null],
+                        ] as [$num, $id, $label, $flag])
+                            <div>
+                                <label for="{{ $id }}" class="text-sm font-bold text-ink">
+                                    <span class="text-primary">{{ $num }}.</span> {{ $label }}
+                                    @if ($flag)
+                                        <span class="text-xs font-semibold text-primary">({{ $flag }})</span>
+                                    @endif
+                                </label>
+
+                                @if ($id === 'personality')
+                                    <select id="personality" x-model="personality"
+                                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                        <option value="">Any</option>
+                                        @foreach ($personalities as $p)
+                                            <option value="{{ $p['slug'] }}">{{ $p['label'] }}</option>
+                                        @endforeach
+                                    </select>
+                                @elseif ($id === 'breed')
+                                    <select id="breed" x-model="breedSlug"
+                                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                        <option value="">Any / not sure</option>
+                                        <template x-for="breed in breeds" :key="breed.slug">
+                                            <option :value="breed.slug" x-text="breed.name"></option>
+                                        </template>
+                                    </select>
+                                @elseif ($id === 'letter')
+                                    <select id="letter" x-model="letter"
+                                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                        <option value="">Any letter</option>
+                                        <template x-for="l in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')" :key="l">
+                                            <option :value="l" x-text="l"></option>
+                                        </template>
+                                    </select>
+                                @else
+                                    <select id="length" x-model="length"
+                                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                        <option value="any">Any</option>
+                                        <option value="short">Short</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="long">Long</option>
+                                    </select>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <p class="mt-4 text-xs text-ink-muted" x-show="poolCount() === 0" x-cloak>
+                        No exact match for that combination. Generating will pick from the full list instead.
+                    </p>
+
+                    <div class="mt-6 flex justify-center">
+                        <button type="button" x-on:click="generate()"
+                                class="btn-primary w-full justify-center rounded-full py-3 text-base transition-transform duration-150 hover:scale-[1.02] active:scale-[0.98] sm:w-auto sm:px-14">
+                            <x-paw-print class="size-5"/>
+                            <span x-text="twoCats ? 'Generate a Pair' : 'Generate a Name'"></span>
+                        </button>
+                    </div>
+                </div>
+
+                {{-- Suggested names --}}
+                <div id="results" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <h2 class="flex items-center gap-2 font-heading text-xl font-extrabold tracking-tight text-ink">
+                            <span x-text="twoCats ? 'Name Pairs For Your Cats' : 'Suggested Names For Your Cat'"></span>
+                            <svg class="size-5 text-primary-vivid" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 2.5l1.9 5.6 5.6 1.9-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9L12 2.5Z"/>
+                            </svg>
+                        </h2>
+                        <button type="button" x-on:click="generate()"
+                                class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-1.5 text-sm font-semibold text-ink-muted transition hover:border-primary/40 hover:text-primary">
+                            <svg class="size-4 transition-transform duration-500 group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M20 11a8 8 0 1 0-2.3 5.6M20 4v7h-7"/>
+                            </svg>
+                            Shuffle
+                        </button>
+                    </div>
+
+                    {{-- Pairs --}}
+                    <template x-if="twoCats && pairs.length">
+                        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                            <template x-for="pair in pairs" :key="pair.cats[0].name + pair.cats[1].name">
+                                <div class="rounded-xl border border-line bg-surface-soft p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                                    <p class="font-heading text-lg font-extrabold text-ink">
+                                        <span x-text="pair.cats[0].name"></span>
+                                        <span class="text-primary">&amp;</span>
+                                        <span x-text="pair.cats[1].name"></span>
+                                    </p>
+                                    <p class="mt-1.5 text-xs leading-relaxed text-ink-muted" x-text="pair.why"></p>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+
+                    {{-- Single names --}}
+                    <template x-if="!twoCats">
+                        <div>
+                            <div class="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                                <template x-for="pick in visibleResults()" :key="pick.name">
+                                    <div class="group relative flex flex-col rounded-xl border border-line bg-surface p-4 transition duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
+                                        <button type="button" x-on:click="toggleFavorite(pick)"
+                                                :aria-label="isFavorite(pick.name) ? 'Remove ' + pick.name + ' from favorites' : 'Save ' + pick.name + ' to favorites'"
+                                                class="absolute top-3 right-3 flex size-7 items-center justify-center rounded-full transition hover:bg-primary-light">
+                                            <svg class="size-4 text-primary-vivid transition-transform duration-200 hover:scale-125"
+                                                 viewBox="0 0 24 24" :fill="isFavorite(pick.name) ? 'currentColor' : 'none'"
+                                                 stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
+                                            </svg>
+                                        </button>
+
+                                        <button type="button" x-on:click="openDetail(pick)" class="text-left">
+                                            <span class="block pr-8 font-heading text-lg font-extrabold text-ink transition-colors group-hover:text-primary" x-text="pick.name"></span>
+
+                                            <span class="mt-1.5 inline-block rounded-full bg-primary-light px-2.5 py-0.5 text-[11px] font-bold text-primary"
+                                                  x-text="styleLabels[pick.styles[0]] || pick.styles[0]"></span>
+
+                                            <span class="mt-2 block text-xs leading-relaxed text-ink-muted" x-text="pick.meaning"></span>
+                                        </button>
+                                    </div>
+                                </template>
+                            </div>
+
+                            <div class="mt-5 text-center" x-show="results.length > 8" x-cloak>
+                                <button type="button" x-on:click="showAll = !showAll"
+                                        class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition hover:gap-2.5">
+                                    <span x-text="showAll ? 'Show Fewer Names' : 'View More Names'"></span>
+                                    <svg class="size-4 transition-transform duration-200" :class="showAll && 'rotate-180'"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                        <path d="m6 9 6 6 6-6"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                {{-- Favorites --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7" x-show="favorites.length" x-cloak>
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <h2 class="flex items-center gap-2 font-heading text-xl font-extrabold tracking-tight text-ink">
+                            <svg class="size-5 text-primary-vivid" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
                             </svg>
-                        </span>
-                        <span class="mt-1 line-clamp-2 text-xs text-ink-muted" x-text="pick.meaning"></span>
-                    </button>
-                </template>
-            </div>
-        </div>
-
-        <div class="reveal relative overflow-hidden rounded-2xl border border-line bg-surface-soft p-5 shadow-sm sm:p-8">
-            <div aria-hidden="true" class="pointer-events-none absolute -top-10 -right-10 size-40 rounded-full bg-primary-vivid opacity-[0.06] blur-2xl"></div>
-
-            <div class="relative flex flex-wrap items-center justify-between gap-4">
-                <div>
-                    <p class="font-heading text-lg font-bold text-ink">Build your filters</p>
-                    <p class="mt-0.5 text-sm text-ink-muted">Mix and match. Nothing here is required.</p>
+                            Your favorites
+                            <span class="text-ink-muted" x-text="'(' + favorites.length + ')'"></span>
+                        </h2>
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <button type="button" x-on:click="copyAllFavorites()"
+                                    class="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-ink-muted transition hover:border-line-strong hover:text-ink"
+                                    x-text="favoritesCopied ? 'Copied!' : 'Copy all'"></button>
+                            <button type="button" x-on:click="downloadFavorites()"
+                                    class="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-ink-muted transition hover:border-line-strong hover:text-ink">Download</button>
+                            <button type="button" x-on:click="clearFavorites()"
+                                    class="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-danger transition hover:border-danger/40 hover:bg-danger-light">Clear all</button>
+                        </div>
+                    </div>
+                    <ul class="mt-4 flex flex-wrap gap-2">
+                        <template x-for="fav in favorites" :key="fav.name">
+                            <li class="flex items-center gap-2 rounded-full border border-line bg-surface-soft py-1.5 pr-2 pl-4 text-sm font-semibold text-ink">
+                                <span x-text="fav.name"></span>
+                                <button type="button" x-on:click="removeFavorite(fav.name)" aria-label="Remove from favorites"
+                                        class="flex size-5 items-center justify-center rounded-full text-ink-muted transition hover:bg-danger-light hover:text-danger">
+                                    <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+                                </button>
+                            </li>
+                        </template>
+                    </ul>
                 </div>
 
-                {{-- One cat / two cats --}}
-                <label class="flex items-center gap-2.5 text-sm font-semibold text-ink">
-                    <span>Two cats mode</span>
-                    <button type="button" role="switch" x-on:click="twoCats = !twoCats"
-                            :aria-checked="twoCats ? 'true' : 'false'"
-                            :class="twoCats ? 'bg-primary-vivid' : 'bg-line'"
-                            class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors duration-200">
-                        <span :class="twoCats ? 'translate-x-5' : 'translate-x-1'"
-                              class="inline-block size-4 transform rounded-full bg-surface shadow transition-transform duration-200"></span>
-                    </button>
-                </label>
-            </div>
+                {{-- How to choose --}}
+                <div class="reveal overflow-hidden rounded-2xl border border-line bg-surface shadow-sm">
+                    <div class="grid gap-0 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.8fr)]">
+                        <div class="p-5 sm:p-7">
+                            <h2 class="border-b-2 border-primary-vivid/25 pb-3 font-heading text-xl font-extrabold tracking-tight text-ink">
+                                How to Choose the Perfect Name
+                            </h2>
 
-            {{-- Gender, personality, breed, letter, length --}}
-            <div class="relative mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-                <div>
-                    <label for="gender" class="text-xs font-bold tracking-wide text-ink-muted uppercase">Gender</label>
-                    <select id="gender" x-model="gender"
-                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                        <option value="any">Any</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="neutral">Either</option>
-                    </select>
+                            <ol class="mt-5 space-y-4">
+                                @foreach ($howToChoose as $i => $step)
+                                    <li class="group flex gap-3.5">
+                                        <span @class([
+                                            'flex size-9 shrink-0 items-center justify-center rounded-xl font-heading text-sm font-extrabold transition-transform duration-300 group-hover:scale-110',
+                                            'bg-primary-light text-primary' => $i % 4 === 0,
+                                            'bg-accent-light text-accent-dark' => $i % 4 === 1,
+                                            'bg-warning-light text-warning' => $i % 4 === 2,
+                                            'bg-info-light text-info' => $i % 4 === 3,
+                                        ])>{{ $i + 1 }}</span>
+                                        <span>
+                                            <span class="block font-heading text-sm font-bold text-ink">{{ $step['title'] }}</span>
+                                            <span class="mt-1 block text-sm leading-relaxed text-ink-muted">{{ $step['text'] }}</span>
+                                        </span>
+                                    </li>
+                                @endforeach
+                            </ol>
+                        </div>
+
+                        <div class="relative min-h-56 lg:min-h-full">
+                            <x-img name="purrquery-happy-tabby-cat-relaxing" alt="Relaxed tabby cat resting on a soft blanket"
+                                   sizes="(max-width: 1023px) 92vw, 420px"/>
+                        </div>
+                    </div>
                 </div>
 
-                <div>
-                    <label for="personality" class="text-xs font-bold tracking-wide text-ink-muted uppercase">Personality</label>
-                    <select id="personality" x-model="personality"
-                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                        <option value="">Any</option>
-                        @foreach ($personalities as $p)
-                            <option value="{{ $p['slug'] }}">{{ $p['label'] }}</option>
+                {{-- FAQ --}}
+                <div id="faq" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="flex items-center gap-2 border-b-2 border-primary-vivid/25 pb-3 font-heading text-xl font-extrabold tracking-tight text-ink">
+                        <x-paw-print class="size-5 text-primary-vivid"/>
+                        Common Questions
+                    </h2>
+
+                    <div class="mt-5 space-y-2.5">
+                        @foreach ($faq as $item)
+                            <details class="group rounded-xl border border-line bg-surface-soft px-4 transition hover:border-line-strong">
+                                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-3.5 text-sm font-bold text-ink marker:content-['']">
+                                    {{ $item['q'] }}
+                                    <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary transition-transform duration-200 group-open:rotate-45">
+                                        <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                             stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                            <path d="M12 5v14M5 12h14"/>
+                                        </svg>
+                                    </span>
+                                </summary>
+                                <p class="pb-4 text-sm leading-relaxed text-ink-muted">{{ $item['a'] }}</p>
+                            </details>
                         @endforeach
-                    </select>
+                    </div>
                 </div>
 
-                <div>
-                    <label for="breed" class="text-xs font-bold tracking-wide text-ink-muted uppercase">Breed <span class="font-medium normal-case text-primary">(unique)</span></label>
-                    <select id="breed" x-model="breedSlug"
-                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                        <option value="">Any / not sure</option>
-                        <template x-for="breed in breeds" :key="breed.slug">
-                            <option :value="breed.slug" x-text="breed.name"></option>
-                        </template>
-                    </select>
-                </div>
+                {{-- Still can't decide --}}
+                <div class="reveal relative overflow-hidden rounded-2xl border border-line bg-surface-soft p-5 shadow-sm sm:p-7">
+                    <div class="grid items-center gap-5 sm:grid-cols-[minmax(0,1fr)_auto]">
+                        <div>
+                            <h2 class="font-heading text-xl font-extrabold tracking-tight text-ink">Still cannot decide?</h2>
+                            <p class="mt-2 max-w-md text-sm leading-relaxed text-ink-muted">
+                                Shuffle a fresh set, or scroll down for full lists by style, personality and breed.
+                            </p>
+                            <div class="mt-4 flex flex-wrap gap-2.5">
+                                <button type="button" x-on:click="generate()" class="btn-primary rounded-full px-6 py-2.5 text-sm">
+                                    <x-paw-print class="size-4"/>
+                                    Generate more
+                                </button>
+                                <a href="#name-ideas" class="btn-outline rounded-full px-6 py-2.5 text-sm">
+                                    Browse by category
+                                </a>
+                            </div>
+                        </div>
 
-                <div>
-                    <label for="letter" class="text-xs font-bold tracking-wide text-ink-muted uppercase">Starts with</label>
-                    <select id="letter" x-model="letter"
-                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                        <option value="">Any letter</option>
-                        <template x-for="l in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')" :key="l">
-                            <option :value="l" x-text="l"></option>
-                        </template>
-                    </select>
-                </div>
-
-                <div>
-                    <label for="length" class="text-xs font-bold tracking-wide text-ink-muted uppercase">Length</label>
-                    <select id="length" x-model="length"
-                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                        <option value="any">Any</option>
-                        <option value="short">Short</option>
-                        <option value="medium">Medium</option>
-                        <option value="long">Long</option>
-                    </select>
+                        <div class="hidden w-40 shrink-0 sm:block">
+                            <x-img name="purrquery-cat-saying-hi" alt="Ginger kitten raising a paw" sizes="160px"/>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            {{-- Style --}}
-            <div class="relative mt-6">
-                <p class="text-xs font-bold tracking-wide text-ink-muted uppercase">Style <span class="font-medium normal-case text-ink-muted/70">(pick any number)</span></p>
-                <div class="mt-2.5 flex flex-wrap gap-2">
-                    @foreach ($styles as $style)
-                        <button type="button" x-on:click="toggleStyle('{{ $style['slug'] }}')"
-                                :class="styles.includes('{{ $style['slug'] }}') ? 'bg-accent text-ink-inverse border-accent' : 'bg-surface text-ink-muted border-line hover:border-line-strong'"
-                                class="rounded-full border px-4 py-1.5 text-sm font-semibold transition">
-                            {{ $style['label'] }}
-                        </button>
-                    @endforeach
-                </div>
-            </div>
+            {{-- ── Sidebar ──────────────────────────────────────────────── --}}
+            <aside class="space-y-5 lg:sticky lg:top-24 lg:self-start">
 
-            <p class="relative mt-4 text-xs text-ink-muted" x-show="poolCount() === 0" x-cloak>
-                No exact match for that combination. Generating will pick from the full list instead.
-            </p>
+                {{-- Popular right now --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                    <h2 class="flex items-center gap-2 font-heading text-base font-extrabold text-ink">
+                        <svg class="size-4 text-warning" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M13 2 4.5 13H11l-1 9 8.5-11H12l1-9Z"/>
+                        </svg>
+                        Popular Right Now
+                    </h2>
 
-            <button type="button" x-on:click="generate()"
-                    class="btn-primary mt-6 w-full justify-center rounded-full py-3.5 text-base transition-transform duration-150 active:scale-[0.98] sm:w-auto sm:px-10">
-                <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M12 3v3.5M12 17.5V21M3 12h3.5M17.5 12H21M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/>
-                    <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                </svg>
-                <span x-text="twoCats ? 'Generate a Pair' : 'Generate a Name'"></span>
-            </button>
-        </div>
+                    <ol class="mt-4 space-y-1">
+                        @foreach ($trendingNames->take(5) as $i => $pick)
+                            <li>
+                                <button type="button" x-on:click="openDetail(@js($pick))"
+                                        class="group flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition hover:bg-surface-soft">
+                                    <span class="font-heading text-xs font-extrabold text-primary/50">{{ $i + 1 }}</span>
+                                    <span class="flex-1 text-sm font-semibold text-ink transition-colors group-hover:text-primary">{{ $pick['name'] }}</span>
+                                    <svg class="size-3.5 shrink-0 text-accent-dark transition-transform duration-200 group-hover:-translate-y-0.5"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M7 17 17 7M9 7h8v8"/>
+                                    </svg>
+                                </button>
+                            </li>
+                        @endforeach
+                    </ol>
 
-        {{-- Favorites --}}
-        <div class="reveal mt-6" x-show="favorites.length" x-cloak>
-            <div class="flex flex-wrap items-center justify-between gap-3">
-                <p class="flex items-center gap-2 text-sm font-bold text-ink">
-                    <svg class="size-4 text-primary-vivid" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
-                    </svg>
-                    Your favorites <span class="text-ink-muted" x-text="'(' + favorites.length + ')'"></span>
-                </p>
-                <div class="flex items-center gap-1.5">
-                    <button type="button" x-on:click="copyAllFavorites()"
-                            class="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-ink-muted transition hover:border-line-strong hover:text-ink"
-                            x-text="favoritesCopied ? 'Copied!' : 'Copy all'"></button>
-                    <button type="button" x-on:click="downloadFavorites()"
-                            class="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-ink-muted transition hover:border-line-strong hover:text-ink">Download</button>
-                    <button type="button" x-on:click="clearFavorites()"
-                            class="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-danger transition hover:border-danger/40 hover:bg-danger-light">Clear all</button>
-                </div>
-            </div>
-            <ul class="mt-3 flex flex-wrap gap-2">
-                <template x-for="fav in favorites" :key="fav.name">
-                    <li class="flex items-center gap-2 rounded-full border border-line bg-surface py-1.5 pr-2 pl-4 text-sm font-semibold text-ink shadow-sm">
-                        <span x-text="fav.name"></span>
-                        <button type="button" x-on:click="removeFavorite(fav.name)" aria-label="Remove from favorites"
-                                class="flex size-5 items-center justify-center rounded-full text-ink-muted transition hover:bg-danger-light hover:text-danger">
-                            <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
-                        </button>
-                    </li>
-                </template>
-            </ul>
-        </div>
-
-        </div>
-
-        {{-- Live preview: purely decorative motion so the wide layout never
-             sits next to an empty column, cycling through real names from
-             the same pool the generator itself uses. --}}
-        <div class="hidden lg:block">
-            <div class="reveal sticky top-24 overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-primary-light via-surface to-accent-light p-6 text-center shadow-sm" style="--reveal-delay: 100ms">
-                <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-                    <x-paw-print class="paw absolute top-3 right-3 size-7 text-primary-vivid/20 [animation-duration:18s]"/>
-                    <x-paw-print class="paw absolute bottom-4 left-3 size-5 text-accent-vivid/20 [animation-delay:-8s] [animation-duration:22s]"/>
+                    <button type="button" x-on:click="generate()"
+                            class="btn-outline mt-4 w-full justify-center rounded-full py-2 text-sm">
+                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M20 11a8 8 0 1 0-2.3 5.6M20 4v7h-7"/>
+                        </svg>
+                        Generate More
+                    </button>
                 </div>
 
-                <p class="relative text-xs font-bold tracking-wide text-ink-muted uppercase">Fresh pick</p>
+                {{-- Name ideas by category --}}
+                <div id="name-ideas" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                    <h2 class="flex items-center gap-2 font-heading text-base font-extrabold text-ink">
+                        <svg class="size-4 text-accent-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.5h9A1.5 1.5 0 0 1 21 10v7.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5Z"/>
+                        </svg>
+                        Name Ideas by Category
+                    </h2>
 
-                <div class="relative mx-auto mt-4 flex size-20 items-center justify-center rounded-full bg-surface/80">
-                    <x-cat-face-icon size="size-16"/>
+                    <ul class="mt-4 space-y-1">
+                        @foreach ($categoryCounts->take(7) as $category)
+                            <li>
+                                <button type="button" x-on:click="pickCategory('{{ $category['slug'] }}')"
+                                        class="group flex w-full items-center gap-2.5 rounded-lg px-2 py-2 text-left transition hover:bg-surface-soft">
+                                    <svg class="size-3 shrink-0 text-primary-vivid transition-transform duration-200 group-hover:translate-x-0.5"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+                                        <path d="m9 6 6 6-6 6"/>
+                                    </svg>
+                                    <span class="flex-1 text-sm font-medium text-ink transition-colors group-hover:text-primary">{{ $category['label'] }}</span>
+                                    <span class="text-xs font-bold text-ink-muted">{{ $category['count'] }}</span>
+                                </button>
+                            </li>
+                        @endforeach
+                    </ul>
+
+                    <a href="#by-style" class="btn-outline mt-4 w-full justify-center rounded-full py-2 text-sm">
+                        View All Categories
+                    </a>
                 </div>
 
-                <p class="relative mt-4 font-heading text-xl font-extrabold text-ink" x-text="previewPick?.name"></p>
-                <p class="relative mt-1 text-sm leading-relaxed text-ink-muted" x-text="previewPick?.meaning"></p>
+                {{-- Naming tips --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm">
+                    <h2 class="flex items-center gap-2 font-heading text-base font-extrabold text-ink">
+                        <svg class="size-4 text-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M9 18h6M10 21h4M12 3a6 6 0 0 1 3.6 10.8c-.4.3-.6.8-.6 1.2H9c0-.4-.2-.9-.6-1.2A6 6 0 0 1 12 3Z"/>
+                        </svg>
+                        Naming Tips
+                    </h2>
 
-                <button type="button" x-on:click="generate()"
-                        class="btn-outline relative mt-5 w-full justify-center rounded-full text-sm">
-                    Generate my own
-                </button>
+                    <ul class="mt-4 space-y-3.5">
+                        @foreach ($namingTips as $tip)
+                            <li class="group flex gap-3">
+                                <span @class([
+                                    'flex size-8 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-hover:scale-110',
+                                    'bg-primary-light text-primary' => $tip['tone'] === 'primary',
+                                    'bg-accent-light text-accent-dark' => $tip['tone'] === 'accent',
+                                    'bg-info-light text-info' => $tip['tone'] === 'info',
+                                ])>
+                                    <x-paw-print class="size-3.5"/>
+                                </span>
+                                <span class="text-sm leading-relaxed text-ink-muted">{{ $tip['tip'] }}</span>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
 
-                <p class="relative mt-4 text-xs text-ink-muted">
-                    {{ count($inToolNames) }}+ names in the full list
-                </p>
-            </div>
-        </div>
+                {{-- Image --}}
+                <div class="reveal overflow-hidden rounded-2xl border border-line shadow-sm">
+                    <div class="aspect-[4/3]">
+                        <x-img name="purrquery-cat-cozy-blanket" alt="Kitten peeking out from under a cozy blanket" sizes="340px"/>
+                    </div>
+                </div>
+
+                {{-- Fun fact --}}
+                <div class="reveal rounded-2xl border border-line bg-surface-soft p-5 shadow-sm">
+                    <h2 class="flex items-center gap-2 font-heading text-base font-extrabold text-ink">
+                        <svg class="size-4 text-primary-vivid" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
+                        </svg>
+                        Fun Fact
+                    </h2>
+                    <p class="mt-3 text-sm leading-relaxed text-ink-muted">{{ $funFact }}</p>
+                </div>
+            </aside>
         </div>
     </div>
 
-    {{-- Result dialog: reuses the site's cat-face reveal animation (the same
-         one the tool result cards use elsewhere), driven by Alpine instead
-         of a server round trip since there is nothing here to send to a
-         server in the first place. --}}
+    {{-- Result dialog: reuses the site's cat-face reveal animation, driven by
+         Alpine instead of a server round trip since there is nothing here to
+         send to a server in the first place. --}}
     <dialog x-ref="resultDialog" aria-labelledby="name-result-heading"
             class="result-card m-auto w-[calc(100%-2rem)] max-w-md rounded-2xl border border-line bg-surface p-0 shadow-2xl backdrop:bg-ink/50 backdrop:backdrop-blur-sm"
             x-on:click="if ($event.target === $refs.resultDialog) $refs.resultDialog.close()">
-
-        {{-- Single name --}}
-        <template x-if="result && !result.pair">
+        <template x-if="result">
             <div class="p-6 text-center sm:p-8">
                 <div class="relative mx-auto flex size-32 items-center justify-center rounded-full bg-primary-light">
                     <x-cat-face-icon size="size-24"/>
@@ -358,7 +543,7 @@
 
                 <p class="mt-3 text-base leading-relaxed text-ink-muted" x-text="result.meaning"></p>
 
-                <div class="mt-3 flex flex-wrap justify-center gap-1.5" x-show="result.origin_country || (result.personalities && result.personalities.length)" x-cloak>
+                <div class="mt-3 flex flex-wrap justify-center gap-1.5">
                     <span class="inline-flex items-center gap-1 rounded-full bg-surface-soft px-3 py-1 text-xs font-semibold text-ink-muted" x-show="result.origin_country" x-cloak>
                         <span x-text="result.origin_flag"></span>
                         <span x-text="result.origin_country"></span>
@@ -374,9 +559,9 @@
                 </div>
 
                 <div class="mt-6 flex flex-wrap justify-center gap-2.5">
-                    <button type="button" x-on:click="generate()" class="btn-outline rounded-full px-5 py-2.5 text-sm">
+                    <button type="button" x-on:click="generate(); $refs.resultDialog.close()" class="btn-outline rounded-full px-5 py-2.5 text-sm">
                         <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.6M20 4v7h-7"/></svg>
-                        Another
+                        More names
                     </button>
                     <button type="button" x-on:click="toggleFavorite(result)"
                             :class="isFavorite(result.name) ? 'bg-primary-light text-primary border-primary-light' : 'bg-surface text-ink-muted border-line'"
@@ -418,77 +603,56 @@
                 </button>
             </div>
         </template>
-
-        {{-- Two cats --}}
-        <template x-if="result && result.pair">
-            <div class="p-6 text-center sm:p-8">
-                <div class="mx-auto flex size-16 items-center justify-center rounded-full bg-primary-light text-primary">
-                    <svg class="size-8" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
-                    </svg>
-                </div>
-                <h2 id="name-result-heading" class="mt-4 font-heading text-2xl font-extrabold tracking-tight text-ink">
-                    <span x-text="result.cats[0].name"></span> &amp; <span x-text="result.cats[1].name"></span>
-                </h2>
-
-                <div class="mt-5 grid grid-cols-2 gap-3 text-left">
-                    <template x-for="cat in result.cats" :key="cat.name">
-                        <div class="rounded-xl border border-line bg-surface-soft p-3.5">
-                            <p class="font-heading text-base font-bold text-ink" x-text="cat.name"></p>
-                            <p class="mt-1 text-xs leading-relaxed text-ink-muted" x-text="cat.meaning"></p>
-                        </div>
-                    </template>
-                </div>
-
-                <p class="mt-4 rounded-xl border border-line bg-surface-soft p-3.5 text-left text-sm leading-relaxed text-ink-muted" x-text="result.why"></p>
-
-                <div class="mt-6 flex flex-wrap justify-center gap-2.5">
-                    <button type="button" x-on:click="generate()" class="btn-outline rounded-full px-5 py-2.5 text-sm">
-                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.6M20 4v7h-7"/></svg>
-                        Another Pair
-                    </button>
-                    <button type="button" x-on:click="toggleFavorite(result.cats[0]); toggleFavorite(result.cats[1])" class="btn-outline rounded-full px-5 py-2.5 text-sm">
-                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
-                        </svg>
-                        Save Both
-                    </button>
-                </div>
-
-                <div class="mt-5 border-t border-line pt-5">
-                    <p class="text-xs font-bold tracking-wide text-ink-muted uppercase">Share this pair</p>
-                    <div class="mt-2.5 flex flex-wrap justify-center gap-2">
-                        <button type="button" x-on:click="shareTo('facebook')" aria-label="Share on Facebook"
-                                class="flex size-9 items-center justify-center rounded-full border border-line text-sm font-black text-ink-muted transition hover:border-primary/40 hover:bg-primary-light hover:text-primary">f</button>
-                        <button type="button" x-on:click="shareTo('twitter')" aria-label="Share on X"
-                                class="flex size-9 items-center justify-center rounded-full border border-line text-sm font-black text-ink-muted transition hover:border-primary/40 hover:bg-primary-light hover:text-primary">X</button>
-                        <button type="button" x-on:click="shareTo('whatsapp')" aria-label="Share on WhatsApp"
-                                class="flex size-9 items-center justify-center rounded-full border border-line text-ink-muted transition hover:border-primary/40 hover:bg-primary-light hover:text-primary">
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M4 20l1.4-4.2A8 8 0 1 1 8.8 19L4 20Z"/>
-                                <path d="M9 10c0 2.5 2.5 5 5 5"/>
-                            </svg>
-                        </button>
-                        <button type="button" x-on:click="copyLink()" aria-label="Copy link"
-                                class="flex size-9 items-center justify-center rounded-full border border-line text-ink-muted transition hover:border-primary/40 hover:bg-primary-light hover:text-primary">
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                <path d="M9 9V5.5A1.5 1.5 0 0 1 10.5 4h8A1.5 1.5 0 0 1 20 5.5v8a1.5 1.5 0 0 1-1.5 1.5H15"/>
-                                <path d="M5.5 9h8A1.5 1.5 0 0 1 15 10.5v8a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 4 18.5v-8A1.5 1.5 0 0 1 5.5 9Z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <p class="mt-2 text-xs font-semibold text-primary" x-show="shareCopied" x-cloak>Link copied!</p>
-                </div>
-
-                <button type="button" x-on:click="$refs.resultDialog.close()" class="mt-4 text-sm font-semibold text-ink-muted hover:text-ink">
-                    Close
-                </button>
-            </div>
-        </template>
     </dialog>
 </section>
 
-{{-- ══ 3. SEO CONTENT ════════════════════════════════════════════════════ --}}
+{{-- ══ 3. MORE TOOLS ═════════════════════════════════════════════════════ --}}
+<section class="border-t border-line bg-surface py-10 lg:py-12" x-data="toolsCarousel()">
+    <div class="mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[50px]">
+        <div class="flex items-center justify-between gap-4">
+            <h2 class="flex items-center gap-2 font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">
+                <x-paw-print class="size-5 text-primary-vivid"/>
+                More Tools You Will Love
+            </h2>
+
+            <div class="hidden gap-2 sm:flex">
+                <button type="button" x-on:click="scrollBy(-1)" aria-label="Previous tools"
+                        class="flex size-9 items-center justify-center rounded-full border border-line bg-surface text-ink-muted transition hover:border-primary/40 hover:text-primary">
+                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>
+                </button>
+                <button type="button" x-on:click="scrollBy(1)" aria-label="Next tools"
+                        class="flex size-9 items-center justify-center rounded-full border border-line bg-surface text-ink-muted transition hover:border-primary/40 hover:text-primary">
+                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div x-ref="track" class="-mx-1 mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-2">
+            @foreach ($moreTools as $tool)
+                <a href="{{ $tool['url'] }}"
+                   class="card reveal group w-64 shrink-0 snap-start sm:w-72"
+                   style="--reveal-delay: {{ $loop->index * 70 }}ms">
+                    <div class="card-media aspect-[16/10]">
+                        <x-img :name="$tool['image']" :alt="$tool['alt']"
+                               class="transition-transform duration-500 group-hover:scale-105" sizes="288px"/>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title transition-colors group-hover:text-primary">{{ $tool['title'] }}</h3>
+                        <p class="card-text line-clamp-2 flex-1">{{ $tool['blurb'] }}</p>
+                        <span class="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-primary">
+                            Open tool
+                            <svg class="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                 stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                        </span>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- ══ 4. SEO CONTENT ════════════════════════════════════════════════════ --}}
 <section class="border-t border-line bg-surface-section py-10 lg:py-14">
     <div class="mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-[50px]">
 
@@ -562,7 +726,7 @@
         </div>
 
         {{-- By style --}}
-        <div class="reveal mt-14">
+        <div id="by-style" class="reveal mt-14 scroll-mt-24">
             <h3 class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">Cat names by style</h3>
             <p class="mt-4 max-w-3xl text-base leading-relaxed text-ink-muted">
                 The style filter above covers ten long-tail directions, from
@@ -715,38 +879,6 @@
     </div>
 </section>
 
-{{-- ══ 4. FAQ ════════════════════════════════════════════════════════════ --}}
-<section id="faq" class="scroll-mt-24 bg-surface-soft py-10 lg:py-14">
-    <div class="container-page max-w-3xl">
-        <div class="reveal text-center">
-            <p class="inline-flex items-center gap-2 text-xs font-bold tracking-[0.14em] text-primary uppercase">
-                <x-paw-print class="size-4"/>
-                Common questions
-            </p>
-            <h2 class="mt-3 font-heading text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-                Cat names, answered
-            </h2>
-        </div>
-
-        <div class="mt-8 space-y-3">
-            @foreach ($faq as $item)
-                <details class="reveal group rounded-xl border border-line bg-surface px-5 shadow-sm transition hover:border-line-strong open:shadow-md">
-                    <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-heading font-bold text-ink marker:content-['']">
-                        {{ $item['q'] }}
-                        <span class="flex size-7 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary transition-transform duration-200 group-open:rotate-45">
-                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                 stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-                                <path d="M12 5v14M5 12h14"/>
-                            </svg>
-                        </span>
-                    </summary>
-                    <p class="pb-5 text-base leading-relaxed text-ink-muted">{{ $item['a'] }}</p>
-                </details>
-            @endforeach
-        </div>
-    </div>
-</section>
-
 @push('scripts')
     <script>
         function catNameGenerator(config) {
@@ -769,12 +901,12 @@
                 length: 'any',
                 twoCats: false,
                 result: null,
+                results: [],
+                pairs: [],
+                showAll: false,
                 favorites: [],
                 favoritesCopied: false,
                 shareCopied: false,
-                gridMode: null,
-                gridResults: [],
-                previewPick: null,
 
                 init() {
                     try {
@@ -783,16 +915,22 @@
                         this.favorites = [];
                     }
 
-                    // Purely decorative: cycles the sidebar preview through
-                    // real names from the pool so the wide layout never sits
-                    // next to a static empty panel.
-                    this.previewPick = this.pickOne(this.names);
-                    setInterval(() => { this.previewPick = this.pickOne(this.names); }, 4500);
+                    // Seed the grid so the section is never an empty box on
+                    // arrival, the way it reads in the design.
+                    this.fill();
                 },
 
                 toggleStyle(slug) {
                     const i = this.styles.indexOf(slug);
                     if (i === -1) this.styles.push(slug); else this.styles.splice(i, 1);
+                },
+
+                // Sidebar category click: applies that style as the only filter
+                // and regenerates, so the list is the category, not a jump link.
+                pickCategory(slug) {
+                    this.styles = [slug];
+                    this.twoCats = false;
+                    this.generate();
                 },
 
                 lengthBucket(name) {
@@ -854,51 +992,36 @@
                     return a.name + ' and ' + b.name + ' have a similar rhythm and length, which is the main thing that makes two cat names sound like a matched set.';
                 },
 
-                generate() {
+                // Builds the grid without moving the page, so init() can use it too.
+                fill() {
                     const pool = this.pool();
                     const source = pool.length ? pool : this.names;
+                    const shuffled = [...source].sort(() => Math.random() - 0.5);
 
                     if (this.twoCats) {
-                        const a = this.pickOne(source);
-                        let b = this.pickOne(source);
-                        let attempts = 0;
-                        while (b.name === a.name && attempts < 10) {
-                            b = this.pickOne(source);
-                            attempts++;
+                        this.pairs = [];
+                        for (let i = 0; i + 1 < shuffled.length && this.pairs.length < 4; i += 2) {
+                            const a = shuffled[i];
+                            const b = shuffled[i + 1];
+                            this.pairs.push({ cats: [a, b], why: this.pairWhy(a, b) });
                         }
-                        this.result = { pair: true, cats: [a, b], why: this.pairWhy(a, b) };
                     } else {
-                        this.result = { pair: false, ...this.pickOne(source) };
+                        this.results = shuffled.slice(0, 16);
+                        this.showAll = false;
                     }
-
-                    this.gridMode = null;
-                    this.$nextTick(() => this.$refs.resultDialog?.showModal());
                 },
 
-                surpriseMe() {
-                    const genders = ['any', 'male', 'female', 'neutral'];
-                    this.gender = genders[Math.floor(Math.random() * genders.length)];
-                    this.styles = Math.random() < 0.6 ? [this.pickOne(this.styleSlugs)] : [];
-                    this.personality = Math.random() < 0.5 ? this.pickOne(this.personalitySlugs) : '';
-                    this.letter = '';
-                    this.length = 'any';
-                    this.breedSlug = '';
-                    this.twoCats = false;
-                    this.generate();
+                generate() {
+                    this.fill();
+                    document.getElementById('results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 },
 
-                showRandomGrid() {
-                    this.gridMode = 'random';
-                    this.gridResults = [...this.names].sort(() => Math.random() - 0.5).slice(0, 12);
+                visibleResults() {
+                    return this.showAll ? this.results : this.results.slice(0, 8);
                 },
 
-                showTrendingGrid() {
-                    this.gridMode = 'trending';
-                    this.gridResults = this.trending;
-                },
-
-                openFromGrid(pick) {
-                    this.result = { pair: false, ...pick };
+                openDetail(pick) {
+                    this.result = pick;
                     this.$nextTick(() => this.$refs.resultDialog?.showModal());
                 },
 
@@ -965,9 +1088,6 @@
                 },
 
                 shareText() {
-                    if (this.result.pair) {
-                        return this.result.cats[0].name + ' & ' + this.result.cats[1].name + ': cat name ideas from PurrQuery';
-                    }
                     return this.result.name + ': ' + this.result.meaning;
                 },
 
@@ -988,6 +1108,19 @@
                         this.shareCopied = true;
                         setTimeout(() => { this.shareCopied = false; }, 2000);
                     } catch (e) {}
+                },
+            };
+        }
+
+        function toolsCarousel() {
+            return {
+                scrollBy(direction) {
+                    const track = this.$refs.track;
+                    const card = track.querySelector('a');
+                    if (!card) return;
+
+                    const step = card.getBoundingClientRect().width + 16;
+                    track.scrollBy({ left: step * direction, behavior: 'smooth' });
                 },
             };
         }

@@ -76,12 +76,12 @@
                 {{-- The answer, before any preamble. It is what the reader came
                      for and what Google lifts for a snippet. --}}
                 @if ($post->quick_answer)
-                    <div class="relative overflow-hidden rounded-2xl border border-line border-l-4 border-l-primary-vivid p-5 sm:p-6">
+                    <div>
                         <p class="flex items-center gap-2 text-xs font-bold tracking-wider text-primary uppercase">
                             <x-paw-print class="size-4"/>
                             Quick answer
                         </p>
-                        <p class="mt-2.5 text-base leading-relaxed font-medium text-ink">{{ $post->quick_answer }}</p>
+                        <p class="mt-2.5 text-lg leading-relaxed font-semibold text-ink">{{ $post->quick_answer }}</p>
                     </div>
                 @endif
 

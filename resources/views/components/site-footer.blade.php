@@ -147,8 +147,8 @@
         </div>
 
         {{-- Bottom bar --}}
-        <div class="mt-10 flex flex-col gap-3 border-t border-surface/15 pt-5 sm:flex-row sm:items-center sm:justify-between">
-            <p class="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-ink-inverse/80">
+        <div class="mt-10 flex flex-col items-center gap-3 border-t border-surface/15 pt-5 text-center sm:flex-row sm:items-center sm:justify-between sm:text-left">
+            <p class="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-ink-inverse/80 sm:justify-start">
                 <span>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</span>
                 <span class="inline-flex items-center gap-1.5">
                     Made with
@@ -161,7 +161,7 @@
                     for cat owners
                 </span>
             </p>
-            <ul class="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
                 @foreach ([['Privacy Policy', route('privacy')], ['Terms & Conditions', route('terms')], ['Sitemap', route('sitemap')]] as [$label, $href])
                     <li>
                         <a href="{{ $href }}" class="text-sm text-ink-inverse/80 transition hover:text-ink-inverse">{{ $label }}</a>

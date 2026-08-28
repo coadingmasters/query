@@ -547,7 +547,50 @@
                 $gridPosts = $latestPosts->slice(3, 4);
             @endphp
 
-            <div class="mt-12 grid gap-5 lg:grid-cols-5 lg:gap-6">
+            {{-- Mobile: one horizontal, auto-advancing carousel instead of a
+                 tall vertical stack. Desktop keeps the magazine grid below,
+                 untouched. --}}
+            <div class="mt-10 lg:hidden" x-data="postCarousel()" x-init="start()">
+                <div x-ref="track" class="-mx-3 flex snap-x snap-mandatory gap-4 overflow-x-auto px-3 pb-2"
+                     x-on:touchstart="pause()" x-on:pointerdown="pause()">
+                    @foreach ($latestPosts as $post)
+                        <a href="{{ route('blog.show', $post->slug) }}" class="card reveal group w-[78%] max-w-80 shrink-0 snap-center">
+                            <div class="card-media aspect-[3/2]">
+                                <x-post-image :post="$post" class="transition-transform duration-500 group-hover:scale-105"/>
+
+                                <span aria-hidden="true" class="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent"></span>
+
+                                <span class="absolute top-3 left-3 rounded-full bg-primary-vivid px-2.5 py-1 text-[11px] font-bold text-ink shadow-sm">
+                                    {{ $post->category?->name }}
+                                </span>
+
+                                <span class="absolute right-3 bottom-3 left-3 flex items-center gap-1.5 text-[11px] font-semibold text-ink-inverse">
+                                    <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M12 8v4l3 3M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/>
+                                    </svg>
+                                    {{ $post->reading_time }} min read
+                                </span>
+                            </div>
+
+                            <div class="card-body">
+                                <h3 class="line-clamp-2 font-heading text-base leading-snug font-bold text-ink transition-colors group-hover:text-primary">
+                                    {{ $post->title }}
+                                </h3>
+                                <p class="card-text line-clamp-2 flex-1">{{ $post->excerpt }}</p>
+
+                                <span class="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-primary">
+                                    Read the guide
+                                    <svg class="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                         stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                                </span>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="mt-12 hidden gap-5 lg:grid lg:grid-cols-5 lg:gap-6">
                 @if ($featuredPost)
                     <a href="{{ route('blog.show', $featuredPost->slug) }}"
                        class="card reveal group relative aspect-[4/3] sm:aspect-[16/9] lg:col-span-3 lg:aspect-auto">
@@ -621,7 +664,7 @@
             {{-- The even row underneath: same card language as the two
                  above, just four in a row and roomy enough for the excerpt
                  and a "read the guide" line. --}}
-            <div class="mt-5 grid grid-cols-2 gap-4 sm:gap-6 lg:mt-6 lg:grid-cols-4">
+            <div class="mt-5 hidden gap-4 sm:gap-6 lg:mt-6 lg:grid lg:grid-cols-4">
                 @foreach ($gridPosts as $post)
                     <a href="{{ route('blog.show', $post->slug) }}"
                         class="card reveal group" style="--reveal-delay: {{ ($loop->index + 3) * 80 }}ms">
@@ -773,6 +816,40 @@
                         window.location.href = this.items[this.active].url;
                     }
                     // Otherwise the form submits as normal, straight to /search.
+                },
+            };
+        }
+
+        // Mobile blog carousel: advances on its own, but a touch pauses it
+        // for a few seconds so a swipe or a tap into an article never fights
+        // the auto-advance.
+        function postCarousel() {
+            return {
+                timer: null,
+                resumeTimer: null,
+                paused: false,
+
+                start() {
+                    this.timer = setInterval(() => this.advance(), 3500);
+                },
+
+                advance() {
+                    if (this.paused) return;
+
+                    const track = this.$refs.track;
+                    const card = track.querySelector('a');
+                    if (!card) return;
+
+                    const step = card.getBoundingClientRect().width + 16;
+                    const atEnd = track.scrollLeft + track.clientWidth >= track.scrollWidth - 10;
+
+                    track.scrollTo({ left: atEnd ? 0 : track.scrollLeft + step, behavior: 'smooth' });
+                },
+
+                pause() {
+                    this.paused = true;
+                    clearTimeout(this.resumeTimer);
+                    this.resumeTimer = setTimeout(() => { this.paused = false; }, 5000);
                 },
             };
         }

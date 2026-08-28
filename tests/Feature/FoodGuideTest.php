@@ -73,4 +73,35 @@ class FoodGuideTest extends TestCase
 
         $this->assertStringNotContainsString('/#food-guides', $html);
     }
+
+    /**
+     * Fruits covers many individual items rather than one food, so it
+     * carries a real reference table and FAQ that the other, single-answer
+     * guides do not.
+     */
+    public function test_the_fruits_guide_has_a_full_safety_table_and_faq(): void
+    {
+        $response = $this->get('/food-guides/fruits')->assertOk();
+
+        $fruits = collect(config('catalog.foods'))->firstWhere('slug', 'fruits');
+
+        foreach ($fruits['items'] as $item) {
+            $response->assertSee($item['name']);
+        }
+
+        foreach ($fruits['faq'] as $entry) {
+            $response->assertSee($entry['q']);
+        }
+
+        $response->assertSee('Fruits to avoid entirely')
+            ->assertSee('Introducing a new fruit safely');
+    }
+
+    /** Only fruits should have grown this content — every other guide stays exactly as it was. */
+    public function test_other_food_guides_do_not_show_a_faq_accordion(): void
+    {
+        $html = $this->get('/food-guides/vegetables')->getContent();
+
+        $this->assertStringNotContainsString('group rounded-xl border border-line bg-surface px-5', $html);
+    }
 }

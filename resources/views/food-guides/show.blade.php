@@ -67,11 +67,76 @@
                 <p class="mt-3 text-base leading-relaxed text-ink-muted">{{ $food['why'] }}</p>
             @endif
 
+            {{-- A category page like fruits covers many individual items, so
+                 the single verdict badge up top is not enough on its own;
+                 this is the actual reference table someone scans for their
+                 specific fruit. --}}
+            @if (! empty($food['items']))
+                <h2 class="mt-10 font-heading text-xl font-extrabold tracking-tight text-ink">
+                    {{ $food['title'] }}, one at a time
+                </h2>
+                <p class="mt-3 text-base leading-relaxed text-ink-muted">
+                    The verdict above covers {{ strtolower($food['title']) }} as a whole. For the
+                    specific one in front of you, this is the breakdown.
+                </p>
+                <div class="mt-5 overflow-hidden rounded-2xl border border-line">
+                    <table class="w-full text-left text-sm">
+                        <thead>
+                            <tr class="border-b border-line bg-surface-section text-xs tracking-wider text-ink-muted uppercase">
+                                <th scope="col" class="px-4 py-3 font-semibold">Item</th>
+                                <th scope="col" class="px-4 py-3 font-semibold">Verdict</th>
+                                <th scope="col" class="hidden px-4 py-3 font-semibold sm:table-cell">Note</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-line">
+                            @foreach ($food['items'] as $item)
+                                @php $itemMeta = [
+                                    'safe' => ['label' => 'Safe', 'tone' => 'bg-accent-light text-accent-dark'],
+                                    'caution' => ['label' => 'Caution', 'tone' => 'bg-warning-light text-warning'],
+                                    'unsafe' => ['label' => 'Never', 'tone' => 'bg-danger-light text-danger'],
+                                ][$item['verdict']] @endphp
+                                <tr class="align-top">
+                                    <td class="px-4 py-3 font-semibold text-ink">{{ $item['name'] }}</td>
+                                    <td class="px-4 py-3">
+                                        <span @class(['rounded-full px-2.5 py-1 text-xs font-bold whitespace-nowrap', $itemMeta['tone']])>
+                                            {{ $itemMeta['label'] }}
+                                        </span>
+                                        <p class="mt-1.5 text-ink-muted sm:hidden">{{ $item['note'] }}</p>
+                                    </td>
+                                    <td class="hidden px-4 py-3 text-ink-muted sm:table-cell">{{ $item['note'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+
             @if (! empty($food['guidance']))
                 <h2 class="mt-8 font-heading text-xl font-extrabold tracking-tight text-ink">
                     {{ $food['verdict'] === 'unsafe' ? 'What to do if your cat ate this' : 'How much is actually safe' }}
                 </h2>
                 <p class="mt-3 text-base leading-relaxed text-ink-muted">{{ $food['guidance'] }}</p>
+            @endif
+
+            @if (! empty($food['introduce']))
+                <h2 class="mt-8 font-heading text-xl font-extrabold tracking-tight text-ink">
+                    Introducing a new {{ Str::of($food['title'])->lower()->rtrim('s') }} safely
+                </h2>
+                <p class="mt-3 text-base leading-relaxed text-ink-muted">{{ $food['introduce'] }}</p>
+            @endif
+
+            @if (! empty($food['avoid']))
+                <h2 class="mt-8 font-heading text-xl font-extrabold tracking-tight text-ink">
+                    {{ $food['title'] }} to avoid entirely
+                </h2>
+                <ul class="mt-3 space-y-2.5 rounded-xl border border-danger/20 bg-danger-light p-5">
+                    @foreach ($food['avoid'] as $item)
+                        <li class="flex items-start gap-2.5 text-sm leading-relaxed text-ink">
+                            <span aria-hidden="true" class="mt-2 size-1.5 shrink-0 rounded-full bg-danger"></span>
+                            {{ $item }}
+                        </li>
+                    @endforeach
+                </ul>
             @endif
 
             {{-- Points at the full single-food article for anything covered
@@ -108,6 +173,31 @@
                     <a href="{{ route('blog.show', 'signs-your-cat-is-sick') }}" class="font-semibold text-primary underline decoration-line-strong underline-offset-4">the early signs a cat is sick</a>
                     covers the wider list of what to watch for at any time, not just after eating something new.
                 </p>
+            @endif
+
+            {{-- A single question is already covered by the quick answer up
+                 top, so this only shows once a food supplies its own set of
+                 real questions worth a section of their own. --}}
+            @if (count($faq) > 1)
+                <h2 class="mt-10 font-heading text-xl font-extrabold tracking-tight text-ink">
+                    {{ $food['title'] }}, answered
+                </h2>
+                <div class="mt-4 space-y-2.5">
+                    @foreach ($faq as $item)
+                        <details class="group rounded-xl border border-line bg-surface px-5">
+                            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-3.5 text-sm font-bold text-ink marker:content-['']">
+                                {{ $item['q'] }}
+                                <span class="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-light text-primary transition-transform duration-200 group-open:rotate-45">
+                                    <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                         stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                        <path d="M12 5v14M5 12h14"/>
+                                    </svg>
+                                </span>
+                            </summary>
+                            <p class="pb-4 text-sm leading-relaxed text-ink-muted">{{ $item['a'] }}</p>
+                        </details>
+                    @endforeach
+                </div>
             @endif
         </div>
     </div>

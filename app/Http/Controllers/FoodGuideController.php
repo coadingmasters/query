@@ -70,6 +70,11 @@ class FoodGuideController extends Controller
             ->reject(fn (array $f): bool => $f['slug'] === $slug)
             ->take(4);
 
+        // Most food pages answer one question, so the single q/a pair is
+        // FAQ enough. A category page like fruits covers many foods at
+        // once and earns a real FAQ block, so it supplies its own.
+        $faq = $food['faq'] ?? [['q' => $food['question'], 'a' => $food['answer']]];
+
         return view('food-guides.show', [
             'title' => $food['question'].' | '.config('app.name'),
             'description' => $description,
@@ -77,6 +82,7 @@ class FoodGuideController extends Controller
             'food' => $food,
             'related' => $related,
             'sources' => self::SOURCES,
+            'faq' => $faq,
             'schema' => Schema::graph([
                 [
                     '@type' => 'WebPage',
@@ -86,9 +92,7 @@ class FoodGuideController extends Controller
                     'description' => $description,
                     'isPartOf' => ['@id' => $url.'/#website'],
                 ],
-                Schema::faq($path.'#faq', [
-                    ['q' => $food['question'], 'a' => $food['answer']],
-                ]),
+                Schema::faq($path.'#faq', $faq),
                 Schema::breadcrumbs($path, [
                     'Home' => '/',
                     'Food Guides' => '/food-guides',

@@ -23,7 +23,11 @@ class VaccinationTrackerController extends Controller
         $vaccines = config('vaccination.vaccines');
         $faq = config('vaccination-faq');
 
+        $toolMeta = collect(config('catalog.tools'))->firstWhere('slug', 'vaccination-tracker');
+
         return view('tools.cat-vaccination-tracker', [
+            'publishedAt' => $toolMeta['published_at'] ?? null,
+            'updatedAt' => $toolMeta['updated_at'] ?? null,
             'title' => $title,
             'description' => $description,
             'canonical' => $url.$path,

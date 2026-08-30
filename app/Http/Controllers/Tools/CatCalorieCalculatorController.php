@@ -29,7 +29,11 @@ class CatCalorieCalculatorController extends Controller
         $food = config('cat-calorie.food');
         $faq = config('cat-calorie-faq');
 
+        $toolMeta = collect(config('catalog.tools'))->firstWhere('slug', 'cat-calorie-calculator');
+
         return view('tools.cat-calorie-calculator', [
+            'publishedAt' => $toolMeta['published_at'] ?? null,
+            'updatedAt' => $toolMeta['updated_at'] ?? null,
             'title' => $title,
             'description' => $description,
             'canonical' => $url.$path,

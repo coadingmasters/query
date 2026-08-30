@@ -22,7 +22,11 @@ class CatWeightCheckerController extends Controller
         $bcs = config('cat-weight.bcs');
         $faq = config('cat-weight-faq');
 
+        $toolMeta = collect(config('catalog.tools'))->firstWhere('slug', 'cat-weight-checker');
+
         return view('tools.cat-weight-checker', [
+            'publishedAt' => $toolMeta['published_at'] ?? null,
+            'updatedAt' => $toolMeta['updated_at'] ?? null,
             'title' => $title,
             'description' => $description,
             'canonical' => $url.$path,

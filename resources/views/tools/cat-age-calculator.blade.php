@@ -410,7 +410,7 @@
                     </ul>
 
                     <div class="mt-6 border-t border-line pt-5">
-                        <x-byline :reviewed="true"/>
+                        <x-byline :reviewed="true" :published-at="$publishedAt" :updated-at="$updatedAt"/>
                     </div>
 
                     <p class="mt-5 border-l-2 border-warning pl-4 text-sm leading-relaxed text-ink-muted">

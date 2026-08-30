@@ -23,7 +23,11 @@ class CatAgeCalculatorController extends Controller
 
         $faq = config('cat-age-faq');
 
+        $toolMeta = collect(config('catalog.tools'))->firstWhere('slug', 'cat-age-calculator');
+
         return view('tools.cat-age-calculator', [
+            'publishedAt' => $toolMeta['published_at'] ?? null,
+            'updatedAt' => $toolMeta['updated_at'] ?? null,
             'title' => $title,
             'description' => $description,
             'canonical' => $url.$path,

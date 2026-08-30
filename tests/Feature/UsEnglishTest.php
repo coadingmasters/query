@@ -49,6 +49,7 @@ class UsEnglishTest extends TestCase
             'tools index' => ['/tools'],
             'food guides index' => ['/food-guides'],
             'fruits food guide' => ['/food-guides/fruits'],
+            'vegetables food guide' => ['/food-guides/vegetables'],
             'toxic foods food guide' => ['/food-guides/toxic-foods'],
             'search' => ['/search?q=cat'],
         ];

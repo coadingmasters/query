@@ -44,7 +44,7 @@
 
                 <p class="mt-4 text-lg leading-relaxed font-semibold text-ink">{{ $food['answer'] }}</p>
 
-                <x-byline :reviewed="true" class="mt-5"/>
+                <x-byline :reviewed="true" :published-at="$publishedAt" :updated-at="$updatedAt" class="mt-5"/>
             </div>
         </div>
     </div>
@@ -70,7 +70,7 @@
                             <h2 class="{{ $h2 }}">
                                 Why
                             </h2>
-                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{{ $food['why'] }}</p>
+                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['why'] !!}</p>
 
                             @if (! empty($food['note']))
                                 <p @class([
@@ -142,7 +142,7 @@
                             <h2 class="{{ $h2 }}">
                                 {{ $food['verdict'] === 'unsafe' ? 'What to do if your cat ate this' : 'How much is actually safe' }}
                             </h2>
-                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{{ $food['guidance'] }}</p>
+                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['guidance'] !!}</p>
                         </section>
                     @endif
 
@@ -152,7 +152,7 @@
                             <h2 class="{{ $h2 }}">
                                 Introducing a new {{ Str::of($food['title'])->lower()->rtrim('s') }} safely
                             </h2>
-                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{{ $food['introduce'] }}</p>
+                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['introduce'] !!}</p>
                         </section>
                     @endif
 
@@ -242,7 +242,7 @@
                             @endforeach
                         </ul>
                         <div class="mt-5 border-t border-line pt-5">
-                            <x-byline :reviewed="true"/>
+                            <x-byline :reviewed="true" :published-at="$publishedAt" :updated-at="$updatedAt"/>
                         </div>
                     </section>
                 </div>

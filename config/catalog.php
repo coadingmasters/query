@@ -22,6 +22,8 @@ return [
     'tools' => [
         [
             'slug' => 'cat-pregnancy-calculator',
+            'published_at' => '2026-08-17',
+            'updated_at' => '2026-08-28',
             'url' => '/tools/cat-pregnancy-calculator',
             'title' => 'Cat Pregnancy Calculator',
             'blurb' => 'Work out your cat’s due date and follow the pregnancy week by week.',
@@ -30,6 +32,8 @@ return [
         ],
         [
             'slug' => 'cat-age-calculator',
+            'published_at' => '2026-08-18',
+            'updated_at' => '2026-08-28',
             'url' => '/tools/cat-age-calculator',
             'title' => 'Cat Age Calculator',
             'blurb' => 'Turn your cat’s age into human years, using the life-stage curve vets actually use.',
@@ -38,6 +42,8 @@ return [
         ],
         [
             'slug' => 'cat-calorie-calculator',
+            'published_at' => '2026-08-21',
+            'updated_at' => '2026-08-28',
             'url' => '/tools/cat-calorie-calculator',
             'title' => 'Cat Calorie Calculator',
             'blurb' => 'Work out how much to feed each day from weight, life stage, activity and body condition.',
@@ -46,6 +52,8 @@ return [
         ],
         [
             'slug' => 'cat-weight-checker',
+            'published_at' => '2026-08-24',
+            'updated_at' => '2026-08-28',
             'url' => '/tools/cat-weight-checker',
             'title' => 'Weight Checker',
             'blurb' => 'Score body condition, see an ideal weight range, and log weight over time.',
@@ -54,6 +62,8 @@ return [
         ],
         [
             'slug' => 'vaccination-tracker',
+            'published_at' => '2026-08-21',
+            'updated_at' => '2026-08-28',
             'url' => '/tools/cat-vaccination-tracker',
             'title' => 'Cat Vaccination Tracker',
             'blurb' => 'Build a shot schedule from your cat’s birth date and keep every booster on time.',
@@ -62,6 +72,8 @@ return [
         ],
         [
             'slug' => 'cat-name-generator',
+            'published_at' => '2026-08-27',
+            'updated_at' => '2026-08-30',
             'url' => '/tools/cat-name-generator',
             'title' => 'Cat Name Generator',
             'blurb' => 'Filter by style, personality and breed for a name with a real meaning behind it.',
@@ -95,6 +107,8 @@ return [
     'foods' => [
         [
             'slug' => 'fruits',
+            'published_at' => '2026-08-17',
+            'updated_at' => '2026-08-28',
             'title' => 'Fruits',
             'question' => 'Can Cats Eat Fruit?',
             'answer' => 'Small amounts of melon, blueberries or apple flesh are fine. Never grapes or raisins.',
@@ -150,6 +164,8 @@ return [
         ],
         [
             'slug' => 'vegetables',
+            'published_at' => '2026-08-17',
+            'updated_at' => '2026-08-30',
             'title' => 'Vegetables',
             'question' => 'Can Cats Eat Vegetables?',
             'answer' => 'Plain cooked carrot, broccoli or pumpkin in small amounts. Skip onion, garlic and leek entirely.',
@@ -157,12 +173,51 @@ return [
             'note' => 'Cooked and plain only',
             'image' => 'can-cats-eat-vegetables-fresh-greens',
             'alt' => 'Broccoli, cucumber, spinach and carrots beside a cat',
-            'why' => 'A cat\'s digestive system is built around meat, not plant matter, so vegetables offer fiber and a little variety rather than anything a well-fed cat is missing. Raw vegetables are harder to digest and more likely to cause an upset stomach than cooked, plain ones, since cooking breaks down the plant cell walls a cat\'s gut cannot easily process on its own.',
-            'guidance' => 'Plain cooked carrot, broccoli, green beans, peas or pumpkin, cut small and offered without butter, oil or seasoning, are fine in small amounts alongside a regular diet. Spinach is usually fine occasionally but is best kept infrequent in a cat with a history of urinary crystals, since it is relatively high in oxalates. The one category to skip entirely is the allium family: onion, garlic, leek, chives and shallots, cooked or raw, all contain compounds that damage a cat\'s red blood cells and can cause a serious anemia, even from amounts that would seem trivially small.',
+            'why' => "Cats are obligate carnivores, and that shapes how their whole digestive system is built, not just what they crave. A cat's gut is short relative to its body, its intestinal surface area is a fraction of an omnivore's, and it produces very little amylase, the enzyme that breaks starch down into usable sugar, because none of that was ever needed to hunt and process prey. Vegetables are not built the way meat is. Their cell walls are made of cellulose, a fiber a cat's gut cannot break down on its own, which is why a raw vegetable tends to pass through mostly intact and can cause more gas or looser stool than the same vegetable cooked. Cooking ruptures those cell walls mechanically, and that is the real reason a plain cooked vegetable sits easier than a raw one, not any change in what nutrients it offers. None of this makes vegetables dangerous as a category. Unlike onion or garlic, a plain cooked vegetable carries no toxin at all for most of the items on this page, and the concern is almost always digestive tolerance or a specific prep mistake, not a poison. But it also does not make vegetables useful. A cat gets everything its body needs, taurine, arachidonic acid, vitamin A, from animal tissue, and a vegetable fills none of those gaps no matter how it is cooked. A spoonful of plain carrot or pumpkin is a fiber and texture addition a cat's gut can tolerate, not a nutritional contribution, and never a stand-in for the meat its metabolism actually runs on.",
+            'guidance' => "For the vegetables marked safe or caution below, plain and cooked is the default: steamed or boiled, nothing added, no butter, oil, salt or seasoning, cut into pieces small enough that a cat swallows them cleanly rather than gulping down a chunk whole. A few, carrot, green beans, peas and corn kernels off the cob among them, are tolerated raw in small amounts, but cooking is the safer default across the board, since it softens the cellulose a cat's gut cannot break down and removes surface bacteria raw produce can carry. Treat vegetables the way you would any other treat: roughly a spoonful or two per feeding, a few times a week rather than daily, counted toward the general rule of keeping treats of any kind under about 10 percent of a cat's total daily calories, alongside a complete, balanced food doing the actual nutritional work. Spinach deserves its own note. It is fine occasionally for most cats, but it is relatively high in oxalates, and a cat with any history of urinary crystals or bladder stones is better off skipping it entirely, since oxalates are a real contributing factor behind the crystal and stone formation covered in more depth in our guide to <a href=\"/blog/cat-uti-symptoms\" class=\"font-semibold text-primary underline decoration-line-strong underline-offset-4\">UTI symptoms in cats</a>. The one category with no moderation version at all is the allium family, covered in full on our <a href=\"/food-guides/toxic-foods\" class=\"font-semibold text-primary underline decoration-line-strong underline-offset-4\">toxic foods guide</a>: onion, garlic, leek, chives and shallots. Raw, cooked, powdered, or hidden in a broth or seasoning blend, every form damages a cat's red blood cells and can cause a serious anemia, even from an amount that looks trivially small, with no safe threshold to build a habit around. That family is treated as an automatic no on this page, never a judgment call.",
+            'introduce' => "Introduce any new vegetable the same cautious way, one at a time. Cook a small amount plain, cut it into pieces sized for a cat's mouth rather than a person's bite, and offer just a taste, not a full spoonful, the first time. Wait roughly 24 hours before trying anything else new, watching for vomiting, diarrhea, gas, or a cat that goes off its regular food, any of which is a reason to stop and not offer that vegetable again. No reaction after a day is a reasonable sign of tolerance, though that only covers digestive upset, not the allium family, where there is no safe amount to work up to no matter how well a cat handles it. Overall daily portion size matters as much as any single new item does: a vegetable that sits fine on its own can still push a cat past its daily calorie total if it is layered on top of full meals instead of counted against them, and our <a href=\"/tools/cat-calorie-calculator\" class=\"font-semibold text-primary underline decoration-line-strong underline-offset-4\">calorie calculator</a> is the fastest way to see what that total is for a cat's weight and activity level before adding extras. A cat that shows no interest at all is not being fussy, it simply is not built to crave plant matter, and that is a normal response, not something to coax past.",
+            'items' => [
+                ['name' => 'Carrot (cooked)', 'verdict' => 'safe', 'note' => "Steamed or boiled until fork-soft, no seasoning. Raw carrot is a genuine choking and obstruction risk, since a cat's shearing teeth tend to bite off chunks rather than grind them down. Limit to about half a teaspoon, mashed or diced, once or twice a week."],
+                ['name' => 'Broccoli (cooked)', 'verdict' => 'caution', 'note' => 'Steamed or boiled plain, stems removed, florets cut small. Contains glucosinolates that turn into gas-causing irritants once cut or cooked, so a thumb-sized portion, once or twice a week, is the ceiling. More than that can bring on gas or loose stool.'],
+                ['name' => 'Cauliflower (cooked)', 'verdict' => 'caution', 'note' => 'Cooked only, plain, in small florets; raw cauliflower is harder to digest. Ferments in the gut and can cause gas or bloating at more than a floret or two, from an indigestible sugar plus the same sulfur compounds broccoli carries.'],
+                ['name' => 'Green beans (cooked)', 'verdict' => 'safe', 'note' => 'Fresh, frozen or cooked, cut into bite-sized pieces, a low-calorie snack vets often recommend. Skip seasoned or canned holiday-style green bean blends, which can carry onion or garlic powder, a real hazard the bean itself does not carry at all.'],
+                ['name' => 'Peas', 'verdict' => 'safe', 'note' => 'Fresh or frozen only, boiled soft and mashed rather than left whole, since intact skins are an unnecessary choking risk. Keep it under a tablespoon a week, and skip it entirely for a cat with diagnosed kidney disease, given its purine content.'],
+                ['name' => 'Pumpkin (plain, cooked or canned)', 'verdict' => 'safe', 'note' => 'Plain canned pumpkin, never pie filling, which is spiked with sugar and spices like nutmeg. Its soluble fiber firms up loose stool or eases mild constipation either way. A teaspoon or two mixed into a meal is the usual vet-recommended dose.'],
+                ['name' => 'Cucumber', 'verdict' => 'caution', 'note' => 'Peeled, washed, and cut into small pieces, since the skin is fibrous and harder to digest. About 95 percent water, so more than a slice or two at a time tends toward loose stool. Never pickled or brined, which adds sodium and sometimes onion.'],
+                ['name' => 'Zucchini (cooked)', 'verdict' => 'caution', 'note' => "Steamed or baked plain and diced small; raw zucchini is not toxic but harder on a cat's gut. Skip any zucchini or squash that tastes bitter, homegrown fruit included, a sign of cucurbitacin, a natural toxin that heat does not destroy."],
+                ['name' => 'Celery', 'verdict' => 'caution', 'note' => 'Wash and strip the tough outer strings before cutting into small plain pieces; the stringy fiber is a real choking risk for a cat that tends to gulp rather than chew. Skip the ranch or peanut-butter dip celery is usually served with.'],
+                ['name' => 'Sweet potato (cooked)', 'verdict' => 'safe', 'note' => 'Boiled, steamed or baked plain with the skin removed; raw is a starchy choking and digestion risk, not a toxic one. Mash or cube it small, and keep it to about half a teaspoon at most, once or twice a week.'],
+                ['name' => 'Potato (cooked, no green skin)', 'verdict' => 'caution', 'note' => 'Fully cooked with every trace of skin removed, not just green or sprouted patches, since ordinary skin still carries solanine and cooking only cuts it by roughly a third. Green, sprouted, or raw potato is a genuine poisoning risk on its own.'],
+                ['name' => 'Corn kernels (off the cob)', 'verdict' => 'safe', 'note' => 'Boiled or steamed plain, off the cob; the kernels themselves carry no toxin. The cob is the real hazard, a fibrous, indigestible cylinder that can lodge in the intestine, so it is never something to let a cat chew on directly.'],
+                ['name' => 'Tomato (ripe flesh only)', 'verdict' => 'caution', 'note' => 'Only fully ripe, all-red flesh, no stem, leaf, vine, or green fruit, which contain solanine and tomatine at levels that can cause drooling and stomach upset. Skip sauce, ketchup, and canned tomato products, which usually add onion or garlic too.'],
+                ['name' => 'Mushrooms (plain, store-bought only)', 'verdict' => 'caution', 'note' => 'Only grocery-store button, cremini, or portobello mushrooms, cooked plain, count. Never a wild or lawn mushroom: toxic and harmless species look alike to a non-expert, and some cause liver or kidney damage after a deceptive symptom-free window.'],
+                ['name' => 'Spinach', 'verdict' => 'caution', 'note' => 'Fine occasionally in a small amount, briefly boiled with the water discarded, which cuts its oxalate content substantially. Best skipped by a cat with any history of urinary crystals or bladder stones, where oxalates are a genuine contributing factor.'],
+                ['name' => 'Brussels sprouts', 'verdict' => 'caution', 'note' => 'Steamed or boiled until fork-soft, cut small; never raw, which can carry soil bacteria and is harder to digest. About half to one small cooked sprout, once or twice a week, is enough to avoid gas or loose stool afterward.'],
+                ['name' => 'Onion, garlic, leek, chives & shallots', 'verdict' => 'unsafe', 'note' => "Every form, raw, cooked, powdered, or in a broth or bouillon, damages a cat's red blood cells and can cause a serious anemia. No known safe amount in any quantity, and powdered forms are actually more concentrated than the fresh vegetable."],
+            ],
+            'avoid' => [
+                "Onion, garlic, leek, chives and shallots, in any form, raw, cooked, dehydrated or powdered in a broth, gravy, or seasoning blend: organosulfur compounds in every member of this family damage a cat's red blood cells and can cause a serious anemia, with no dose considered safe and powdered forms actually more concentrated than the fresh vegetable.",
+                'Corn on the cob: the kernels are harmless, but the fibrous, indigestible cob itself can lodge in the intestine and often has to be removed surgically.',
+                'Green or sprouted potato, and potato skin in any form, raw or cooked: both carry solanine at a level cooking does not fully neutralize, and can cause vomiting, drooling and, in serious cases, tremors.',
+                'Unripe, green tomato and any tomato stem, leaf or vine: these carry the same solanine-family toxin as green potato, at levels the ripe red flesh does not.',
+                'Wild, foraged or lawn mushrooms, including anything a cat might find growing in the yard: toxic and harmless species are frequently impossible to tell apart, and the most dangerous toxins cause organ damage after a deceptive symptom-free period.',
+                'Pickled, brined, salted, buttered or seasoned vegetables of any kind, and any dip served alongside them, ranch, cheese sauce or seasoned oil: the sodium, fat and often onion or garlic powder are a separate, real hazard from the plain vegetable itself.',
+                'Bitter-tasting squash or zucchini, especially homegrown or garden-grown fruit: bitterness signals cucurbitacin, a natural plant toxin that heat does not destroy and that causes vomiting and abdominal pain in cats.',
+            ],
             'watch_for' => [
-                'Pale gums, weakness or lethargy in the days after eating onion, garlic or leek, signs of anemia',
-                'Vomiting or diarrhea after a new vegetable, especially a raw one',
-                'Reduced appetite that continues beyond a day',
+                'Vomiting, diarrhea or gas within a few hours of a new vegetable, more likely from a raw or cruciferous one than a cooked, plain one',
+                'Pale gums, weakness, a fast heart rate or dark urine in the day or two after any onion, garlic, leek, chives or shallot exposure, signs of the anemia this family causes',
+                'Straining to urinate, blood in the litter box, or frequent trips to the box in a cat with a history of urinary crystals after spinach or another oxalate-heavy vegetable',
+                'Gagging, drooling or repeated swallowing after a fibrous vegetable like celery or a piece of corn cob, a possible sign something is stuck rather than swallowed cleanly',
+            ],
+            'faq' => [
+                ['q' => 'Can cats eat onions or garlic?', 'a' => "No. Onion, garlic, leek, chives and shallots, in any form, raw, cooked or powdered, damage a cat's red blood cells and can cause a serious anemia. There is no known safe amount, and powdered or dehydrated forms are actually more concentrated than the fresh vegetable. If a cat eats any amount, call a vet rather than waiting for symptoms."],
+                ['q' => 'Can cats eat broccoli?', 'a' => 'Yes, in small amounts, cooked plain. Broccoli is not toxic to cats, but it contains compounds that turn into gas-causing irritants once it is cut or cooked, so a thumb-sized portion once or twice a week is plenty. Remove the stems first, both a digestion and a choking concern.'],
+                ['q' => 'Can cats eat carrots?', 'a' => "Yes, cooked and cut small. Raw carrot is hard, and a cat's shearing teeth tend to bite off chunks rather than grind them down, which makes it a real choking risk. Steamed or boiled until soft, then mashed or diced, carrot is a low-calorie, guilt-free treat in small amounts."],
+                ['q' => 'Can cats eat tomatoes?', 'a' => 'Only fully ripe, red flesh, and only a small amount. Tomato is a nightshade, and its stem, leaves, vine and any green, unripe fruit carry solanine and tomatine at levels that can cause drooling and stomach upset. Skip sauce and ketchup entirely, both usually contain onion or garlic.'],
+                ['q' => 'Can cats eat potatoes?', 'a' => 'Only fully cooked, fully peeled potato flesh, with no trace of skin. Ordinary potato skin still carries solanine, and cooking only cuts it by around a third, so the skin has to come off entirely. Green, sprouted, or raw potato is a genuine poisoning risk and should never be fed.'],
+                ['q' => 'Are vegetables good for cats nutritionally?', 'a' => "Not in a way that fills a real gap. Cats get taurine, arachidonic acid and vitamin A from animal tissue, and no vegetable supplies those. A spoonful of plain cooked vegetable adds fiber and variety a cat's gut can tolerate, not a nutritional contribution its diet is actually missing."],
+                ['q' => 'How much vegetable can I give my cat?', 'a' => "A spoonful or two at most, a few times a week, not daily. Treats of any kind, vegetables included, are generally kept under about 10 percent of a cat's total daily calories, with a complete, balanced food doing the rest of the nutritional work day to day."],
             ],
             'deep_dives' => [
                 ['label' => 'Can Cats Eat Broccoli?', 'slug' => 'can-cats-eat-broccoli'],
@@ -170,6 +225,8 @@ return [
         ],
         [
             'slug' => 'meat-and-seafood',
+            'published_at' => '2026-08-17',
+            'updated_at' => '2026-08-25',
             'title' => 'Meat & Seafood',
             'question' => 'Can Cats Eat Meat and Fish?',
             'answer' => 'Yes. Plain cooked chicken, turkey or fish, boneless and without salt, oil or seasoning.',
@@ -191,6 +248,8 @@ return [
         ],
         [
             'slug' => 'dairy-and-eggs',
+            'published_at' => '2026-08-17',
+            'updated_at' => '2026-08-25',
             'title' => 'Dairy & Eggs',
             'question' => 'Can Cats Eat Dairy and Eggs?',
             'answer' => 'Cooked egg is fine. Most adult cats are lactose intolerant, so milk and cheese cause upset.',
@@ -212,6 +271,8 @@ return [
         ],
         [
             'slug' => 'toxic-foods',
+            'published_at' => '2026-08-17',
+            'updated_at' => '2026-08-25',
             'title' => 'Toxic Foods',
             'question' => 'What Foods Are Toxic to Cats?',
             'answer' => 'Onion, garlic, chocolate, grapes, raisins, alcohol and xylitol. Call a vet if any is eaten.',
@@ -230,6 +291,8 @@ return [
         ],
         [
             'slug' => 'grains-and-seeds',
+            'published_at' => '2026-08-17',
+            'updated_at' => '2026-08-25',
             'title' => 'Grains & Seeds',
             'question' => 'Can Cats Eat Grains and Seeds?',
             'answer' => 'Small amounts of cooked rice or oats are harmless, but cats gain nothing nutritionally from them.',
@@ -250,6 +313,8 @@ return [
         ],
         [
             'slug' => 'sweets',
+            'published_at' => '2026-08-17',
+            'updated_at' => '2026-08-25',
             'title' => 'Sweets',
             'question' => 'Can Cats Eat Sweets?',
             'answer' => 'No. Cats cannot taste sweetness, and chocolate and xylitol are outright poisonous.',
@@ -266,6 +331,8 @@ return [
         ],
         [
             'slug' => 'junk-food',
+            'published_at' => '2026-08-17',
+            'updated_at' => '2026-08-25',
             'title' => 'Junk Food',
             'question' => 'Can Cats Eat Junk Food?',
             'answer' => 'No. The salt, fat and seasoning in chips, burgers and pizza are far past what a cat can handle.',
@@ -286,6 +353,8 @@ return [
         ],
         [
             'slug' => 'herbs-and-spices',
+            'published_at' => '2026-08-17',
+            'updated_at' => '2026-08-26',
             'title' => 'Herbs & Spices',
             'question' => 'Can Cats Eat Seasoning, Herbs and Spices?',
             'answer' => 'Basil and rosemary are harmless in tiny amounts. Onion and garlic powder are dangerous.',
@@ -302,6 +371,8 @@ return [
         ],
         [
             'slug' => 'treats-and-snacks',
+            'published_at' => '2026-08-17',
+            'updated_at' => '2026-08-25',
             'title' => 'Treats & Snacks',
             'question' => 'Can Cats Eat Treats?',
             'answer' => 'Yes, as long as treats stay under a tenth of daily calories so meals keep their nutrition.',

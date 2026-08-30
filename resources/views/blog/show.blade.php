@@ -45,11 +45,7 @@
                 <p class="mt-4 max-w-lg text-base leading-relaxed text-ink-muted">{{ $post->excerpt }}</p>
 
                 <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-ink-muted">
-                    <x-byline/>
-                    <span aria-hidden="true" class="hidden size-1 rounded-full bg-line-strong sm:block"></span>
-                    <time datetime="{{ $post->updated_at->toDateString() }}">
-                        {{ $post->updated_at->format('F j, Y') }}
-                    </time>
+                    <x-byline :published-at="$post->published_at" :updated-at="$post->updated_at"/>
                     <span aria-hidden="true" class="size-1 rounded-full bg-line-strong"></span>
                     <span>{{ $post->reading_time }} min read</span>
                 </div>

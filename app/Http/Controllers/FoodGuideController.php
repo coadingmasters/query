@@ -71,8 +71,8 @@ class FoodGuideController extends Controller
             ->take(4);
 
         // Most food pages answer one question, so the single q/a pair is
-        // FAQ enough. A category page like fruits covers many foods at
-        // once and earns a real FAQ block, so it supplies its own.
+        // FAQ enough. A category page like fruits or vegetables covers many
+        // foods at once and earns a real FAQ block, so it supplies its own.
         $faq = $food['faq'] ?? [['q' => $food['question'], 'a' => $food['answer']]];
 
         // Built from the sections that actually render for this food, so a
@@ -105,6 +105,8 @@ class FoodGuideController extends Controller
             'related' => $related,
             'sources' => self::SOURCES,
             'faq' => $faq,
+            'publishedAt' => $food['published_at'] ?? null,
+            'updatedAt' => $food['updated_at'] ?? null,
             'toc' => $toc,
             'safeList' => $safeList,
             'avoidList' => $avoidList,

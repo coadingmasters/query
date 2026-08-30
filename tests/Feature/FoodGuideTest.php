@@ -75,33 +75,43 @@ class FoodGuideTest extends TestCase
     }
 
     /**
-     * Fruits covers many individual items rather than one food, so it
-     * carries a real reference table and FAQ that the other, single-answer
-     * guides do not.
+     * Fruits and vegetables each cover many individual items rather than one
+     * food, so both carry a real reference table and FAQ that the other,
+     * single-answer guides do not.
      */
-    public function test_the_fruits_guide_has_a_full_safety_table_and_faq(): void
+    public static function categoryGuides(): array
     {
-        $response = $this->get('/food-guides/fruits')->assertOk();
+        return [
+            'fruits' => ['fruits'],
+            'vegetables' => ['vegetables'],
+        ];
+    }
 
-        $fruits = collect(config('catalog.foods'))->firstWhere('slug', 'fruits');
+    #[\PHPUnit\Framework\Attributes\DataProvider('categoryGuides')]
+    public function test_a_category_guide_has_a_full_safety_table_and_faq(string $slug): void
+    {
+        $response = $this->get("/food-guides/{$slug}")->assertOk();
 
-        foreach ($fruits['items'] as $item) {
+        $food = collect(config('catalog.foods'))->firstWhere('slug', $slug);
+
+        foreach ($food['items'] as $item) {
             $response->assertSee($item['name']);
         }
 
-        foreach ($fruits['faq'] as $entry) {
+        foreach ($food['faq'] as $entry) {
             $response->assertSee($entry['q']);
         }
 
-        $response->assertSee('Fruits to avoid entirely')
-            ->assertSee('Introducing a new fruit safely');
+        $response->assertSee($food['title'].' to avoid entirely')
+            ->assertSee('Introducing a new '.\Illuminate\Support\Str::of($food['title'])->lower()->rtrim('s').' safely');
     }
 
-    /** Only fruits supplies its own FAQ set, so only fruits gets the accordion. */
+    /** Only a category guide supplies its own FAQ set, so only those get the accordion. */
     public function test_other_food_guides_do_not_show_a_faq_accordion(): void
     {
-        $this->get('/food-guides/vegetables')->assertDontSee('Frequently asked questions');
+        $this->get('/food-guides/toxic-foods')->assertDontSee('Frequently asked questions');
         $this->get('/food-guides/fruits')->assertSee('Frequently asked questions');
+        $this->get('/food-guides/vegetables')->assertSee('Frequently asked questions');
     }
 
     /** Every guide carries the sidebar, and its contents list only real sections. */

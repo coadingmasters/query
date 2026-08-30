@@ -63,8 +63,11 @@ class FoodGuideController extends Controller
         $path = '/food-guides/'.$slug;
 
         // Same real fields the card already shows, joined into one
-        // paragraph — nothing here is a claim beyond what is on the page.
-        $description = $food['question'].' '.$food['answer'].' '.self::VERDICT_LABEL[$food['verdict']];
+        // paragraph, nothing here is a claim beyond what is on the page.
+        // A guide can supply its own meta_description instead, written for
+        // search intent and click-through rather than assembled from parts.
+        $description = $food['meta_description']
+            ?? $food['question'].' '.$food['answer'].' '.self::VERDICT_LABEL[$food['verdict']];
 
         $related = collect(config('catalog.foods'))
             ->reject(fn (array $f): bool => $f['slug'] === $slug)

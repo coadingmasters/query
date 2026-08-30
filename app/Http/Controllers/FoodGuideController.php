@@ -25,14 +25,26 @@ class FoodGuideController extends Controller
         $url = rtrim(config('app.url'), '/');
         $foods = collect(config('catalog.foods'));
 
-        $description = 'What cats can and cannot eat, one food category at a time: safe, in '
-            .'moderation, or never, with the reason behind each verdict.';
+        $description = 'Find out exactly what cats can and cannot eat: 10 food categories, each rated '
+            .'safe, caution or never, with the reasoning behind every verdict.';
+
+        $faqs = [
+            ['q' => 'How does the safe, caution and never system work on this site?', 'a' => 'Every food guide opens with one of three verdicts. Safe means fine for a healthy adult cat in a normal amount. Caution means not toxic, but with a real catch, a prep step, a small portion limit, or a part of the food to remove first. Never means there is no safe amount, and the guide covers what to do if it already happened.'],
+            ['q' => 'What human foods can cats eat?', 'a' => 'Plain cooked meat and fish are the safest human foods for a cat, since they\'re closest to a cat\'s normal diet. Small amounts of a few fruits and vegetables, like melon, blueberries, cooked carrot or pumpkin, work as an occasional extra. Each category guide on this page covers exactly which foods qualify and how much is reasonable to offer.'],
+            ['q' => 'What can cats not eat?', 'a' => 'A short list of ordinary kitchen ingredients is dangerous to cats in any amount: onion, garlic, chocolate, grapes, raisins, alcohol and xylitol among them. These are not a matter of moderation the way many other foods are. The toxic foods guide covers the full list, why each one is dangerous, and what to do if your cat eats one.'],
+            ['q' => 'What should I do if my cat eats something on the never list?', 'a' => 'Call your vet or an animal poison control line right away, rather than waiting to see if symptoms show up. Have the packaging, or a rough idea of what and how much your cat ate, ready to describe. Do not try to induce vomiting on your own unless a vet specifically tells you to, since that is not safe for every ingredient.'],
+            ['q' => 'What are the signs my cat ate something toxic?', 'a' => 'Vomiting, diarrhea, drooling, weakness and pale gums are common early signs across most toxic foods, though the exact pattern depends on what was eaten. Tremors, a fast heart rate or rapid breathing can follow chocolate, caffeine or alcohol specifically. Any known or suspected ingestion is worth a call to your vet immediately, even before symptoms appear.'],
+            ['q' => 'Do treats count differently than a regular meal?', 'a' => 'Treats and human food extras are meant to stay a small slice of a cat\'s day, not a habit that competes with a balanced diet. A common guideline keeps treats and extras under about 10 percent of daily calories, with the rest coming from a complete cat food. The cat calorie calculator can work out what that 10 percent looks like for your cat.'],
+            ['q' => 'Why does a cat need a different food safety list than a dog?', 'a' => 'Cats are obligate carnivores with a smaller body and a more sensitive response to certain compounds than dogs have. Onion and garlic, for example, are more dangerous to a cat than to a similarly sized dog, because a cat processes the sulfur compounds involved less efficiently. A food safety list built for dogs does not transfer safely to a cat.'],
+            ['q' => 'Where does the safety information on this site come from?', 'a' => 'Each guide draws on established veterinary and feline-nutrition sources, including the ASPCA Animal Poison Control Center and the Cornell Feline Health Center, both named at the bottom of every guide. Nothing here is written as a diagnosis, and anything that looks like a real emergency is a reason to call your vet directly rather than rely on a website.'],
+        ];
 
         return view('food-guides.index', [
-            'title' => 'What Can Cats Eat? Cat Food Safety Guides | '.config('app.name'),
+            'title' => 'What Can Cats Eat? Complete Safe & Toxic Guide | '.config('app.name'),
             'description' => $description,
             'canonical' => $url.'/food-guides',
             'foods' => $foods,
+            'faqs' => $faqs,
             'schema' => Schema::graph([
                 [
                     '@type' => 'CollectionPage',
@@ -46,6 +58,7 @@ class FoodGuideController extends Controller
                     $foods->map(fn (array $f): array => [
                         'name' => $f['question'], 'description' => $f['answer'],
                     ])->all()),
+                Schema::faq('/food-guides#faq', $faqs),
                 Schema::breadcrumbs('/food-guides', ['Home' => '/', 'Food Guides' => null]),
             ]),
         ]);

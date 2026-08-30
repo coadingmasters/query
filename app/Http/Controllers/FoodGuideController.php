@@ -84,7 +84,7 @@ class FoodGuideController extends Controller
             ['id' => 'why', 'label' => 'Why', 'when' => ! empty($food['why'])],
             ['id' => 'each-one', 'label' => $food['title'].', one at a time', 'when' => ! empty($food['items'])],
             ['id' => 'how-much', 'label' => $food['verdict'] === 'unsafe' ? 'If your cat ate this' : 'How much is safe', 'when' => ! empty($food['guidance'])],
-            ['id' => 'introduce', 'label' => 'Introducing it safely', 'when' => ! empty($food['introduce'])],
+            ['id' => 'introduce', 'label' => $food['verdict'] === 'unsafe' ? 'If it already happened' : 'Introducing it safely', 'when' => ! empty($food['introduce'])],
             ['id' => 'avoid', 'label' => 'What to avoid entirely', 'when' => ! empty($food['avoid'])],
             ['id' => 'signs', 'label' => 'Signs to watch for', 'when' => ! empty($food['watch_for'])],
             ['id' => 'faq', 'label' => 'Questions, answered', 'when' => count($faq) > 1],

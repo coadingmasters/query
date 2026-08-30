@@ -150,7 +150,7 @@
                     @if (! empty($food['introduce']))
                         <section id="introduce" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                             <h2 class="{{ $h2 }}">
-                                Introducing a new {{ Str::of($food['title'])->lower()->rtrim('s') }} safely
+                                {{ $food['verdict'] === 'unsafe' ? 'If it already happened' : 'Introducing a new '.Str::of($food['title'])->lower()->rtrim('s').' safely' }}
                             </h2>
                             <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['introduce'] !!}</p>
                         </section>
@@ -164,7 +164,7 @@
                             </h2>
                             <ul class="mt-4 space-y-3 border-l-2 border-danger pl-5">
                                 @foreach ($food['avoid'] as $item)
-                                    <li class="text-base leading-relaxed text-ink-muted">{{ $item }}</li>
+                                    <li class="text-base leading-relaxed text-ink-muted">{!! $item !!}</li>
                                 @endforeach
                             </ul>
                         </section>

@@ -108,7 +108,11 @@
                                 </table>
                             </div>
 
-                            <p class="mt-3 text-xs text-ink-muted">Safe in small amounts, Caution: prep matters, Never feed.</p>
+                            <p class="mt-3 text-xs text-ink-muted">
+                                <span class="font-semibold text-ink">Safe</span> means fine as described here.
+                                <span class="font-semibold text-ink">Caution</span> means keep it small, plain and occasional.
+                                <span class="font-semibold text-ink">Never</span> means no safe amount, keep it out of reach.
+                            </p>
                         @endif
 
                         {{-- How much --}}

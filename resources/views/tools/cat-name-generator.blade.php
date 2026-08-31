@@ -263,46 +263,6 @@
                             <span x-text="twoCats ? 'Generate a Pair' : 'Generate a Name'"></span>
                         </button>
                     </div>
-
-                    {{-- Quick-start shortcuts --}}
-                    <div class="mt-6 border-t border-line pt-6">
-                        <p class="text-center text-xs font-bold tracking-wide text-ink-muted uppercase">Or try a shortcut</p>
-                        <div class="mt-3 grid gap-3 sm:grid-cols-3">
-                            <button type="button" x-on:click="surpriseMe()"
-                                    class="group flex flex-col items-center gap-2 rounded-2xl bg-primary-vivid px-4 py-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
-                                <span class="flex size-11 items-center justify-center rounded-full bg-ink/10 transition-transform duration-200 group-hover:scale-110">
-                                    <svg class="size-5 text-ink" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                        <path d="M12 2.5l1.9 5.6 5.6 1.9-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9L12 2.5Z"/>
-                                    </svg>
-                                </span>
-                                <span class="font-heading text-sm font-extrabold text-ink">Surprise Me</span>
-                                <span class="text-xs font-semibold text-ink/70">Random filters</span>
-                            </button>
-
-                            <button type="button" x-on:click="randomNames()"
-                                    class="group flex flex-col items-center gap-2 rounded-2xl bg-primary-dark px-4 py-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
-                                <span class="flex size-11 items-center justify-center rounded-full bg-white/15 transition-transform duration-200 group-hover:scale-110">
-                                    <svg class="size-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M20 11a8 8 0 1 0-2.3 5.6M20 4v7h-7"/>
-                                    </svg>
-                                </span>
-                                <span class="font-heading text-sm font-extrabold text-white">Random Names</span>
-                                <span class="text-xs font-semibold text-white/70">Quick generate</span>
-                            </button>
-
-                            <button type="button" x-on:click="showTrending()"
-                                    class="group flex flex-col items-center gap-2 rounded-2xl bg-accent-dark px-4 py-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
-                                <span class="flex size-11 items-center justify-center rounded-full bg-white/15 transition-transform duration-200 group-hover:scale-110">
-                                    <svg class="size-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="M3 17l6-6 4 4 8-8"/>
-                                        <path d="M15 7h6v6"/>
-                                    </svg>
-                                </span>
-                                <span class="font-heading text-sm font-extrabold text-white">Trending Names</span>
-                                <span class="text-xs font-semibold text-white/70">Popular picks</span>
-                            </button>
-                        </div>
-                    </div>
                 </div>
 
                 {{-- Suggested names --}}
@@ -346,25 +306,27 @@
                         <div>
                             <div class="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                                 <template x-for="pick in visibleResults()" :key="pick.name">
-                                    <div class="group relative flex flex-col rounded-xl border border-line bg-surface p-4 transition duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
-                                        <button type="button" x-on:click="toggleFavorite(pick)"
-                                                :aria-label="isFavorite(pick.name) ? 'Remove ' + pick.name + ' from favorites' : 'Save ' + pick.name + ' to favorites'"
-                                                class="absolute top-3 right-3 flex size-7 items-center justify-center rounded-full transition hover:bg-primary-light">
-                                            <svg class="size-4 text-primary-vivid transition-transform duration-200 hover:scale-125"
-                                                 viewBox="0 0 24 24" :fill="isFavorite(pick.name) ? 'currentColor' : 'none'"
-                                                 stroke="currentColor" stroke-width="2" aria-hidden="true">
-                                                <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
-                                            </svg>
-                                        </button>
+                                    <div class="group flex flex-col items-center gap-3 rounded-xl border border-line bg-surface p-5 text-center transition duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
+                                        <span class="font-heading text-xl font-extrabold text-ink transition-colors group-hover:text-primary" x-text="pick.name"></span>
 
-                                        <button type="button" x-on:click="openDetail(pick)" class="text-left">
-                                            <span class="block pr-8 font-heading text-lg font-extrabold text-ink transition-colors group-hover:text-primary" x-text="pick.name"></span>
+                                        <div class="flex items-center gap-2">
+                                            <button type="button" x-on:click="toggleFavorite(pick)"
+                                                    :aria-label="isFavorite(pick.name) ? 'Remove ' + pick.name + ' from favorites' : 'Save ' + pick.name + ' to favorites'"
+                                                    class="flex size-9 items-center justify-center rounded-full bg-surface-section transition-transform duration-150 hover:scale-110 hover:bg-primary-light">
+                                                <svg class="size-4 text-primary-vivid" viewBox="0 0 24 24" :fill="isFavorite(pick.name) ? 'currentColor' : 'none'"
+                                                     stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                    <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
+                                                </svg>
+                                            </button>
 
-                                            <span class="mt-1.5 inline-block rounded-full bg-primary-light px-2.5 py-0.5 text-[11px] font-bold text-primary"
-                                                  x-text="styleLabels[pick.styles[0]] || pick.styles[0]"></span>
-
-                                            <span class="mt-2 block text-xs leading-relaxed text-ink-muted" x-text="pick.meaning"></span>
-                                        </button>
+                                            <button type="button" x-on:click="openDetail(pick)" aria-label="View name details"
+                                                    class="flex size-9 items-center justify-center rounded-full bg-surface-section transition-transform duration-150 hover:scale-110 hover:bg-primary-light">
+                                                <svg class="size-4 text-ink-muted transition-colors group-hover:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <path d="M20.6 12.7 12.7 20.6a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8l7.9-7.9A2 2 0 0 1 12.2 2H18a2.6 2.6 0 0 1 2.6 2.6v5.8a2 2 0 0 1-.6 1.4Z"/>
+                                                    <path d="M15.5 8.5h.01"/>
+                                                </svg>
+                                            </button>
+                                        </div>
                                     </div>
                                 </template>
                             </div>
@@ -375,15 +337,57 @@
                                 </p>
 
                                 <button type="button" x-on:click="loadMore()" x-show="visibleCount < results.length" x-cloak
-                                        class="btn-primary mt-4 rounded-full px-8 py-2.5 text-sm transition-transform duration-150 hover:scale-[1.02] active:scale-[0.98]">
+                                        class="btn-primary group mt-4 rounded-full px-8 py-2.5 text-sm transition-transform duration-150 hover:scale-[1.02] active:scale-[0.98]">
                                     Load More
-                                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <svg class="size-4 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                         <path d="M12 5v14M6 13l6 6 6-6"/>
                                     </svg>
                                 </button>
                             </div>
                         </div>
                     </template>
+                </div>
+
+                {{-- Quick-start shortcuts: sits right under the button when
+                     there are no results yet, and after them once there are,
+                     since it always lives right after the results panel. --}}
+                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <p class="text-center text-xs font-bold tracking-wide text-ink-muted uppercase">Or try a shortcut</p>
+                    <div class="mt-3 grid gap-3 sm:grid-cols-3">
+                        <button type="button" x-on:click="surpriseMe()"
+                                class="group flex flex-col items-center gap-2 rounded-2xl bg-primary-vivid px-4 py-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                            <span class="flex size-11 items-center justify-center rounded-full bg-ink/10 transition-transform duration-200 group-hover:scale-110">
+                                <svg class="size-5 text-ink" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 2.5l1.9 5.6 5.6 1.9-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9L12 2.5Z"/>
+                                </svg>
+                            </span>
+                            <span class="font-heading text-sm font-extrabold text-ink">Surprise Me</span>
+                            <span class="text-xs font-semibold text-ink/70">Random filters</span>
+                        </button>
+
+                        <button type="button" x-on:click="randomNames()"
+                                class="group flex flex-col items-center gap-2 rounded-2xl bg-primary-dark px-4 py-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                            <span class="flex size-11 items-center justify-center rounded-full bg-white/15 transition-transform duration-200 group-hover:scale-110">
+                                <svg class="size-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M20 11a8 8 0 1 0-2.3 5.6M20 4v7h-7"/>
+                                </svg>
+                            </span>
+                            <span class="font-heading text-sm font-extrabold text-white">Random Names</span>
+                            <span class="text-xs font-semibold text-white/70">Quick generate</span>
+                        </button>
+
+                        <button type="button" x-on:click="showTrending()"
+                                class="group flex flex-col items-center gap-2 rounded-2xl bg-accent-dark px-4 py-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                            <span class="flex size-11 items-center justify-center rounded-full bg-white/15 transition-transform duration-200 group-hover:scale-110">
+                                <svg class="size-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M3 17l6-6 4 4 8-8"/>
+                                    <path d="M15 7h6v6"/>
+                                </svg>
+                            </span>
+                            <span class="font-heading text-sm font-extrabold text-white">Trending Names</span>
+                            <span class="text-xs font-semibold text-white/70">Popular picks</span>
+                        </button>
+                    </div>
                 </div>
 
                 {{-- Favorites --}}

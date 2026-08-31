@@ -128,13 +128,13 @@
                         <legend class="text-sm font-bold text-ink">
                             <span class="text-primary">1.</span> Gender
                         </legend>
-                        <div class="relative mt-2.5 grid grid-cols-4 rounded-xl border border-line bg-surface-section p-1">
+                        <div class="relative mt-2.5 grid grid-cols-4 divide-x divide-line overflow-hidden rounded-xl border border-line bg-surface-section p-1 shadow-inner">
                             <div class="pointer-events-none absolute inset-y-1 left-1 w-[calc(25%-2px)] rounded-lg bg-primary-vivid shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
                                  :style="{ transform: 'translateX(' + (genderIndex() * 100) + '%)' }"></div>
                             @foreach (['any' => 'Any', 'male' => 'Male', 'female' => 'Female', 'neutral' => 'Either'] as $value => $label)
                                 <button type="button" x-on:click="gender = '{{ $value }}'"
-                                        :class="gender === '{{ $value }}' ? 'text-ink' : 'text-ink-muted hover:text-primary'"
-                                        class="relative z-10 rounded-lg py-2.5 text-sm font-bold transition-colors duration-200">
+                                        :class="gender === '{{ $value }}' ? 'text-ink' : 'text-ink-muted hover:scale-[1.03] hover:text-primary'"
+                                        class="relative z-10 rounded-lg py-2.5 text-sm font-bold transition-all duration-200">
                                     {{ $label }}
                                 </button>
                             @endforeach
@@ -148,6 +148,7 @@
                         </label>
                         <div class="relative mt-2">
                             <button type="button" x-on:click="open = !open"
+                                    :class="open && 'border-primary/40 ring-2 ring-primary/20'"
                                     class="flex w-full items-center justify-between gap-2 rounded-lg border border-line bg-surface px-3 py-2.5 text-left text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
                                 <span x-text="styles.length ? styles.length + ' style' + (styles.length > 1 ? 's' : '') + ' selected' : 'Any style'"></span>
                                 <svg class="size-4 shrink-0 text-ink-muted transition-transform duration-200" :class="open && 'rotate-180'"
@@ -156,12 +157,13 @@
                                 </svg>
                             </button>
                             <div x-show="open" x-cloak
-                                 x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-                                 class="absolute z-20 mt-2 max-h-72 w-full overflow-y-auto rounded-xl border border-line bg-surface p-2 shadow-lg">
+                                 x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 -translate-y-1 scale-95" x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
+                                 class="absolute z-20 mt-2 max-h-72 w-full origin-top overflow-y-auto rounded-xl border border-line bg-surface p-2 shadow-lg">
                                 @foreach ($styles as $style)
-                                    <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-ink transition hover:bg-primary-light">
+                                    <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-ink transition-colors hover:bg-primary-light">
                                         <input type="checkbox" x-on:change="toggleStyle('{{ $style['slug'] }}')" :checked="styles.includes('{{ $style['slug'] }}')"
-                                               class="size-4 rounded border-line-strong text-primary focus:ring-2 focus:ring-primary/30">
+                                               class="size-4 rounded border-line-strong accent-primary-vivid transition-transform focus:ring-2 focus:ring-primary/30">
                                         {{ $style['label'] }}
                                     </label>
                                 @endforeach
@@ -172,21 +174,8 @@
                     {{-- Selects --}}
                     <div class="mt-5 grid gap-4 sm:grid-cols-2">
                         <div>
-                            <label for="personality" class="text-sm font-bold text-ink">
-                                <span class="text-primary">3.</span> Personality
-                            </label>
-                            <select id="personality" x-model="personality"
-                                    class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                                <option value="">Any</option>
-                                @foreach ($personalities as $p)
-                                    <option value="{{ $p['slug'] }}">{{ $p['label'] }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div>
                             <label for="breed" class="text-sm font-bold text-ink">
-                                <span class="text-primary">4.</span> Breed
+                                <span class="text-primary">3.</span> Breed
                             </label>
                             <select id="breed" x-model="breedSlug"
                                     class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
@@ -198,21 +187,8 @@
                         </div>
 
                         <div>
-                            <label for="length" class="text-sm font-bold text-ink">
-                                <span class="text-primary">5.</span> Length
-                            </label>
-                            <select id="length" x-model="length"
-                                    class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                                <option value="any">Any</option>
-                                <option value="short">Short</option>
-                                <option value="medium">Medium</option>
-                                <option value="long">Long</option>
-                            </select>
-                        </div>
-
-                        <div>
                             <label class="text-sm font-bold text-ink">
-                                <span class="text-primary">6.</span> Size
+                                <span class="text-primary">4.</span> Size
                                 <span class="text-xs font-semibold text-ink-muted" x-show="selectedBreed()" x-cloak>(from breed)</span>
                             </label>
                             <template x-if="selectedBreed()">
@@ -228,6 +204,32 @@
                                 </select>
                             </template>
                         </div>
+
+                        <div>
+                            <label for="personality" class="text-sm font-bold text-ink">
+                                <span class="text-primary">5.</span> Personality
+                            </label>
+                            <select id="personality" x-model="personality"
+                                    class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                <option value="">Any</option>
+                                @foreach ($personalities as $p)
+                                    <option value="{{ $p['slug'] }}">{{ $p['label'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="length" class="text-sm font-bold text-ink">
+                                <span class="text-primary">6.</span> Length
+                            </label>
+                            <select id="length" x-model="length"
+                                    class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                <option value="any">Any</option>
+                                <option value="short">Short</option>
+                                <option value="medium">Medium</option>
+                                <option value="long">Long</option>
+                            </select>
+                        </div>
                     </div>
 
                     {{-- Starts with --}}
@@ -237,14 +239,14 @@
                         </label>
                         <div class="mt-2.5 flex gap-1.5 overflow-x-auto pb-1.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                             <button type="button" x-on:click="letter = ''"
-                                    :class="letter === '' ? 'border-primary-vivid bg-primary-vivid text-ink' : 'border-line bg-surface text-ink-muted hover:border-primary/40 hover:text-primary'"
-                                    class="shrink-0 rounded-lg border px-3 py-2 text-sm font-bold transition">
+                                    :class="letter === '' ? 'border-primary-vivid bg-primary-vivid text-ink' : 'border-line bg-surface text-ink-muted hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary hover:shadow-sm'"
+                                    class="shrink-0 rounded-lg border px-3 py-2 text-sm font-bold transition-all duration-150">
                                 Any
                             </button>
                             <template x-for="l in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')" :key="l">
                                 <button type="button" x-on:click="letter = l"
-                                        :class="letter === l ? 'border-primary-vivid bg-primary-vivid text-ink' : 'border-line bg-surface text-ink-muted hover:border-primary/40 hover:text-primary'"
-                                        class="shrink-0 rounded-lg border px-3 py-2 text-sm font-bold transition"
+                                        :class="letter === l ? 'border-primary-vivid bg-primary-vivid text-ink' : 'border-line bg-surface text-ink-muted hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary hover:shadow-sm'"
+                                        class="shrink-0 rounded-lg border px-3 py-2 text-sm font-bold transition-all duration-150"
                                         x-text="l"></button>
                             </template>
                         </div>

@@ -263,10 +263,52 @@
                             <span x-text="twoCats ? 'Generate a Pair' : 'Generate a Name'"></span>
                         </button>
                     </div>
+
+                    {{-- Quick-start shortcuts --}}
+                    <div class="mt-6 border-t border-line pt-6">
+                        <p class="text-center text-xs font-bold tracking-wide text-ink-muted uppercase">Or try a shortcut</p>
+                        <div class="mt-3 grid gap-3 sm:grid-cols-3">
+                            <button type="button" x-on:click="surpriseMe()"
+                                    class="group flex flex-col items-center gap-2 rounded-2xl bg-primary-vivid px-4 py-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                                <span class="flex size-11 items-center justify-center rounded-full bg-ink/10 transition-transform duration-200 group-hover:scale-110">
+                                    <svg class="size-5 text-ink" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M12 2.5l1.9 5.6 5.6 1.9-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.9L12 2.5Z"/>
+                                    </svg>
+                                </span>
+                                <span class="font-heading text-sm font-extrabold text-ink">Surprise Me</span>
+                                <span class="text-xs font-semibold text-ink/70">Random filters</span>
+                            </button>
+
+                            <button type="button" x-on:click="randomNames()"
+                                    class="group flex flex-col items-center gap-2 rounded-2xl bg-primary-dark px-4 py-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                                <span class="flex size-11 items-center justify-center rounded-full bg-white/15 transition-transform duration-200 group-hover:scale-110">
+                                    <svg class="size-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M20 11a8 8 0 1 0-2.3 5.6M20 4v7h-7"/>
+                                    </svg>
+                                </span>
+                                <span class="font-heading text-sm font-extrabold text-white">Random Names</span>
+                                <span class="text-xs font-semibold text-white/70">Quick generate</span>
+                            </button>
+
+                            <button type="button" x-on:click="showTrending()"
+                                    class="group flex flex-col items-center gap-2 rounded-2xl bg-accent-dark px-4 py-5 text-center shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-lg">
+                                <span class="flex size-11 items-center justify-center rounded-full bg-white/15 transition-transform duration-200 group-hover:scale-110">
+                                    <svg class="size-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M3 17l6-6 4 4 8-8"/>
+                                        <path d="M15 7h6v6"/>
+                                    </svg>
+                                </span>
+                                <span class="font-heading text-sm font-extrabold text-white">Trending Names</span>
+                                <span class="text-xs font-semibold text-white/70">Popular picks</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 {{-- Suggested names --}}
-                <div id="results" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                <div id="results" x-show="hasGenerated" x-cloak
+                     x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+                     class="scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <div class="flex flex-wrap items-center justify-between gap-3">
                         <h2 class="flex items-center gap-2 font-heading text-xl font-extrabold tracking-tight text-ink">
                             <span x-text="twoCats ? 'Name Pairs For Your Cats' : 'Suggested Names For Your Cat'"></span>
@@ -946,6 +988,7 @@
                 results: [],
                 pairs: [],
                 showAll: false,
+                hasGenerated: false,
                 favorites: [],
                 favoritesCopied: false,
                 shareCopied: false,
@@ -957,9 +1000,6 @@
                         this.favorites = [];
                     }
 
-                    // Seed the grid so the section is never an empty box on
-                    // arrival, the way it reads in the design.
-                    this.fill();
                 },
 
                 toggleStyle(slug) {
@@ -1059,7 +1099,51 @@
 
                 generate() {
                     this.fill();
-                    document.getElementById('results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    this.revealResults();
+                },
+
+                // Shared by every action that puts names on screen, so the
+                // reveal and scroll behave identically no matter which
+                // button triggered it.
+                revealResults() {
+                    this.hasGenerated = true;
+                    this.$nextTick(() => {
+                        document.getElementById('results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                },
+
+                // Randomizes the filters themselves, then generates from
+                // that combination, so the result (and the form) both
+                // reflect a genuinely different search each time.
+                surpriseMe() {
+                    this.twoCats = false;
+                    this.gender = this.pickOne(this.genderOptions);
+                    this.styles = Math.random() < 0.5 ? [this.pickOne(this.styleSlugs)] : [];
+                    this.personality = Math.random() < 0.5 ? this.pickOne(this.personalitySlugs) : '';
+                    this.breedSlug = (Math.random() < 0.3 && this.breeds.length) ? this.pickOne(this.breeds).slug : '';
+                    this.length = this.pickOne(['any', 'short', 'medium', 'long']);
+                    this.letter = '';
+                    this.generate();
+                },
+
+                // Leaves whatever filters are set alone and just pulls a
+                // fresh random set from the full list, the plain "give me
+                // something" option next to the filter-driven ones.
+                randomNames() {
+                    this.twoCats = false;
+                    this.results = [...this.names].sort(() => Math.random() - 0.5).slice(0, 16);
+                    this.showAll = false;
+                    this.revealResults();
+                },
+
+                // The trending list is real (save counts from actual
+                // visitors, topped up from the curated list), so this shows
+                // it as-is rather than running it back through fill().
+                showTrending() {
+                    this.twoCats = false;
+                    this.results = this.trending;
+                    this.showAll = false;
+                    this.revealResults();
                 },
 
                 visibleResults() {

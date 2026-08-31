@@ -1106,11 +1106,21 @@
         <div class="p-6 sm:p-8">
             <div class="relative overflow-hidden rounded-2xl bg-surface-section">
                 <div class="aspect-square">
-                    <x-img name="purrquery-orange-tabby-cat-hero" alt="Cat wearing a preview of the tag around its neck" sizes="576px"/>
+                    <x-img name="purrquery-orange-tabby-cat-hero" alt="Cat wearing a preview of the tag around its neck" sizes="576px"
+                           class="[object-position:50%_38%]"/>
                 </div>
+
+                {{-- A collar band, so the tag reads as hanging from
+                     something real rather than pasted onto the photo. --}}
+                <svg class="pointer-events-none absolute" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true"
+                     style="top: 51%; left: 50%; width: 42%; margin-left: -21%;">
+                    <path d="M6 12 Q100 58 194 12" fill="none" stroke="#6B4226" stroke-width="16" stroke-linecap="round"/>
+                    <path d="M6 12 Q100 58 194 12" fill="none" stroke="#8B5A2B" stroke-width="5" stroke-linecap="round" opacity="0.55"/>
+                </svg>
+
                 <img x-ref="tagOnCat" alt="" aria-hidden="true"
-                     class="tag-swing pointer-events-none absolute w-[26%]"
-                     style="top: 60%; left: 50%; margin-left: -13%;">
+                     class="tag-swing pointer-events-none absolute w-[24%]"
+                     style="top: 58%; left: 50%; margin-left: -12%;">
             </div>
 
             <button type="button" x-on:click="downloadTag()"

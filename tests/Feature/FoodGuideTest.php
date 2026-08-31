@@ -109,7 +109,7 @@ class FoodGuideTest extends TestCase
     /** Only a category guide supplies its own FAQ set, so only those get the accordion. */
     public function test_other_food_guides_do_not_show_a_faq_accordion(): void
     {
-        $this->get('/food-guides/toxic-foods')->assertDontSee('Frequently asked questions');
+        $this->get('/food-guides/meat-and-seafood')->assertDontSee('Frequently asked questions');
         $this->get('/food-guides/fruits')->assertSee('Frequently asked questions');
         $this->get('/food-guides/vegetables')->assertSee('Frequently asked questions');
     }
@@ -134,6 +134,6 @@ class FoodGuideTest extends TestCase
     public function test_the_contents_list_matches_the_sections_that_exist(): void
     {
         $this->get('/food-guides/fruits')->assertSee('Fruits, one at a time');
-        $this->get('/food-guides/toxic-foods')->assertDontSee(', one at a time');
+        $this->get('/food-guides/meat-and-seafood')->assertDontSee(', one at a time');
     }
 }

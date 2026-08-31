@@ -307,7 +307,8 @@
                             <div class="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                                 <template x-for="pick in visibleResults()" :key="pick.name">
                                     <div class="group flex flex-col items-center gap-3 rounded-xl border border-line bg-surface p-5 text-center transition duration-200 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg">
-                                        <span class="font-heading text-xl font-extrabold text-ink transition-colors group-hover:text-primary" x-text="pick.name"></span>
+                                        <button type="button" x-on:click="openDetail(pick)"
+                                                class="font-heading text-xl font-extrabold text-ink transition-colors hover:text-primary" x-text="pick.name"></button>
 
                                         <div class="flex items-center gap-2">
                                             <button type="button" x-on:click="toggleFavorite(pick)"
@@ -319,7 +320,7 @@
                                                 </svg>
                                             </button>
 
-                                            <button type="button" x-on:click="openDetail(pick)" aria-label="View name details"
+                                            <button type="button" x-on:click="openTagMaker(pick)" aria-label="Make a tag for this name"
                                                     class="flex size-9 items-center justify-center rounded-full bg-surface-section transition-transform duration-150 hover:scale-110 hover:bg-primary-light">
                                                 <svg class="size-4 text-ink-muted transition-colors group-hover:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                                     <path d="M20.6 12.7 12.7 20.6a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8l7.9-7.9A2 2 0 0 1 12.2 2H18a2.6 2.6 0 0 1 2.6 2.6v5.8a2 2 0 0 1-.6 1.4Z"/>

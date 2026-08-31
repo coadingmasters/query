@@ -923,6 +923,14 @@
                         </svg>
                         <span x-text="isFavorite(result.name) ? 'Saved' : 'Save'"></span>
                     </button>
+                    <button type="button" x-on:click="openTagMaker(result)"
+                            class="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-5 py-2.5 text-sm font-semibold text-ink-muted transition hover:border-primary/40 hover:text-primary">
+                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M20.6 12.7 12.7 20.6a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8l7.9-7.9A2 2 0 0 1 12.2 2H18a2.6 2.6 0 0 1 2.6 2.6v5.8a2 2 0 0 1-.6 1.4Z"/>
+                            <path d="M15.5 8.5h.01"/>
+                        </svg>
+                        Make a tag
+                    </button>
                 </div>
 
                 <div class="mt-5 border-t border-line pt-5">
@@ -955,6 +963,100 @@
                 </button>
             </div>
         </template>
+    </dialog>
+
+    {{-- Tag maker: a live canvas, redrawn on every change, so Download and
+         Share always save exactly what's on screen rather than a separate
+         re-render that could drift from the preview. --}}
+    <dialog x-ref="tagDialog"
+            class="tag-maker m-auto w-[calc(100%-2rem)] max-w-2xl rounded-2xl border border-line bg-surface p-0 shadow-2xl backdrop:bg-ink/50 backdrop:backdrop-blur-sm"
+            x-on:click="if ($event.target === $refs.tagDialog) $refs.tagDialog.close()">
+        <div class="flex items-center justify-between border-b border-line px-6 py-4">
+            <h2 class="font-heading text-xl font-extrabold tracking-tight text-ink">Cat Tag Preview</h2>
+            <button type="button" x-on:click="$refs.tagDialog.close()" aria-label="Close"
+                    class="flex size-8 items-center justify-center rounded-full text-ink-muted transition hover:bg-surface-soft hover:text-ink">
+                <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+            </button>
+        </div>
+
+        <div class="grid gap-6 p-6 sm:grid-cols-2 sm:p-8">
+            {{-- Preview --}}
+            <div>
+                <div class="flex aspect-square items-center justify-center rounded-2xl bg-surface-section">
+                    <canvas x-ref="tagCanvas" width="320" height="320" class="size-full max-h-80 max-w-80"></canvas>
+                </div>
+
+                <div class="mt-4 flex items-center justify-between rounded-xl border border-line p-3.5">
+                    <label for="tag-phone-toggle" class="text-sm font-bold text-ink">Phone Number</label>
+                    <button type="button" role="switch" id="tag-phone-toggle" x-on:click="toggleTagPhone()"
+                            :aria-checked="tagShowPhone ? 'true' : 'false'"
+                            :class="tagShowPhone ? 'bg-primary-vivid' : 'bg-line-strong'"
+                            class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors duration-200">
+                        <span :class="tagShowPhone ? 'translate-x-5' : 'translate-x-1'"
+                              class="inline-block size-4 transform rounded-full bg-surface shadow transition-transform duration-200"></span>
+                    </button>
+                </div>
+                <input type="tel" x-show="tagShowPhone" x-cloak x-model="tagPhone" x-on:input="redrawTag()"
+                       placeholder="+1 123 456 7890"
+                       class="mt-2.5 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+            </div>
+
+            {{-- Controls --}}
+            <div>
+                <p class="text-sm font-bold text-ink">Tag Style</p>
+                <div class="mt-2 grid grid-cols-3 gap-2">
+                    @foreach (['circle' => 'Circle', 'heart' => 'Heart', 'fish' => 'Fish'] as $shape => $label)
+                        <button type="button" x-on:click="setTagShape('{{ $shape }}')"
+                                :class="tagShape === '{{ $shape }}' ? 'border-primary-vivid bg-primary-light text-primary' : 'border-line bg-surface text-ink-muted hover:border-primary/40'"
+                                class="rounded-lg border py-2 text-xs font-bold transition">
+                            {{ $label }}
+                        </button>
+                    @endforeach
+                </div>
+
+                <p class="mt-5 text-sm font-bold text-ink">Tag Color</p>
+                <div class="mt-2 flex items-center gap-2.5">
+                    @foreach (['#F47C6B' => 'Coral', '#123F42' => 'Deep teal', '#4F6C49' => 'Sage'] as $hex => $label)
+                        <button type="button" x-on:click="setTagColor('{{ $hex }}')" aria-label="{{ $label }}"
+                                :class="tagColor === '{{ $hex }}' && 'ring-2 ring-offset-2 ring-primary-vivid'"
+                                class="size-9 rounded-full border border-line transition" style="background-color: {{ $hex }}"></button>
+                    @endforeach
+                </div>
+
+                <p class="mt-5 text-sm font-bold text-ink">Text Color</p>
+                <div class="mt-2 flex items-center gap-2.5">
+                    @foreach (['#FFFFFF' => 'White', '#123F42' => 'Dark'] as $hex => $label)
+                        <button type="button" x-on:click="setTagTextColor('{{ $hex }}')" aria-label="{{ $label }}"
+                                :class="tagTextColor === '{{ $hex }}' && 'ring-2 ring-offset-2 ring-primary-vivid'"
+                                class="size-9 rounded-full border border-line transition" style="background-color: {{ $hex }}"></button>
+                    @endforeach
+                </div>
+
+                <p class="mt-5 text-sm font-bold text-ink">Font</p>
+                <select x-model="tagFont" x-on:change="redrawTag()"
+                        class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                    <option value="Inter, sans-serif">Inter</option>
+                    <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                    <option value="Georgia, serif">Georgia</option>
+                    <option value="'Courier New', monospace">Courier New</option>
+                </select>
+
+                <div class="mt-6 flex gap-2.5">
+                    <button type="button" x-on:click="downloadTag()"
+                            class="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-primary-dark px-4 py-2.5 text-sm font-bold text-white transition hover:brightness-110">
+                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+                        Download
+                    </button>
+                    <button type="button" x-on:click="shareTag()"
+                            class="btn-primary flex-1 justify-center rounded-full px-4 py-2.5 text-sm">
+                        <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M18 8a3 3 0 1 0-2.8-4.1M18 20a3 3 0 1 0-2.8-4.1M8.7 13.5l6.6 3.8M15.3 6.7 8.7 10.5M8 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                        </svg>
+                        Share
+                    </button>
+                </div>
+            </div>
+        </div>
     </dialog>
 </section>
 
@@ -1029,6 +1131,14 @@
                 favorites: [],
                 favoritesCopied: false,
                 shareCopied: false,
+
+                tagName: '',
+                tagShape: 'circle',
+                tagColor: '#F47C6B',
+                tagTextColor: '#123F42',
+                tagFont: 'Inter, sans-serif',
+                tagShowPhone: false,
+                tagPhone: '',
 
                 init() {
                     try {
@@ -1323,6 +1433,143 @@
                         this.shareCopied = true;
                         setTimeout(() => { this.shareCopied = false; }, 2000);
                     } catch (e) {}
+                },
+
+                openTagMaker(pick) {
+                    this.tagName = pick.name;
+                    this.tagShape = 'circle';
+                    this.tagColor = '#F47C6B';
+                    this.tagTextColor = '#123F42';
+                    this.tagFont = 'Inter, sans-serif';
+                    this.tagShowPhone = false;
+                    this.tagPhone = '';
+                    this.$nextTick(() => {
+                        this.$refs.tagDialog?.showModal();
+                        this.redrawTag();
+                    });
+                },
+
+                setTagShape(shape) {
+                    this.tagShape = shape;
+                    this.redrawTag();
+                },
+
+                setTagColor(hex) {
+                    this.tagColor = hex;
+                    this.redrawTag();
+                },
+
+                setTagTextColor(hex) {
+                    this.tagTextColor = hex;
+                    this.redrawTag();
+                },
+
+                toggleTagPhone() {
+                    this.tagShowPhone = !this.tagShowPhone;
+                    this.redrawTag();
+                },
+
+                // A pet tag always has a hole for the ring, so every shape
+                // punches the same small notch near the top after filling.
+                drawTagHole(ctx, cx, topY) {
+                    ctx.beginPath();
+                    ctx.arc(cx, topY, 10, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(0,0,0,0.18)';
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(cx, topY, 6, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+                    ctx.fill();
+                },
+
+                drawHeart(ctx, cx, cy, size) {
+                    const top = cy - size * 0.35;
+                    ctx.beginPath();
+                    ctx.moveTo(cx, top + size * 0.3);
+                    ctx.bezierCurveTo(cx, top, cx - size / 2, top, cx - size / 2, top + size * 0.3);
+                    ctx.bezierCurveTo(cx - size / 2, top + size * 0.55, cx, top + size * 0.75, cx, top + size);
+                    ctx.bezierCurveTo(cx, top + size * 0.75, cx + size / 2, top + size * 0.55, cx + size / 2, top + size * 0.3);
+                    ctx.bezierCurveTo(cx + size / 2, top, cx, top, cx, top + size * 0.3);
+                    ctx.closePath();
+                    ctx.fill();
+                },
+
+                drawFish(ctx, cx, cy, size) {
+                    ctx.beginPath();
+                    ctx.ellipse(cx - size * 0.06, cy, size * 0.42, size * 0.3, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.moveTo(cx + size * 0.34, cy - size * 0.22);
+                    ctx.lineTo(cx + size * 0.62, cy);
+                    ctx.lineTo(cx + size * 0.34, cy + size * 0.22);
+                    ctx.closePath();
+                    ctx.fill();
+                },
+
+                // The preview canvas is what Download and Share both save, so
+                // redrawing it on every change keeps all three in sync with
+                // no separate render path to drift out of step.
+                redrawTag() {
+                    const canvas = this.$refs.tagCanvas;
+                    if (!canvas) return;
+                    const ctx = canvas.getContext('2d');
+                    const w = canvas.width, h = canvas.height;
+                    const cx = w / 2, cy = h / 2 + 8;
+
+                    ctx.clearRect(0, 0, w, h);
+                    ctx.fillStyle = this.tagColor;
+
+                    if (this.tagShape === 'heart') {
+                        this.drawHeart(ctx, cx, cy, 220);
+                        this.drawTagHole(ctx, cx, cy - 100);
+                    } else if (this.tagShape === 'fish') {
+                        this.drawFish(ctx, cx, cy, 260);
+                        this.drawTagHole(ctx, cx - 96, cy - 30);
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(cx, cy, 130, 0, Math.PI * 2);
+                        ctx.fill();
+                        this.drawTagHole(ctx, cx, cy - 130);
+                    }
+
+                    ctx.fillStyle = this.tagTextColor;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.font = 'bold 38px ' + this.tagFont;
+                    const hasPhone = this.tagShowPhone && this.tagPhone.trim();
+                    ctx.fillText(this.tagName || 'Name', cx, cy + (hasPhone ? -10 : 10));
+
+                    if (hasPhone) {
+                        ctx.font = '17px ' + this.tagFont;
+                        ctx.fillText(this.tagPhone, cx, cy + 28);
+                    }
+                },
+
+                downloadTag() {
+                    const canvas = this.$refs.tagCanvas;
+                    if (!canvas) return;
+                    const link = document.createElement('a');
+                    link.download = (this.tagName || 'cat-tag').toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-tag.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                },
+
+                shareTag() {
+                    const canvas = this.$refs.tagCanvas;
+                    if (!canvas) return;
+                    canvas.toBlob(async (blob) => {
+                        if (!blob) return;
+                        const file = new File([blob], 'cat-tag.png', { type: 'image/png' });
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            try {
+                                await navigator.share({ files: [file], title: this.tagName + ' cat tag' });
+                                return;
+                            } catch (e) {
+                                return;
+                            }
+                        }
+                        this.downloadTag();
+                    }, 'image/png');
                 },
             };
         }

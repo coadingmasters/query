@@ -126,7 +126,7 @@
                     {{-- Gender --}}
                     <fieldset class="mt-5">
                         <legend class="text-sm font-bold text-ink">
-                            <span class="text-primary">1.</span> Gender
+                            <span class="inline-flex size-5 items-center justify-center rounded-full bg-primary-light text-[11px] font-extrabold text-primary">1</span> Gender
                         </legend>
                         <div class="relative mt-2.5 grid grid-cols-4 divide-x divide-line overflow-hidden rounded-xl border border-line bg-surface-section p-1 shadow-inner">
                             <div class="pointer-events-none absolute inset-y-1 left-1 w-[calc(25%-2px)] rounded-lg bg-primary-vivid shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
@@ -144,7 +144,7 @@
                     {{-- Style --}}
                     <div class="mt-5" x-data="{ open: false }" @click.outside="open = false">
                         <label class="text-sm font-bold text-ink">
-                            <span class="text-primary">2.</span> Style
+                            <span class="inline-flex size-5 items-center justify-center rounded-full bg-primary-light text-[11px] font-extrabold text-primary">2</span> Style
                         </label>
                         <div class="relative mt-2">
                             <button type="button" x-on:click="open = !open"
@@ -175,7 +175,7 @@
                     <div class="mt-5 grid gap-4 sm:grid-cols-2">
                         <div>
                             <label for="breed" class="text-sm font-bold text-ink">
-                                <span class="text-primary">3.</span> Breed
+                                <span class="inline-flex size-5 items-center justify-center rounded-full bg-primary-light text-[11px] font-extrabold text-primary">3</span> Breed
                             </label>
                             <select id="breed" x-model="breedSlug"
                                     class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
@@ -188,7 +188,7 @@
 
                         <div>
                             <label class="text-sm font-bold text-ink">
-                                <span class="text-primary">4.</span> Size
+                                <span class="inline-flex size-5 items-center justify-center rounded-full bg-primary-light text-[11px] font-extrabold text-primary">4</span> Size
                                 <span class="text-xs font-semibold text-ink-muted" x-show="selectedBreed()" x-cloak>(from breed)</span>
                             </label>
                             <template x-if="selectedBreed()">
@@ -207,7 +207,7 @@
 
                         <div>
                             <label for="personality" class="text-sm font-bold text-ink">
-                                <span class="text-primary">5.</span> Personality
+                                <span class="inline-flex size-5 items-center justify-center rounded-full bg-primary-light text-[11px] font-extrabold text-primary">5</span> Personality
                             </label>
                             <select id="personality" x-model="personality"
                                     class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
@@ -220,7 +220,7 @@
 
                         <div>
                             <label for="length" class="text-sm font-bold text-ink">
-                                <span class="text-primary">6.</span> Length
+                                <span class="inline-flex size-5 items-center justify-center rounded-full bg-primary-light text-[11px] font-extrabold text-primary">6</span> Length
                             </label>
                             <select id="length" x-model="length"
                                     class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
@@ -235,7 +235,7 @@
                     {{-- Starts with --}}
                     <div class="mt-5">
                         <label class="text-sm font-bold text-ink">
-                            <span class="text-primary">7.</span> Starts With
+                            <span class="inline-flex size-5 items-center justify-center rounded-full bg-primary-light text-[11px] font-extrabold text-primary">7</span> Starts With
                         </label>
                         <div class="mt-2.5 flex gap-1.5 overflow-x-auto pb-1.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                             <button type="button" x-on:click="letter = ''"
@@ -1107,15 +1107,26 @@
             <div class="relative overflow-hidden rounded-2xl bg-surface-section">
                 <div class="aspect-square">
                     <x-img name="purrquery-orange-tabby-cat-hero" alt="Cat wearing a preview of the tag around its neck" sizes="576px"
-                           class="[object-position:50%_38%]"/>
+                           class="[object-position:62%_38%]"/>
                 </div>
 
                 {{-- A collar band, so the tag reads as hanging from
-                     something real rather than pasted onto the photo. --}}
-                <svg class="pointer-events-none absolute" viewBox="0 0 200 60" preserveAspectRatio="none" aria-hidden="true"
-                     style="top: 51%; left: 50%; width: 42%; margin-left: -21%;">
-                    <path d="M6 12 Q100 58 194 12" fill="none" stroke="#6B4226" stroke-width="16" stroke-linecap="round"/>
-                    <path d="M6 12 Q100 58 194 12" fill="none" stroke="#8B5A2B" stroke-width="5" stroke-linecap="round" opacity="0.55"/>
+                     something real rather than pasted onto the photo. A
+                     vertical gradient plus a soft top highlight is what
+                     reads as a rounded leather strap instead of a flat
+                     two-tone line. --}}
+                <svg class="pointer-events-none absolute" viewBox="0 0 200 70" preserveAspectRatio="none" aria-hidden="true"
+                     style="top: 49%; left: 50%; width: 44%; margin-left: -22%;">
+                    <defs>
+                        <linearGradient id="collarGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#8B5A2B"/>
+                            <stop offset="55%" stop-color="#6B4226"/>
+                            <stop offset="100%" stop-color="#42260F"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M4 20 Q100 68 196 20" fill="none" stroke="#000000" stroke-width="19" stroke-linecap="round" opacity="0.12" transform="translate(0,3)"/>
+                    <path d="M4 20 Q100 68 196 20" fill="none" stroke="url(#collarGradient)" stroke-width="18" stroke-linecap="round"/>
+                    <path d="M4 15 Q100 61 196 15" fill="none" stroke="#D9AE7C" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
                 </svg>
 
                 <img x-ref="tagOnCat" alt="" aria-hidden="true"

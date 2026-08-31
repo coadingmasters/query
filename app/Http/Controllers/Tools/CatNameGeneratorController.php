@@ -48,7 +48,7 @@ class CatNameGeneratorController extends Controller
         });
 
         $breeds = Breed::active()->orderBy('name')->get([
-            'name', 'slug', 'origin_country', 'energy_level', 'temperament_summary', 'fun_fact',
+            'name', 'slug', 'origin_country', 'energy_level', 'temperament_summary', 'fun_fact', 'size_category',
         ])->map(fn (Breed $breed): array => [
             'name' => $breed->name,
             'slug' => $breed->slug,
@@ -57,6 +57,7 @@ class CatNameGeneratorController extends Controller
             'energyLevel' => $breed->energy_level,
             'temperament' => $breed->temperament_summary,
             'funFact' => $breed->fun_fact,
+            'sizeCategory' => $breed->size_category,
         ]);
 
         // A real count, not a placeholder: incremented once per browser per

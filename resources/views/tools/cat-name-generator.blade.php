@@ -128,11 +128,13 @@
                         <legend class="text-sm font-bold text-ink">
                             <span class="text-primary">1.</span> Gender
                         </legend>
-                        <div class="mt-2.5 flex flex-wrap gap-2">
+                        <div class="relative mt-2.5 grid grid-cols-4 rounded-xl border border-line bg-surface-section p-1">
+                            <div class="pointer-events-none absolute inset-y-1 left-1 w-[calc(25%-2px)] rounded-lg bg-primary-vivid shadow-sm transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]"
+                                 :style="{ transform: 'translateX(' + (genderIndex() * 100) + '%)' }"></div>
                             @foreach (['any' => 'Any', 'male' => 'Male', 'female' => 'Female', 'neutral' => 'Either'] as $value => $label)
                                 <button type="button" x-on:click="gender = '{{ $value }}'"
-                                        :class="gender === '{{ $value }}' ? 'bg-primary-vivid text-ink border-primary-vivid shadow-sm' : 'bg-surface text-ink-muted border-line hover:border-primary/40 hover:text-primary'"
-                                        class="rounded-full border px-4 py-1.5 text-sm font-semibold transition">
+                                        :class="gender === '{{ $value }}' ? 'text-ink' : 'text-ink-muted hover:text-primary'"
+                                        class="relative z-10 rounded-lg py-2.5 text-sm font-bold transition-colors duration-200">
                                     {{ $label }}
                                 </button>
                             @endforeach
@@ -140,73 +142,112 @@
                     </fieldset>
 
                     {{-- Style --}}
-                    <fieldset class="mt-5">
-                        <legend class="text-sm font-bold text-ink">
+                    <div class="mt-5" x-data="{ open: false }" @click.outside="open = false">
+                        <label class="text-sm font-bold text-ink">
                             <span class="text-primary">2.</span> Style
-                            <span class="font-medium text-ink-muted">(pick any number)</span>
-                        </legend>
-                        <div class="mt-2.5 flex flex-wrap gap-2">
-                            @foreach ($styles as $style)
-                                <button type="button" x-on:click="toggleStyle('{{ $style['slug'] }}')"
-                                        :class="styles.includes('{{ $style['slug'] }}') ? 'bg-accent text-ink-inverse border-accent shadow-sm' : 'bg-surface text-ink-muted border-line hover:border-accent/40 hover:text-accent-dark'"
-                                        class="rounded-full border px-4 py-1.5 text-sm font-semibold transition">
-                                    {{ $style['label'] }}
-                                </button>
-                            @endforeach
+                        </label>
+                        <div class="relative mt-2">
+                            <button type="button" x-on:click="open = !open"
+                                    class="flex w-full items-center justify-between gap-2 rounded-lg border border-line bg-surface px-3 py-2.5 text-left text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                <span x-text="styles.length ? styles.length + ' style' + (styles.length > 1 ? 's' : '') + ' selected' : 'Any style'"></span>
+                                <svg class="size-4 shrink-0 text-ink-muted transition-transform duration-200" :class="open && 'rotate-180'"
+                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                                    <path d="m6 9 6 6 6-6"/>
+                                </svg>
+                            </button>
+                            <div x-show="open" x-cloak
+                                 x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
+                                 class="absolute z-20 mt-2 max-h-72 w-full overflow-y-auto rounded-xl border border-line bg-surface p-2 shadow-lg">
+                                @foreach ($styles as $style)
+                                    <label class="flex cursor-pointer items-center gap-2.5 rounded-lg px-2.5 py-2 text-sm text-ink transition hover:bg-primary-light">
+                                        <input type="checkbox" x-on:change="toggleStyle('{{ $style['slug'] }}')" :checked="styles.includes('{{ $style['slug'] }}')"
+                                               class="size-4 rounded border-line-strong text-primary focus:ring-2 focus:ring-primary/30">
+                                        {{ $style['label'] }}
+                                    </label>
+                                @endforeach
+                            </div>
                         </div>
-                    </fieldset>
+                    </div>
 
                     {{-- Selects --}}
-                    <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                        @foreach ([
-                            ['3', 'personality', 'Personality', null],
-                            ['4', 'breed', 'Breed', 'unique'],
-                            ['5', 'letter', 'Starts with', null],
-                            ['6', 'length', 'Length', null],
-                        ] as [$num, $id, $label, $flag])
-                            <div>
-                                <label for="{{ $id }}" class="text-sm font-bold text-ink">
-                                    <span class="text-primary">{{ $num }}.</span> {{ $label }}
-                                    @if ($flag)
-                                        <span class="text-xs font-semibold text-primary">({{ $flag }})</span>
-                                    @endif
-                                </label>
+                    <div class="mt-5 grid gap-4 sm:grid-cols-2">
+                        <div>
+                            <label for="personality" class="text-sm font-bold text-ink">
+                                <span class="text-primary">3.</span> Personality
+                            </label>
+                            <select id="personality" x-model="personality"
+                                    class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                <option value="">Any</option>
+                                @foreach ($personalities as $p)
+                                    <option value="{{ $p['slug'] }}">{{ $p['label'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                                @if ($id === 'personality')
-                                    <select id="personality" x-model="personality"
-                                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                                        <option value="">Any</option>
-                                        @foreach ($personalities as $p)
-                                            <option value="{{ $p['slug'] }}">{{ $p['label'] }}</option>
-                                        @endforeach
-                                    </select>
-                                @elseif ($id === 'breed')
-                                    <select id="breed" x-model="breedSlug"
-                                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                                        <option value="">Any / not sure</option>
-                                        <template x-for="breed in breeds" :key="breed.slug">
-                                            <option :value="breed.slug" x-text="breed.name"></option>
-                                        </template>
-                                    </select>
-                                @elseif ($id === 'letter')
-                                    <select id="letter" x-model="letter"
-                                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                                        <option value="">Any letter</option>
-                                        <template x-for="l in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')" :key="l">
-                                            <option :value="l" x-text="l"></option>
-                                        </template>
-                                    </select>
-                                @else
-                                    <select id="length" x-model="length"
-                                            class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                                        <option value="any">Any</option>
-                                        <option value="short">Short</option>
-                                        <option value="medium">Medium</option>
-                                        <option value="long">Long</option>
-                                    </select>
-                                @endif
-                            </div>
-                        @endforeach
+                        <div>
+                            <label for="breed" class="text-sm font-bold text-ink">
+                                <span class="text-primary">4.</span> Breed
+                            </label>
+                            <select id="breed" x-model="breedSlug"
+                                    class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                <option value="">Any / not sure</option>
+                                <template x-for="breed in breeds" :key="breed.slug">
+                                    <option :value="breed.slug" x-text="breed.name"></option>
+                                </template>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="length" class="text-sm font-bold text-ink">
+                                <span class="text-primary">5.</span> Length
+                            </label>
+                            <select id="length" x-model="length"
+                                    class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                <option value="any">Any</option>
+                                <option value="short">Short</option>
+                                <option value="medium">Medium</option>
+                                <option value="long">Long</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-bold text-ink">
+                                <span class="text-primary">6.</span> Size
+                                <span class="text-xs font-semibold text-ink-muted" x-show="selectedBreed()" x-cloak>(from breed)</span>
+                            </label>
+                            <template x-if="selectedBreed()">
+                                <p class="mt-2 flex h-[42px] items-center rounded-lg border border-line bg-surface-section px-3 text-sm font-semibold text-ink capitalize" x-text="selectedBreed().sizeCategory"></p>
+                            </template>
+                            <template x-if="!selectedBreed()">
+                                <select x-model="sizePreference"
+                                        class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                    <option value="any">Any</option>
+                                    <option value="small">Small</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="large">Large</option>
+                                </select>
+                            </template>
+                        </div>
+                    </div>
+
+                    {{-- Starts with --}}
+                    <div class="mt-5">
+                        <label class="text-sm font-bold text-ink">
+                            <span class="text-primary">7.</span> Starts With
+                        </label>
+                        <div class="mt-2.5 flex gap-1.5 overflow-x-auto pb-1.5 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                            <button type="button" x-on:click="letter = ''"
+                                    :class="letter === '' ? 'border-primary-vivid bg-primary-vivid text-ink' : 'border-line bg-surface text-ink-muted hover:border-primary/40 hover:text-primary'"
+                                    class="shrink-0 rounded-lg border px-3 py-2 text-sm font-bold transition">
+                                Any
+                            </button>
+                            <template x-for="l in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')" :key="l">
+                                <button type="button" x-on:click="letter = l"
+                                        :class="letter === l ? 'border-primary-vivid bg-primary-vivid text-ink' : 'border-line bg-surface text-ink-muted hover:border-primary/40 hover:text-primary'"
+                                        class="shrink-0 rounded-lg border px-3 py-2 text-sm font-bold transition"
+                                        x-text="l"></button>
+                            </template>
+                        </div>
                     </div>
 
                     <p class="mt-4 text-xs text-ink-muted" x-show="poolCount() === 0" x-cloak>
@@ -891,9 +932,11 @@
                 csrfToken: config.csrfToken,
 
                 gender: 'any',
+                genderOptions: ['any', 'male', 'female', 'neutral'],
                 styles: [],
                 personality: '',
                 breedSlug: '',
+                sizePreference: 'any',
                 letter: '',
                 length: 'any',
                 twoCats: false,
@@ -939,6 +982,10 @@
 
                 selectedBreed() {
                     return this.breeds.find((b) => b.slug === this.breedSlug) || null;
+                },
+
+                genderIndex() {
+                    return this.genderOptions.indexOf(this.gender);
                 },
 
                 pool() {

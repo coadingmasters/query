@@ -2,15 +2,10 @@
 
 @php
     $verdictMeta = [
-        'safe' => ['label' => 'Safe', 'tone' => 'bg-accent-light text-accent-dark', 'solid' => 'bg-accent'],
-        'caution' => ['label' => 'In moderation', 'tone' => 'bg-warning-light text-warning', 'solid' => 'bg-warning'],
-        'unsafe' => ['label' => 'Never', 'tone' => 'bg-danger-light text-danger', 'solid' => 'bg-danger'],
+        'safe' => ['label' => 'Safe', 'tone' => 'bg-accent-light text-accent-dark'],
+        'caution' => ['label' => 'In moderation', 'tone' => 'bg-warning-light text-warning'],
+        'unsafe' => ['label' => 'Never', 'tone' => 'bg-danger-light text-danger'],
     ][$food['verdict']];
-@endphp
-
-{{-- Shared heading style so every section reads the same down the page. --}}
-@php
-    $h2 = 'flex items-center gap-2.5 font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl';
 @endphp
 
 <article>
@@ -55,8 +50,7 @@
             <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
 
                 {{-- ── Main ─────────────────────────────────────────────── --}}
-                <div class="space-y-6">
-
+                <div>
                     <div class="reveal overflow-hidden rounded-2xl border border-line shadow-sm">
                         <div class="aspect-[16/9]">
                             <x-img :name="$food['image']" :alt="$food['alt']"
@@ -64,37 +58,27 @@
                         </div>
                     </div>
 
-                    {{-- Why --}}
-                    @if (! empty($food['why']))
-                        <section id="why" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
-                            <h2 class="{{ $h2 }}">
-                                Why
-                            </h2>
-                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['why'] !!}</p>
+                    <div class="reveal article mt-8">
+
+                        {{-- Why --}}
+                        @if (! empty($food['why']))
+                            <h2 id="why">Why</h2>
+                            <p>{!! $food['why'] !!}</p>
 
                             @if (! empty($food['note']))
-                                <p @class([
-                                    'mt-5 border-l-2 pl-4 text-base font-semibold text-ink',
-                                    'border-accent' => $food['verdict'] === 'safe',
-                                    'border-warning' => $food['verdict'] === 'caution',
-                                    'border-danger' => $food['verdict'] === 'unsafe',
-                                ])>{{ $food['note'] }}</p>
+                                <p><strong>{{ $food['note'] }}</strong></p>
                             @endif
-                        </section>
-                    @endif
+                        @endif
 
-                    {{-- Per-item table --}}
-                    @if (! empty($food['items']))
-                        <section id="each-one" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
-                            <h2 class="{{ $h2 }}">
-                                {{ $food['title'] }}, one at a time
-                            </h2>
-                            <p class="mt-3 text-base leading-relaxed text-ink-muted">
+                        {{-- Per-item table --}}
+                        @if (! empty($food['items']))
+                            <h2 id="each-one">{{ $food['title'] }}, one at a time</h2>
+                            <p>
                                 The verdict above covers {{ strtolower($food['title']) }} as a whole. For the
                                 specific one in front of you, this is the breakdown.
                             </p>
 
-                            <div class="mt-5 overflow-hidden rounded-xl border border-line">
+                            <div class="overflow-hidden rounded-xl border border-line">
                                 <table class="w-full text-left text-sm">
                                     <thead>
                                         <tr class="border-b border-line bg-surface-section text-xs tracking-wider text-ink-muted uppercase">
@@ -125,94 +109,65 @@
                                 </table>
                             </div>
 
-                            <div class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-ink-muted">
-                                @foreach ([['Safe in small amounts', 'bg-accent'], ['Caution, prep matters', 'bg-warning'], ['Never feed', 'bg-danger']] as [$legend, $dot])
-                                    <span class="inline-flex items-center gap-1.5">
-                                        <span aria-hidden="true" class="size-2 rounded-full {{ $dot }}"></span>
-                                        {{ $legend }}
-                                    </span>
-                                @endforeach
-                            </div>
-                        </section>
-                    @endif
+                            <p class="mt-3 text-xs text-ink-muted">Safe in small amounts, Caution: prep matters, Never feed.</p>
+                        @endif
 
-                    {{-- How much --}}
-                    @if (! empty($food['guidance']))
-                        <section id="how-much" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
-                            <h2 class="{{ $h2 }}">
+                        {{-- How much --}}
+                        @if (! empty($food['guidance']))
+                            <h2 id="how-much">
                                 {{ $food['verdict'] === 'unsafe' ? 'What to do if your cat ate this' : 'How much is actually safe' }}
                             </h2>
-                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['guidance'] !!}</p>
-                        </section>
-                    @endif
+                            <p>{!! $food['guidance'] !!}</p>
+                        @endif
 
-                    {{-- Introducing --}}
-                    @if (! empty($food['introduce']))
-                        <section id="introduce" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
-                            <h2 class="{{ $h2 }}">
+                        {{-- Introducing --}}
+                        @if (! empty($food['introduce']))
+                            <h2 id="introduce">
                                 {{ $food['verdict'] === 'unsafe' ? 'If it already happened' : 'Introducing a new '.Str::of($food['title'])->lower()->rtrim('s').' safely' }}
                             </h2>
-                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['introduce'] !!}</p>
-                        </section>
-                    @endif
+                            <p>{!! $food['introduce'] !!}</p>
+                        @endif
 
-                    {{-- Avoid --}}
-                    @if (! empty($food['avoid']))
-                        <section id="avoid" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
-                            <h2 class="{{ $h2 }}">
-                                {{ $food['title'] }} to avoid entirely
-                            </h2>
-                            <ul class="mt-4 space-y-3 border-l-2 border-danger pl-5">
+                        {{-- Avoid --}}
+                        @if (! empty($food['avoid']))
+                            <h2 id="avoid">{{ $food['title'] }} to avoid entirely</h2>
+                            <ul>
                                 @foreach ($food['avoid'] as $item)
-                                    <li class="text-base leading-relaxed text-ink-muted">{!! $item !!}</li>
+                                    <li>{!! $item !!}</li>
                                 @endforeach
                             </ul>
-                        </section>
-                    @endif
+                        @endif
 
-                    {{-- Deep dives --}}
-                    @if (! empty($food['deep_dives']))
-                        <div class="reveal flex flex-wrap gap-2.5">
-                            @foreach ($food['deep_dives'] as $dive)
-                                <a href="{{ route('blog.show', $dive['slug']) }}"
-                                   class="group inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2.5 text-sm font-semibold text-ink shadow-sm transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary hover:shadow-md">
-                                    Full guide: {{ $dive['label'] }}
-                                    <svg class="size-3.5 text-ink-muted transition-transform group-hover:translate-x-0.5 group-hover:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        <path d="m9 6 6 6-6 6"/>
-                                    </svg>
-                                </a>
-                            @endforeach
-                        </div>
-                    @endif
+                        {{-- Deep dives --}}
+                        @if (! empty($food['deep_dives']))
+                            <p>
+                                Full guides:
+                                @foreach ($food['deep_dives'] as $dive)
+                                    <a href="{{ route('blog.show', $dive['slug']) }}">{{ $dive['label'] }}</a>{{ ! $loop->last ? ',' : '' }}
+                                @endforeach
+                            </p>
+                        @endif
 
-                    {{-- Signs --}}
-                    @if (! empty($food['watch_for']))
-                        <section id="signs" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
-                            <h2 class="{{ $h2 }}">
-                                Signs to watch for
-                            </h2>
-                            <ul class="mt-4 list-disc space-y-2.5 pl-5 marker:text-line-strong">
+                        {{-- Signs --}}
+                        @if (! empty($food['watch_for']))
+                            <h2 id="signs">Signs to watch for</h2>
+                            <ul>
                                 @foreach ($food['watch_for'] as $sign)
-                                    <li class="text-base leading-relaxed text-ink-muted">{{ $sign }}</li>
+                                    <li>{{ $sign }}</li>
                                 @endforeach
                             </ul>
-                            <p class="mt-4 text-sm leading-relaxed text-ink-muted">
+                            <p>
                                 Any of these, or anything that seems off beyond what is listed here, is worth a call to
                                 your vet. Our guide to
-                                <a href="{{ route('blog.show', 'signs-your-cat-is-sick') }}" class="font-semibold text-primary underline decoration-line-strong underline-offset-4">the early signs a cat is sick</a>
+                                <a href="{{ route('blog.show', 'signs-your-cat-is-sick') }}">the early signs a cat is sick</a>
                                 covers the wider list of what to watch for at any time, not just after eating something new.
                             </p>
-                        </section>
-                    @endif
+                        @endif
 
-                    {{-- FAQ --}}
-                    @if (count($faq) > 1)
-                        <section id="faq" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
-                            <h2 class="{{ $h2 }}">
-                                Frequently asked questions
-                            </h2>
-                            <div class="mt-5 space-y-2.5">
+                        {{-- FAQ --}}
+                        @if (count($faq) > 1)
+                            <h2 id="faq">Frequently asked questions</h2>
+                            <div class="space-y-2.5">
                                 @foreach ($faq as $item)
                                     <details class="group border-b border-line last:border-b-0">
                                         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-bold text-ink transition-colors hover:text-primary marker:content-['']">
@@ -227,24 +182,23 @@
                                     </details>
                                 @endforeach
                             </div>
-                        </section>
-                    @endif
+                        @endif
 
-                    {{-- Sources + byline --}}
-                    <section class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
-                        <h2 class="font-heading text-base font-extrabold text-ink">Where this comes from</h2>
-                        <ul class="mt-3 space-y-2">
+                        {{-- Sources --}}
+                        <h2>Where this comes from</h2>
+                        <ul>
                             @foreach ($sources as $source)
-                                <li class="text-sm leading-relaxed text-ink-muted">
-                                    <a href="{{ $source['url'] }}" rel="noopener" target="_blank" class="font-semibold text-primary underline decoration-line-strong underline-offset-4">{{ $source['name'] }}</a>
-                                    <span class="block">{{ $source['note'] }}</span>
+                                <li>
+                                    <a href="{{ $source['url'] }}" rel="noopener" target="_blank">{{ $source['name'] }}</a>
+                                    {{ $source['note'] }}
                                 </li>
                             @endforeach
                         </ul>
-                        <div class="mt-5 border-t border-line pt-5">
-                            <x-byline :reviewed="true" :published-at="$publishedAt" :updated-at="$updatedAt"/>
-                        </div>
-                    </section>
+                    </div>
+
+                    <div class="reveal mt-8 border-t border-line pt-6">
+                        <x-byline :reviewed="true" :published-at="$publishedAt" :updated-at="$updatedAt"/>
+                    </div>
                 </div>
 
                 {{-- ── Sidebar ──────────────────────────────────────────── --}}
@@ -280,40 +234,19 @@
                         @if ($safeList->isNotEmpty() || $avoidList->isNotEmpty())
                             @if ($safeList->isNotEmpty())
                                 <div class="mt-4">
-                                    <p class="flex items-center gap-2 text-sm font-bold text-ink">
-                                        <span class="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent text-ink-inverse">
-                                            <svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-                                        </span>
-                                        Safe choices
-                                    </p>
-                                    <p class="mt-2 text-sm leading-relaxed text-ink-muted">{{ $safeList->implode(', ') }}</p>
+                                    <p class="text-sm font-bold text-ink">Safe choices</p>
+                                    <p class="mt-1 text-sm leading-relaxed text-ink-muted">{{ $safeList->implode(', ') }}</p>
                                 </div>
                             @endif
 
                             @if ($avoidList->isNotEmpty())
                                 <div class="mt-4 border-t border-line pt-4">
-                                    <p class="flex items-center gap-2 text-sm font-bold text-ink">
-                                        <span class="flex size-5 shrink-0 items-center justify-center rounded-full bg-danger text-ink-inverse">
-                                            <svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
-                                        </span>
-                                        Never feed
-                                    </p>
-                                    <p class="mt-2 text-sm leading-relaxed text-ink-muted">{{ $avoidList->implode(', ') }}</p>
+                                    <p class="text-sm font-bold text-ink">Never feed</p>
+                                    <p class="mt-1 text-sm leading-relaxed text-ink-muted">{{ $avoidList->implode(', ') }}</p>
                                 </div>
                             @endif
                         @else
-                            <div class="mt-4 flex items-start gap-2.5">
-                                <span @class(['mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full text-ink-inverse', $verdictMeta['solid']])>
-                                    <svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                                        @if ($food['verdict'] === 'unsafe')
-                                            <path d="M6 6l12 12M18 6 6 18"/>
-                                        @else
-                                            <path d="M20 6 9 17l-5-5"/>
-                                        @endif
-                                    </svg>
-                                </span>
-                                <p class="text-sm leading-relaxed text-ink-muted">{{ $food['answer'] }}</p>
-                            </div>
+                            <p class="mt-4 text-sm leading-relaxed text-ink-muted">{{ $food['answer'] }}</p>
                         @endif
 
                         <p class="mt-4 border-t border-line pt-4 text-xs leading-relaxed text-ink-muted">

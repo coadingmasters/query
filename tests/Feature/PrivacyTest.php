@@ -55,11 +55,12 @@ class PrivacyTest extends TestCase
     }
 
     /**
-     * The policy states there is no analytics and no third-party request. If
-     * a script or an external asset is ever added, this fails before anyone
-     * has to notice the policy went stale.
+     * The policy names Microsoft Clarity as the one third-party request the
+     * pages make, and nothing else. If a script or an external asset is ever
+     * added beyond that, this fails before anyone has to notice the policy
+     * went stale.
      */
-    public function test_no_third_party_assets_are_loaded(): void
+    public function test_the_only_third_party_asset_is_the_disclosed_one(): void
     {
         foreach (['/', '/privacy', '/contact'] as $path) {
             $html = $this->get($path)->getContent();
@@ -68,9 +69,14 @@ class PrivacyTest extends TestCase
 
             foreach ($matches[1] as $url) {
                 $host = parse_url($url, PHP_URL_HOST);
+
+                if ($host === 'www.clarity.ms') {
+                    continue;
+                }
+
                 $this->assertStringContainsString(
                     parse_url(config('app.url'), PHP_URL_HOST), $host,
-                    "$path loads a third-party asset, which the privacy policy says it does not: $url"
+                    "$path loads an undisclosed third-party asset: $url"
                 );
             }
         }
@@ -80,7 +86,7 @@ class PrivacyTest extends TestCase
     {
         $this->get('/privacy')
             ->assertSee('cross-site request forgery')
-            ->assertSee('We do not use analytics');
+            ->assertSee('Microsoft Clarity');
     }
 
     public function test_it_is_reachable_from_the_footer(): void

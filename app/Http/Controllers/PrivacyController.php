@@ -13,8 +13,8 @@ class PrivacyController extends Controller
         $url = rtrim(config('app.url'), '/');
 
         $description = 'What PurrQuery collects and why: an email if you '
-            .'subscribe, your message if you write in, and nothing else. No '
-            .'analytics, no tracking cookies, no sharing.';
+            .'subscribe, your message if you write in, and Microsoft Clarity '
+            .'analytics cookies. Nothing sold or shared.';
 
         return view('privacy', [
             'title' => 'Privacy Policy | '.$name.' Cat Care',

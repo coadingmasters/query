@@ -187,20 +187,21 @@ return [
         ],
     ],
 
-    'privacy_effective' => env('LEGAL_PRIVACY_EFFECTIVE', '2026-08-21'),
+    'privacy_effective' => env('LEGAL_PRIVACY_EFFECTIVE', '2026-08-31'),
 
     /*
      | Every statement below was checked against the schema and the live
      | response headers before it was written. The subscribers table holds an
      | email and nothing else; contact_messages holds a name, email, subject
-     | and message; the only cookies set are the session and CSRF pair; and
-     | the pages make no third-party requests at all. A privacy policy that
-     | overstates or understates what a site does is worse than none, because
-     | it is the one document people are entitled to rely on.
+     | and message; the only cookies set are the session and CSRF pair plus
+     | Microsoft Clarity's own; and the only third-party request the pages
+     | make is to Clarity. A privacy policy that overstates or understates
+     | what a site does is worse than none, because it is the one document
+     | people are entitled to rely on.
      */
     'privacy_summary' => [
         'We collect an email address if you subscribe, and your name, email and message if you write to us. Nothing else.',
-        'No analytics, no tracking cookies, no advertising scripts, and no third-party requests from our pages.',
+        'We use Microsoft Clarity to see, in aggregate, how visitors use this site, no advertising scripts and no other third-party requests from our pages.',
         'We never sell or share your details, and you can have them deleted by asking.',
     ],
 
@@ -257,9 +258,10 @@ return [
             ],
             'heading' => 'Cookies',
             'body' => [
-                'PurrQuery sets two cookies, both strictly necessary and both first-party. One keeps track of your session; the other carries a token that protects our forms against cross-site request forgery. Neither identifies you, follows you between sites, or is used for advertising.',
-                'We do not use analytics. There is no Google Analytics, no pixel, no heatmap and no tracker of any kind on this site, and our pages make no requests to third-party servers. Even the fonts are served from our own domain.',
-                'Because the only cookies are strictly necessary ones, there is no consent banner. If that ever changes, you will be asked before any non-essential cookie is set.',
+                'PurrQuery sets two strictly necessary, first-party cookies. One keeps track of your session; the other carries a token that protects our forms against cross-site request forgery. Neither identifies you, follows you between sites, or is used for advertising.',
+                'We also use Microsoft Clarity, a session-recording and heatmap tool, to understand how visitors move through and use this site: where people click, how far they scroll, and which pages get read. Clarity sets a couple of its own cookies (including one named _clck and one named _clsk) to recognize repeat visits to this site, and it processes your IP address and browser details as part of that. We do not use it to identify you personally, and Microsoft\'s own privacy documentation, published at clarity.microsoft.com/privacy, covers exactly what it collects and how it is retained.',
+                'There is no Google Analytics, no advertising pixel, and no other tracker beyond Clarity on this site. Even the fonts are served from our own domain.',
+                'There is no cookie consent banner today, since the cookies above are the only ones set. If that changes, for advertising cookies in particular, you will be asked before any non-essential cookie beyond what is described here is set.',
             ],
         ],
         [

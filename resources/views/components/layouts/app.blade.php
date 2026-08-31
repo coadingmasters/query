@@ -75,6 +75,15 @@
             @json($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
         </script>
     @endisset
+
+    {{-- Microsoft Clarity: session/heatmap analytics. Disclosed in the privacy policy's cookies section. --}}
+    <script>
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "yasqg72eds");
+    </script>
 </head>
 
 <body class="flex min-h-dvh flex-col bg-surface">

@@ -369,13 +369,16 @@
                                 </template>
                             </div>
 
-                            <div class="mt-5 text-center" x-show="results.length > 8" x-cloak>
-                                <button type="button" x-on:click="showAll = !showAll"
-                                        class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition hover:gap-2.5">
-                                    <span x-text="showAll ? 'Show Fewer Names' : 'View More Names'"></span>
-                                    <svg class="size-4 transition-transform duration-200" :class="showAll && 'rotate-180'"
-                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-                                        <path d="m6 9 6 6 6-6"/>
+                            <div class="mt-6 text-center" x-show="results.length" x-cloak>
+                                <p class="text-xs font-semibold text-ink-muted">
+                                    Showing <span x-text="visibleResults().length"></span> of <span x-text="results.length"></span> names
+                                </p>
+
+                                <button type="button" x-on:click="loadMore()" x-show="visibleCount < results.length" x-cloak
+                                        class="btn-primary mt-4 rounded-full px-8 py-2.5 text-sm transition-transform duration-150 hover:scale-[1.02] active:scale-[0.98]">
+                                    Load More
+                                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M12 5v14M6 13l6 6 6-6"/>
                                     </svg>
                                 </button>
                             </div>
@@ -987,7 +990,7 @@
                 result: null,
                 results: [],
                 pairs: [],
-                showAll: false,
+                visibleCount: 8,
                 hasGenerated: false,
                 favorites: [],
                 favoritesCopied: false,
@@ -1092,8 +1095,8 @@
                             this.pairs.push({ cats: [a, b], why: this.pairWhy(a, b) });
                         }
                     } else {
-                        this.results = shuffled.slice(0, 16);
-                        this.showAll = false;
+                        this.results = shuffled;
+                        this.visibleCount = 8;
                     }
                 },
 
@@ -1131,8 +1134,8 @@
                 // something" option next to the filter-driven ones.
                 randomNames() {
                     this.twoCats = false;
-                    this.results = [...this.names].sort(() => Math.random() - 0.5).slice(0, 16);
-                    this.showAll = false;
+                    this.results = [...this.names].sort(() => Math.random() - 0.5);
+                    this.visibleCount = 8;
                     this.revealResults();
                 },
 
@@ -1142,12 +1145,16 @@
                 showTrending() {
                     this.twoCats = false;
                     this.results = this.trending;
-                    this.showAll = false;
+                    this.visibleCount = 8;
                     this.revealResults();
                 },
 
                 visibleResults() {
-                    return this.showAll ? this.results : this.results.slice(0, 8);
+                    return this.results.slice(0, this.visibleCount);
+                },
+
+                loadMore() {
+                    this.visibleCount = Math.min(this.visibleCount + 8, this.results.length);
                 },
 
                 openDetail(pick) {

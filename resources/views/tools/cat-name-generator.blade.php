@@ -985,7 +985,7 @@
             {{-- Preview --}}
             <div>
                 <div class="flex aspect-square items-center justify-center rounded-2xl bg-surface-section">
-                    <canvas x-ref="tagCanvas" width="320" height="320" class="size-full max-h-80 max-w-80"></canvas>
+                    <canvas x-ref="tagCanvas" width="320" height="320" class="tag-swing size-full max-h-80 max-w-80"></canvas>
                 </div>
 
                 <div class="mt-4 flex items-center justify-between rounded-xl border border-line p-3.5">
@@ -1077,6 +1077,20 @@
                         Share
                     </button>
                 </div>
+            </div>
+        </div>
+
+        {{-- On-cat mockup: a live snapshot of the same canvas, so it never
+             shows a design that doesn't match what Download actually saves. --}}
+        <div class="border-t border-line p-6 sm:p-8">
+            <p class="text-sm font-bold text-ink">Preview on your cat</p>
+            <div class="relative mt-3 overflow-hidden rounded-2xl bg-surface-section">
+                <div class="aspect-[16/10]">
+                    <x-img name="purrquery-orange-tabby-cat-hero" alt="Cat wearing a preview of the tag around its neck" sizes="600px"/>
+                </div>
+                <img x-ref="tagOnCat" alt="" aria-hidden="true"
+                     class="tag-swing pointer-events-none absolute w-[15%]"
+                     style="top: 56%; left: 50%; margin-left: -7.5%;">
             </div>
         </div>
     </dialog>
@@ -1528,6 +1542,24 @@
                     ctx.fill();
                 },
 
+                hexToRgb(hex) {
+                    const clean = hex.replace('#', '');
+                    const full = clean.length === 3 ? clean.split('').map((c) => c + c).join('') : clean;
+                    const n = parseInt(full, 16);
+                    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+                },
+
+                // A real tag reads as metal or enamel, not a flat fill, so
+                // this shifts a color toward white (positive) or black
+                // (negative) to build the gradient and rim tones below.
+                shadeColor(hex, percent) {
+                    const { r, g, b } = this.hexToRgb(hex);
+                    const t = percent < 0 ? 0 : 255;
+                    const p = Math.abs(percent);
+                    const mix = (c) => Math.round((t - c) * p) + c;
+                    return 'rgb(' + mix(r) + ',' + mix(g) + ',' + mix(b) + ')';
+                },
+
                 // The preview canvas is what Download and Share both save, so
                 // redrawing it on every change keeps all three in sync with
                 // no separate render path to drift out of step.
@@ -1539,20 +1571,53 @@
                     const cx = w / 2, cy = h / 2 + 8;
 
                     ctx.clearRect(0, 0, w, h);
-                    ctx.fillStyle = this.tagColor;
 
+                    // A glossy radial gradient plus a drop shadow under the
+                    // silhouette is what actually sells "real metal tag"
+                    // instead of a flat colored sticker.
+                    const highlight = this.shadeColor(this.tagColor, 0.45);
+                    const rim = this.shadeColor(this.tagColor, -0.3);
+                    const gradient = ctx.createRadialGradient(cx - 55, cy - 65, 15, cx, cy, 210);
+                    gradient.addColorStop(0, highlight);
+                    gradient.addColorStop(0.55, this.tagColor);
+                    gradient.addColorStop(1, rim);
+
+                    ctx.save();
+                    ctx.shadowColor = 'rgba(0,0,0,0.35)';
+                    ctx.shadowBlur = 22;
+                    ctx.shadowOffsetY = 12;
+                    ctx.fillStyle = gradient;
+                    ctx.strokeStyle = rim;
+                    ctx.lineWidth = 3;
+
+                    let holeX = cx, holeY = cy - 130;
                     if (this.tagShape === 'heart') {
                         this.drawHeart(ctx, cx, cy, 220);
-                        this.drawTagHole(ctx, cx, cy - 100);
+                        holeY = cy - 100;
                     } else if (this.tagShape === 'fish') {
                         this.drawFish(ctx, cx, cy, 260);
-                        this.drawTagHole(ctx, cx - 96, cy - 30);
+                        holeX = cx - 96;
+                        holeY = cy - 30;
                     } else {
                         ctx.beginPath();
                         ctx.arc(cx, cy, 130, 0, Math.PI * 2);
                         ctx.fill();
-                        this.drawTagHole(ctx, cx, cy - 130);
+                        ctx.stroke();
                     }
+                    ctx.restore();
+
+                    // A soft highlight ellipse over the upper-left reads as
+                    // a light reflection, the detail that makes enamel or
+                    // brushed metal look glossy rather than painted flat.
+                    ctx.save();
+                    ctx.globalAlpha = 0.22;
+                    ctx.fillStyle = '#FFFFFF';
+                    ctx.beginPath();
+                    ctx.ellipse(cx - 55, cy - 60, 70, 38, -0.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+
+                    this.drawTagHole(ctx, holeX, holeY);
 
                     ctx.fillStyle = this.tagTextColor;
                     ctx.textAlign = 'center';
@@ -1565,6 +1630,13 @@
                         ctx.font = '17px ' + this.tagFont;
                         ctx.fillText(this.tagPhone, cx, cy + 28);
                     }
+
+                    // Keeps the "on your cat" mockup showing exactly what's
+                    // on the main canvas, without a second drawing routine
+                    // that could fall out of sync with this one.
+                    this.$nextTick(() => {
+                        if (this.$refs.tagOnCat) this.$refs.tagOnCat.src = canvas.toDataURL('image/png');
+                    });
                 },
 
                 downloadTag() {

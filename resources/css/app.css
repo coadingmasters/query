@@ -324,6 +324,30 @@
     }
 }
 
+/* A pet tag hangs from one point (the ring), so it swings from its top
+   edge like a real pendant rather than spinning around its own center. */
+@keyframes tag-swing {
+    0%,
+    100% {
+        transform: rotate(-6deg);
+    }
+    50% {
+        transform: rotate(6deg);
+    }
+}
+
+.tag-swing {
+    transform-origin: top center;
+    animation: tag-swing 3.2s ease-in-out infinite;
+    filter: drop-shadow(0 10px 14px rgb(0 0 0 / 0.18));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tag-swing {
+        animation: none;
+    }
+}
+
 /* ==========================================================================
    Article prose
    --------------------------------------------------------------------------

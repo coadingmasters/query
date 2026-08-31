@@ -89,18 +89,12 @@
                                     </thead>
                                     <tbody class="divide-y divide-line">
                                         @foreach ($food['items'] as $item)
-                                            @php $itemMeta = [
-                                                'safe' => ['label' => 'Safe', 'tone' => 'bg-accent-light text-accent-dark'],
-                                                'caution' => ['label' => 'Caution', 'tone' => 'bg-warning-light text-warning'],
-                                                'unsafe' => ['label' => 'Never', 'tone' => 'bg-danger-light text-danger'],
-                                            ][$item['verdict']] @endphp
+                                            @php $itemLabel = ['safe' => 'Safe', 'caution' => 'Caution', 'unsafe' => 'Never'][$item['verdict']] @endphp
                                             <tr class="align-top transition-colors hover:bg-surface-soft">
                                                 <td class="px-4 py-3 font-semibold text-ink">{{ $item['name'] }}</td>
-                                                <td class="px-4 py-3">
-                                                    <span @class(['rounded-full px-2.5 py-1 text-xs font-bold whitespace-nowrap', $itemMeta['tone']])>
-                                                        {{ $itemMeta['label'] }}
-                                                    </span>
-                                                    <p class="mt-1.5 text-ink-muted sm:hidden">{{ $item['note'] }}</p>
+                                                <td class="px-4 py-3 font-semibold whitespace-nowrap text-ink">
+                                                    {{ $itemLabel }}
+                                                    <p class="mt-1.5 font-normal text-ink-muted sm:hidden">{{ $item['note'] }}</p>
                                                 </td>
                                                 <td class="hidden px-4 py-3 text-ink-muted sm:table-cell">{{ $item['note'] }}</td>
                                             </tr>

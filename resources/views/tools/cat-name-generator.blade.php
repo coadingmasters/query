@@ -1063,7 +1063,15 @@
                     <option value="'Courier New', monospace">Courier New</option>
                 </select>
 
-                <div class="mt-6 flex gap-2.5">
+                <button type="button" x-on:click="openCatPreview()"
+                        class="mt-2.5 flex w-full items-center justify-center gap-1.5 rounded-full border border-line py-2.5 text-sm font-bold text-ink-muted transition hover:border-primary/40 hover:text-primary">
+                    <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
+                    </svg>
+                    Preview on Cat
+                </button>
+
+                <div class="mt-2.5 flex gap-2.5">
                     <button type="button" x-on:click="downloadTag()"
                             class="inline-flex flex-1 items-center justify-center gap-1.5 rounded-full bg-primary-dark px-4 py-2.5 text-sm font-bold text-white transition hover:brightness-110">
                         <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
@@ -1079,19 +1087,37 @@
                 </div>
             </div>
         </div>
+    </dialog>
 
-        {{-- On-cat mockup: a live snapshot of the same canvas, so it never
-             shows a design that doesn't match what Download actually saves. --}}
-        <div class="border-t border-line p-6 sm:p-8">
-            <p class="text-sm font-bold text-ink">Preview on your cat</p>
-            <div class="relative mt-3 overflow-hidden rounded-2xl bg-surface-section">
-                <div class="aspect-[16/10]">
-                    <x-img name="purrquery-orange-tabby-cat-hero" alt="Cat wearing a preview of the tag around its neck" sizes="600px"/>
+    {{-- Cat preview: its own, larger dialog rather than a section stacked
+         under the customizer, since the two are separate moments (design it,
+         then see it) rather than one long scrolling view. --}}
+    <dialog x-ref="catPreviewDialog"
+            class="m-auto w-[calc(100%-2rem)] max-w-xl rounded-2xl border border-line bg-surface p-0 shadow-2xl backdrop:bg-ink/50 backdrop:backdrop-blur-sm"
+            x-on:click="if ($event.target === $refs.catPreviewDialog) $refs.catPreviewDialog.close()">
+        <div class="flex items-center justify-between border-b border-line px-6 py-4">
+            <h2 class="font-heading text-xl font-extrabold tracking-tight text-ink">Preview on Your Cat</h2>
+            <button type="button" x-on:click="$refs.catPreviewDialog.close()" aria-label="Close"
+                    class="flex size-8 items-center justify-center rounded-full text-ink-muted transition hover:bg-surface-soft hover:text-ink">
+                <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+            </button>
+        </div>
+
+        <div class="p-6 sm:p-8">
+            <div class="relative overflow-hidden rounded-2xl bg-surface-section">
+                <div class="aspect-square">
+                    <x-img name="purrquery-orange-tabby-cat-hero" alt="Cat wearing a preview of the tag around its neck" sizes="576px"/>
                 </div>
                 <img x-ref="tagOnCat" alt="" aria-hidden="true"
-                     class="tag-swing pointer-events-none absolute w-[15%]"
-                     style="top: 56%; left: 50%; margin-left: -7.5%;">
+                     class="tag-swing pointer-events-none absolute w-[26%]"
+                     style="top: 60%; left: 50%; margin-left: -13%;">
             </div>
+
+            <button type="button" x-on:click="downloadTag()"
+                    class="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-full bg-primary-dark px-4 py-2.5 text-sm font-bold text-white transition hover:brightness-110">
+                <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>
+                Download
+            </button>
         </div>
     </dialog>
 </section>
@@ -1483,6 +1509,10 @@
                         this.$refs.tagDialog?.showModal();
                         this.redrawTag();
                     });
+                },
+
+                openCatPreview() {
+                    this.$refs.catPreviewDialog?.showModal();
                 },
 
                 setTagShape(shape) {

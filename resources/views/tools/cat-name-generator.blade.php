@@ -148,8 +148,8 @@
                         </label>
                         <div class="relative mt-2">
                             <button type="button" x-on:click="open = !open"
-                                    :class="open && 'border-primary/40 ring-2 ring-primary/20'"
-                                    class="flex w-full items-center justify-between gap-2 rounded-lg border border-line bg-surface px-3 py-2.5 text-left text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
+                                    :class="open && 'border-primary/40 shadow-md ring-2 ring-primary/20'"
+                                    class="flex w-full items-center justify-between gap-2 rounded-lg border border-line bg-surface px-3 py-2.5 text-left text-sm text-ink shadow-sm transition-all duration-200 hover:border-primary/40 hover:shadow-md focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
                                 <span x-text="styles.length ? styles.length + ' style' + (styles.length > 1 ? 's' : '') + ' selected' : 'Any style'"></span>
                                 <svg class="size-4 shrink-0 text-ink-muted transition-transform duration-200" :class="open && 'rotate-180'"
                                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
@@ -173,17 +173,28 @@
 
                     {{-- Selects --}}
                     <div class="mt-5 grid gap-4 sm:grid-cols-2">
+                        @php
+                            $selectClass = 'mt-2 w-full appearance-none rounded-lg border border-line bg-surface px-3 py-2.5 pr-9 text-sm text-ink shadow-sm transition-all duration-200 hover:border-primary/40 hover:shadow-md focus:border-primary focus:shadow-md focus:ring-2 focus:ring-primary/20 focus:outline-none';
+                            $chevron = <<<'SVG'
+                                <svg class="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-ink-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="m6 9 6 6 6-6"/>
+                                </svg>
+                            SVG;
+                        @endphp
+
                         <div>
                             <label for="breed" class="text-sm font-bold text-ink">
                                 <span class="inline-flex size-5 items-center justify-center rounded-full bg-primary-light text-[11px] font-extrabold text-primary">3</span> Breed
                             </label>
-                            <select id="breed" x-model="breedSlug"
-                                    class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                                <option value="">Any / not sure</option>
-                                <template x-for="breed in breeds" :key="breed.slug">
-                                    <option :value="breed.slug" x-text="breed.name"></option>
-                                </template>
-                            </select>
+                            <div class="relative">
+                                <select id="breed" x-model="breedSlug" class="{{ $selectClass }}">
+                                    <option value="">Any / not sure</option>
+                                    <template x-for="breed in breeds" :key="breed.slug">
+                                        <option :value="breed.slug" x-text="breed.name"></option>
+                                    </template>
+                                </select>
+                                {!! $chevron !!}
+                            </div>
                         </div>
 
                         <div>
@@ -192,16 +203,18 @@
                                 <span class="text-xs font-semibold text-ink-muted" x-show="selectedBreed()" x-cloak>(from breed)</span>
                             </label>
                             <template x-if="selectedBreed()">
-                                <p class="mt-2 flex h-[42px] items-center rounded-lg border border-line bg-surface-section px-3 text-sm font-semibold text-ink capitalize" x-text="selectedBreed().sizeCategory"></p>
+                                <p class="mt-2 flex h-[42px] items-center rounded-lg border border-line bg-surface-section px-3 text-sm font-semibold text-ink capitalize shadow-sm" x-text="selectedBreed().sizeCategory"></p>
                             </template>
                             <template x-if="!selectedBreed()">
-                                <select x-model="sizePreference"
-                                        class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                                    <option value="any">Any</option>
-                                    <option value="small">Small</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="large">Large</option>
-                                </select>
+                                <div class="relative">
+                                    <select x-model="sizePreference" class="{{ $selectClass }}">
+                                        <option value="any">Any</option>
+                                        <option value="small">Small</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="large">Large</option>
+                                    </select>
+                                    {!! $chevron !!}
+                                </div>
                             </template>
                         </div>
 
@@ -209,26 +222,30 @@
                             <label for="personality" class="text-sm font-bold text-ink">
                                 <span class="inline-flex size-5 items-center justify-center rounded-full bg-primary-light text-[11px] font-extrabold text-primary">5</span> Personality
                             </label>
-                            <select id="personality" x-model="personality"
-                                    class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                                <option value="">Any</option>
-                                @foreach ($personalities as $p)
-                                    <option value="{{ $p['slug'] }}">{{ $p['label'] }}</option>
-                                @endforeach
-                            </select>
+                            <div class="relative">
+                                <select id="personality" x-model="personality" class="{{ $selectClass }}">
+                                    <option value="">Any</option>
+                                    @foreach ($personalities as $p)
+                                        <option value="{{ $p['slug'] }}">{{ $p['label'] }}</option>
+                                    @endforeach
+                                </select>
+                                {!! $chevron !!}
+                            </div>
                         </div>
 
                         <div>
                             <label for="length" class="text-sm font-bold text-ink">
                                 <span class="inline-flex size-5 items-center justify-center rounded-full bg-primary-light text-[11px] font-extrabold text-primary">6</span> Length
                             </label>
-                            <select id="length" x-model="length"
-                                    class="mt-2 w-full rounded-lg border border-line bg-surface px-3 py-2.5 text-sm text-ink transition hover:border-primary/40 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none">
-                                <option value="any">Any</option>
-                                <option value="short">Short</option>
-                                <option value="medium">Medium</option>
-                                <option value="long">Long</option>
-                            </select>
+                            <div class="relative">
+                                <select id="length" x-model="length" class="{{ $selectClass }}">
+                                    <option value="any">Any</option>
+                                    <option value="short">Short</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="long">Long</option>
+                                </select>
+                                {!! $chevron !!}
+                            </div>
                         </div>
                     </div>
 

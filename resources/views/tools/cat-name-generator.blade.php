@@ -873,18 +873,6 @@
                 </a>
             @endforeach
         </div>
-
-        {{-- The remaining tools still get a real link from this page, just as
-             text rather than another row of cards. --}}
-        <ul class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm">
-            @foreach ($moreTools->skip(3) as $tool)
-                <li>
-                    <a href="{{ $tool['url'] }}" class="font-semibold text-ink-muted transition hover:text-primary">
-                        {{ $tool['title'] }}
-                    </a>
-                </li>
-            @endforeach
-        </ul>
     </div>
 </section>
 

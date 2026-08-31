@@ -58,27 +58,32 @@
                         </div>
                     </div>
 
-                    <div class="reveal article mt-8">
+                    @php
+                        $h2 = 'mt-10 flex items-center gap-2.5 font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl';
+                        $linkClass = 'font-semibold text-primary underline decoration-line-strong underline-offset-4';
+                    @endphp
+
+                    <div class="reveal mt-8">
 
                         {{-- Why --}}
                         @if (! empty($food['why']))
-                            <h2 id="why">Why</h2>
-                            <p>{!! $food['why'] !!}</p>
+                            <h2 id="why" class="{{ $h2 }} mt-0">Why</h2>
+                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['why'] !!}</p>
 
                             @if (! empty($food['note']))
-                                <p><strong>{{ $food['note'] }}</strong></p>
+                                <p class="mt-4 text-base font-semibold text-ink">{{ $food['note'] }}</p>
                             @endif
                         @endif
 
                         {{-- Per-item table --}}
                         @if (! empty($food['items']))
-                            <h2 id="each-one">{{ $food['title'] }}, one at a time</h2>
-                            <p>
+                            <h2 id="each-one" class="{{ $h2 }}">{{ $food['title'] }}, one at a time</h2>
+                            <p class="mt-4 text-base leading-relaxed text-ink-muted">
                                 The verdict above covers {{ strtolower($food['title']) }} as a whole. For the
                                 specific one in front of you, this is the breakdown.
                             </p>
 
-                            <div class="overflow-hidden rounded-xl border border-line">
+                            <div class="mt-5 overflow-hidden rounded-xl border border-line">
                                 <table class="w-full text-left text-sm">
                                     <thead>
                                         <tr class="border-b border-line bg-surface-section text-xs tracking-wider text-ink-muted uppercase">
@@ -108,60 +113,60 @@
 
                         {{-- How much --}}
                         @if (! empty($food['guidance']))
-                            <h2 id="how-much">
+                            <h2 id="how-much" class="{{ $h2 }}">
                                 {{ $food['verdict'] === 'unsafe' ? 'What to do if your cat ate this' : 'How much is actually safe' }}
                             </h2>
-                            <p>{!! $food['guidance'] !!}</p>
+                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['guidance'] !!}</p>
                         @endif
 
                         {{-- Introducing --}}
                         @if (! empty($food['introduce']))
-                            <h2 id="introduce">
+                            <h2 id="introduce" class="{{ $h2 }}">
                                 {{ $food['verdict'] === 'unsafe' ? 'If it already happened' : 'Introducing a new '.Str::of($food['title'])->lower()->rtrim('s').' safely' }}
                             </h2>
-                            <p>{!! $food['introduce'] !!}</p>
+                            <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['introduce'] !!}</p>
                         @endif
 
                         {{-- Avoid --}}
                         @if (! empty($food['avoid']))
-                            <h2 id="avoid">{{ $food['title'] }} to avoid entirely</h2>
-                            <ul>
+                            <h2 id="avoid" class="{{ $h2 }}">{{ $food['title'] }} to avoid entirely</h2>
+                            <ul class="mt-4 list-disc space-y-2.5 pl-5 marker:text-line-strong">
                                 @foreach ($food['avoid'] as $item)
-                                    <li>{!! $item !!}</li>
+                                    <li class="text-base leading-relaxed text-ink-muted">{!! $item !!}</li>
                                 @endforeach
                             </ul>
                         @endif
 
                         {{-- Deep dives --}}
                         @if (! empty($food['deep_dives']))
-                            <p>
+                            <p class="mt-4 text-base leading-relaxed text-ink-muted">
                                 Full guides:
                                 @foreach ($food['deep_dives'] as $dive)
-                                    <a href="{{ route('blog.show', $dive['slug']) }}">{{ $dive['label'] }}</a>{{ ! $loop->last ? ',' : '' }}
+                                    <a href="{{ route('blog.show', $dive['slug']) }}" class="{{ $linkClass }}">{{ $dive['label'] }}</a>{{ ! $loop->last ? ',' : '' }}
                                 @endforeach
                             </p>
                         @endif
 
                         {{-- Signs --}}
                         @if (! empty($food['watch_for']))
-                            <h2 id="signs">Signs to watch for</h2>
-                            <ul>
+                            <h2 id="signs" class="{{ $h2 }}">Signs to watch for</h2>
+                            <ul class="mt-4 list-disc space-y-2.5 pl-5 marker:text-line-strong">
                                 @foreach ($food['watch_for'] as $sign)
-                                    <li>{{ $sign }}</li>
+                                    <li class="text-base leading-relaxed text-ink-muted">{{ $sign }}</li>
                                 @endforeach
                             </ul>
-                            <p>
+                            <p class="mt-4 text-base leading-relaxed text-ink-muted">
                                 Any of these, or anything that seems off beyond what is listed here, is worth a call to
                                 your vet. Our guide to
-                                <a href="{{ route('blog.show', 'signs-your-cat-is-sick') }}">the early signs a cat is sick</a>
+                                <a href="{{ route('blog.show', 'signs-your-cat-is-sick') }}" class="{{ $linkClass }}">the early signs a cat is sick</a>
                                 covers the wider list of what to watch for at any time, not just after eating something new.
                             </p>
                         @endif
 
                         {{-- FAQ --}}
                         @if (count($faq) > 1)
-                            <h2 id="faq">Frequently asked questions</h2>
-                            <div class="space-y-2.5">
+                            <h2 id="faq" class="{{ $h2 }}">Frequently asked questions</h2>
+                            <div class="mt-4 space-y-2.5">
                                 @foreach ($faq as $item)
                                     <details class="group border-b border-line last:border-b-0">
                                         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-bold text-ink transition-colors hover:text-primary marker:content-['']">
@@ -179,11 +184,11 @@
                         @endif
 
                         {{-- Sources --}}
-                        <h2>Where this comes from</h2>
-                        <ul>
+                        <h2 class="{{ $h2 }}">Where this comes from</h2>
+                        <ul class="mt-4 space-y-2">
                             @foreach ($sources as $source)
-                                <li>
-                                    <a href="{{ $source['url'] }}" rel="noopener" target="_blank">{{ $source['name'] }}</a>
+                                <li class="text-sm leading-relaxed text-ink-muted">
+                                    <a href="{{ $source['url'] }}" rel="noopener" target="_blank" class="{{ $linkClass }}">{{ $source['name'] }}</a>
                                     {{ $source['note'] }}
                                 </li>
                             @endforeach

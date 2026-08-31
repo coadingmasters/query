@@ -370,12 +370,55 @@
                         <div class="mt-5 grid gap-3 sm:grid-cols-2">
                             <template x-for="pair in pairs" :key="pair.cats[0].name + pair.cats[1].name">
                                 <div class="rounded-xl border border-line p-4 transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
-                                    <p class="font-heading text-lg font-extrabold text-ink">
-                                        <span x-text="pair.cats[0].name"></span>
-                                        <span class="text-primary">&amp;</span>
-                                        <span x-text="pair.cats[1].name"></span>
-                                    </p>
-                                    <p class="mt-1.5 text-xs leading-relaxed text-ink-muted" x-text="pair.why"></p>
+                                    <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
+                                        <div class="group flex flex-col items-center gap-2 rounded-lg bg-surface-section p-3 text-center">
+                                            <button type="button" x-on:click="openDetail(pair.cats[0])"
+                                                    class="font-heading text-base font-extrabold text-ink transition-colors hover:text-primary" x-text="pair.cats[0].name"></button>
+                                            <div class="flex items-center gap-1.5">
+                                                <button type="button" x-on:click="toggleFavorite(pair.cats[0])"
+                                                        :aria-label="isFavorite(pair.cats[0].name) ? 'Remove ' + pair.cats[0].name + ' from favorites' : 'Save ' + pair.cats[0].name + ' to favorites'"
+                                                        class="flex size-7 items-center justify-center rounded-full bg-surface transition-transform duration-150 hover:scale-110 hover:bg-primary-light">
+                                                    <svg class="size-3.5 text-primary-vivid" viewBox="0 0 24 24" :fill="isFavorite(pair.cats[0].name) ? 'currentColor' : 'none'"
+                                                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                        <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
+                                                    </svg>
+                                                </button>
+                                                <button type="button" x-on:click="openTagMaker(pair.cats[0])" aria-label="Make a tag for this name"
+                                                        class="flex size-7 items-center justify-center rounded-full bg-surface transition-transform duration-150 hover:scale-110 hover:bg-primary-light">
+                                                    <svg class="size-3.5 text-ink-muted transition-colors group-hover:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                        <path d="M20.6 12.7 12.7 20.6a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8l7.9-7.9A2 2 0 0 1 12.2 2H18a2.6 2.6 0 0 1 2.6 2.6v5.8a2 2 0 0 1-.6 1.4Z"/>
+                                                        <path d="M15.5 8.5h.01"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <span class="text-lg font-extrabold text-primary">&amp;</span>
+
+                                        <div class="group flex flex-col items-center gap-2 rounded-lg bg-surface-section p-3 text-center">
+                                            <button type="button" x-on:click="openDetail(pair.cats[1])"
+                                                    class="font-heading text-base font-extrabold text-ink transition-colors hover:text-primary" x-text="pair.cats[1].name"></button>
+                                            <div class="flex items-center gap-1.5">
+                                                <button type="button" x-on:click="toggleFavorite(pair.cats[1])"
+                                                        :aria-label="isFavorite(pair.cats[1].name) ? 'Remove ' + pair.cats[1].name + ' from favorites' : 'Save ' + pair.cats[1].name + ' to favorites'"
+                                                        class="flex size-7 items-center justify-center rounded-full bg-surface transition-transform duration-150 hover:scale-110 hover:bg-primary-light">
+                                                    <svg class="size-3.5 text-primary-vivid" viewBox="0 0 24 24" :fill="isFavorite(pair.cats[1].name) ? 'currentColor' : 'none'"
+                                                         stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                                        <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
+                                                    </svg>
+                                                </button>
+                                                <button type="button" x-on:click="openTagMaker(pair.cats[1])" aria-label="Make a tag for this name"
+                                                        class="flex size-7 items-center justify-center rounded-full bg-surface transition-transform duration-150 hover:scale-110 hover:bg-primary-light">
+                                                    <svg class="size-3.5 text-ink-muted transition-colors group-hover:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                        <path d="M20.6 12.7 12.7 20.6a2 2 0 0 1-2.8 0l-7-7a2 2 0 0 1 0-2.8l7.9-7.9A2 2 0 0 1 12.2 2H18a2.6 2.6 0 0 1 2.6 2.6v5.8a2 2 0 0 1-.6 1.4Z"/>
+                                                        <path d="M15.5 8.5h.01"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <p class="mt-3 text-xs leading-relaxed text-ink-muted" x-text="pair.why"></p>
                                 </div>
                             </template>
                         </div>

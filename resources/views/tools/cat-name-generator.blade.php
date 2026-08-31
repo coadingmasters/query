@@ -391,28 +391,58 @@
                 </div>
 
                 {{-- Favorites --}}
-                <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7" x-show="favorites.length" x-cloak>
-                    <div class="flex flex-wrap items-center justify-between gap-3">
-                        <h2 class="flex items-center gap-2 font-heading text-xl font-extrabold tracking-tight text-ink">
-                            <svg class="size-5 text-primary-vivid" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <div class="reveal overflow-hidden rounded-2xl border border-line shadow-sm" x-show="favorites.length" x-cloak>
+                    <div class="flex flex-wrap items-center justify-between gap-3 bg-primary-dark px-5 py-4 text-white sm:px-7">
+                        <p class="flex items-center gap-2 font-heading text-base font-extrabold">
+                            <svg class="size-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                                 <path d="M12 21s-6.7-4.35-9.3-8.1C1 10.2 1.6 6.9 4.2 5.4c2.2-1.3 4.9-.6 6.3 1.4l1.5 2 1.5-2c1.4-2 4.1-2.7 6.3-1.4 2.6 1.5 3.2 4.8 1.5 7.5C18.7 16.65 12 21 12 21Z"/>
                             </svg>
-                            Your favorites
-                            <span class="text-ink-muted" x-text="'(' + favorites.length + ')'"></span>
-                        </h2>
-                        <div class="flex flex-wrap items-center gap-1.5">
+                            <span x-text="favorites.length"></span>
+                            <span>favorite<span x-show="favorites.length !== 1">s</span></span>
+                        </p>
+
+                        <div class="flex flex-wrap items-center gap-2">
+                            <label class="flex cursor-pointer items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold transition hover:bg-white/20">
+                                <input type="checkbox" :checked="allFavoritesSelected()" x-on:change="toggleSelectAllFavorites()"
+                                       class="size-4 rounded border-white/40 accent-primary-vivid">
+                                Select All
+                            </label>
+
                             <button type="button" x-on:click="copyAllFavorites()"
-                                    class="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-ink-muted transition hover:border-line-strong hover:text-ink"
-                                    x-text="favoritesCopied ? 'Copied!' : 'Copy all'"></button>
-                            <button type="button" x-on:click="downloadFavorites()"
-                                    class="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-ink-muted transition hover:border-line-strong hover:text-ink">Download</button>
+                                    class="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold transition hover:bg-white/20"
+                                    x-text="favoritesCopied ? 'Copied!' : 'Copy'"></button>
+
+                            <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                                <button type="button" x-on:click="open = !open"
+                                        class="flex items-center gap-1.5 rounded-full bg-primary-vivid px-4 py-1.5 text-xs font-bold text-ink transition hover:brightness-95">
+                                    <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>
+                                    </svg>
+                                    Download as
+                                    <svg class="size-3 transition-transform duration-200" :class="open && 'rotate-180'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true">
+                                        <path d="m6 9 6 6 6-6"/>
+                                    </svg>
+                                </button>
+                                <div x-show="open" x-cloak
+                                     x-transition:enter="transition ease-out duration-150" x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
+                                     class="absolute right-0 z-20 mt-2 w-32 overflow-hidden rounded-xl border border-line bg-surface shadow-lg">
+                                    <button type="button" x-on:click="downloadFavorites('csv'); open = false"
+                                            class="block w-full px-4 py-2.5 text-left text-sm font-semibold text-ink transition hover:bg-primary-light">CSV</button>
+                                    <button type="button" x-on:click="downloadFavorites('txt'); open = false"
+                                            class="block w-full px-4 py-2.5 text-left text-sm font-semibold text-ink transition hover:bg-primary-light">TXT</button>
+                                </div>
+                            </div>
+
                             <button type="button" x-on:click="clearFavorites()"
-                                    class="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-danger transition hover:border-danger/40 hover:bg-danger-light">Clear all</button>
+                                    class="rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold transition hover:bg-danger/80">Clear all</button>
                         </div>
                     </div>
-                    <ul class="mt-4 flex flex-wrap gap-2">
+
+                    <ul class="flex flex-wrap gap-2 bg-surface p-5 sm:p-7">
                         <template x-for="fav in favorites" :key="fav.name">
-                            <li class="flex items-center gap-2 rounded-full border border-line py-1.5 pr-2 pl-4 text-sm font-semibold text-ink">
+                            <li class="flex items-center gap-2 rounded-full border border-line py-1.5 pr-2 pl-3 text-sm font-semibold text-ink">
+                                <input type="checkbox" :checked="fav.selected" x-on:change="toggleFavoriteSelected(fav.name)"
+                                       class="size-4 rounded border-line-strong accent-primary-vivid">
                                 <span x-text="fav.name"></span>
                                 <button type="button" x-on:click="removeFavorite(fav.name)" aria-label="Remove from favorites"
                                         class="flex size-5 items-center justify-center rounded-full text-ink-muted transition hover:bg-danger-light hover:text-danger">
@@ -1002,7 +1032,10 @@
 
                 init() {
                     try {
-                        this.favorites = JSON.parse(localStorage.getItem('purrquery-name-favorites') || '[]');
+                        // Older saved favorites predate the selected flag, so
+                        // anything missing it defaults to selected, not lost.
+                        this.favorites = JSON.parse(localStorage.getItem('purrquery-name-favorites') || '[]')
+                            .map((f) => ({ ...f, selected: f.selected !== false }));
                     } catch (e) {
                         this.favorites = [];
                     }
@@ -1170,40 +1203,83 @@
                     return this.favorites.some((f) => f.name === name);
                 },
 
+                // Every mutation ends by calling this rather than each
+                // repeating the same try/catch, since localStorage can throw
+                // in private-browsing contexts and a favorite that fails to
+                // persist should still work for the rest of the session.
+                persistFavorites() {
+                    try {
+                        localStorage.setItem('purrquery-name-favorites', JSON.stringify(this.favorites));
+                    } catch (e) {}
+                },
+
                 toggleFavorite(pick) {
                     if (this.isFavorite(pick.name)) {
                         this.favorites = this.favorites.filter((f) => f.name !== pick.name);
                     } else {
-                        this.favorites.push({ name: pick.name, meaning: pick.meaning });
+                        this.favorites.push({ name: pick.name, meaning: pick.meaning, selected: true });
                         this.saveName(pick.name);
                     }
-                    try {
-                        localStorage.setItem('purrquery-name-favorites', JSON.stringify(this.favorites));
-                    } catch (e) {}
+                    this.persistFavorites();
                 },
 
                 removeFavorite(name) {
                     this.favorites = this.favorites.filter((f) => f.name !== name);
-                    try {
-                        localStorage.setItem('purrquery-name-favorites', JSON.stringify(this.favorites));
-                    } catch (e) {}
+                    this.persistFavorites();
+                },
+
+                allFavoritesSelected() {
+                    return this.favorites.length > 0 && this.favorites.every((f) => f.selected);
+                },
+
+                toggleSelectAllFavorites() {
+                    const next = !this.allFavoritesSelected();
+                    this.favorites = this.favorites.map((f) => ({ ...f, selected: next }));
+                    this.persistFavorites();
+                },
+
+                toggleFavoriteSelected(name) {
+                    this.favorites = this.favorites.map((f) => f.name === name ? { ...f, selected: !f.selected } : f);
+                    this.persistFavorites();
+                },
+
+                // Bulk actions act on whatever's checked, or everything if
+                // nothing is, so Copy/Download still make sense on their own
+                // without forcing a selection step first.
+                selectedOrAllFavorites() {
+                    const selected = this.favorites.filter((f) => f.selected);
+                    return selected.length ? selected : this.favorites;
                 },
 
                 copyAllFavorites() {
-                    const text = this.favorites.map((f) => f.name + ': ' + f.meaning).join('\n');
+                    const text = this.selectedOrAllFavorites().map((f) => f.name + ': ' + f.meaning).join('\n');
                     navigator.clipboard.writeText(text).then(() => {
                         this.favoritesCopied = true;
                         setTimeout(() => { this.favoritesCopied = false; }, 2000);
                     }).catch(() => {});
                 },
 
-                downloadFavorites() {
-                    const text = this.favorites.map((f) => f.name + ': ' + f.meaning).join('\n');
-                    const blob = new Blob([text], { type: 'text/plain' });
+                downloadFavorites(format) {
+                    const rows = this.selectedOrAllFavorites();
+                    if (!rows.length) return;
+
+                    let text, mime, filename;
+                    if (format === 'csv') {
+                        const escape = (v) => '"' + String(v).replace(/"/g, '""') + '"';
+                        text = 'Name,Meaning\r\n' + rows.map((f) => escape(f.name) + ',' + escape(f.meaning)).join('\r\n');
+                        mime = 'text/csv';
+                        filename = 'cat-name-favorites.csv';
+                    } else {
+                        text = rows.map((f) => f.name + ': ' + f.meaning).join('\n');
+                        mime = 'text/plain';
+                        filename = 'cat-name-favorites.txt';
+                    }
+
+                    const blob = new Blob([text], { type: mime });
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = 'cat-name-favorites.txt';
+                    a.download = filename;
                     a.click();
                     URL.revokeObjectURL(url);
                 },
@@ -1211,9 +1287,7 @@
                 clearFavorites() {
                     if (!confirm('Remove all saved favorites?')) return;
                     this.favorites = [];
-                    try {
-                        localStorage.setItem('purrquery-name-favorites', JSON.stringify(this.favorites));
-                    } catch (e) {}
+                    this.persistFavorites();
                 },
 
                 saveName(name) {

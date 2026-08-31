@@ -1014,22 +1014,42 @@
                     @endforeach
                 </div>
 
+                @php
+                    $tagPresets = ['#F47C6B' => 'Coral', '#123F42' => 'Deep teal', '#4F6C49' => 'Sage'];
+                    $textPresets = ['#FFFFFF' => 'White', '#123F42' => 'Dark'];
+                    $swatchClass = 'size-9 shrink-0 rounded-full border border-line transition-transform duration-150 hover:scale-110';
+                @endphp
+
                 <p class="mt-5 text-sm font-bold text-ink">Tag Color</p>
                 <div class="mt-2 flex items-center gap-2.5">
-                    @foreach (['#F47C6B' => 'Coral', '#123F42' => 'Deep teal', '#4F6C49' => 'Sage'] as $hex => $label)
+                    @foreach ($tagPresets as $hex => $label)
                         <button type="button" x-on:click="setTagColor('{{ $hex }}')" aria-label="{{ $label }}"
                                 :class="tagColor === '{{ $hex }}' && 'ring-2 ring-offset-2 ring-primary-vivid'"
-                                class="size-9 rounded-full border border-line transition" style="background-color: {{ $hex }}"></button>
+                                class="{{ $swatchClass }}" style="background-color: {{ $hex }}"></button>
                     @endforeach
+                    <label aria-label="Custom tag color"
+                           class="relative flex {{ $swatchClass }} cursor-pointer items-center justify-center overflow-hidden"
+                           :class="! @js(array_keys($tagPresets)).includes(tagColor.toUpperCase()) && 'ring-2 ring-offset-2 ring-primary-vivid'"
+                           style="background: conic-gradient(from 180deg, #F47C6B, #F4D06B, #6BF47C, #6BC8F4, #8B6BF4, #F46BD0, #F47C6B)">
+                        <input type="color" x-model="tagColor" x-on:input="redrawTag()" aria-label="Custom tag color picker"
+                               class="absolute inset-0 size-full cursor-pointer opacity-0">
+                    </label>
                 </div>
 
                 <p class="mt-5 text-sm font-bold text-ink">Text Color</p>
                 <div class="mt-2 flex items-center gap-2.5">
-                    @foreach (['#FFFFFF' => 'White', '#123F42' => 'Dark'] as $hex => $label)
+                    @foreach ($textPresets as $hex => $label)
                         <button type="button" x-on:click="setTagTextColor('{{ $hex }}')" aria-label="{{ $label }}"
                                 :class="tagTextColor === '{{ $hex }}' && 'ring-2 ring-offset-2 ring-primary-vivid'"
-                                class="size-9 rounded-full border border-line transition" style="background-color: {{ $hex }}"></button>
+                                class="{{ $swatchClass }}" style="background-color: {{ $hex }}"></button>
                     @endforeach
+                    <label aria-label="Custom text color"
+                           class="relative flex {{ $swatchClass }} cursor-pointer items-center justify-center overflow-hidden"
+                           :class="! @js(array_keys($textPresets)).includes(tagTextColor.toUpperCase()) && 'ring-2 ring-offset-2 ring-primary-vivid'"
+                           style="background: conic-gradient(from 180deg, #F47C6B, #F4D06B, #6BF47C, #6BC8F4, #8B6BF4, #F46BD0, #F47C6B)">
+                        <input type="color" x-model="tagTextColor" x-on:input="redrawTag()" aria-label="Custom text color picker"
+                               class="absolute inset-0 size-full cursor-pointer opacity-0">
+                    </label>
                 </div>
 
                 <p class="mt-5 text-sm font-bold text-ink">Font</p>

@@ -160,6 +160,7 @@ return [
             ],
             'deep_dives' => [
                 ['label' => 'Can Cats Eat Bananas?', 'slug' => 'can-cats-eat-bananas'],
+                ['label' => 'Can Cats Eat Grapes or Raisins?', 'slug' => 'can-cats-eat-grapes'],
             ],
         ],
         [
@@ -403,6 +404,11 @@ return [
                 ['q' => 'Is raw dough toxic to cats?', 'a' => 'Yes. Yeast keeps fermenting inside a cat\'s warm stomach after it\'s swallowed, producing carbon dioxide that can painfully expand the stomach and ethanol that causes genuine alcohol poisoning. Both risks come from the same piece of raw bread or pizza dough, so keep rising dough covered and out of reach.'],
                 ['q' => 'What can\'t cats eat?', 'a' => 'Onion, garlic, chocolate, xylitol, grapes, raisins, alcohol, caffeine, raw yeast dough, and macadamia nuts are never safe in any amount. Beyond this page, many other human foods are fine occasionally in small amounts; this list is specifically the genuinely toxic exceptions, not general dietary advice.'],
                 ['q' => 'What should I do if my cat eats something toxic?', 'a' => 'Call a veterinarian or an animal poison control line immediately, don\'t wait to see if symptoms appear. Have ready what was eaten, roughly how much, and your cat\'s weight. Don\'t induce vomiting on your own, since it isn\'t safe for every substance and a vet needs to guide that decision.'],
+            ],
+            'deep_dives' => [
+                ['label' => 'Can Cats Eat Chocolate?', 'slug' => 'can-cats-eat-chocolate'],
+                ['label' => 'Can Cats Eat Grapes or Raisins?', 'slug' => 'can-cats-eat-grapes'],
+                ['label' => 'Can Cats Eat Ham?', 'slug' => 'can-cats-eat-ham'],
             ],
         ],
         [

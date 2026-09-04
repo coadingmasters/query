@@ -15,22 +15,24 @@ use App\Http\Controllers\Admin\PostTagController;
 use App\Http\Controllers\Admin\RedirectController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\SubscribersController;
+use App\Http\Controllers\Admin\VideoController;
 use App\Http\Controllers\Admin\VisitorsController;
 use App\Http\Controllers\ArticleFeedbackController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\PrivacyController;
-use App\Http\Controllers\TermsController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\FoodGuideController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HowItWorksController;
 use App\Http\Controllers\ManifestController;
+use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\TermsController;
 use App\Http\Controllers\Tools\CatAgeCalculatorController;
 use App\Http\Controllers\Tools\CatCalorieCalculatorController;
 use App\Http\Controllers\Tools\CatNameGeneratorController;
@@ -39,7 +41,6 @@ use App\Http\Controllers\Tools\CatPregnancyCalculatorController;
 use App\Http\Controllers\Tools\CatWeightCheckerController;
 use App\Http\Controllers\Tools\VaccinationTrackerController;
 use App\Http\Controllers\ToolsController;
-use App\Http\Controllers\SubscriberController;
 use App\Http\Controllers\VisitClickController;
 use Illuminate\Support\Facades\Route;
 
@@ -168,6 +169,13 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
         Route::post('/', [MediaController::class, 'store'])->name('store');
         Route::put('/{media}', [MediaController::class, 'update'])->name('update');
         Route::delete('/{media}', [MediaController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::middleware('auth')->prefix('videos')->name('videos.')->group(function (): void {
+        Route::get('/', [VideoController::class, 'index'])->name('index');
+        Route::post('/', [VideoController::class, 'store'])->name('store');
+        Route::put('/{video}', [VideoController::class, 'update'])->name('update');
+        Route::delete('/{video}', [VideoController::class, 'destroy'])->name('destroy');
     });
 
     Route::middleware('auth')->prefix('settings')->name('settings.')->group(function (): void {

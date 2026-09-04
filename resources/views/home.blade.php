@@ -27,7 +27,35 @@
         @endforeach
     </div>
 
-    <div class="container-page relative grid items-center gap-8 py-8 lg:grid-cols-2 lg:gap-10 xl:grid-cols-[1fr_1.14fr] lg:py-10">
+    @php
+        $heroVideo ??= \App\Models\Video::where('name', 'home-page-hero-section')->latest()->first();
+        $heroPoster ??= $heroVideo ? Illuminate\Support\Str::replaceLast('.mp4', '-poster.webp', $heroVideo->path) : null;
+    @endphp
+    @if ($heroVideo)
+        {{-- Desktop only: the clip as a true full-bleed background behind
+             the whole section, not boxed into the right column. A gradient
+             in the site's own blush tone, the video's own backdrop color
+             too, fades the left side toward solid for text contrast while
+             leaving the right side fully visible, rather than dimming the
+             whole clip with a dark scrim. Mobile keeps the framed card
+             version further down, where a full-bleed treatment would fight
+             the text for space instead of sitting behind it. --}}
+        <div aria-hidden="true" class="absolute inset-0 z-0 hidden lg:block">
+            <video class="hero-video h-full w-full object-cover"
+                   poster="{{ Illuminate\Support\Facades\Storage::url($heroPoster) }}"
+                   muted loop playsinline preload="auto">
+                <source src="{{ $heroVideo->url }}" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-r from-surface-soft from-5% via-surface-soft/75 via-40% to-transparent to-75%"></div>
+            <script>
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    document.currentScript.previousElementSibling.previousElementSibling.play().catch(() => {});
+                }
+            </script>
+        </div>
+    @endif
+
+    <div class="container-page relative z-10 grid items-center gap-8 py-8 lg:grid-cols-2 lg:gap-10 xl:grid-cols-[1fr_1.14fr] lg:py-10">
         <div>
             <h1 class="hero-in font-heading text-4xl leading-[1.08] font-extrabold tracking-tight text-ink sm:text-5xl" style="--i: 0">
                 Everything You Need for a
@@ -137,18 +165,16 @@
         <div class="relative">
             {{-- A soft coral stage behind the photo, echoing the sample's
                  backdrop circle. Only visible around a cutout with real
-                 transparency — the launch photo below is opaque and hides it. --}}
-            <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center">
+                 transparency — the launch photo below is opaque and hides
+                 it. Hidden on desktop specifically when the full-bleed video
+                 above is active, since there is no card here for it to glow
+                 behind at that breakpoint; the video branch just below is
+                 mobile-only in that case for the same reason. --}}
+            <div aria-hidden="true" class="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center {{ $heroVideo ? 'lg:hidden' : '' }}">
                 <div class="size-[80%] rounded-full bg-primary-vivid opacity-30 blur-3xl"></div>
             </div>
 
             @php
-                // Same admin-uploaded-beats-static-fallback pattern as the
-                // image below, checked first: a video in this slot is the
-                // strongest signal of intent, so it wins if one exists.
-                $heroVideo = \App\Models\Video::where('name', 'home-page-hero-section')->latest()->first();
-                $heroPoster = $heroVideo ? Illuminate\Support\Str::replaceLast('.mp4', '-poster.webp', $heroVideo->path) : null;
-
                 // Admin-uploaded via Media (category "general", name below)
                 // rather than the resources/images manifest, so swapping the
                 // photo is an upload, not a deploy. Falls back to the launch
@@ -156,16 +182,16 @@
                 $heroMedia = \App\Models\Media::where('name', 'home-page-hero-section')->latest()->first();
             @endphp
             @if ($heroVideo)
-                {{-- A real clip, not a cutout, so it gets the same framed
-                     card treatment as the static fallback photo rather than
-                     the borderless cutout style below. Muted/looped/no
+                {{-- Mobile only: the full-bleed version above takes over at
+                     lg, so this framed card is the desktop-off / mobile-on
+                     complement to it, not a duplicate. Muted/looped/no
                      controls so it reads as a living photograph, not a
                      player. autoplay is deliberately left off the tag: it
                      only starts via the script below, and only when the
                      visitor hasn't asked for reduced motion — so a
                      reduced-motion visitor, or one with JS disabled, just
                      sees the poster frame as a still photo instead. --}}
-                <div class="cat-walk">
+                <div class="cat-walk lg:hidden">
                     <div class="cat-breathe relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg">
                         <video class="hero-video relative block h-full w-full object-cover"
                                width="1280" height="720"
@@ -204,37 +230,6 @@
                     </div>
                 </div>
             @endif
-
-            {{-- Floating context badges: purely decorative, so hidden from
-                 screen readers and dropped below the breakpoint where the
-                 photo is too small for them to sit on cleanly. The third
-                 (top-right) badge from the first pass collided with the
-                 feather wand and was dropped rather than shuffled around it. --}}
-            <div aria-hidden="true" style="--i: 0" class="cat-badge absolute top-2 -left-4 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
-                <svg class="size-6 text-primary-vivid" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M12 21c-.28 0-.53-.11-.71-.29C7.4 16.98 3.5 13.1 3.5 9.36 3.5 6.4 5.9 4 8.85 4c1.68 0 3.24.83 4.15 2.14C13.91 4.83 15.47 4 17.15 4 20.1 4 22.5 6.4 22.5 9.36c0 3.74-3.9 7.62-7.79 11.35a1 1 0 0 1-.71.29Z"/>
-                </svg>
-            </div>
-
-            <div aria-hidden="true" style="--i: 1" class="cat-badge absolute top-[46%] -right-5 hidden size-14 items-center justify-center rounded-full bg-surface shadow-lg sm:flex">
-                <svg class="size-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <ellipse cx="12" cy="8" rx="8" ry="3"/>
-                    <path d="M4 8v2.5c0 3.6 3.6 6.5 8 6.5s8-2.9 8-6.5V8"/>
-                </svg>
-            </div>
-
-            {{-- Duplicates a line from the trust row below, so it is hidden
-                 from screen readers rather than read out twice. --}}
-            <div aria-hidden="true" style="--i: 2"
-                 class="cat-badge absolute -bottom-5 right-4 hidden items-center gap-3 rounded-full bg-accent px-4 py-3 shadow-lg sm:flex">
-                <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-surface text-accent">
-                    <x-paw-print class="size-5"/>
-                </span>
-                <span>
-                    <span class="block font-heading text-sm font-extrabold text-ink-inverse">Free forever</span>
-                    <span class="mt-0.5 block text-xs text-ink-inverse/85">No account, no paywall</span>
-                </span>
-            </div>
         </div>
     </div>
 

@@ -209,8 +209,6 @@ return [
         // Same artwork, run at figure size for the body of the age calculator.
         'cat-age-life-stages' => 'cat-age-calculator-senior-tabby-cat',
 
-        'cat-pregnancy-calculator-kitten' => 'cat-name-generator-cute-kitten',
-
         'purrquery-admin-login-cat-owner' => 'purrquery-hero-cat-owner-smiling',
         'cat-calorie-calculator-hero' => 'cat-calorie-calculator-cat-food-bowl',
         'cat-vaccination-tracker-hero' => 'cat-vaccination-tracker-vet-examination',

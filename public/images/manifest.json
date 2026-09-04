@@ -455,19 +455,19 @@
         "width": 400,
         "height": 250,
         "preset": "tool",
-        "placeholder": true,
+        "placeholder": false,
         "variants": [
             {
                 "w": 400,
-                "src": "/images/cat-pregnancy-calculator-kitten-400.2f50e545.webp"
+                "src": "/images/cat-pregnancy-calculator-kitten-400.d5381d9c.webp"
             },
             {
                 "w": 600,
-                "src": "/images/cat-pregnancy-calculator-kitten-600.2f50e545.webp"
+                "src": "/images/cat-pregnancy-calculator-kitten-600.d5381d9c.webp"
             },
             {
                 "w": 800,
-                "src": "/images/cat-pregnancy-calculator-kitten-800.2f50e545.webp"
+                "src": "/images/cat-pregnancy-calculator-kitten-800.d5381d9c.webp"
             }
         ]
     },

@@ -234,6 +234,10 @@
         @endphp
         <div class="mt-5 space-y-5" data-magazine-sections>
             @foreach ($posts->chunk(8) as $chunk)
+                {{-- Every other block mirrors: the big tile moves to the right
+                     half and the wide tile follows it, so the page alternates
+                     instead of stamping the same shape down the column. --}}
+                @php $flip = $loop->index % 2 === 1; @endphp
                 <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[248px] lg:grid-flow-dense">
                     @foreach ($chunk->values() as $i => $post)
                         @php $type = $tileTypes[$i] ?? 'small'; @endphp
@@ -243,6 +247,7 @@
                                 'sm:col-span-2 lg:row-span-2' => $type === 'feature',
                                 'sm:col-span-2 lg:row-span-1' => $type === 'wide',
                                 'lg:row-span-1' => $type === 'small',
+                                'lg:col-start-3' => $flip && $type !== 'small',
                             ])>
 
                             @if ($type === 'feature')

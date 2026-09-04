@@ -107,7 +107,7 @@
 
                         <div class="mt-5 space-y-3">
                             @foreach ($post->faqs as $item)
-                                <details class="group rounded-xl border border-line bg-surface px-5 shadow-sm transition hover:border-line-strong open:shadow-md">
+                                <details name="faq" class="group rounded-xl border border-line bg-surface px-5 shadow-sm transition hover:border-line-strong open:shadow-md">
                                     <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-heading text-sm font-bold text-ink marker:content-[''] sm:text-base">
                                         {{ $item->question }}
                                         <svg class="size-5 shrink-0 text-primary transition-transform duration-200 group-open:rotate-180"
@@ -353,15 +353,16 @@
                     <li>
                         <a href="{{ route('blog.show', $next->slug) }}"
                            class="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-                            <div class="overflow-hidden bg-surface-section">
-                                <x-post-image :post="$next"/>
+                            <div class="relative aspect-[3/2] overflow-hidden bg-surface-section">
+                                <x-post-image :post="$next"
+                                       class="transition-transform duration-500 group-hover:scale-105"/>
                             </div>
                             <div class="flex flex-1 flex-col p-5">
                                 <span class="text-xs font-semibold text-primary">{{ $next->category?->name }}</span>
-                                <span class="mt-2 font-heading text-base leading-snug font-bold text-ink transition-colors group-hover:text-primary">
+                                <span class="mt-2 line-clamp-2 font-heading text-base leading-snug font-bold text-ink transition-colors group-hover:text-primary">
                                     {{ $next->title }}
                                 </span>
-                                <span class="mt-2 flex-1 text-sm leading-relaxed text-ink-muted">{{ $next->excerpt }}</span>
+                                <span class="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-ink-muted">{{ $next->excerpt }}</span>
                             </div>
                         </a>
                     </li>

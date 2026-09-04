@@ -218,39 +218,83 @@
             </span>
         </div>
 
-        <ul class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            @foreach ($posts as $post)
-                <li data-post data-category="{{ $post->category?->name }}"
-                    data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}">
-                    <a href="{{ route('blog.show', $post->slug) }}"
-                        class="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition hover:-translate-y-1 hover:border-line-strong hover:shadow-lg">
-                        <div class="relative aspect-[3/2] overflow-hidden bg-surface-section">
-                            <x-post-image :post="$post"
-                                   class="transition-transform duration-500 group-hover:scale-105"/>
-                        </div>
-
-                        <div class="flex flex-1 flex-col p-5">
-                            <div class="flex flex-wrap items-center gap-2 text-xs font-semibold">
-                                <span class="rounded-full bg-primary-light px-2.5 py-0.5 text-primary-dark">{{ $post->category?->name }}</span>
-                                <span class="text-ink-muted">{{ $post->reading_time }} min read</span>
+        {{-- A flat grid of identical cards reads as a wall past the first row.
+             Chunking into fives and giving the lead of each chunk a wider
+             spotlight card breaks that rhythm up the way a print magazine's
+             pages do, without any JS: it's the same repeating pattern as the
+             "Featured this week" row above, just repeated down the page. --}}
+        <div class="mt-5 space-y-8" data-magazine-sections>
+            @foreach ($posts->chunk(5) as $chunk)
+                <div>
+                    @php $lead = $chunk->first(); @endphp
+                    <article data-post data-category="{{ $lead->category?->name }}"
+                             data-terms="{{ Str::lower($lead->title.' '.$lead->excerpt) }}">
+                        <a href="{{ route('blog.show', $lead->slug) }}"
+                            class="group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition hover:-translate-y-1 hover:border-line-strong hover:shadow-lg sm:flex-row">
+                            <div class="relative aspect-[16/10] overflow-hidden bg-surface-section sm:aspect-auto sm:w-2/5 sm:shrink-0">
+                                <x-post-image :post="$lead"
+                                       class="transition-transform duration-500 group-hover:scale-105"/>
                             </div>
 
-                            <h3 class="mt-2.5 font-heading text-base leading-snug font-bold text-ink transition-colors group-hover:text-primary">
-                                {{ $post->title }}</h3>
+                            <div class="flex flex-1 flex-col justify-center p-6 sm:p-7">
+                                <div class="flex flex-wrap items-center gap-2 text-xs font-semibold">
+                                    <span class="rounded-full bg-primary-light px-2.5 py-0.5 text-primary-dark">{{ $lead->category?->name }}</span>
+                                    <span class="text-ink-muted">{{ $lead->reading_time }} min read</span>
+                                </div>
 
-                            <p class="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-ink-muted">{{ $post->excerpt }}</p>
+                                <h3 class="mt-3 font-heading text-xl leading-snug font-extrabold tracking-tight text-ink transition-colors group-hover:text-primary sm:text-2xl">
+                                    {{ $lead->title }}</h3>
 
-                            <span class="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-primary">
-                                Read the guide
-                                <svg class="size-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24"
-                                     fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                                     aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-                            </span>
-                        </div>
-                    </a>
-                </li>
+                                <p class="mt-2.5 line-clamp-2 max-w-xl text-sm leading-relaxed text-ink-muted sm:text-base">{{ $lead->excerpt }}</p>
+
+                                <span class="mt-4 inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-primary">
+                                    Read the guide
+                                    <svg class="size-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24"
+                                         fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                         aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                                </span>
+                            </div>
+                        </a>
+                    </article>
+
+                    @if ($chunk->count() > 1)
+                        <ul class="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                            @foreach ($chunk->skip(1) as $post)
+                                <li data-post data-category="{{ $post->category?->name }}"
+                                    data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}">
+                                    <a href="{{ route('blog.show', $post->slug) }}"
+                                        class="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition hover:-translate-y-1 hover:border-line-strong hover:shadow-lg">
+                                        <div class="relative aspect-[3/2] overflow-hidden bg-surface-section">
+                                            <x-post-image :post="$post"
+                                                   class="transition-transform duration-500 group-hover:scale-105"/>
+                                        </div>
+
+                                        <div class="flex flex-1 flex-col p-5">
+                                            <div class="flex flex-wrap items-center gap-2 text-xs font-semibold">
+                                                <span class="rounded-full bg-primary-light px-2.5 py-0.5 text-primary-dark">{{ $post->category?->name }}</span>
+                                                <span class="text-ink-muted">{{ $post->reading_time }} min read</span>
+                                            </div>
+
+                                            <h3 class="mt-2.5 font-heading text-base leading-snug font-bold text-ink transition-colors group-hover:text-primary">
+                                                {{ $post->title }}</h3>
+
+                                            <p class="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-ink-muted">{{ $post->excerpt }}</p>
+
+                                            <span class="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-primary">
+                                                Read the guide
+                                                <svg class="size-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24"
+                                                     fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                                     aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                                            </span>
+                                        </div>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
             @endforeach
-        </ul>
+        </div>
 
         <p data-empty hidden class="mt-8 rounded-xl border border-line bg-surface-soft p-6 text-center text-base text-ink-muted">
             Nothing matches that yet. Try another topic, or

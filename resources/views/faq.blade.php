@@ -152,6 +152,7 @@
                              keeps the answer in the DOM either way, which is
                              what lets the FAQ markup describe it honestly. --}}
                         <details data-faq-item
+                                 name="faq-{{ $group['id'] }}"
                                  data-terms="{{ Str::lower($item['q'].' '.$item['a']) }}"
                                  class="group px-5 transition-colors open:bg-surface-section sm:px-6">
                             <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-3.5 text-sm font-semibold text-ink marker:content-['']">

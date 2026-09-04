@@ -418,6 +418,7 @@
                     <div class="mt-5 space-y-2.5">
                         @foreach (config('pregnancy-faq') as $item)
                             <details id="{{ $item['id'] }}"
+                                     name="faq"
                                      class="group scroll-mt-24 border-b border-line last:border-b-0">
                                 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-bold text-ink transition-colors hover:text-primary marker:content-['']">
                                     {{ $item['q'] }}

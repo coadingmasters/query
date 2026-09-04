@@ -105,15 +105,14 @@
             </div>
 
             {{-- Skeleton loader, shown while an AJAX request is in flight --}}
-            <div x-cloak x-show="loading" x-transition.opacity class="absolute inset-0 grid grid-cols-1 gap-5 bg-surface-section sm:grid-cols-2 lg:grid-cols-3">
+            <div x-cloak x-show="loading" x-transition.opacity class="absolute inset-0 flex flex-col gap-3 bg-surface-section">
                 @for ($i = 0; $i < 6; $i++)
-                    <div class="overflow-hidden rounded-2xl border border-line bg-surface shadow-sm">
-                        <div class="skeleton aspect-video w-full"></div>
-                        <div class="space-y-2.5 p-5">
+                    <div class="flex items-center gap-4 rounded-2xl border border-line bg-surface p-4 shadow-sm">
+                        <div class="skeleton h-16 w-24 shrink-0 rounded-xl"></div>
+                        <div class="flex-1 space-y-2.5">
+                            <div class="skeleton h-3 w-1/4 rounded"></div>
+                            <div class="skeleton h-4 w-2/3 rounded"></div>
                             <div class="skeleton h-3 w-1/3 rounded"></div>
-                            <div class="skeleton h-4 w-5/6 rounded"></div>
-                            <div class="skeleton h-3 w-full rounded"></div>
-                            <div class="skeleton h-3 w-2/3 rounded"></div>
                         </div>
                     </div>
                 @endfor

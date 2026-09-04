@@ -315,7 +315,7 @@
                     {{-- Native details/summary: keyboard accessible, works without
                          JavaScript, and the answer stays in the DOM either way,
                          which is what lets the FAQ markup describe it honestly. --}}
-                    <details class="reveal group rounded-xl border border-line bg-surface px-5 shadow-sm transition hover:border-line-strong open:shadow-md">
+                    <details name="faq" class="reveal group rounded-xl border border-line bg-surface px-5 shadow-sm transition hover:border-line-strong open:shadow-md">
                         <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-3.5 text-sm font-semibold text-ink marker:content-['']">
                             {{ $faq['question'] }}
                             <span class="flex size-6 shrink-0 items-center justify-center rounded-full border border-primary-vivid text-primary transition-transform duration-200 group-open:rotate-45">

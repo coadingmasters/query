@@ -562,7 +562,7 @@
 
                     <div class="mt-5 space-y-2.5">
                         @foreach ($faq as $item)
-                            <details class="group border-b border-line last:border-b-0">
+                            <details name="faq" class="group border-b border-line last:border-b-0">
                                 <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-base font-bold text-ink transition-colors hover:text-primary marker:content-['']">
                                     {{ $item['q'] }}
                                     <svg class="size-4 shrink-0 text-ink-muted transition-transform duration-200 group-open:rotate-180"

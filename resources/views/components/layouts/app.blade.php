@@ -14,6 +14,20 @@
     // be ones a link can point at reliably. `follow` stays on so PageRank
     // still reaches whatever the results link to.
     'noindex' => false,
+
+    // A page with real photography of its own (a blog post, eventually a
+    // food guide) passes its own image here so a Facebook or Reddit share
+    // shows that photo rather than the site's generic default. Left null,
+    // every page keeps behaving exactly as before this existed.
+    'ogImage' => null,
+    'ogImageAlt' => null,
+
+    // "article" for an actual post, so Facebook renders the byline/date
+    // strip and article:* properties below apply; every other page stays
+    // "website", which is what they actually are.
+    'ogType' => 'website',
+    'articlePublishedTime' => null,
+    'articleModifiedTime' => null,
 ])
 <!DOCTYPE html>
 <html lang="{{ config('brand.lang') }}">
@@ -41,19 +55,26 @@
          in results. The snippet and video values lift the default caps too. --}}
     <meta name="robots" content="{{ $noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' }}">
 
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="{{ $ogType }}">
     <meta property="og:site_name" content="{{ config('app.name') }}">
     <meta property="og:title" content="{{ $title }}">
     <meta property="og:description" content="{{ $description }}">
     <meta property="og:url" content="{{ $canonical }}">
-    <meta property="og:image" content="{{ rtrim(config('app.url'), '/') }}{{ config('brand.og_image', '/og-image.png') }}">
+    <meta property="og:image" content="{{ $ogImage ?: rtrim(config('app.url'), '/').config('brand.og_image', '/og-image.png') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="{{ config('app.name') }}: {{ config('brand.tagline') }}">
+    <meta property="og:image:alt" content="{{ $ogImageAlt ?: config('app.name').': '.config('brand.tagline') }}">
     <meta property="og:locale" content="{{ config('brand.og_locale') }}">
+    @if ($articlePublishedTime)
+        <meta property="article:published_time" content="{{ $articlePublishedTime }}">
+    @endif
+    @if ($articleModifiedTime)
+        <meta property="article:modified_time" content="{{ $articleModifiedTime }}">
+    @endif
 
     <meta name="twitter:card" content="{{ config('brand.twitter_card', 'summary_large_image') }}">
-    <meta name="twitter:image:alt" content="{{ config('app.name') }}: {{ config('brand.tagline') }}">
+    <meta name="twitter:image" content="{{ $ogImage ?: rtrim(config('app.url'), '/').config('brand.og_image', '/og-image.png') }}">
+    <meta name="twitter:image:alt" content="{{ $ogImageAlt ?: config('app.name').': '.config('brand.tagline') }}">
 
     {{-- Small sizes carry the cat on its disc rather than the whole badge:
          the rim lettering is unreadable below about 48px. --}}

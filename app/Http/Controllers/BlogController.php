@@ -99,6 +99,14 @@ class BlogController extends Controller
             'canonical' => $url.$path,
             'post' => $post,
             'posts' => $posts,
+            // A share on Facebook or Reddit should carry the post's own
+            // photo, not the site's generic default. og:image has to be a
+            // full URL, which featured_image_url alone is not.
+            'ogImage' => $post->featured_image_url ? $url.$post->featured_image_url : null,
+            'ogImageAlt' => $post->featured_image_alt,
+            'ogType' => 'article',
+            'articlePublishedTime' => $post->published_at?->toAtomString(),
+            'articleModifiedTime' => $post->updated_at?->toAtomString(),
             'schema' => Schema::graph([
                 [
                     '@type' => 'Article',

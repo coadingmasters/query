@@ -1,4 +1,6 @@
-<x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema">
+<x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema"
+    :og-image="$ogImage" :og-image-alt="$ogImageAlt" og-type="article"
+    :article-published-time="$articlePublishedTime" :article-modified-time="$articleModifiedTime">
 
 {{-- A reading-progress bar. Purely decorative feedback, so it is aria-hidden
      and it degrades to an invisible empty div without JavaScript. --}}

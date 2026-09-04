@@ -11,7 +11,7 @@
 @endpush
 
 {{-- ══ 1. Hero ═══════════════════════════════════════════════════════════ --}}
-<section class="relative overflow-hidden bg-surface-soft pb-10 lg:pb-14">
+<section class="relative overflow-hidden bg-surface-soft pb-10 lg:flex lg:min-h-[640px] lg:items-center lg:pb-14">
     <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
         <div class="absolute -top-32 -left-24 size-96 rounded-full bg-primary-vivid opacity-[0.07] blur-3xl"></div>
         <div class="absolute -right-24 bottom-0 size-80 rounded-full bg-accent-vivid opacity-[0.12] blur-3xl"></div>
@@ -41,7 +41,7 @@
              version further down, where a full-bleed treatment would fight
              the text for space instead of sitting behind it. --}}
         <div aria-hidden="true" class="absolute inset-0 z-0 hidden lg:block">
-            <video class="hero-video h-full w-full object-cover"
+            <video class="hero-video h-full w-full object-cover [object-position:78%_40%]"
                    poster="{{ Illuminate\Support\Facades\Storage::url($heroPoster) }}"
                    muted loop playsinline preload="auto">
                 <source src="{{ $heroVideo->url }}" type="video/mp4">

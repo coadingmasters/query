@@ -234,60 +234,75 @@
         @endphp
         <div class="mt-5 space-y-5" data-magazine-sections>
             @foreach ($posts->chunk(8) as $chunk)
-                <ul class="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:auto-rows-[172px] lg:grid-flow-dense">
+                <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[248px] lg:grid-flow-dense">
                     @foreach ($chunk->values() as $i => $post)
                         @php $type = $tileTypes[$i] ?? 'small'; @endphp
                         <li data-post data-category="{{ $post->category?->name }}"
                             data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}"
                             @class([
-                                'col-span-2 sm:col-span-4 lg:col-span-2 lg:row-span-2' => $type === 'feature',
-                                'col-span-2 sm:col-span-4 lg:col-span-2 lg:row-span-1' => $type === 'wide',
-                                'col-span-1 lg:row-span-1' => $type === 'small',
+                                'sm:col-span-2 lg:row-span-2' => $type === 'feature',
+                                'sm:col-span-2 lg:row-span-1' => $type === 'wide',
+                                'lg:row-span-1' => $type === 'small',
                             ])>
-                            <a href="{{ route('blog.show', $post->slug) }}"
-                                @class([
-                                    'group flex h-full overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition hover:-translate-y-1 hover:border-line-strong hover:shadow-lg',
-                                    'flex-col' => $type !== 'wide',
-                                    'items-center gap-4 p-3' => $type === 'wide',
-                                ])>
 
-                                @if ($type === 'feature')
-                                    <div class="relative aspect-[16/10] shrink-0 overflow-hidden bg-surface-section lg:aspect-auto lg:h-[150px]">
+                            @if ($type === 'feature')
+                                {{-- Full-bleed photo with the headline sitting on it, the
+                                     same treatment as the hero above. A big photo with a
+                                     caption stuck underneath reads as filler at this size;
+                                     text on the image is what makes it look deliberate. --}}
+                                <a href="{{ route('blog.show', $post->slug) }}"
+                                   class="group relative flex h-full min-h-[320px] flex-col justify-end overflow-hidden rounded-2xl shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+                                    <div class="absolute inset-0">
                                         <x-post-image :post="$post" class="transition-transform duration-500 group-hover:scale-105"/>
                                     </div>
-                                    <div class="flex flex-1 flex-col overflow-hidden p-4">
+                                    <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/50 to-ink/5"></div>
+
+                                    <div class="relative p-5 sm:p-6">
+                                        <div class="flex flex-wrap items-center gap-2 text-xs font-semibold">
+                                            <span class="rounded-full bg-surface/95 px-2.5 py-1 text-ink">{{ $post->category?->name }}</span>
+                                            <span class="text-ink-inverse">{{ $post->reading_time }} min read</span>
+                                        </div>
+                                        <h3 class="mt-2.5 line-clamp-2 font-heading text-xl leading-snug font-extrabold tracking-tight text-ink-inverse sm:text-2xl">
+                                            {{ $post->title }}</h3>
+                                        <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-ink-inverse/85">{{ $post->excerpt }}</p>
+                                        <span class="mt-4 inline-flex items-center gap-2 rounded-full bg-surface px-4 py-2 text-sm font-bold text-ink shadow-md transition group-hover:gap-3">
+                                            Read the guide
+                                            <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
+                                        </span>
+                                    </div>
+                                </a>
+
+                            @elseif ($type === 'wide')
+                                <a href="{{ route('blog.show', $post->slug) }}"
+                                   class="group flex h-full min-h-[190px] items-stretch overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition hover:-translate-y-1 hover:border-line-strong hover:shadow-lg">
+                                    <div class="relative w-2/5 shrink-0 overflow-hidden bg-surface-section">
+                                        <x-post-image :post="$post" class="transition-transform duration-500 group-hover:scale-105"/>
+                                    </div>
+                                    <div class="flex min-w-0 flex-1 flex-col justify-center p-5">
                                         <div class="flex flex-wrap items-center gap-2 text-xs font-semibold">
                                             <span class="rounded-full bg-primary-light px-2.5 py-0.5 text-primary-dark">{{ $post->category?->name }}</span>
                                             <span class="text-ink-muted">{{ $post->reading_time }} min read</span>
                                         </div>
-                                        <h3 class="mt-2 line-clamp-2 font-heading text-lg leading-snug font-extrabold tracking-tight text-ink transition-colors group-hover:text-primary">
+                                        <h3 class="mt-2 line-clamp-2 font-heading text-base leading-snug font-bold text-ink transition-colors group-hover:text-primary">
                                             {{ $post->title }}</h3>
-                                        <p class="mt-1.5 line-clamp-2 text-xs leading-relaxed text-ink-muted">{{ $post->excerpt }}</p>
-                                        <span class="mt-auto inline-flex w-fit items-center gap-1.5 pt-2 text-sm font-semibold text-primary">
-                                            Read the guide
-                                            <svg class="size-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>
-                                        </span>
+                                        <p class="mt-1.5 line-clamp-2 text-sm leading-relaxed text-ink-muted">{{ $post->excerpt }}</p>
                                     </div>
-                                @elseif ($type === 'wide')
-                                    <div class="relative aspect-square h-full w-28 shrink-0 overflow-hidden rounded-xl bg-surface-section sm:w-32 lg:h-full lg:w-36">
+                                </a>
+
+                            @else
+                                <a href="{{ route('blog.show', $post->slug) }}"
+                                   class="group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-sm transition hover:-translate-y-1 hover:border-line-strong hover:shadow-lg">
+                                    <div class="relative aspect-[3/2] shrink-0 overflow-hidden bg-surface-section lg:aspect-auto lg:h-[142px]">
                                         <x-post-image :post="$post" class="transition-transform duration-500 group-hover:scale-105"/>
                                     </div>
-                                    <div class="min-w-0 flex-1">
-                                        <span class="text-xs font-semibold text-primary-dark">{{ $post->category?->name }}</span>
-                                        <h3 class="mt-1 line-clamp-2 font-heading text-sm leading-snug font-bold text-ink transition-colors group-hover:text-primary sm:text-base">
+                                    <div class="flex flex-1 flex-col p-4">
+                                        <span class="text-[11px] font-bold tracking-wide text-primary-dark uppercase">{{ $post->category?->name }}</span>
+                                        <h3 class="mt-1.5 line-clamp-3 font-heading text-sm leading-snug font-bold text-ink transition-colors group-hover:text-primary">
                                             {{ $post->title }}</h3>
+                                        <span class="mt-auto pt-2 text-xs text-ink-muted">{{ $post->reading_time }} min read</span>
                                     </div>
-                                @else
-                                    <div class="relative aspect-[4/3] shrink-0 overflow-hidden bg-surface-section lg:aspect-auto lg:h-[92px]">
-                                        <x-post-image :post="$post" class="transition-transform duration-500 group-hover:scale-105"/>
-                                    </div>
-                                    <div class="flex flex-1 flex-col justify-center p-3">
-                                        <span class="text-[10px] font-semibold tracking-wide text-primary-dark uppercase">{{ $post->category?->name }}</span>
-                                        <h3 class="mt-1 line-clamp-2 font-heading text-xs leading-snug font-bold text-ink transition-colors group-hover:text-primary sm:text-sm">
-                                            {{ $post->title }}</h3>
-                                    </div>
-                                @endif
-                            </a>
+                                </a>
+                            @endif
                         </li>
                     @endforeach
                 </ul>

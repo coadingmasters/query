@@ -143,13 +143,45 @@
             </div>
 
             @php
+                // Same admin-uploaded-beats-static-fallback pattern as the
+                // image below, checked first: a video in this slot is the
+                // strongest signal of intent, so it wins if one exists.
+                $heroVideo = \App\Models\Video::where('name', 'home-page-hero-section')->latest()->first();
+                $heroPoster = $heroVideo ? Illuminate\Support\Str::replaceLast('.mp4', '-poster.webp', $heroVideo->path) : null;
+
                 // Admin-uploaded via Media (category "general", name below)
                 // rather than the resources/images manifest, so swapping the
                 // photo is an upload, not a deploy. Falls back to the launch
                 // photo, in its framed card, until one is uploaded.
                 $heroMedia = \App\Models\Media::where('name', 'home-page-hero-section')->latest()->first();
             @endphp
-            @if ($heroMedia)
+            @if ($heroVideo)
+                {{-- A real clip, not a cutout, so it gets the same framed
+                     card treatment as the static fallback photo rather than
+                     the borderless cutout style below. Muted/looped/no
+                     controls so it reads as a living photograph, not a
+                     player. autoplay is deliberately left off the tag: it
+                     only starts via the script below, and only when the
+                     visitor hasn't asked for reduced motion — so a
+                     reduced-motion visitor, or one with JS disabled, just
+                     sees the poster frame as a still photo instead. --}}
+                <div class="cat-walk">
+                    <div class="cat-breathe relative overflow-hidden rounded-[4.5rem_2rem_4.5rem_2rem] sm:rounded-[6rem_2.5rem_6rem_2.5rem] border-4 border-primary/15 bg-surface shadow-lg">
+                        <video class="hero-video relative block h-full w-full object-cover"
+                               width="1280" height="720"
+                               poster="{{ Illuminate\Support\Facades\Storage::url($heroPoster) }}"
+                               muted loop playsinline preload="auto"
+                               aria-label="A cat walking, filmed for the PurrQuery home page">
+                            <source src="{{ $heroVideo->url }}" type="video/mp4">
+                        </video>
+                        <script>
+                            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                                document.currentScript.previousElementSibling.play().catch(() => {});
+                            }
+                        </script>
+                    </div>
+                </div>
+            @elseif ($heroMedia)
                 {{-- This photo is an alpha-transparent cutout, not a framed
                      shot, so it sits directly on the hero background rather
                      than inside a card: no fill, no border, no box-shadow —

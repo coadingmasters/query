@@ -252,7 +252,7 @@
                                 ])>
 
                                 @if ($type === 'feature')
-                                    <div class="relative aspect-[16/10] shrink-0 overflow-hidden bg-surface-section lg:aspect-auto lg:h-[190px]">
+                                    <div class="relative aspect-[16/10] shrink-0 overflow-hidden bg-surface-section lg:aspect-auto lg:h-[150px]">
                                         <x-post-image :post="$post" class="transition-transform duration-500 group-hover:scale-105"/>
                                     </div>
                                     <div class="flex flex-1 flex-col overflow-hidden p-4">
@@ -262,6 +262,7 @@
                                         </div>
                                         <h3 class="mt-2 line-clamp-2 font-heading text-lg leading-snug font-extrabold tracking-tight text-ink transition-colors group-hover:text-primary">
                                             {{ $post->title }}</h3>
+                                        <p class="mt-1.5 line-clamp-2 text-xs leading-relaxed text-ink-muted">{{ $post->excerpt }}</p>
                                         <span class="mt-auto inline-flex w-fit items-center gap-1.5 pt-2 text-sm font-semibold text-primary">
                                             Read the guide
                                             <svg class="size-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>

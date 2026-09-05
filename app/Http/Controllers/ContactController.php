@@ -53,6 +53,12 @@ class ContactController extends Controller
                     'email' => config('brand.email'),
                     'availableLanguage' => 'English',
                 ],
+                // The page renders these as a visible accordion, so they get
+                // the same markup every other FAQ on the site carries. The
+                // config keys are question/answer; Schema::faq takes q/a.
+                Schema::faq('/contact#faq', collect(config('contact.faqs', []))
+                    ->map(fn (array $faq): array => ['q' => $faq['question'], 'a' => $faq['answer']])
+                    ->all()),
                 Schema::breadcrumbs('/contact', ['Home' => '/', 'Contact' => null]),
             ]),
         ]);

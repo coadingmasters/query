@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\Images;
 use App\Support\Schema;
 use Illuminate\Contracts\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -113,8 +114,33 @@ class FoodGuideController extends Controller
             ->whereIn('slug', ['cat-age-calculator', 'cat-weight-checker', 'cat-calorie-calculator'])
             ->values();
 
+        // A share of this page should carry its own photograph rather than the
+        // site's generic card. The manifest is the source of the real
+        // dimensions, since declaring the wrong ones is worse than none.
+        $ogEntry = Images::get($food['image']);
+        $ogImage = $ogEntry ? $url.Images::largest($food['image']) : null;
+
+        // The manifest records the 1x display size, but largest() serves the
+        // biggest variant, so the declared dimensions are scaled to the file
+        // actually being sent rather than left describing a smaller one.
+        $ogWidth = 1200;
+        $ogHeight = 630;
+
+        if ($ogEntry) {
+            preg_match_all('/\s(\d+)w/', $ogEntry['srcset'], $widths);
+            $ogWidth = (int) max($widths[1] ?: [$ogEntry['width']]);
+            $ogHeight = (int) round($ogEntry['height'] * ($ogWidth / $ogEntry['width']));
+        }
+
         return view('food-guides.show', [
-            'title' => $food['question'].' | '.config('app.name'),
+            // "Can Cats Eat Fruit? | PurrQuery" spent barely half of the ~60
+            // characters Google renders. A guide can set its own title to use
+            // that space on what the page actually covers; the question plus
+            // the brand stays the fallback.
+            'title' => $food['meta_title'] ?? $food['question'].' | '.config('app.name'),
+            'ogImage' => $ogImage,
+            'ogImageWidth' => $ogWidth,
+            'ogImageHeight' => $ogHeight,
             'description' => $description,
             'canonical' => $url.$path,
             'food' => $food,

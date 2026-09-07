@@ -22,6 +22,12 @@
     'ogImage' => null,
     'ogImageAlt' => null,
 
+    // The default card is 1200x630. A page passing its own photo usually is
+    // not, and declaring dimensions that do not match the file is worse than
+    // declaring none, so a custom image states its real size.
+    'ogImageWidth' => 1200,
+    'ogImageHeight' => 630,
+
     // "article" for an actual post, so Facebook renders the byline/date
     // strip and article:* properties below apply; every other page stays
     // "website", which is what they actually are.
@@ -61,8 +67,8 @@
     <meta property="og:description" content="{{ $description }}">
     <meta property="og:url" content="{{ $canonical }}">
     <meta property="og:image" content="{{ $ogImage ?: rtrim(config('app.url'), '/').config('brand.og_image', '/og-image.png') }}">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
+    <meta property="og:image:width" content="{{ $ogImageWidth }}">
+    <meta property="og:image:height" content="{{ $ogImageHeight }}">
     <meta property="og:image:alt" content="{{ $ogImageAlt ?: config('app.name').': '.config('brand.tagline') }}">
     <meta property="og:locale" content="{{ config('brand.og_locale') }}">
     @if ($articlePublishedTime)

@@ -1,4 +1,6 @@
-<x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema">
+<x-layouts.app :title="$title" :description="$description" :canonical="$canonical" :schema="$schema"
+               :og-image="$ogImage" :og-image-alt="$food['alt']"
+               :og-image-width="$ogImageWidth" :og-image-height="$ogImageHeight">
 
 @php
     $verdictMeta = [
@@ -67,7 +69,7 @@
 
                         {{-- Why --}}
                         @if (! empty($food['why']))
-                            <h2 id="why" class="{{ $h2 }} mt-0">Why</h2>
+                            <h2 id="why" class="{{ $h2 }} mt-0">Why cats react differently to {{ Str::lower($food['title']) }}</h2>
                             <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['why'] !!}</p>
 
                             @if (! empty($food['note']))
@@ -77,7 +79,11 @@
 
                         {{-- Per-item table --}}
                         @if (! empty($food['items']))
-                            <h2 id="each-one" class="{{ $h2 }}">{{ $food['title'] }}, one at a time</h2>
+                            <h2 id="each-one" class="{{ $h2 }}">
+                                {{ $food['verdict'] === 'unsafe'
+                                    ? 'Which '.Str::lower($food['title']).' are most dangerous to cats?'
+                                    : 'Which '.Str::lower($food['title']).' are safe for cats?' }}
+                            </h2>
                             <p class="mt-4 text-base leading-relaxed text-ink-muted">
                                 The verdict above covers {{ strtolower($food['title']) }} as a whole. For the
                                 specific one in front of you, this is the breakdown.
@@ -117,8 +123,11 @@
 
                         {{-- How much --}}
                         @if (! empty($food['guidance']))
+                            @php $noun = $food['noun'] ?? Str::of($food['title'])->lower()->rtrim('s'); @endphp
                             <h2 id="how-much" class="{{ $h2 }}">
-                                {{ $food['verdict'] === 'unsafe' ? 'What to do if your cat ate this' : 'How much is actually safe' }}
+                                {{ $food['verdict'] === 'unsafe'
+                                    ? 'What to do if your cat ate '.$noun
+                                    : 'How much '.$noun.' can a cat eat?' }}
                             </h2>
                             <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['guidance'] !!}</p>
                         @endif
@@ -126,14 +135,16 @@
                         {{-- Introducing --}}
                         @if (! empty($food['introduce']))
                             <h2 id="introduce" class="{{ $h2 }}">
-                                {{ $food['verdict'] === 'unsafe' ? 'If it already happened' : 'Introducing a new '.Str::of($food['title'])->lower()->rtrim('s').' safely' }}
+                                {{ $food['verdict'] === 'unsafe'
+                                    ? 'If your cat already ate some'
+                                    : 'How to introduce '.($food['noun'] ?? Str::of($food['title'])->lower()->rtrim('s')).' to your cat safely' }}
                             </h2>
                             <p class="mt-4 text-base leading-relaxed text-ink-muted">{!! $food['introduce'] !!}</p>
                         @endif
 
                         {{-- Avoid --}}
                         @if (! empty($food['avoid']))
-                            <h2 id="avoid" class="{{ $h2 }}">{{ $food['title'] }} to avoid entirely</h2>
+                            <h2 id="avoid" class="{{ $h2 }}">Which {{ Str::lower($food['title']) }} should cats never eat?</h2>
                             <ul class="mt-4 list-disc space-y-2.5 pl-5 marker:text-line-strong">
                                 @foreach ($food['avoid'] as $item)
                                     <li class="text-base leading-relaxed text-ink-muted">{!! $item !!}</li>
@@ -153,7 +164,7 @@
 
                         {{-- Signs --}}
                         @if (! empty($food['watch_for']))
-                            <h2 id="signs" class="{{ $h2 }}">Signs to watch for</h2>
+                            <h2 id="signs" class="{{ $h2 }}">Signs of a bad reaction to watch for</h2>
                             <ul class="mt-4 list-disc space-y-2.5 pl-5 marker:text-line-strong">
                                 @foreach ($food['watch_for'] as $sign)
                                     <li class="text-base leading-relaxed text-ink-muted">{{ $sign }}</li>
@@ -188,7 +199,7 @@
                         @endif
 
                         {{-- Sources --}}
-                        <h2 class="{{ $h2 }}">Where this comes from</h2>
+                        <h2 class="{{ $h2 }}">Sources for this guide</h2>
                         <ul class="mt-4 space-y-2">
                             @foreach ($sources as $source)
                                 <li class="text-sm leading-relaxed text-ink-muted">

@@ -102,8 +102,12 @@ class FoodGuideTest extends TestCase
             $response->assertSee($entry['q']);
         }
 
-        $response->assertSee($food['title'].' to avoid entirely')
-            ->assertSee('Introducing a new '.\Illuminate\Support\Str::of($food['title'])->lower()->rtrim('s').' safely');
+        // The section headings are phrased as the questions people actually
+        // search, so they are asserted in that form rather than as labels.
+        $noun = $food['noun'] ?? \Illuminate\Support\Str::of($food['title'])->lower()->rtrim('s');
+
+        $response->assertSee('Which '.\Illuminate\Support\Str::lower($food['title']).' should cats never eat?', false)
+            ->assertSee('How to introduce '.$noun.' to your cat safely', false);
     }
 
     /** Only a category guide supplies its own FAQ set, so only those get the accordion. */

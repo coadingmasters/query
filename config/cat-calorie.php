@@ -136,7 +136,7 @@ return [
         ],
         [
             'name' => 'AAFP/AAHA Weight Management Guidelines',
-            'url' => 'https://catvets.com/guidelines/practice-guidelines/weight-management-guidelines',
+            'url' => 'https://catvets.com/guidelines/endorsements',
             'note' => 'The 9-point-scale-derived 5-point Body Condition Score used in this calculator.',
         ],
     ],

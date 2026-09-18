@@ -293,7 +293,7 @@
                         </p>
                         <p>
                             That split, and the schedules below, follow the
-                            <a href="https://catvets.com/guidelines/practice-guidelines/feline-vaccination-guidelines" target="_blank" rel="noopener"
+                            <a href="https://catvets.com/resource/aaha-aafp-feline-vaccination-guidelines/" target="_blank" rel="noopener"
                                class="font-semibold text-primary underline decoration-line-strong underline-offset-4 transition-colors hover:text-primary-hover">2020 AAFP Feline Vaccination Advisory Panel report</a>,
                             the most recent comprehensive US guideline on feline vaccination.
                         </p>
@@ -344,7 +344,7 @@
                     </p>
                     <p class="mt-4 text-sm leading-relaxed text-ink-muted">
                         Sources: 2020 AAFP Feline Vaccination Advisory Panel Report,
-                        <a href="https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/feline-health-topics/vaccinations" target="_blank" rel="noopener"
+                        <a href="https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/vaccinations" target="_blank" rel="noopener"
                            class="font-semibold text-primary underline decoration-line-strong underline-offset-4 transition-colors hover:text-primary-hover">Cornell Feline Health Center</a>.
                     </p>
                 </div>

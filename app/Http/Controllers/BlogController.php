@@ -84,13 +84,30 @@ class BlogController extends Controller
         // Neighbouring articles this one points readers to next: other
         // published guides in the same topic, not a hand-picked list, so the
         // section never dangles on a slug that gets renamed or unpublished.
+        // Random rather than newest-first, so every post in a category gets
+        // a fair share of inbound links over time instead of the same
+        // handful of recent posts always winning the slot.
         $posts = Post::published()
             ->with('category')
             ->where('id', '!=', $post->id)
             ->where('category_id', $post->category_id)
-            ->orderByDesc('published_at')
-            ->take(4)
+            ->inRandomOrder()
+            ->take(6)
             ->get();
+
+        // A thin category (or one this post has alone) can't fill six on its
+        // own — top up from the rest of the blog so no post is ever left
+        // with zero or one related link just because of what category it's in.
+        if ($posts->count() < 6) {
+            $posts = $posts->concat(
+                Post::published()
+                    ->with('category')
+                    ->whereNotIn('id', $posts->pluck('id')->push($post->id))
+                    ->inRandomOrder()
+                    ->take(6 - $posts->count())
+                    ->get()
+            );
+        }
 
         return view('blog.show', [
             'title' => $post->meta_title ?: $post->title,

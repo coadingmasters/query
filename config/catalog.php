@@ -294,6 +294,7 @@ return [
                 ['label' => 'Can Cats Eat Chicken?', 'slug' => 'can-cats-eat-chicken'],
                 ['label' => 'Can Cats Eat Raw Chicken?', 'slug' => 'can-cats-eat-raw-chicken'],
                 ['label' => 'Can Cats Eat Tuna?', 'slug' => 'can-cats-eat-tuna'],
+                ['label' => 'Can Cats Eat Ham?', 'slug' => 'can-cats-eat-ham'],
                 ['label' => 'Northwest Naturals Cat Food Recall', 'slug' => 'northwest-naturals-cat-food-recall'],
             ],
         ],
@@ -483,6 +484,7 @@ return [
             'deep_dives' => [
                 ['label' => 'Can Cats Eat Bread?', 'slug' => 'can-cats-eat-bread'],
                 ['label' => 'Can Cats Eat Chickpeas?', 'slug' => 'can-cats-eat-chickpeas'],
+                ['label' => 'Can Cats Eat Popcorn?', 'slug' => 'can-cats-eat-popcorn'],
             ],
         ],
         [
@@ -548,6 +550,9 @@ return [
                 ['q' => 'Can cats eat marshmallows or candy?', 'a' => 'Plain marshmallows and plain candy aren\'t toxic, but they offer zero nutrition and their sticky or hard texture is a genuine choking risk since cats chew poorly. Skip sugar-free versions, which may contain xylitol, and any chocolate-coated candy or marshmallow, which is a separate confirmed toxin.'],
                 ['q' => 'Can cats have honey?', 'a' => 'A drop-sized taste is generally fine for a healthy adult cat, though it offers no nutritional benefit. Avoid it entirely for kittens under a year old, and as a precaution for senior or immunocompromised cats, since honey can carry botulism spores an immature or weakened gut may not suppress.'],
             ],
+            'deep_dives' => [
+                ['label' => 'Can Cats Eat Chocolate?', 'slug' => 'can-cats-eat-chocolate'],
+            ],
         ],
         [
             'slug' => 'junk-food',
@@ -590,6 +595,7 @@ return [
             'deep_dives' => [
                 ['label' => 'Can Cats Eat Cheese?', 'slug' => 'can-cats-eat-cheese'],
                 ['label' => 'Can Cats Eat Chicken?', 'slug' => 'can-cats-eat-chicken'],
+                ['label' => 'Can Cats Eat Popcorn?', 'slug' => 'can-cats-eat-popcorn'],
             ],
         ],
         [
@@ -702,6 +708,8 @@ return [
                 ['label' => 'Can Cats Eat Cheese?', 'slug' => 'can-cats-eat-cheese'],
                 ['label' => 'Can Cats Eat Tuna?', 'slug' => 'can-cats-eat-tuna'],
                 ['label' => 'Can Cats Eat Popcorn?', 'slug' => 'can-cats-eat-popcorn'],
+                ['label' => 'Can Cats Eat Chickpeas?', 'slug' => 'can-cats-eat-chickpeas'],
+                ['label' => 'Can Cats Eat Bananas?', 'slug' => 'can-cats-eat-bananas'],
             ],
         ],
     ],

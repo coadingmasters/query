@@ -650,6 +650,26 @@
                     </div>
                 </div>
 
+                {{-- Related reading --}}
+                <div id="related-reading" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">Related reading</h2>
+
+                    <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                        @foreach ([
+                            ['href' => route('blog.show', 'how-much-should-i-feed-my-cat'), 'label' => 'How Much Should I Feed My Cat?'],
+                            ['href' => route('blog.show', 'best-food-for-indoor-cats'), 'label' => 'Best Food for Indoor Cats'],
+                        ] as $link)
+                            <a href="{{ $link['href'] }}"
+                               class="group flex items-center justify-between gap-2 rounded-xl border border-line px-4 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                                {{ $link['label'] }}
+                                <svg class="size-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5 group-hover:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="m9 6 6 6-6 6"/>
+                                </svg>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
                 {{-- Sources and byline --}}
                 <div id="sources" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <h2 class="{{ $panelHeading }}">Where this comes from</h2>
@@ -690,6 +710,7 @@
                 ['id' => 'convert-to-food', 'label' => 'Calories Into Portions'],
                 ['id' => 'signs', 'label' => 'Too Much or Too Little'],
                 ['id' => 'faq', 'label' => 'Common Questions'],
+                ['id' => 'related-reading', 'label' => 'Related reading'],
                 ['id' => 'sources', 'label' => 'Where This Comes From'],
             ]">
                 <dl class="space-y-2.5">

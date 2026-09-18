@@ -434,6 +434,26 @@
                     </div>
                 </div>
 
+                {{-- Related reading --}}
+                <div id="related-reading" class="reveal scroll-mt-24 rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
+                    <h2 class="{{ $panelHeading }}">Related reading</h2>
+
+                    <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                        @foreach ([
+                            ['href' => route('blog.show', 'new-cat-owner-guide'), 'label' => 'New Cat Owner Guide'],
+                            ['href' => route('tools.cat-name-generator'), 'label' => 'Cat Name Generator'],
+                        ] as $link)
+                            <a href="{{ $link['href'] }}"
+                               class="group flex items-center justify-between gap-2 rounded-xl border border-line px-4 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                                {{ $link['label'] }}
+                                <svg class="size-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5 group-hover:text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="m9 6 6 6-6 6"/>
+                                </svg>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
                 {{-- ══ FOOTER NOTE ═══════════════════════════════════════════ --}}
                 <div class="reveal rounded-2xl border border-line bg-surface p-5 shadow-sm sm:p-7">
                     <p class="border-l-2 border-warning py-1 pl-4 text-sm leading-relaxed text-ink-muted">
@@ -447,6 +467,7 @@
                 ['id' => 'calculator', 'label' => 'Calculator'],
                 ['id' => 'timeline', 'label' => 'Week by week'],
                 ['id' => 'faq', 'label' => 'Common questions'],
+                ['id' => 'related-reading', 'label' => 'Related reading'],
             ]"/>
         </div>
     </div>

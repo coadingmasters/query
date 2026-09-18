@@ -586,6 +586,7 @@
                             ['href' => route('tools.cat-age-calculator'), 'label' => 'Cat Age Calculator'],
                             ['href' => route('tools.cat-pregnancy-calculator'), 'label' => 'Cat Pregnancy Calculator'],
                             ['href' => route('blog.show', 'signs-your-cat-is-sick'), 'label' => 'Signs Your Cat Is Sick'],
+                            ['href' => route('blog.show', 'new-cat-owner-guide'), 'label' => 'New Cat Owner Guide'],
                         ] as $link)
                             <a href="{{ $link['href'] }}"
                                class="group flex items-center justify-between gap-2 rounded-xl border border-line px-4 py-3.5 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">

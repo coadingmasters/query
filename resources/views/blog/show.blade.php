@@ -157,7 +157,7 @@
                     <div class="grid overflow-hidden rounded-2xl bg-accent-light sm:grid-cols-[auto_minmax(0,1fr)]">
                         <div aria-hidden="true" class="hidden w-40 self-end sm:block">
                             <div class="aspect-[3/2]">
-                                <x-img name="purrquery-cat-waving-paw" alt="" sizes="160px" fit="contain"/>
+                                <x-img name="purrquery-cat-waving-paw" alt="Cute gray and white tabby cat waving its paw" sizes="160px" fit="contain"/>
                             </div>
                         </div>
                         <div class="px-6 py-7 text-center sm:pl-2 sm:text-left">

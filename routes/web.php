@@ -44,18 +44,36 @@ use App\Http\Controllers\ToolsController;
 use App\Http\Controllers\VisitClickController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', HomeController::class)->name('home');
-Route::get('/about', AboutController::class)->name('about');
+// No session-bound content on any of these: safe for Cloudflare to cache
+// and serve from the edge. Contact and search stay out, both genuinely
+// per-request (a CSRF-protected form, live suggestions).
+Route::middleware(\App\Http\Middleware\SetPublicCache::class)->group(function () {
+    Route::get('/', HomeController::class)->name('home');
+    Route::get('/about', AboutController::class)->name('about');
+    Route::get('/author', AuthorController::class)->name('author');
 
-// The author page carries its own slug rather than an anchor on /about:
-// authorship is a claim about a person, and it reads as one when it has a
-// page of its own.
-Route::get('/author', AuthorController::class)->name('author');
+    Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
-Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/tools', [ToolsController::class, 'index'])->name('tools.index');
 
-Route::get('/blog/{slug}', [BlogController::class, 'show'])
-    ->name('blog.show');
+    Route::get('/food-guides', [FoodGuideController::class, 'index'])->name('food-guides.index');
+    Route::get('/food-guides/{slug}', [FoodGuideController::class, 'show'])->name('food-guides.show');
+
+    Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+
+    Route::get('/tools/cat-age-calculator', CatAgeCalculatorController::class)->name('tools.cat-age-calculator');
+    Route::get('/tools/cat-pregnancy-calculator', CatPregnancyCalculatorController::class)->name('tools.cat-pregnancy-calculator');
+    Route::get('/tools/cat-calorie-calculator', CatCalorieCalculatorController::class)->name('tools.cat-calorie-calculator');
+    Route::get('/tools/cat-vaccination-tracker', VaccinationTrackerController::class)->name('tools.cat-vaccination-tracker');
+    Route::get('/tools/cat-weight-checker', CatWeightCheckerController::class)->name('tools.cat-weight-checker');
+    Route::get('/tools/cat-name-generator', CatNameGeneratorController::class)->name('tools.cat-name-generator');
+
+    Route::get('/how-it-works', HowItWorksController::class)->name('how-it-works');
+    Route::get('/faq', FaqController::class)->name('faq');
+    Route::get('/terms', TermsController::class)->name('terms');
+    Route::get('/privacy', PrivacyController::class)->name('privacy');
+});
 
 // Rate limited because it writes to the database from an unauthenticated page.
 Route::post('/blog/feedback', [ArticleFeedbackController::class, 'store'])
@@ -69,31 +87,6 @@ Route::post('/contact', [ContactController::class, 'store'])
     ->middleware('throttle:5,1')
     ->name('contact.store');
 
-Route::get('/tools', [ToolsController::class, 'index'])->name('tools.index');
-
-Route::get('/food-guides', [FoodGuideController::class, 'index'])->name('food-guides.index');
-Route::get('/food-guides/{slug}', [FoodGuideController::class, 'show'])->name('food-guides.show');
-
-Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-
-Route::get('/tools/cat-age-calculator', CatAgeCalculatorController::class)
-    ->name('tools.cat-age-calculator');
-
-Route::get('/tools/cat-pregnancy-calculator', CatPregnancyCalculatorController::class)
-    ->name('tools.cat-pregnancy-calculator');
-
-Route::get('/tools/cat-calorie-calculator', CatCalorieCalculatorController::class)
-    ->name('tools.cat-calorie-calculator');
-
-Route::get('/tools/cat-vaccination-tracker', VaccinationTrackerController::class)
-    ->name('tools.cat-vaccination-tracker');
-
-Route::get('/tools/cat-weight-checker', CatWeightCheckerController::class)
-    ->name('tools.cat-weight-checker');
-
-Route::get('/tools/cat-name-generator', CatNameGeneratorController::class)
-    ->name('tools.cat-name-generator');
-
 // Rate limited: it writes to the database from an unauthenticated page.
 Route::post('/tools/cat-name-generator/save', [CatNameGeneratorSaveController::class, 'store'])
     ->middleware('throttle:30,1')
@@ -101,13 +94,6 @@ Route::post('/tools/cat-name-generator/save', [CatNameGeneratorSaveController::c
 
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 Route::get('/search/suggest', [SearchController::class, 'suggest'])->name('search.suggest');
-
-Route::get('/how-it-works', HowItWorksController::class)->name('how-it-works');
-
-Route::get('/faq', FaqController::class)->name('faq');
-
-Route::get('/terms', TermsController::class)->name('terms');
-Route::get('/privacy', PrivacyController::class)->name('privacy');
 
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 Route::get('/robots.txt', RobotsController::class)->name('robots');
@@ -207,3 +193,5 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
         Route::apiResource('redirects', RedirectController::class)->except(['show']);
     });
 });
+
+

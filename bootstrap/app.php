@@ -19,6 +19,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias(['noindex' => \App\Http\Middleware\NoIndexAdmin::class]);
         $middleware->redirectGuestsTo(fn () => route('admin.login'));
 
+        // All three are rate-limited, low-stakes writes from public,
+        // cacheable pages: a session-bound token would force every page
+        // carrying them private, for no real protection throttling doesn't
+        // already give.
+        $middleware->validateCsrfTokens(except: ['subscribe', 'blog/feedback', 'visit/click']);
+
         // A self-generated, non-sensitive UUID — nothing is gained by
         // encrypting it, and an APP_KEY rotation would otherwise silently
         // turn every returning visitor into a "new" one.

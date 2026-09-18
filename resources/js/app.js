@@ -112,13 +112,10 @@ if (!location.pathname.startsWith('/admin')) {
             ? described.tagName.toLowerCase() + (described.id ? `#${described.id}` : classes ? `.${classes}` : '')
             : null;
 
-        const token = document.querySelector('meta[name="csrf-token"]')?.content;
-        if (!token) return;
-
         fetch('/visit/click', {
             method: 'POST',
             keepalive: true,
-            headers: { 'X-CSRF-TOKEN': token, 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify({
                 path: location.pathname,
                 selector: selector?.slice(0, 255) || null,

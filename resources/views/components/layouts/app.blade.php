@@ -52,9 +52,10 @@
     <meta name="description" content="{{ $description }}">
     <link rel="canonical" href="{{ $canonical }}">
 
-    {{-- Read by the one thing on the site that posts with fetch rather than
-         a form: the "was this helpful" vote under an article. --}}
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- Admin renders its own, in components.admin.shell. This layout is
+         public-only, and rendering a token here would touch the session on
+         every request, killing cacheability — the three public write
+         endpoints (subscribe, feedback, click) are CSRF-exempt instead. --}}
 
     {{-- max-image-preview:large is the one that earns its place on a site
          built around photographs: without it Google is limited to a thumbnail

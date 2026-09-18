@@ -124,7 +124,6 @@
                      back empty, and what happened is announced in the dialog
                      below, the same way the contact form does it. --}}
                 <form method="POST" action="{{ route('subscribe') }}" class="mt-4 space-y-2.5">
-                    @csrf
                     <label for="footer-email" class="sr-only">Email address</label>
                     <input id="footer-email" name="email" type="email" required
                            placeholder="Enter your email" autocomplete="email"

@@ -435,10 +435,7 @@
                     try {
                         await fetch('/blog/feedback', {
                             method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': document.querySelector('meta[name=\'csrf-token\']')?.content ?? '',
-                            },
+                            headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ slug: feedback.dataset.slug, helpful }),
                         });
                     } catch {

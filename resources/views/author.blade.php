@@ -139,6 +139,21 @@
                 @endforeach
             </ul>
 
+            @if ($topSources->isNotEmpty())
+                <div class="reveal mt-7" style="--reveal-delay: 280ms">
+                    <h3 class="font-heading text-sm font-bold tracking-wider text-ink uppercase">
+                        Sources cited across the guides
+                    </h3>
+                    <ul class="mt-3 flex flex-wrap gap-2">
+                        @foreach ($topSources as $source)
+                            <li class="rounded-full border border-line bg-surface px-3 py-1.5 text-xs font-semibold text-ink-muted">
+                                {{ $source }}
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             @if ($reviewer['name'])
                 <div class="reveal mt-6 rounded-2xl border border-accent-light bg-accent-light p-5">
                     <x-byline :reviewed="true"/>

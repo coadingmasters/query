@@ -76,6 +76,11 @@ class Schema
             'url' => self::url('/author'),
             'email' => config('brand.email'),
             'worksFor' => ['@id' => self::url('/#organization')],
+            // Categories that actually have a published guide, not every row
+            // in the table — an empty category is not a topic anyone here
+            // has written about yet.
+            'knowsAbout' => \App\Models\PostCategory::whereHas('posts', fn ($q) => $q->published())
+                ->pluck('name')->all(),
         ];
 
         // sameAs is the part that makes the name checkable, so it is only

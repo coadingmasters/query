@@ -20,6 +20,9 @@ class AuthorController extends Controller
             throw new NotFoundHttpException;
         }
 
+        $posts = Post::published()->get(['sources']);
+        $citations = $posts->flatMap(fn (Post $p) => $p->sources ?? []);
+
         // Counted, not written in, matching the same rule the About page's
         // own numbers follow. A "100+" here would outrun what is actually
         // published, which is exactly the overclaim this site is built to
@@ -27,9 +30,23 @@ class AuthorController extends Controller
         $stats = [
             ['value' => Post::published()->count(), 'label' => 'Guides Written', 'body' => 'Well-researched cat care articles and guides'],
             ['value' => count(config('catalog.tools')), 'label' => 'Smart Tools', 'body' => 'Interactive calculators and trackers built for cat parents'],
-            ['value' => 'Trusted', 'label' => 'Source First', 'body' => 'We quote real sources, never guess or copy'],
+            ['value' => $citations->pluck('url')->unique()->count(), 'label' => 'Sources Cited', 'body' => 'Named on the guide that uses them, not just claimed here'],
             ['value' => 'Cat-First', 'label' => 'Approach', 'body' => 'Everything we do is for the health and happiness of cats'],
         ];
+
+        // The organizations actually cited, ranked by how often a guide
+        // draws on them — not a claim about "trusted sources", a count of
+        // the real ones. Taking the name before its first comma or colon
+        // collapses a source's several differently-titled citations (e.g.
+        // "Cornell Feline Health Center: vaccinations" and "..., Feline
+        // Pancreatitis") into one entry, without a hand-maintained list
+        // that drifts out of step with what the guides actually cite.
+        $topSources = $citations
+            ->map(fn (array $s) => trim(preg_replace('/[:,].*/', '', $s['name'])))
+            ->countBy()
+            ->sortDesc()
+            ->take(8)
+            ->keys();
 
         $url = rtrim(config('app.url'), '/');
         $title = $author['name'].', Founder | '.config('app.name');
@@ -45,6 +62,7 @@ class AuthorController extends Controller
             'author' => $author,
             'reviewer' => config('author.reviewer'),
             'stats' => $stats,
+            'topSources' => $topSources,
             'catImage' => Media::where('name', 'cat-with-flower')->first(),
             'schema' => Schema::graph([
                 [

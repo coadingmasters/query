@@ -128,6 +128,10 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
         ->middleware('auth')
         ->name('analytics');
 
+    Route::get('/search-console', [\App\Http\Controllers\Admin\SearchConsoleController::class, 'index'])
+        ->middleware('auth')
+        ->name('search-console');
+
     Route::get('/messages', [MessagesController::class, 'index'])
         ->middleware('auth')
         ->name('messages.index');

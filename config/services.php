@@ -18,6 +18,11 @@ return [
         'key' => env('POSTMARK_API_KEY'),
     ],
 
+    'search_console' => [
+        'credentials' => storage_path('app/private/google-search-console.json'),
+        'site_url' => env('GSC_SITE_URL', 'https://purrquery.com/'),
+    ],
+
     'resend' => [
         'key' => env('RESEND_API_KEY'),
     ],

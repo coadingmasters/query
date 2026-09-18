@@ -34,3 +34,4 @@ class SetPublicCache
         return $response;
     }
 }
+

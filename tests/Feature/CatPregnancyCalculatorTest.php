@@ -266,29 +266,13 @@ class CatPregnancyCalculatorTest extends TestCase
         }
     }
 
-    public function test_it_declares_itself_a_veterinary_web_application(): void
+    public function test_it_declares_itself_a_veterinary_medical_page(): void
     {
         $this->get(self::PATH)
-            ->assertSee('"@type":"WebApplication"', false)
             ->assertSee('"@type":"MedicalWebPage"', false)
             ->assertSee('"@type":"MedicalAudience"', false)
             ->assertSee('schema.org/Veterinary', false)
             ->assertSee('"disclaimer"', false);
-    }
-
-    /** Free is the main claim, so it is stated where a machine can read it. */
-    public function test_the_application_schema_states_it_is_free(): void
-    {
-        $html = $this->get(self::PATH)->getContent();
-
-        preg_match('/<script type="application\/ld\+json">\s*(.*?)\s*<\/script>/s', $html, $m);
-        $graph = json_decode($m[1], true);
-
-        $types = array_column($graph['@graph'], '@type');
-        $app = $graph['@graph'][array_search('WebApplication', $types, true)];
-
-        $this->assertSame('0', $app['offers']['price']);
-        $this->assertNotEmpty($app['featureList']);
     }
 
     public function test_the_description_fits_a_search_result(): void

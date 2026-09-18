@@ -207,25 +207,17 @@ class CatNameGeneratorController extends Controller
             'faq' => $faq,
             'schema' => Schema::graph([
                 [
-                    '@type' => 'WebApplication',
-                    '@id' => $url.$path.'#app',
-                    'name' => 'Cat Name Generator',
-                    'url' => $url.$path,
-                    'applicationCategory' => 'LifestyleApplication',
-                    'operatingSystem' => 'Any',
-                    'browserRequirements' => 'Requires JavaScript',
-                    'isAccessibleForFree' => true,
-                    'offers' => ['@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'USD'],
-                    'publisher' => ['@id' => $url.'/#organization'],
-                ],
-                [
+                    // Plain WebPage, not WebApplication: Google requires an
+                    // aggregateRating or review on any SoftwareApplication
+                    // subtype, which this tool has no genuine data for —
+                    // claiming the type without one is what Search Console
+                    // flags as invalid structured data.
                     '@type' => 'WebPage',
                     '@id' => $url.$path.'#page',
                     'url' => $url.$path,
                     'name' => $title,
                     'description' => $description,
                     'isPartOf' => ['@id' => $url.'/#website'],
-                    'primaryImageOfPage' => ['@id' => $url.$path.'#app'],
                 ] + (config('author.founder.name') ? [
                     'author' => ['@id' => $url.'/#founder'],
                 ] : []),

@@ -26,50 +26,6 @@ class CatPregnancyCalculatorController extends Controller
             'description' => $description,
             'canonical' => $canonical,
             'schema' => Schema::graph([
-                /*
-                 | WebApplication rather than plain WebPage: this is a tool that
-                 | does something, and the type says so. The price is stated
-                 | because "free" is the main claim, and an offer of zero is how
-                 | that is expressed in a way a machine can read.
-                 */
-                [
-                    '@type' => 'WebApplication',
-                    '@id' => $canonical.'#app',
-                    'url' => $canonical,
-                    'name' => 'Cat Pregnancy Calculator',
-                    'description' => $description,
-                    'applicationCategory' => 'HealthApplication',
-                    'applicationSubCategory' => 'Veterinary calculator',
-                    'operatingSystem' => 'Any modern web browser',
-                    'browserRequirements' => 'Requires JavaScript',
-                    'isPartOf' => ['@id' => $url.'/#website'],
-                    'publisher' => ['@id' => $url.'/#organization'],
-                    'inLanguage' => str_replace('_', '-', app()->getLocale()),
-                    'offers' => [
-                        '@type' => 'Offer',
-                        'price' => '0',
-                        'priceCurrency' => 'USD',
-                        'availability' => 'https://schema.org/InStock',
-                    ],
-                    'featureList' => [
-                        'Due date from mating date and breed',
-                        'Symptom-based estimate when the mating date is unknown',
-                        'Birth window and days remaining',
-                        'Current pregnancy week and trimester',
-                        'Pinking-up date',
-                        'Week-by-week timeline',
-                    ],
-                    /*
-                     | The audience is the person looking after the animal, not
-                     | a clinician. Saying so keeps the page honest about what
-                     | it is: general guidance for owners, written from
-                     | veterinary sources, not a clinical reference.
-                     */
-                    'audience' => [
-                        '@type' => 'PeopleAudience',
-                        'audienceType' => 'Cat owners and breeders',
-                    ],
-                ],
                 [
                     /*
                      | The subject matter, marked as veterinary and carrying the

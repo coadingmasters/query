@@ -294,6 +294,7 @@ return [
                 ['label' => 'Can Cats Eat Chicken?', 'slug' => 'can-cats-eat-chicken'],
                 ['label' => 'Can Cats Eat Raw Chicken?', 'slug' => 'can-cats-eat-raw-chicken'],
                 ['label' => 'Can Cats Eat Tuna?', 'slug' => 'can-cats-eat-tuna'],
+                ['label' => 'Northwest Naturals Cat Food Recall', 'slug' => 'northwest-naturals-cat-food-recall'],
             ],
         ],
         [
@@ -420,6 +421,7 @@ return [
                 ['label' => 'Can Cats Eat Chocolate?', 'slug' => 'can-cats-eat-chocolate'],
                 ['label' => 'Can Cats Eat Grapes or Raisins?', 'slug' => 'can-cats-eat-grapes'],
                 ['label' => 'Can Cats Eat Ham?', 'slug' => 'can-cats-eat-ham'],
+                ['label' => 'Toxic Plants for Cats', 'slug' => 'toxic-plants-for-cats'],
             ],
         ],
         [

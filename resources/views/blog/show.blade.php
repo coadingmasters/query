@@ -226,6 +226,13 @@
                             ['Email', 'mailto:?subject='.$shareText.'&body='.$shareUrl, 'M3 7.5A2.5 2.5 0 0 1 5.5 5h13A2.5 2.5 0 0 1 21 7.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 16.5Zm.5.5 7.6 5a1.6 1.6 0 0 0 1.8 0l7.6-5'],
                         ] as [$label, $href, $path])
                             <li>
+                                {{-- The mailto: share link carries no address (the reader
+                                     supplies their own recipient), so there is nothing for
+                                     Cloudflare's email obfuscation to protect here — the
+                                     email_off marker stops it rewriting this one link into
+                                     a /cdn-cgi/ redirect. Real addresses elsewhere on the
+                                     site (footer, contact, author) stay obfuscated. --}}
+                                @if ($label === 'Email') <!--email_off--> @endif
                                 <a href="{{ $href }}" rel="noopener nofollow" target="_blank"
                                    class="flex size-10 items-center justify-center rounded-xl border border-line bg-surface text-ink-muted transition hover:border-primary hover:bg-primary-light hover:text-primary">
                                     <span class="sr-only">Share on {{ $label }}</span>
@@ -233,6 +240,7 @@
                                         <path d="{{ $path }}"/>
                                     </svg>
                                 </a>
+                                @if ($label === 'Email') <!--/email_off--> @endif
                             </li>
                         @endforeach
                     </ul>

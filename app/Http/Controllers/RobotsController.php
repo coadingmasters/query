@@ -20,6 +20,6 @@ class RobotsController extends Controller
         $body = Setting::current()->robots_txt
             ?: str_replace('{sitemap}', route('sitemap'), self::DEFAULT);
 
-        return response($body, 200, ['Content-Type' => 'text/plain']);
+        return response(rtrim($body)."\n", 200, ['Content-Type' => 'text/plain']);
     }
 }

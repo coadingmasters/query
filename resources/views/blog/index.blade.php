@@ -18,8 +18,13 @@
             </p>
 
             <h1 class="mt-5 font-heading text-4xl leading-[1.06] font-extrabold tracking-tight text-ink sm:text-5xl lg:text-[3.4rem]">
-                Cat care knowledge<br>
-                <span class="text-primary">you can trust</span>
+                @if ($activeCategory)
+                    {{ $activeCategory }} guides<br>
+                    <span class="text-primary">you can trust</span>
+                @else
+                    Cat care knowledge<br>
+                    <span class="text-primary">you can trust</span>
+                @endif
                 <svg class="inline-block size-8 align-middle text-primary-vivid sm:size-10" viewBox="0 0 24 24"
                      fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                     <path d="M12 20.5c-3.6-2.2-7-4.6-7-8.4A3.9 3.9 0 0 1 12 9.6a3.9 3.9 0 0 1 7 2.5c0 3.8-3.4 6.2-7 8.4Z"/>
@@ -27,9 +32,14 @@
             </h1>
 
             <p class="mt-5 max-w-md text-base leading-relaxed text-ink-muted">
-                Practical guides written from published veterinary sources, with
-                those sources named, so you can check the answer rather than
-                trust it.
+                @if ($activeCategory)
+                    Every {{ Str::lower($activeCategory) }} guide on {{ config('app.name') }}, written from
+                    published veterinary sources, with those sources named.
+                @else
+                    Practical guides written from published veterinary sources, with
+                    those sources named, so you can check the answer rather than
+                    trust it.
+                @endif
             </p>
 
             {{-- Filters the cards already on the page. Nothing is fetched, so
@@ -99,25 +109,26 @@
         {{-- Scrolls sideways rather than wrapping, so the row keeps its shape
              as topics are added. --}}
         <div class="-mx-4 mt-5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-            <div class="flex w-max gap-2.5" role="group" aria-label="Filter by topic">
-                <button type="button" data-filter-category="" aria-pressed="true"
-                        class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2.5 text-sm font-semibold text-ink-muted shadow-sm transition hover:border-line-strong aria-pressed:border-primary aria-pressed:bg-primary-light aria-pressed:text-primary">
+            <div class="flex w-max gap-2.5" role="group" aria-label="Browse by topic">
+                <a href="{{ route('blog.index') }}" aria-pressed="{{ $activeCategory ? 'false' : 'true' }}"
+                   class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2.5 text-sm font-semibold text-ink-muted shadow-sm transition hover:border-line-strong aria-pressed:border-primary aria-pressed:bg-primary-light aria-pressed:text-primary">
                     <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
                          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/>
                     </svg>
                     All topics
-                </button>
+                </a>
 
                 @foreach ($categories as $category)
-                    <button type="button" data-filter-category="{{ $category }}" aria-pressed="false"
-                            class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2.5 text-sm font-semibold text-ink-muted shadow-sm transition hover:border-line-strong aria-pressed:border-primary aria-pressed:bg-primary-light aria-pressed:text-primary">
+                    <a href="{{ route('blog.category', $category['slug']) }}"
+                       aria-pressed="{{ $activeCategory === $category['name'] ? 'true' : 'false' }}"
+                       class="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2.5 text-sm font-semibold text-ink-muted shadow-sm transition hover:border-line-strong aria-pressed:border-primary aria-pressed:bg-primary-light aria-pressed:text-primary">
                         <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
                              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            @foreach ($icons[$category] ?? [] as $d)<path d="{{ $d }}"/>@endforeach
+                            @foreach ($icons[$category['name']] ?? [] as $d)<path d="{{ $d }}"/>@endforeach
                         </svg>
-                        {{ $category }}
-                    </button>
+                        {{ $category['name'] }}
+                    </a>
                 @endforeach
             </div>
         </div>
@@ -137,7 +148,7 @@
 
                 {{-- The lead. Text sits on the photograph, so it carries a
                      gradient heavy enough to hold white type at any crop. --}}
-                <article class="lg:h-full" data-post data-category="{{ $featured->category?->name }}"
+                <article class="lg:h-full" data-post
                          data-terms="{{ Str::lower($featured->title.' '.$featured->excerpt) }}">
                     <a href="{{ route('blog.show', $featured->slug) }}"
                         class="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-2xl shadow-lg sm:aspect-[16/10] lg:aspect-auto lg:h-full lg:min-h-[28rem]">
@@ -178,7 +189,7 @@
                 {{-- The rest of the week, headline first. --}}
                 <ul class="divide-y divide-line">
                     @foreach ($side as $post)
-                        <li data-post data-category="{{ $post->category?->name }}"
+                        <li data-post
                             data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}">
                             <a href="{{ route('blog.show', $post->slug) }}"
                                 class="group flex items-start gap-4 rounded-xl py-4 transition hover:bg-surface-soft">
@@ -211,7 +222,7 @@
     <div class="container-page">
         <div class="flex items-end justify-between gap-4">
             <h2 data-grid-heading class="font-heading text-xl font-extrabold tracking-tight text-ink sm:text-2xl">
-                All guides
+                {{ $activeCategory ? 'All '.Str::lower($activeCategory).' guides' : 'All guides' }}
             </h2>
             <span class="text-sm text-ink-muted">
                 {{ $posts->count() }} {{ Str::plural('guide', $posts->count()) }}
@@ -241,7 +252,7 @@
                 <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[248px] lg:grid-flow-dense">
                     @foreach ($chunk->values() as $i => $post)
                         @php $type = $tileTypes[$i] ?? 'small'; @endphp
-                        <li data-post data-category="{{ $post->category?->name }}"
+                        <li data-post
                             data-terms="{{ Str::lower($post->title.' '.$post->excerpt) }}"
                             @class([
                                 'sm:col-span-2 lg:row-span-2' => $type === 'feature',
@@ -369,26 +380,21 @@
 @push('scripts')
     <script>
         (() => {
-            const buttons = [...document.querySelectorAll('[data-filter-category]')];
             const posts = [...document.querySelectorAll('[data-post]')];
             const empty = document.querySelector('[data-empty]');
             const heading = document.querySelector('[data-grid-heading]');
             const search = document.querySelector('[data-blog-search]');
             const status = document.querySelector('[data-blog-status]');
 
-            // Arriving from a topic link elsewhere on the site.
-            const wanted = new URLSearchParams(location.search).get('topic') ?? '';
-            let category = buttons.some(b => b.dataset.filterCategory === wanted) ? wanted : '';
-
+            // Topic is now its own real page (see BlogController::category),
+            // so this only ever searches within whatever set the server
+            // already rendered.
             const apply = () => {
                 const term = (search?.value ?? '').trim().toLowerCase();
                 let shown = 0;
 
                 posts.forEach(post => {
-                    const byCategory = !category || post.dataset.category === category;
-                    const byTerm = !term || (post.dataset.terms ?? '').includes(term);
-                    const match = byCategory && byTerm;
-
+                    const match = !term || (post.dataset.terms ?? '').includes(term);
                     post.hidden = !match;
                     if (match) shown++;
                 });
@@ -402,23 +408,12 @@
                 empty.toggleAttribute('hidden', shown > 0);
                 heading?.toggleAttribute('hidden', shown === 0);
 
-                status.textContent = (term || category)
+                status.textContent = term
                     ? `${distinct} ${distinct === 1 ? 'guide' : 'guides'} match`
                     : '';
             };
 
-            buttons.forEach(button => button.addEventListener('click', () => {
-                category = button.dataset.filterCategory;
-                buttons.forEach(b => b.setAttribute('aria-pressed', String(b === button)));
-                apply();
-            }));
-
             search?.addEventListener('input', apply);
-
-            if (category) {
-                buttons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filterCategory === category)));
-                apply();
-            }
         })();
     </script>
 @endpush

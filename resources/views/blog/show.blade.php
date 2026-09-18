@@ -22,8 +22,10 @@
                 <li><a href="{{ route('home') }}" class="transition-colors hover:text-primary">Home</a></li>
                 <li aria-hidden="true">/</li>
                 <li><a href="{{ route('blog.index') }}" class="transition-colors hover:text-primary">Blog</a></li>
-                <li aria-hidden="true">/</li>
-                <li><a href="{{ route('blog.index') }}?topic={{ urlencode($post->category?->name) }}" class="transition-colors hover:text-primary">{{ $post->category?->name }}</a></li>
+                @if ($post->category)
+                    <li aria-hidden="true">/</li>
+                    <li><a href="{{ route('blog.category', $post->category->slug) }}" class="transition-colors hover:text-primary">{{ $post->category->name }}</a></li>
+                @endif
                 <li aria-hidden="true">/</li>
                 <li class="font-medium text-ink">{{ $post->title }}</li>
             </ol>
@@ -298,9 +300,9 @@
                     <ul class="mt-3 flex flex-wrap gap-2">
                         @foreach ($topics as $topic)
                             <li>
-                                <a href="{{ route('blog.index') }}?topic={{ urlencode($topic) }}"
+                                <a href="{{ route('blog.category', $topic['slug']) }}"
                                    class="inline-block rounded-full border border-line px-3 py-1.5 text-xs font-semibold text-ink-muted transition hover:border-primary hover:bg-primary-light hover:text-primary">
-                                    {{ $topic }}
+                                    {{ $topic['name'] }}
                                 </a>
                             </li>
                         @endforeach

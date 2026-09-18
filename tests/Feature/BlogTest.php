@@ -156,10 +156,24 @@ class BlogTest extends TestCase
         );
     }
 
-    /** The article links here with ?topic=, so those links must do something. */
-    public function test_the_index_accepts_a_topic_in_the_query(): void
+    /**
+     * The old ?topic= query string used to render the same page with the same
+     * title and canonical as /blog for every category — invisible to Google
+     * as anything but a duplicate. It now redirects permanently to the real
+     * category page instead of quietly doing nothing.
+     */
+    public function test_a_topic_query_redirects_to_the_real_category_page(): void
     {
-        $this->get('/blog?topic=Health')->assertOk();
+        $category = Post::published()->first()->category;
+
+        $this->get('/blog?topic='.urlencode($category->name))
+            ->assertRedirect(route('blog.category', $category->slug))
+            ->assertStatus(301);
+    }
+
+    public function test_an_unknown_topic_in_the_query_falls_through_to_the_index(): void
+    {
+        $this->get('/blog?topic=Not+A+Real+Category')->assertOk();
     }
 
     /** Categories with no published posts do not appear as filters. */
@@ -168,5 +182,54 @@ class BlogTest extends TestCase
         PostCategory::factory()->create(['name' => 'Empty Topic']);
 
         $this->get('/blog')->assertDontSee('Empty Topic');
+    }
+
+    public function test_a_category_page_lists_only_its_own_posts(): void
+    {
+        $category = Post::published()->first()->category;
+        $inCategory = Post::published()->where('category_id', $category->id)->get();
+        $outsideCategory = Post::published()->where('category_id', '!=', $category->id)->first();
+
+        $html = $this->get('/blog/category/'.$category->slug)->assertOk()->getContent();
+
+        foreach ($inCategory as $post) {
+            $this->assertStringContainsString($post->title, $html);
+        }
+
+        $this->assertStringNotContainsString($outsideCategory->title, $html);
+    }
+
+    public function test_a_category_page_has_its_own_title_and_canonical(): void
+    {
+        $category = Post::published()->first()->category;
+        $base = rtrim(config('app.url'), '/');
+
+        $this->get('/blog/category/'.$category->slug)
+            ->assertOk()
+            ->assertSee($category->name.' guides', false)
+            ->assertSee('<link rel="canonical" href="'.$base.'/blog/category/'.$category->slug.'"', false)
+            ->assertDontSee('<title>Cat Care Guides: Behavior, Feeding & Health', false);
+    }
+
+    public function test_an_unknown_category_is_a_404(): void
+    {
+        $this->get('/blog/category/not-a-real-category')->assertNotFound();
+    }
+
+    public function test_a_category_with_no_published_posts_is_a_404(): void
+    {
+        $category = PostCategory::factory()->create(['name' => 'Empty Topic']);
+
+        $this->get('/blog/category/'.$category->slug)->assertNotFound();
+    }
+
+    public function test_the_sitemap_lists_a_category_page(): void
+    {
+        $category = Post::published()->first()->category;
+        $base = rtrim(config('app.url'), '/');
+
+        $this->get('/sitemap.xml')
+            ->assertOk()
+            ->assertSee($base.'/blog/category/'.$category->slug, false);
     }
 }

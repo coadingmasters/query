@@ -53,6 +53,7 @@ Route::middleware(\App\Http\Middleware\SetPublicCache::class)->group(function ()
     Route::get('/author', AuthorController::class)->name('author');
 
     Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
+    Route::get('/blog/category/{category:slug}', [BlogController::class, 'category'])->name('blog.category');
     Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
 
     Route::get('/tools', [ToolsController::class, 'index'])->name('tools.index');

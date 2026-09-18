@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\PostCategory;
 use App\Models\Setting;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cache;
@@ -96,7 +97,22 @@ class SitemapController extends Controller
                 'priority' => '0.6',
             ]);
 
-        return $staticUrls->concat($postUrls)->concat($foodUrls)->all();
+        // A category with nothing published in it yet has no page to list —
+        // BlogController::category() 404s there too.
+        $categoryUrls = PostCategory::all()
+            ->reject(fn (PostCategory $c) => in_array('/blog/category/'.$c->slug, $excluded, true))
+            ->map(function (PostCategory $c) use ($base) {
+                $latest = Post::published()->where('category_id', $c->id)->max('updated_at');
+
+                return $latest ? [
+                    'loc' => $base.'/blog/category/'.$c->slug,
+                    'lastmod' => \Illuminate\Support\Carbon::parse($latest)->format('Y-m-d'),
+                    'priority' => '0.7',
+                ] : null;
+            })
+            ->filter();
+
+        return $staticUrls->concat($postUrls)->concat($foodUrls)->concat($categoryUrls)->all();
     }
 
     private function excludedPaths(): array

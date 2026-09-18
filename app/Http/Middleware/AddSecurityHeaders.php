@@ -10,17 +10,20 @@ class AddSecurityHeaders
 {
     private const CLARITY = 'https://www.clarity.ms https://*.clarity.ms';
 
+    /** Cloudflare injects its analytics beacon into every response; it is not in the markup. */
+    private const CLOUDFLARE = 'https://static.cloudflareinsights.com https://cloudflareinsights.com';
+
     /** 'unsafe-eval' for Alpine, 'unsafe-inline' for the views' inline blocks, blob: for CKEditor and the PDF tools. */
     private const CSP = [
         "default-src 'self'",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' ".self::CLARITY,
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' ".self::CLARITY.' '.self::CLOUDFLARE,
         "style-src 'self' 'unsafe-inline'",
         "img-src 'self' data: blob: https:",
         "media-src 'self' blob:",
         "frame-src 'self' blob:",
         "worker-src 'self' blob:",
         "font-src 'self'",
-        "connect-src 'self' blob: ".self::CLARITY,
+        "connect-src 'self' blob: ".self::CLARITY.' '.self::CLOUDFLARE,
         "object-src 'none'",
         "frame-ancestors 'self'",
         "base-uri 'self'",

@@ -138,6 +138,12 @@ Route::prefix('admin')->middleware('noindex')->name('admin.')->group(function ()
     Route::post('/messages/{message}/handled', [MessagesController::class, 'markHandled'])
         ->middleware('auth')
         ->name('messages.handled');
+    Route::post('/messages/{message}/reply', [MessagesController::class, 'reply'])
+        ->middleware('auth')
+        ->name('messages.reply');
+    Route::delete('/messages/{message}', [MessagesController::class, 'destroy'])
+        ->middleware('auth')
+        ->name('messages.destroy');
 
     Route::get('/subscribers', [SubscribersController::class, 'index'])
         ->middleware('auth')
